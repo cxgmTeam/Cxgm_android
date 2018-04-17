@@ -25,7 +25,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
-    compile('com.github.Dean1990:ootb:2.1.0', {
+    compile('com.github.Dean1990:ootb:2.1.2', {
         exclude group: 'com.android.support'
     })
     compile 'com.umeng.sdk:common:latest.integration'
@@ -37,4 +37,7 @@ dependencies {
     compile 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-3'
     //没有使用特殊Header，可以不加这行
     implementation 'com.android.support:design:27.1.0'
+    implementation 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
+    compile 'io.reactivex:rxjava:1.0.14'
+    compile 'io.reactivex:rxandroid:1.0.1'
 }

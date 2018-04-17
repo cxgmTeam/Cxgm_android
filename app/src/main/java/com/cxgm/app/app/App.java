@@ -11,6 +11,7 @@ import com.cxgm.app.R;
 import com.cxgm.app.utils.UserManager;
 import com.deanlib.ootb.OotbConfig;
 import com.deanlib.ootb.data.db.DB;
+import com.deanlib.ootb.data.io.DefaultLoadingDialog;
 import com.deanlib.ootb.utils.DLogUtils;
 import com.deanlib.ootb.utils.VersionUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -58,6 +59,8 @@ public class App extends Application {
 
 
         OotbConfig.init(this,Constants.DEBUG);
+
+        OotbConfig.setRequestServer(Constants.SERVICE_URL,null,new UserResult(),new DefaultLoadingDialog());
 
         //TODO 友盟统计
         UMConfigure.init(this, "友盟 app key", "友盟 channel", UMConfigure.DEVICE_TYPE_PHONE, "Push推送业务的secret");

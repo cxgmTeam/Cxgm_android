@@ -10,7 +10,7 @@ public class Constants {
     public static final boolean DEBUG = true;
 //    public static final long offMaxDate = ((long) 1000) * 3600 * 24 * 365 * 100;
 
-//    public static final String serviceUrl = "http://47.93.180.144:8008/";
+    public static final String SERVICE_URL = "http://47.93.180.144:8008/";
 
 
     //文件夹目录
