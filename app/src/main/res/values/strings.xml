@@ -6,4 +6,19 @@
     <string name="shopcar">购物车</string>
     <string name="my">我的</string>
 
+    <string name="fresh">美味生鲜</string>
+    <string name="garden_stuff">新鲜果蔬</string>
+    <string name="snacks">休闲零食</string>
+    <string name="grain_oil">粮油调味</string>
+
+
+    <string name="slogan1">品质臻选</string>
+    <string name="slogan2">优惠折扣</string>
+    <string name="slogan3">当日送达</string>
+    <string name="recent_news">最新简报</string>
+    <string name="recommend">精选推荐</string>
+    <string name="recommend_tag">精心挑选的超级好货</string>
+    <string name="new_goods">新品上市</string>
+    <string name="new_goods_tag">搜索好味道，抢先品尝</string>
+
 </resources>

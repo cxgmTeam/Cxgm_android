@@ -7,11 +7,16 @@ import android.support.v4.view.PagerAdapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.GridView;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.cxgm.app.R;
 import com.cxgm.app.ui.adapter.ShopAdapter;
 import com.cxgm.app.ui.base.BaseFragment;
+import com.deanlib.ootb.widget.HorizontalListView;
 import com.kevin.loopview.AdLoopView;
 import com.kevin.loopview.internal.BaseLoopAdapter;
 import com.kevin.loopview.internal.LoopData;
@@ -35,6 +40,28 @@ public class IndexFragment extends BaseFragment {
     @BindView(R.id.lvShop)
     ListView lvShop;
     Unbinder unbinder;
+    @BindView(R.id.layoutShopShow)
+    LinearLayout layoutShopShow;
+    @BindView(R.id.tvFresh)
+    TextView tvFresh;
+    @BindView(R.id.tvGardenStuff)
+    TextView tvGardenStuff;
+    @BindView(R.id.tvSnacks)
+    TextView tvSnacks;
+    @BindView(R.id.tvGrainOil)
+    TextView tvGrainOil;
+    @BindView(R.id.tvNewsContent)
+    TextView tvNewsContent;
+    @BindView(R.id.hlvRecommend)
+    HorizontalListView hlvRecommend;
+    @BindView(R.id.hlvNewGoods)
+    HorizontalListView hlvNewGoods;
+    @BindView(R.id.imgAd)
+    ImageView imgAd;
+    @BindView(R.id.gvGoods)
+    GridView gvGoods;
+    @BindView(R.id.layoutGoodsShow)
+    LinearLayout layoutGoodsShow;
 
     @Nullable
     @Override
@@ -51,7 +78,7 @@ public class IndexFragment extends BaseFragment {
         init();
     }
 
-    private void init(){
+    private void init() {
 
         lvShop.setAdapter(new ShopAdapter());
 
@@ -63,7 +90,7 @@ public class IndexFragment extends BaseFragment {
         });
     }
 
-    private void loadData(){
+    private void loadData() {
         LoopData loopData = JsonTool.toBean("", LoopData.class);
         loopBanner.refreshData(loopData);
         loopBanner.startAutoLoop();

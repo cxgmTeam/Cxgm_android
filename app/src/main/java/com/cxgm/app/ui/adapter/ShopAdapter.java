@@ -32,7 +32,7 @@ public class ShopAdapter extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -53,7 +53,7 @@ public class ShopAdapter extends BaseAdapter {
                         new RoundedCornersTransformation(128,0, RoundedCornersTransformation.CornerType.TOP)))
                 .into(holder.imgShopCover);
 
-        return null;
+        return convertView;
     }
 
     static class ViewHolder {
