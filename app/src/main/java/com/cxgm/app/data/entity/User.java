@@ -3,7 +3,10 @@ package com.cxgm.app.data.entity;
 import com.deanlib.ootb.entity.BaseEntity;
 
 /**
- * Created by dean on 2017/7/8.
+ * 用户类
+ *
+ * @anthor dean
+ * @time 2018/4/18 下午5:51
  */
 
 public class User extends BaseEntity {

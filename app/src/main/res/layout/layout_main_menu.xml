@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:background="@color/colorWhite"
+    android:layout_height="@dimen/main_menu_height"
+    android:gravity="center_vertical"
+    android:elevation="@dimen/elevation"
+    android:orientation="horizontal">
+
+
+    <RadioButton
+        android:id="@+id/rbIndex"
+        style="@style/MenuButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@drawable/selector_index"
+        android:text="@string/home" />
+
+    <RadioButton
+        android:id="@+id/rbGoods"
+        style="@style/MenuButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@drawable/selector_goods"
+        android:text="@string/classify" />
+
+    <RadioButton
+        android:id="@+id/rbShopcar"
+        style="@style/MenuButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@drawable/selector_shopcar"
+        android:text="@string/shopcar" />
+
+    <RadioButton
+        android:id="@+id/rbUser"
+        style="@style/MenuButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:drawableTop="@drawable/selector_user"
+        android:text="@string/my" />
+
+</RadioGroup>

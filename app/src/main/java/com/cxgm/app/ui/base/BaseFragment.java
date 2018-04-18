@@ -1,6 +1,7 @@
 package com.cxgm.app.ui.base;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,19 +19,24 @@ import org.xutils.x;
  */
 public class BaseFragment extends Fragment implements UserManager.OnUserActionListener{
 
-    private boolean injected = false;
+//    private boolean injected = false;
 
     public Callback.Cancelable httpCallback;
 
-
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        injected = true;
-        return x.view().inject(this, inflater, container);
-
-
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        UserManager.setOnUserActionListener(this);
     }
+
+    //    @Override
+//    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+//
+//        injected = true;
+//        return x.view().inject(this, inflater, container);
+//
+//
+//    }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -40,11 +46,10 @@ public class BaseFragment extends Fragment implements UserManager.OnUserActionLi
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (!injected) {
-            x.view().inject(this, this.getView());
-
-            UserManager.setOnUserActionListener(this);
-        }
+//        if (!injected) {
+//            x.view().inject(this, this.getView());
+//
+//        }
     }
 
     public void reload(){
@@ -61,6 +66,8 @@ public class BaseFragment extends Fragment implements UserManager.OnUserActionLi
             httpCallback.cancel();
 
         }
+
+        UserManager.removeOnUserActionListener(this);
     }
 
     @Override

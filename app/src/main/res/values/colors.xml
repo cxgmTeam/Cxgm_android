@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">@color/colorGreen</color>
+    <color name="colorPrimaryDark">@color/colorGreenDark</color>
+    <color name="colorAccent">@color/colorBlueTint</color>
+    <color name="colorAppBackground">@color/colorGray</color>
+
+    <color name="textGray">#999999</color>
+    <color name="textGreen">@color/colorGreen</color>
+    <color name="textBlack">#333333</color>
+    <color name="textBlackTint">#666666</color>
+
+    <color name="colorWhite">#FFFFFF</color>
+    <color name="colorGray">#F2F3F4</color>
+    <color name="colorGreen">#00A862</color>
+    <color name="colorGreenDark">#30A862</color>
+    <color name="colorBlueTint">#3AB0F2</color>
+
 </resources>

@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">Cxgm</string>
+    <string name="app_name">菜鲜果美</string>
+
+    <string name="home">首页</string>
+    <string name="classify">分类</string>
+    <string name="shopcar">购物车</string>
+    <string name="my">我的</string>
+
 </resources>

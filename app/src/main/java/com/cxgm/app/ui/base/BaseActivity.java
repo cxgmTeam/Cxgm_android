@@ -26,8 +26,7 @@ public class BaseActivity extends AppCompatActivity implements UserManager.OnUse
 		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
-		x.view().inject(this);
-
+//		x.view().inject(this);
 		UserManager.setOnUserActionListener(this);
 
 		// 设置网络状态监听器
@@ -38,6 +37,12 @@ public class BaseActivity extends AppCompatActivity implements UserManager.OnUse
 		
 	}
 
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		NetworkManager.getInstance().removeNetworkListener(this);
+		UserManager.removeOnUserActionListener(this);
+	}
 
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
@@ -82,7 +87,7 @@ public class BaseActivity extends AppCompatActivity implements UserManager.OnUse
 
 	public interface OnClickAppbarListener{
 
-		public void onClick(View v);
+		void onClick(View v);
 
 	}
 

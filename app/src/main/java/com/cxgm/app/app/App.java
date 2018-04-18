@@ -31,6 +31,13 @@ import com.umeng.message.entity.UMessage;
 
 import org.greenrobot.eventbus.EventBus;
 
+/**
+ * Application
+ *
+ * @anthor dean
+ * @time 2018/4/18 下午5:48
+ */
+
 public class App extends Application {
 
     //static 代码段可以防止内存泄露

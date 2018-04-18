@@ -205,6 +205,10 @@ public class UserManager {
 
     }
 
+    public static void removeOnUserActionListener(OnUserActionListener listener){
+        mListenerList.remove(listener);
+    }
+
     public interface OnUserActionListener{
 
         void onLogin(User user);
