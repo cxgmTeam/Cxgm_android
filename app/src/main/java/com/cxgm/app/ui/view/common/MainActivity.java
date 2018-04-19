@@ -14,12 +14,14 @@ import android.widget.RadioGroup;
 
 import com.cxgm.app.R;
 import com.cxgm.app.ui.base.BaseActivity;
+import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.ui.view.user.UserFragment;
 import com.deanlib.ootb.manager.PermissionManager;
 import com.tbruyelle.rxpermissions.Permission;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import rx.functions.Action1;
 
 /**
@@ -41,20 +43,8 @@ public class MainActivity extends BaseActivity {
     RadioButton rbShopcar;
     @BindView(R.id.rbUser)
     RadioButton rbUser;
-    @BindView(R.id.imgLocation)
-    ImageView imgLocation;
-    @BindView(R.id.etSearchWord)
-    EditText etSearchWord;
-    @BindView(R.id.imgTextClear)
-    ImageView imgTextClear;
-    @BindView(R.id.imgMessage)
-    ImageView imgMessage;
     @BindView(R.id.layoutMenu)
     RadioGroup layoutMenu;
-    @BindView(R.id.layoutAppbar)
-    View layoutAppbar;
-    @BindView(R.id.layoutMessage)
-    LinearLayout layoutMessage;
 
     IndexFragment mIndexFragment;
     UserFragment mUserFragment;
@@ -112,9 +102,6 @@ public class MainActivity extends BaseActivity {
     private void changeView(int checkedId) {
 
         getSupportFragmentManager().beginTransaction().hide(mIndexFragment).hide(mUserFragment).commit();
-        layoutAppbar.setVisibility(View.VISIBLE);
-        layoutContainer.setFitsSystemWindows(false);
-        layoutContainer.setClipToPadding(false);
 
         switch (checkedId) {
 
@@ -122,11 +109,9 @@ public class MainActivity extends BaseActivity {
                 getSupportFragmentManager().beginTransaction().show(mIndexFragment).commit();
                 break;
             case R.id.rbUser:
-                layoutAppbar.setVisibility(View.GONE);
-                layoutContainer.setFitsSystemWindows(true);
-                layoutContainer.setClipToPadding(true);
                 getSupportFragmentManager().beginTransaction().show(mUserFragment).commit();
                 break;
         }
     }
+
 }

@@ -7,14 +7,6 @@
     android:orientation="vertical"
     tools:context=".ui.view.common.MainActivity">
 
-    <include
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/appbar_height"
-        android:layout_marginTop="@dimen/status_bar_height"
-        android:id="@+id/layoutAppbar"
-        layout="@layout/layout_input_appbar"
-        />
-
     <FrameLayout
         android:id="@+id/layoutContainer"
         android:layout_weight="1"

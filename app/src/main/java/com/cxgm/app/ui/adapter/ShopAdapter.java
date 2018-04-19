@@ -14,6 +14,13 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
+/**
+ * 店铺列表适配
+ *
+ * @anthor Dean
+ * @time 2018/4/19 0019 22:08
+ */
+
 public class ShopAdapter extends BaseAdapter {
 
     public ShopAdapter() {

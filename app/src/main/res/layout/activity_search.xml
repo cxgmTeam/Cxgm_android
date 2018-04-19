@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:clipToPadding="true"
+        android:elevation="@dimen/elevation"
+        android:fitsSystemWindows="true"
+        android:orientation="vertical">
+
+        <include
+            layout="@layout/layout_input_cancel_appbar"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/appbar_height"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorLine" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="@dimen/margin_large_x"
+            android:paddingTop="@dimen/margin_giant"
+            android:text="@string/hot_search"
+            android:textColor="@color/textBlack"
+            android:textSize="@dimen/text_size_normal" />
+
+        <com.zhy.view.flowlayout.TagFlowLayout
+            android:id="@+id/tflWord"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/margin_giant_xx"
+            android:paddingLeft="@dimen/margin_giant"
+            android:paddingRight="@dimen/margin_giant"
+            android:paddingTop="@dimen/margin_normal" />
+    </LinearLayout>
+
+</LinearLayout>

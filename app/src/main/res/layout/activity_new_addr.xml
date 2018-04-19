@@ -1,177 +1,179 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <include
-        android:layout_marginTop="@dimen/status_bar_height"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/appbar_height"
-        layout="@layout/layout_title_appbar"/>
-
-    <View
-        android:background="@color/colorLine"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"/>
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:elevation="@dimen/elevation"
+        android:fitsSystemWindows="true"
+        android:clipToPadding="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:background="@color/colorWhite"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/margin_giant"
-        android:paddingRight="@dimen/margin_giant"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height">
-
-        <TextView
-            android:textColor="@color/textBlack"
-            android:text="@string/consignee_"
-            android:textSize="@dimen/text_size_normal_x"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/etConsignee"
-            style="@style/Edit"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <View
-        android:background="@color/colorLine"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/line"/>
-
-    <LinearLayout
         android:elevation="@dimen/elevation"
-        android:background="@color/colorWhite"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/margin_giant"
-        android:paddingRight="@dimen/margin_giant"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height">
+        android:orientation="vertical">
 
-        <TextView
-            android:textColor="@color/textBlack"
-            android:text="@string/phone_number_"
-            android:textSize="@dimen/text_size_normal_x"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/etPhoneNumber"
-            style="@style/Edit"
+        <include
+            layout="@layout/layout_back_title_action_appbar"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:layout_height="@dimen/appbar_height"
+            android:layout_marginTop="@dimen/status_bar_height" />
 
-    <View
-        android:background="@color/colorLine"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/line"/>
-
-    <LinearLayout
-        android:elevation="@dimen/elevation"
-        android:background="@color/colorWhite"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/margin_giant"
-        android:paddingRight="@dimen/margin_giant"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height">
-
-        <TextView
-            android:textColor="@color/textBlack"
-            android:text="@string/district_"
-            android:textSize="@dimen/text_size_normal_x"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/etDistrict"
-            android:hint="@string/select"
-            style="@style/Edit"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="1dp"
+            android:background="@color/colorLine" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
-
-    <View
-        android:background="@color/colorLine"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/line"/>
-
-    <LinearLayout
-        android:elevation="@dimen/elevation"
-        android:background="@color/colorWhite"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/margin_giant"
-        android:paddingRight="@dimen/margin_giant"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height">
-
-        <TextView
-            android:textColor="@color/textBlack"
-            android:text="@string/number_"
-            android:textSize="@dimen/text_size_normal_x"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/etNumber"
-            android:hint="@string/number_tag"
-            style="@style/Edit"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-    </LinearLayout>
+            android:layout_height="@dimen/item_height"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/margin_giant"
+            android:paddingRight="@dimen/margin_giant">
 
-    <View
-        android:background="@color/colorLine"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/line"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/consignee_"
+                android:textColor="@color/textBlack"
+                android:textSize="@dimen/text_size_normal_x" />
 
-    <LinearLayout
-        android:elevation="@dimen/elevation"
-        android:background="@color/colorWhite"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/margin_giant"
-        android:paddingRight="@dimen/margin_giant"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height">
+            <EditText
+                android:id="@+id/etConsignee"
+                style="@style/Edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
-        <TextView
-            android:textColor="@color/textBlack"
-            android:text="@string/remark_"
-            android:textSize="@dimen/text_size_normal_x"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:id="@+id/etRemark"
-            style="@style/Edit"
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="@dimen/line"
+            android:background="@color/colorLine" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/margin_giant"
+            android:paddingRight="@dimen/margin_giant">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/phone_number_"
+                android:textColor="@color/textBlack"
+                android:textSize="@dimen/text_size_normal_x" />
+
+            <EditText
+                android:id="@+id/etPhoneNumber"
+                style="@style/Edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line"
+            android:background="@color/colorLine" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/margin_giant"
+            android:paddingRight="@dimen/margin_giant">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/district_"
+                android:textColor="@color/textBlack"
+                android:textSize="@dimen/text_size_normal_x" />
+
+            <EditText
+                android:id="@+id/etDistrict"
+                style="@style/Edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/select" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line"
+            android:background="@color/colorLine" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/margin_giant"
+            android:paddingRight="@dimen/margin_giant">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/number_"
+                android:textColor="@color/textBlack"
+                android:textSize="@dimen/text_size_normal_x" />
+
+            <EditText
+                android:id="@+id/etNumber"
+                style="@style/Edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/number_tag" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line"
+            android:background="@color/colorLine" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/margin_giant"
+            android:paddingRight="@dimen/margin_giant">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/remark_"
+                android:textColor="@color/textBlack"
+                android:textSize="@dimen/text_size_normal_x" />
+
+            <EditText
+                android:id="@+id/etRemark"
+                style="@style/Edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <TextView
         android:id="@+id/tvSave"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
         android:layout_marginLeft="@dimen/margin_giant"
         android:layout_marginRight="@dimen/margin_giant"
         android:layout_marginTop="@dimen/margin_giant_xx"
-        android:gravity="center"
         android:background="@drawable/shape_tc_tran_green"
+        android:gravity="center"
         android:text="@string/save"
-        android:textSize="@dimen/text_size_large_x"
         android:textColor="@color/textWhite"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/button_height" />
+        android:textSize="@dimen/text_size_large_x" />
 
 
 </LinearLayout>

@@ -2,6 +2,7 @@ package com.cxgm.app.ui.view.order;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -47,5 +48,11 @@ public class NewAddrActivity extends BaseActivity {
         }
         setContentView(R.layout.activity_new_addr);
         ButterKnife.bind(this);
+
+        init();
+    }
+
+    private void init(){
+        imgBack.setVisibility(View.VISIBLE);
     }
 }

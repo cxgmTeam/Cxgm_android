@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/appbar_height"
+    android:background="@color/colorWhite">
+
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/imgBack"
+        android:layout_width="@dimen/appbar_height"
+        android:layout_height="@dimen/appbar_height"
+        android:scaleType="center"
+        android:src="@mipmap/back" />
+
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textColor="@color/textBlack"
+        android:textSize="@dimen/text_size_giant" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/appbar_height"
+        android:layout_gravity="right">
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/imgAction1"
+            android:layout_width="@dimen/appbar_height"
+            android:layout_height="@dimen/appbar_height"
+            android:layout_gravity="right"
+            android:scaleType="center"
+            android:src="@mipmap/search2" />
+
+        <TextView
+            android:visibility="gone"
+            android:id="@+id/tvAction1"
+            android:layout_marginRight="@dimen/margin_large_x"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/appbar_height"
+            android:layout_gravity="right"
+            android:gravity="center"
+            android:textColor="@color/textBlack"
+            android:textSize="@dimen/text_size_normal_x" />
+    </LinearLayout>
+</FrameLayout>

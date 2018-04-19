@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/layout_back_input_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/appbar_height"
+        android:layout_marginTop="@dimen/status_bar_height" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorLine" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <GridView
+            android:id="@+id/gvGoods"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:horizontalSpacing="@dimen/margin_normal"
+            android:numColumns="2"
+            android:padding="@dimen/margin_large_t"
+            android:scrollbars="none"
+            android:verticalSpacing="@dimen/margin_giant" />
+
+
+        <ImageView
+            android:id="@+id/imgShopCar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right|bottom"
+            android:layout_margin="@dimen/margin_giant"
+            android:elevation="@dimen/elevation"
+            android:src="@mipmap/shopcar2" />
+    </FrameLayout>
+
+
+</LinearLayout>

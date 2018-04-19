@@ -16,6 +16,12 @@ import org.xutils.common.util.DensityUtil;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
+/**
+ * 商品列表适配
+ *
+ * @anthor Dean
+ * @time 2018/4/19 0019 21:54
+ */
 public class GoodsAdapter extends BaseAdapter {
 
     int mItemWidth;

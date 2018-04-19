@@ -29,6 +29,16 @@
         <activity android:name=".ui.view.common.MainActivity"
             android:screenOrientation="portrait"
             />
+        <activity android:name=".ui.view.goods.SearchActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".ui.view.goods.SearchResultActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".ui.view.order.NewAddrActivity"
+            android:screenOrientation="portrait"
+            />
+
     </application>
 
 </manifest>

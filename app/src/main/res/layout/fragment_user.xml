@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:scrollbars="none"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:scrollbars="none">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -11,6 +10,8 @@
         android:orientation="vertical">
 
         <FrameLayout
+            android:fitsSystemWindows="true"
+            android:clipToPadding="true"
             android:id="@+id/layoutUserBg"
             android:layout_width="match_parent"
             android:layout_height="@dimen/user_bg_height"
@@ -37,8 +38,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:layout_marginRight="15dp"
-                android:layout_marginTop="31dp"
+                android:layout_marginRight="@dimen/margin_giant"
+                android:layout_marginTop="@dimen/margin_giant"
                 android:src="@mipmap/edit" />
 
         </FrameLayout>
@@ -155,182 +156,184 @@
                 android:layout_height="wrap_content" />
         </LinearLayout>
 
-        <View
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_normal"
-            android:background="@color/colorLine"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/line"/>
-        <LinearLayout
-            android:id="@+id/layoutCoupon"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/item_height"
             android:background="@color/colorWhite"
             android:elevation="@dimen/elevation"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingRight="@dimen/margin_large"
-            android:paddingLeft="@dimen/margin_large">
+            android:orientation="vertical">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/coupon" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_normal"
-                android:text="@string/coupon"
-                android:textColor="@color/textBlack"
-                android:textSize="@dimen/text_size_normal_x" />
-
-            <TextView
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_normal"
-                android:layout_weight="1"
-                android:text="@string/coupon_tag"
-                android:textColor="@color/textGray"
-                android:textSize="@dimen/text_size_normal" />
+                android:layout_height="@dimen/line"
+                android:background="@color/colorLine" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
-        <View
-            android:background="@color/colorLine"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/line"/>
+            <LinearLayout
+                android:id="@+id/layoutCoupon"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/margin_large"
+                android:paddingRight="@dimen/margin_large">
 
-        <LinearLayout
-            android:id="@+id/layoutReceiverAddr"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/item_height"
-            android:background="@color/colorWhite"
-            android:elevation="@dimen/elevation"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingRight="@dimen/margin_large"
-            android:paddingLeft="@dimen/margin_large">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/coupon" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/addr" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_normal"
+                    android:text="@string/coupon"
+                    android:textColor="@color/textBlack"
+                    android:textSize="@dimen/text_size_normal_x" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_normal"
-                android:text="@string/receiver_addr"
-                android:textColor="@color/textBlack"
-                android:textSize="@dimen/text_size_normal_x" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_normal"
+                    android:layout_weight="1"
+                    android:text="@string/coupon_tag"
+                    android:textColor="@color/textGray"
+                    android:textSize="@dimen/text_size_normal" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
-        <View
-            android:background="@color/colorLine"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/line"/>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line"
+                android:background="@color/colorLine" />
 
-        <LinearLayout
-            android:id="@+id/layoutHelp"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/item_height"
-            android:background="@color/colorWhite"
-            android:elevation="@dimen/elevation"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingRight="@dimen/margin_large"
-            android:paddingLeft="@dimen/margin_large">
+            <LinearLayout
+                android:id="@+id/layoutReceiverAddr"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/margin_large"
+                android:paddingRight="@dimen/margin_large">
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/help" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/addr" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_normal"
-                android:text="@string/help"
-                android:textColor="@color/textBlack"
-                android:textSize="@dimen/text_size_normal_x" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_normal"
+                    android:text="@string/receiver_addr"
+                    android:textColor="@color/textBlack"
+                    android:textSize="@dimen/text_size_normal_x" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
-        <View
-            android:background="@color/colorLine"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/line"/>
-        <LinearLayout
-            android:id="@+id/layoutService"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/item_height"
-            android:background="@color/colorWhite"
-            android:elevation="@dimen/elevation"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingRight="@dimen/margin_large"
-            android:paddingLeft="@dimen/margin_large">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line"
+                android:background="@color/colorLine" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/service" />
+            <LinearLayout
+                android:id="@+id/layoutHelp"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/margin_large"
+                android:paddingRight="@dimen/margin_large">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_normal"
-                android:text="@string/service"
-                android:textColor="@color/textBlack"
-                android:textSize="@dimen/text_size_normal_x" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/help" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_normal"
+                    android:text="@string/help"
+                    android:textColor="@color/textBlack"
+                    android:textSize="@dimen/text_size_normal_x" />
 
-        <View
-            android:background="@color/colorLine"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/line"/>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/layoutSettings"
-            android:layout_marginBottom="64dp"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/item_height"
-            android:background="@color/colorWhite"
-            android:elevation="@dimen/elevation"
-            android:gravity="center_vertical"
-            android:orientation="horizontal"
-            android:paddingRight="@dimen/margin_large"
-            android:paddingLeft="@dimen/margin_large">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line"
+                android:background="@color/colorLine" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/settings" />
+            <LinearLayout
+                android:id="@+id/layoutService"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/margin_large"
+                android:paddingRight="@dimen/margin_large">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/margin_normal"
-                android:text="@string/settings"
-                android:textColor="@color/textBlack"
-                android:textSize="@dimen/text_size_normal_x" />
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/service" />
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_normal"
+                    android:text="@string/service"
+                    android:textColor="@color/textBlack"
+                    android:textSize="@dimen/text_size_normal_x" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line"
+                android:background="@color/colorLine" />
+
+            <LinearLayout
+                android:id="@+id/layoutSettings"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:layout_marginBottom="64dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/margin_large"
+                android:paddingRight="@dimen/margin_large">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/settings" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_normal"
+                    android:text="@string/settings"
+                    android:textColor="@color/textBlack"
+                    android:textSize="@dimen/text_size_normal_x" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
         </LinearLayout>
 
     </LinearLayout>

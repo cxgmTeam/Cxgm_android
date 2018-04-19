@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:background="@color/colorWhite"
+    android:gravity="center_vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="@dimen/appbar_height">
+
+    <include
+        android:layout_marginLeft="@dimen/margin_giant"
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:layout_weight="1"
+        layout="@layout/layout_input"
+        />
+
+    <TextView
+        android:id="@+id/tvCancel"
+        android:textSize="@dimen/text_size_normal_x"
+        android:textColor="@color/textBlack"
+        android:layout_marginLeft="@dimen/margin_giant"
+        android:layout_marginRight="@dimen/margin_giant"
+        android:gravity="center"
+        android:text="@string/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/appbar_height" />
+
+</LinearLayout>

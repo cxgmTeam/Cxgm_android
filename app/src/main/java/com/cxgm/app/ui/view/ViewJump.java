@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.cxgm.app.ui.view.common.MainActivity;
+import com.cxgm.app.ui.view.goods.SearchActivity;
 
 /**
  * 界面跳转总控
@@ -14,8 +15,12 @@ import com.cxgm.app.ui.view.common.MainActivity;
 public class ViewJump {
 
     public static void toMain(Activity activity){
-
         Intent intent = new Intent(activity, MainActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public static void toSearch(Activity activity){
+        Intent intent = new Intent(activity, SearchActivity.class);
         activity.startActivity(intent);
     }
 

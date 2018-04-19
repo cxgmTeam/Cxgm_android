@@ -1,278 +1,328 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <ScrollView
+    <include
+        android:id="@+id/layoutAppbar"
+        layout="@layout/layout_location_input_msg_appbar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:scrollbars="none">
+        android:layout_height="@dimen/appbar_height"
+        android:layout_marginTop="@dimen/status_bar_height" />
 
-        <LinearLayout
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <com.kevin.loopview.AdLoopView
-                android:id="@+id/loopBanner"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/banner_height"
-                android:elevation="@dimen/elevation" />
+            android:scrollbars="none">
 
             <LinearLayout
-                android:id="@+id/layoutShopShow"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="gone">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="41dp"
-                    android:background="@color/colorWhite"
-                    android:elevation="@dimen/elevation"
-                    android:gravity="center">
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableLeft="@mipmap/selected"
-                            android:drawablePadding="@dimen/margin_small"
-                            android:text="@string/slogan1"
-                            android:textColor="@color/textGreen"
-                            android:textSize="@dimen/text_size_normal" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableLeft="@mipmap/selected"
-                            android:drawablePadding="@dimen/margin_small"
-                            android:text="@string/slogan2"
-                            android:textColor="@color/textGreen"
-                            android:textSize="@dimen/text_size_normal" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:gravity="center">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:drawableLeft="@mipmap/selected"
-                            android:drawablePadding="@dimen/margin_small"
-                            android:text="@string/slogan3"
-                            android:textColor="@color/textGreen"
-                            android:textSize="@dimen/text_size_normal" />
-                    </LinearLayout>
-
-                </LinearLayout>
-
-                <ListView
-                    android:id="@+id/lvShop"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:divider="@null"
-                    android:dividerHeight="@dimen/margin_large_t" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/layoutGoodsShow"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorWhite"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <com.kevin.loopview.AdLoopView
+                    android:id="@+id/loopBanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/banner_height"
+                    android:elevation="@dimen/elevation" />
 
                 <LinearLayout
+                    android:id="@+id/layoutShopShow"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:paddingBottom="@dimen/margin_giant_xxx"
-                    android:paddingTop="@dimen/margin_giant_xxx">
-
-                    <TextView
-                        android:id="@+id/tvFresh"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawablePadding="@dimen/margin_micro"
-                        android:drawableTop="@mipmap/fresh"
-                        android:gravity="center"
-                        android:text="@string/fresh"
-                        android:textColor="@color/textBlack"
-                        android:textSize="@dimen/text_size_normal" />
-
-                    <TextView
-                        android:id="@+id/tvGardenStuff"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawablePadding="@dimen/margin_micro"
-                        android:drawableTop="@mipmap/garden_stuff"
-                        android:gravity="center"
-                        android:text="@string/garden_stuff"
-                        android:textColor="@color/textBlack"
-                        android:textSize="@dimen/text_size_normal" />
-
-                    <TextView
-                        android:id="@+id/tvSnacks"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawablePadding="@dimen/margin_micro"
-                        android:drawableTop="@mipmap/snacks"
-                        android:gravity="center"
-                        android:text="@string/snacks"
-                        android:textColor="@color/textBlack"
-                        android:textSize="@dimen/text_size_normal" />
-
-                    <TextView
-                        android:id="@+id/tvGrainOil"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawablePadding="@dimen/margin_micro"
-                        android:drawableTop="@mipmap/grain_oil"
-                        android:gravity="center"
-                        android:text="@string/grain_oil"
-                        android:textColor="@color/textBlack"
-                        android:textSize="@dimen/text_size_normal" />
-
-                </LinearLayout>
-
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
-                    android:paddingBottom="@dimen/margin_large"
-                    android:paddingLeft="@dimen/margin_giant_x"
-                    android:paddingRight="@dimen/margin_giant_x"
-                    android:paddingTop="@dimen/margin_large">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="41dp"
+                        android:background="@color/colorWhite"
+                        android:elevation="@dimen/elevation"
+                        android:gravity="center">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@mipmap/selected"
+                                android:drawablePadding="@dimen/margin_small"
+                                android:text="@string/slogan1"
+                                android:textColor="@color/textGreen"
+                                android:textSize="@dimen/text_size_normal" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@mipmap/selected"
+                                android:drawablePadding="@dimen/margin_small"
+                                android:text="@string/slogan2"
+                                android:textColor="@color/textGreen"
+                                android:textSize="@dimen/text_size_normal" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:drawableLeft="@mipmap/selected"
+                                android:drawablePadding="@dimen/margin_small"
+                                android:text="@string/slogan3"
+                                android:textColor="@color/textGreen"
+                                android:textSize="@dimen/text_size_normal" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <ListView
+                        android:id="@+id/lvShop"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="center"
+                        android:divider="@null"
+                        android:dividerHeight="@dimen/margin_large_t" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/layoutGoodsShow"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+
+                    <LinearLayout
+                        android:elevation="@dimen/elevation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorWhite"
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/margin_giant_xxx"
+                        android:paddingTop="@dimen/margin_giant_xxx">
+
+                        <TextView
+                            android:id="@+id/tvFresh"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:drawablePadding="@dimen/margin_micro"
+                            android:drawableTop="@mipmap/fresh"
+                            android:gravity="center"
+                            android:text="@string/fresh"
+                            android:textColor="@color/textBlack"
+                            android:textSize="@dimen/text_size_normal" />
+
+                        <TextView
+                            android:id="@+id/tvGardenStuff"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:drawablePadding="@dimen/margin_micro"
+                            android:drawableTop="@mipmap/garden_stuff"
+                            android:gravity="center"
+                            android:text="@string/garden_stuff"
+                            android:textColor="@color/textBlack"
+                            android:textSize="@dimen/text_size_normal" />
+
+                        <TextView
+                            android:id="@+id/tvSnacks"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:drawablePadding="@dimen/margin_micro"
+                            android:drawableTop="@mipmap/snacks"
+                            android:gravity="center"
+                            android:text="@string/snacks"
+                            android:textColor="@color/textBlack"
+                            android:textSize="@dimen/text_size_normal" />
+
+                        <TextView
+                            android:id="@+id/tvGrainOil"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:drawablePadding="@dimen/margin_micro"
+                            android:drawableTop="@mipmap/grain_oil"
+                            android:gravity="center"
+                            android:text="@string/grain_oil"
+                            android:textColor="@color/textBlack"
+                            android:textSize="@dimen/text_size_normal" />
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/line"
+                        android:background="@color/colorLine" />
+
+                    <LinearLayout
+                        android:elevation="@dimen/elevation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorWhite"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal"
+                        android:paddingBottom="@dimen/margin_large"
+                        android:paddingLeft="@dimen/margin_giant_x"
+                        android:paddingRight="@dimen/margin_giant_x"
+                        android:paddingTop="@dimen/margin_large">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="@string/app_name"
+                                android:textColor="@color/textGreen"
+                                android:textSize="@dimen/text_size_normal" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="@dimen/margin_micro_t"
+                                android:background="@color/colorGreen"
+                                android:paddingLeft="@dimen/margin_micro_t"
+                                android:paddingRight="@dimen/margin_micro_t"
+                                android:text="@string/recent_news"
+                                android:textColor="@color/textWhite"
+                                android:textSize="@dimen/text_size_normal" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:id="@+id/tvNewsContent"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_giant_xxx"
+                            android:lines="2"
+                            android:textColor="@color/textBlackTint"
+                            android:textSize="@dimen/text_size_normal" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:paddingTop="@dimen/margin_giant_xx"
+                        android:paddingBottom="@dimen/margin_giant_xx"
+                        android:elevation="@dimen/elevation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:background="@color/colorWhite"
                         android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="@string/app_name"
-                            android:textColor="@color/textGreen"
-                            android:textSize="@dimen/text_size_normal" />
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/recommend"
+                            android:textColor="@color/textBlack"
+                            android:textSize="@dimen/text_size_large"
+                            android:textStyle="bold" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
                             android:layout_marginTop="@dimen/margin_micro_t"
-                            android:background="@color/colorGreen"
-                            android:paddingLeft="@dimen/margin_micro_t"
-                            android:paddingRight="@dimen/margin_micro_t"
-                            android:text="@string/recent_news"
-                            android:textColor="@color/textWhite"
-                            android:textSize="@dimen/text_size_normal" />
+                            android:text="@string/recommend_tag"
+                            android:textColor="@color/textGray"
+                            android:textSize="@dimen/text_size_small" />
+
+                        <com.deanlib.ootb.widget.HorizontalListView
+                            android:id="@+id/hlvRecommend"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/margin_normal"
+                            android:paddingRight="@dimen/margin_normal"
+                            android:layout_marginTop="@dimen/margin_large_t"
+                            android:scrollbars="none" />
                     </LinearLayout>
 
-                    <TextView
-                        android:id="@+id/tvNewsContent"
+                    <LinearLayout
+                        android:paddingTop="@dimen/margin_giant_xx"
+                        android:paddingBottom="@dimen/margin_giant_xx"
+                        android:elevation="@dimen/elevation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_giant_xxx"
-                        android:lines="2"
-                        android:textColor="@color/textBlackTint"
-                        android:textSize="@dimen/text_size_normal" />
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:background="@color/colorWhite"
+                        android:orientation="vertical">
 
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/new_goods"
+                            android:textColor="@color/textBlack"
+                            android:textSize="@dimen/text_size_large"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/margin_micro_t"
+                            android:text="@string/new_goods_tag"
+                            android:textColor="@color/textGray"
+                            android:textSize="@dimen/text_size_small" />
+
+                        <com.deanlib.ootb.widget.HorizontalListView
+                            android:id="@+id/hlvNewGoods"
+                            android:scrollbars="none"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="@dimen/margin_normal"
+                            android:paddingRight="@dimen/margin_normal"
+                            android:layout_marginTop="@dimen/margin_large_t" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:elevation="@dimen/elevation"
+                        android:id="@+id/imgAd"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/ad_height"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:background="@color/colorWhite"
+                        android:paddingLeft="@dimen/margin_normal"
+                        android:paddingRight="@dimen/margin_normal"
+                        android:paddingTop="@dimen/margin_normal" />
+
+                    <GridView
+                        android:elevation="@dimen/elevation"
+                        android:id="@+id/gvGoods"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@color/colorWhite"
+                        android:horizontalSpacing="@dimen/margin_normal"
+                        android:numColumns="2"
+                        android:padding="@dimen/margin_large_t"
+                        android:scrollbars="none"
+                        android:verticalSpacing="@dimen/margin_giant" />
                 </LinearLayout>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/margin_giant_xx"
-                    android:text="@string/recommend"
-                    android:textColor="@color/textBlack"
-                    android:textSize="@dimen/text_size_large"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/margin_micro_t"
-                    android:text="@string/recommend_tag"
-                    android:textColor="@color/textGray"
-                    android:textSize="@dimen/text_size_small" />
-
-                <com.deanlib.ootb.widget.HorizontalListView
-                    android:id="@+id/hlvRecommend"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_large_t" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/margin_giant_xx"
-                    android:text="@string/new_goods"
-                    android:textColor="@color/textBlack"
-                    android:textSize="@dimen/text_size_large"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_marginTop="@dimen/margin_micro_t"
-                    android:text="@string/new_goods_tag"
-                    android:textColor="@color/textGray"
-                    android:textSize="@dimen/text_size_small" />
-
-                <com.deanlib.ootb.widget.HorizontalListView
-                    android:id="@+id/hlvNewGoods"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_large_t"
-                    android:paddingLeft="@dimen/margin_normal"
-                    android:paddingRight="@dimen/margin_normal" />
-
-                <ImageView
-                    android:id="@+id/imgAd"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/ad_height"
-                    android:layout_marginLeft="@dimen/margin_normal"
-                    android:layout_marginRight="@dimen/margin_normal"
-                    android:layout_marginTop="@dimen/margin_normal" />
-
-                <GridView
-                    android:id="@+id/gvGoods"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:horizontalSpacing="@dimen/margin_normal"
-                    android:numColumns="2"
-                    android:padding="@dimen/margin_large_t"
-                    android:verticalSpacing="@dimen/margin_giant" />
             </LinearLayout>
-
-        </LinearLayout>
-    </ScrollView>
-</com.scwang.smartrefresh.layout.SmartRefreshLayout>
+        </ScrollView>
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</LinearLayout>

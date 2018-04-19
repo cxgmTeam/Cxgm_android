@@ -29,8 +29,10 @@
     <string name="remark_">备注信息：</string>
 
     <string name="save">保存</string>
+    <string name="cancel">取消</string>
 
 
+    <string name="hot_search">热门搜索</string>
     <string name="slogan1">品质臻选</string>
     <string name="slogan2">优惠折扣</string>
     <string name="slogan3">当日送达</string>
