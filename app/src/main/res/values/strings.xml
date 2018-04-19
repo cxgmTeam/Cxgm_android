@@ -11,6 +11,25 @@
     <string name="snacks">休闲零食</string>
     <string name="grain_oil">粮油调味</string>
 
+    <string name="orders">全部订单</string>
+    <string name="unpaid">待付款</string>
+    <string name="distribution">待配送</string>
+    <string name="receive">待收货</string>
+    <string name="refund">轻松退</string>
+    <string name="coupon">优惠券</string>
+    <string name="receiver_addr">收货地址</string>
+    <string name="help">帮助中心</string>
+    <string name="service">联系客服</string>
+    <string name="settings">设置</string>
+
+    <string name="consignee_">收货人：</string>
+    <string name="phone_number_">手机号码：</string>
+    <string name="district_">小区 / 大厦：</string>
+    <string name="number_">楼号 - 门牌号：</string>
+    <string name="remark_">备注信息：</string>
+
+    <string name="save">保存</string>
+
 
     <string name="slogan1">品质臻选</string>
     <string name="slogan2">优惠折扣</string>
@@ -20,5 +39,11 @@
     <string name="recommend_tag">精心挑选的超级好货</string>
     <string name="new_goods">新品上市</string>
     <string name="new_goods_tag">搜索好味道，抢先品尝</string>
+    <string name="gift">邀请有礼</string>
+    <string name="gift_tag">新鲜生鲜水果邀请好友共享</string>
+    <string name="coupon_tag">兑换、查看优惠券</string>
+    <string name="select">请选择</string>
+    <string name="number_tag">例如：B座1901室</string>
+
 
 </resources>

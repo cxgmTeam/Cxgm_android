@@ -1,0 +1,337 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:scrollbars="none"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/layoutUserBg"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/user_bg_height"
+            android:background="@color/colorGreen">
+
+            <ImageView
+                android:id="@+id/imgUserCover"
+                android:layout_width="@dimen/user_cover_width"
+                android:layout_height="@dimen/user_cover_height"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="55dp" />
+
+            <TextView
+                android:id="@+id/tvUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="143dp"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_size_giant" />
+
+            <ImageView
+                android:id="@+id/tvEdit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="right"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="31dp"
+                android:src="@mipmap/edit" />
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="71dp"
+            android:background="@color/colorWhite"
+            android:elevation="@dimen/elevation"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvOrder"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/margin_micro_t"
+                android:drawableTop="@mipmap/order"
+                android:gravity="center"
+                android:text="@string/orders"
+                android:textColor="@color/textBlack"
+                android:textSize="@dimen/text_size_normal" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/vector_broken_line" />
+
+            <TextView
+                android:id="@+id/tvUnpaid"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/margin_micro_t"
+                android:drawableTop="@mipmap/unpaid"
+                android:gravity="center"
+                android:text="@string/unpaid"
+                android:textColor="@color/textBlack"
+                android:textSize="@dimen/text_size_normal" />
+
+            <TextView
+                android:id="@+id/tvDistribution"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/margin_micro_t"
+                android:drawableTop="@mipmap/distribution"
+                android:gravity="center"
+                android:text="@string/distribution"
+                android:textColor="@color/textBlack"
+                android:textSize="@dimen/text_size_normal" />
+
+            <TextView
+                android:id="@+id/tvReceive"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/margin_micro_t"
+                android:drawableTop="@mipmap/receive"
+                android:gravity="center"
+                android:text="@string/receive"
+                android:textColor="@color/textBlack"
+                android:textSize="@dimen/text_size_normal" />
+
+            <TextView
+                android:id="@+id/tvRefund"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:drawablePadding="@dimen/margin_micro_t"
+                android:drawableTop="@mipmap/refund"
+                android:gravity="center"
+                android:text="@string/refund"
+                android:textColor="@color/textBlack"
+                android:textSize="@dimen/text_size_normal" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layoutGift"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:background="@color/colorWhite"
+            android:elevation="@dimen/elevation"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/margin_small"
+            android:paddingRight="@dimen/margin_large">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/gift" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:text="@string/gift"
+                android:textColor="@color/textBlack"
+                android:textSize="@dimen/text_size_normal_x" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:layout_weight="1"
+                android:text="@string/gift_tag"
+                android:textColor="@color/textGray"
+                android:textSize="@dimen/text_size_normal" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <View
+            android:layout_marginTop="@dimen/margin_normal"
+            android:background="@color/colorLine"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line"/>
+        <LinearLayout
+            android:id="@+id/layoutCoupon"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height"
+            android:background="@color/colorWhite"
+            android:elevation="@dimen/elevation"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingRight="@dimen/margin_large"
+            android:paddingLeft="@dimen/margin_large">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/coupon" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:text="@string/coupon"
+                android:textColor="@color/textBlack"
+                android:textSize="@dimen/text_size_normal_x" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:layout_weight="1"
+                android:text="@string/coupon_tag"
+                android:textColor="@color/textGray"
+                android:textSize="@dimen/text_size_normal" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <View
+            android:background="@color/colorLine"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line"/>
+
+        <LinearLayout
+            android:id="@+id/layoutReceiverAddr"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height"
+            android:background="@color/colorWhite"
+            android:elevation="@dimen/elevation"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingRight="@dimen/margin_large"
+            android:paddingLeft="@dimen/margin_large">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/addr" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:text="@string/receiver_addr"
+                android:textColor="@color/textBlack"
+                android:textSize="@dimen/text_size_normal_x" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <View
+            android:background="@color/colorLine"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line"/>
+
+        <LinearLayout
+            android:id="@+id/layoutHelp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height"
+            android:background="@color/colorWhite"
+            android:elevation="@dimen/elevation"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingRight="@dimen/margin_large"
+            android:paddingLeft="@dimen/margin_large">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/help" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:text="@string/help"
+                android:textColor="@color/textBlack"
+                android:textSize="@dimen/text_size_normal_x" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <View
+            android:background="@color/colorLine"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line"/>
+        <LinearLayout
+            android:id="@+id/layoutService"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height"
+            android:background="@color/colorWhite"
+            android:elevation="@dimen/elevation"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingRight="@dimen/margin_large"
+            android:paddingLeft="@dimen/margin_large">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/service" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:text="@string/service"
+                android:textColor="@color/textBlack"
+                android:textSize="@dimen/text_size_normal_x" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <View
+            android:background="@color/colorLine"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line"/>
+
+        <LinearLayout
+            android:id="@+id/layoutSettings"
+            android:layout_marginBottom="64dp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/item_height"
+            android:background="@color/colorWhite"
+            android:elevation="@dimen/elevation"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingRight="@dimen/margin_large"
+            android:paddingLeft="@dimen/margin_large">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/settings" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:text="@string/settings"
+                android:textColor="@color/textBlack"
+                android:textSize="@dimen/text_size_normal_x" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+    </LinearLayout>
+</ScrollView>

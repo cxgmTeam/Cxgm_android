@@ -1,15 +1,20 @@
 package com.cxgm.app.ui.view.common;
 
 import android.Manifest;
+import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.cxgm.app.R;
 import com.cxgm.app.ui.base.BaseActivity;
+import com.cxgm.app.ui.view.user.UserFragment;
 import com.deanlib.ootb.manager.PermissionManager;
 import com.tbruyelle.rxpermissions.Permission;
 
@@ -26,7 +31,7 @@ import rx.functions.Action1;
 
 public class MainActivity extends BaseActivity {
 
-    @BindView(R.id.layout_container)
+    @BindView(R.id.layoutContainer)
     FrameLayout layoutContainer;
     @BindView(R.id.rbIndex)
     RadioButton rbIndex;
@@ -46,12 +51,22 @@ public class MainActivity extends BaseActivity {
     ImageView imgMessage;
     @BindView(R.id.layoutMenu)
     RadioGroup layoutMenu;
+    @BindView(R.id.layoutAppbar)
+    View layoutAppbar;
+    @BindView(R.id.layoutMessage)
+    LinearLayout layoutMessage;
 
     IndexFragment mIndexFragment;
+    UserFragment mUserFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//透明状态栏
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);//透明导航栏
+        }
+
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
@@ -62,8 +77,7 @@ public class MainActivity extends BaseActivity {
             @Override
             public void call(Permission permission) {
 
-                if (permission.granted){
-
+                if (permission.granted) {
 
 
                 }
@@ -75,9 +89,11 @@ public class MainActivity extends BaseActivity {
     private void init() {
 
         mIndexFragment = new IndexFragment();
+        mUserFragment = new UserFragment();
 
-        getSupportFragmentManager().beginTransaction().add(R.id.layout_container,mIndexFragment)
-                .hide(mIndexFragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.layoutContainer, mIndexFragment)
+                .add(R.id.layoutContainer, mUserFragment)
+                .hide(mIndexFragment).hide(mUserFragment).commit();
 
         layoutMenu.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -94,10 +110,22 @@ public class MainActivity extends BaseActivity {
     }
 
     private void changeView(int checkedId) {
-        switch (checkedId){
+
+        getSupportFragmentManager().beginTransaction().hide(mIndexFragment).hide(mUserFragment).commit();
+        layoutAppbar.setVisibility(View.VISIBLE);
+        layoutContainer.setFitsSystemWindows(false);
+        layoutContainer.setClipToPadding(false);
+
+        switch (checkedId) {
 
             case R.id.rbIndex:
                 getSupportFragmentManager().beginTransaction().show(mIndexFragment).commit();
+                break;
+            case R.id.rbUser:
+                layoutAppbar.setVisibility(View.GONE);
+                layoutContainer.setFitsSystemWindows(true);
+                layoutContainer.setClipToPadding(true);
+                getSupportFragmentManager().beginTransaction().show(mUserFragment).commit();
                 break;
         }
     }

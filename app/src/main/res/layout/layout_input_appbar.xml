@@ -1,60 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:gravity="center_vertical"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/appbar_height"
     android:background="@color/colorWhite"
-    android:orientation="horizontal"
-    android:paddingLeft="@dimen/margin_giant"
-    android:paddingRight="@dimen/margin_giant"
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
-    android:layout_height="@dimen/appbar_height">
+    android:gravity="center_vertical"
+    android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/imgLocation"
-        android:src="@mipmap/location"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_width="@dimen/appbar_height"
+        android:layout_height="@dimen/appbar_height"
+        android:scaleType="center"
+        android:src="@mipmap/location" />
 
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:layout_weight="1"
+        android:background="@drawable/shape_ct_tran_gray"
         android:focusable="true"
         android:focusableInTouchMode="true"
-        android:orientation="horizontal"
-        android:layout_marginLeft="@dimen/margin_giant"
-        android:layout_marginRight="@dimen/margin_giant"
         android:gravity="center_vertical"
-        android:layout_weight="1"
-        android:background="@drawable/shape_c_t_tran_gray"
-        android:paddingLeft="@dimen/margin_normal"
-        android:paddingRight="@dimen/margin_normal"
-        android:layout_width="match_parent"
-        android:layout_height="28dp" >
+        android:orientation="horizontal">
 
         <ImageView
-            android:src="@mipmap/search"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_normal"
+            android:src="@mipmap/search" />
 
         <EditText
             android:id="@+id/etSearchWord"
-            android:layout_marginLeft="@dimen/margin_micro"
-            android:layout_marginRight="@dimen/margin_normal"
-            android:background="@null"
-            android:textSize="@dimen/text_size_normal"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_micro"
+            android:layout_weight="1"
+            android:background="@null"
+            android:textSize="@dimen/text_size_normal" />
 
         <ImageView
             android:id="@+id/imgTextClear"
-            android:src="@mipmap/close"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:scaleType="center"
+            android:src="@mipmap/close" />
 
     </LinearLayout>
 
-    <ImageView
-        android:id="@+id/imgMessage"
-        android:src="@mipmap/message"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <LinearLayout
+        android:id="@+id/layoutMessage"
+        android:layout_width="@dimen/appbar_height"
+        android:layout_height="@dimen/appbar_height"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/imgMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/message" />
+    </LinearLayout>
 
 </LinearLayout>
