@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include
+        layout="@layout/layout_back_title_action_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/appbar_height"
+        android:layout_marginTop="@dimen/status_bar_height" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_large_x"
+                android:layout_marginTop="@dimen/margin_large_t"
+                android:text="@string/location"
+                android:textColor="@color/textBlackTint"
+                android:textSize="@dimen/text_size_normal" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_large_t"
+                android:background="@color/colorWhite"
+                android:elevation="@dimen/elevation"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/layoutReposition"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_marginRight="@dimen/margin_giant"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/margin_giant">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:textColor="@color/textBlack"
+                        android:textSize="@dimen/text_size_normal_x" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:drawableLeft="@mipmap/location3"
+                        android:drawablePadding="@dimen/margin_micro"
+                        android:text="@string/reposition"
+                        android:textColor="@color/textBlueTint"
+                        android:textSize="@dimen/text_size_normal_x" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/line"
+                    android:background="@color/colorLine" />
+
+                <LinearLayout
+                    android:id="@+id/layoutSurrounding"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_height"
+                    android:layout_marginRight="@dimen/margin_giant"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingLeft="@dimen/margin_giant">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/surrounding"
+                        android:textColor="@color/textBlack"
+                        android:textSize="@dimen/text_size_normal_x" />
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" />
+
+                </LinearLayout>
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_large_x"
+                android:layout_marginTop="@dimen/margin_large_t"
+                android:text="@string/my_receiver_addr"
+                android:textColor="@color/textBlackTint"
+                android:textSize="@dimen/text_size_normal" />
+
+            <TextView
+                android:id="@+id/tvNoAddr"
+                android:visibility="gone"
+                android:text="@string/not_set_addr_tag"
+                android:background="@color/colorWhite"
+                android:layout_marginTop="@dimen/margin_large_t"
+                android:elevation="@dimen/elevation"
+                android:gravity="center_vertical"
+                android:textColor="@color/textGray"
+                android:textSize="@dimen/text_size_normal_x"
+                android:paddingLeft="@dimen/margin_giant"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height" />
+
+            <com.deanlib.ootb.widget.ListViewForScrollView
+                android:id="@+id/lvAddr"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_large_t"
+                android:divider="@color/translate"
+                android:dividerHeight="@dimen/margin_normal" />
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/tvNewAddr"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height2"
+        android:background="@color/colorGreen"
+        android:gravity="center"
+        android:text="@string/new_addr"
+        android:textColor="@color/textWhite"
+        android:textSize="@dimen/text_size_giant" />
+
+
+</LinearLayout>

@@ -3,7 +3,7 @@
 
     <string name="home">首页</string>
     <string name="classify">分类</string>
-    <string name="shopcar">购物车</string>
+    <string name="shop_cart">购物车</string>
     <string name="my">我的</string>
 
     <string name="fresh">美味生鲜</string>
@@ -28,9 +28,23 @@
     <string name="number_">楼号 - 门牌号：</string>
     <string name="remark_">备注信息：</string>
 
+    <string name="location">当前定位</string>
+    <string name="my_receiver_addr">我的收获地址</string>
+    <string name="reposition">重新定位</string>
+    <string name="surrounding">附近地址</string>
+    <string name="new_addr">新增收货地址</string>
+
     <string name="save">保存</string>
     <string name="cancel">取消</string>
+    <string name="edit">编辑</string>
+    <string name="check_all">全选</string>
+    <string name="set_default">设为默认</string>
 
+    <string name="go_shopping">去逛逛</string>
+    <string name="go_duoshou_">去结算($1%d)</string>
+    <string name="total_">合计：$1%d</string>
+    <string name="sum_">总额：$1%d</string>
+    <string name="discounts_">优惠：$1%d</string>
 
     <string name="hot_search">热门搜索</string>
     <string name="slogan1">品质臻选</string>
@@ -46,6 +60,10 @@
     <string name="coupon_tag">兑换、查看优惠券</string>
     <string name="select">请选择</string>
     <string name="number_tag">例如：B座1901室</string>
+    <string name="map_search_tag">搜索小区 / 大厦</string>
+    <string name="search_no_result_tag">没有查询到结果～</string>
+    <string name="not_set_addr_tag">您还没有设置收货地址～</string>
+    <string name="empty_shop_cart_tag">购物车空空如也～</string>
 
 
 </resources>

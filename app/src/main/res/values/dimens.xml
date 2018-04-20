@@ -33,4 +33,6 @@
     <dimen name="user_cover_height">@dimen/user_cover_width</dimen>
     <dimen name="item_height">45dp</dimen>
     <dimen name="button_height">42dp</dimen>
+    <dimen name="button_height2">50dp</dimen>
+    <dimen name="map_height">273dp</dimen>
 </resources>

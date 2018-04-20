@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
 import android.provider.Settings;
+import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
@@ -38,7 +39,7 @@ import org.greenrobot.eventbus.EventBus;
  * @time 2018/4/18 下午5:48
  */
 
-public class App extends Application {
+public class App extends MultiDexApplication {
 
     //static 代码段可以防止内存泄露
     static {

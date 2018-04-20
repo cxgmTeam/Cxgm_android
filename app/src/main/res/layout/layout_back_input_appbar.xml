@@ -2,7 +2,9 @@
 <LinearLayout
     android:background="@color/colorWhite"
     android:gravity="center_vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:elevation="@dimen/elevation"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="@dimen/appbar_height">
 
     <ImageView
@@ -19,5 +21,6 @@
         android:layout_weight="1"
         layout="@layout/layout_input"
         />
+
 
 </LinearLayout>

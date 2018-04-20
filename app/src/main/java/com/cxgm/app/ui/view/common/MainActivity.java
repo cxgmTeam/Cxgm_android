@@ -15,6 +15,7 @@ import android.widget.RadioGroup;
 import com.cxgm.app.R;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
+import com.cxgm.app.ui.view.order.ShopCartFragment;
 import com.cxgm.app.ui.view.user.UserFragment;
 import com.deanlib.ootb.manager.PermissionManager;
 import com.tbruyelle.rxpermissions.Permission;
@@ -39,8 +40,8 @@ public class MainActivity extends BaseActivity {
     RadioButton rbIndex;
     @BindView(R.id.rbGoods)
     RadioButton rbGoods;
-    @BindView(R.id.rbShopcar)
-    RadioButton rbShopcar;
+    @BindView(R.id.rbShopCart)
+    RadioButton rbShopCart;
     @BindView(R.id.rbUser)
     RadioButton rbUser;
     @BindView(R.id.layoutMenu)
@@ -48,6 +49,7 @@ public class MainActivity extends BaseActivity {
 
     IndexFragment mIndexFragment;
     UserFragment mUserFragment;
+    ShopCartFragment mShopCartFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +64,13 @@ public class MainActivity extends BaseActivity {
 
         init();
 
+        String[] permissions = {
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                Manifest.permission.READ_PHONE_STATE,
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION,
+        };
+
         //请求权限
         PermissionManager.requstPermission(this, new Action1<Permission>() {
             @Override
@@ -73,17 +82,20 @@ public class MainActivity extends BaseActivity {
                 }
 
             }
-        }, Manifest.permission.WRITE_EXTERNAL_STORAGE);
+        }, permissions);
     }
 
     private void init() {
 
         mIndexFragment = new IndexFragment();
         mUserFragment = new UserFragment();
+        mShopCartFragment = new ShopCartFragment();
 
         getSupportFragmentManager().beginTransaction().add(R.id.layoutContainer, mIndexFragment)
                 .add(R.id.layoutContainer, mUserFragment)
-                .hide(mIndexFragment).hide(mUserFragment).commit();
+                .add(R.id.layoutContainer,mShopCartFragment)
+                .hide(mIndexFragment).hide(mUserFragment)
+                .hide(mShopCartFragment).commit();
 
         layoutMenu.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -101,7 +113,8 @@ public class MainActivity extends BaseActivity {
 
     private void changeView(int checkedId) {
 
-        getSupportFragmentManager().beginTransaction().hide(mIndexFragment).hide(mUserFragment).commit();
+        getSupportFragmentManager().beginTransaction().hide(mIndexFragment).hide(mUserFragment)
+                .hide(mShopCartFragment).commit();
 
         switch (checkedId) {
 
@@ -110,6 +123,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.rbUser:
                 getSupportFragmentManager().beginTransaction().show(mUserFragment).commit();
+                break;
+            case R.id.rbShopCart:
+                getSupportFragmentManager().beginTransaction().show(mShopCartFragment).commit();
                 break;
         }
     }

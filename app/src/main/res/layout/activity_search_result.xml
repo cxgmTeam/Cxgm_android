@@ -39,7 +39,7 @@
             android:layout_gravity="right|bottom"
             android:layout_margin="@dimen/margin_giant"
             android:elevation="@dimen/elevation"
-            android:src="@mipmap/shopcar2" />
+            android:src="@mipmap/shop_cart2" />
     </FrameLayout>
 
 

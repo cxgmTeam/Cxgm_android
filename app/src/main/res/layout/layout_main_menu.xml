@@ -29,13 +29,13 @@
         android:text="@string/classify" />
 
     <RadioButton
-        android:id="@+id/rbShopcar"
+        android:id="@+id/rbShopCart"
         style="@style/MenuButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:drawableTop="@drawable/selector_shopcar"
-        android:text="@string/shopcar" />
+        android:drawableTop="@drawable/selector_shop_cart"
+        android:text="@string/shop_cart" />
 
     <RadioButton
         android:id="@+id/rbUser"

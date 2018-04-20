@@ -93,8 +93,8 @@
                 android:textColor="@color/textBlack"
                 android:textSize="@dimen/text_size_normal_x" />
 
-            <EditText
-                android:id="@+id/etDistrict"
+            <TextView
+                android:id="@+id/tvDistrict"
                 style="@style/Edit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

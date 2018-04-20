@@ -125,4 +125,9 @@ public class IndexFragment extends BaseFragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
+    @OnClick(R.id.imgLocation)
+    public void onClickLocation() {
+        ViewJump.toAddrList(getActivity());
+    }
 }

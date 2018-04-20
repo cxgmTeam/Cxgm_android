@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:background="@color/colorWhite"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_marginTop="@dimen/margin_large_x"
+        android:layout_marginLeft="@dimen/margin_giant"
+        android:textColor="@color/textBlack"
+        android:textSize="@dimen/text_size_large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_marginTop="@dimen/margin_large_x"
+        android:layout_toRightOf="@+id/tvName"
+        android:layout_marginLeft="30dp"
+        android:id="@+id/tvPhoneNumber"
+        android:textColor="@color/textBlack"
+        android:textSize="@dimen/text_size_large"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_marginLeft="@dimen/margin_giant"
+        android:layout_below="@+id/tvName"
+        android:layout_marginTop="@dimen/margin_small"
+        android:id="@+id/tvAddr"
+        android:textColor="@color/textGray"
+        android:textSize="@dimen/text_size_normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:id="@+id/line"
+        android:layout_below="@id/tvAddr"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:background="@color/colorLine"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line"/>
+
+    <FrameLayout
+        android:layout_below="@id/line"
+        android:layout_marginLeft="@dimen/margin_large_x"
+        android:layout_marginRight="@dimen/margin_giant_x"
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <CheckBox
+            android:button="@null"
+            android:drawableLeft="@drawable/selector_check"
+            android:drawablePadding="@dimen/margin_small"
+            android:id="@+id/cbDefault"
+            android:text="@string/set_default"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp" />
+
+        <TextView
+            android:id="@+id/tvEdit"
+            android:layout_gravity="right"
+            android:gravity="center_vertical"
+            android:text="@string/edit"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp" />
+
+    </FrameLayout>
+
+</RelativeLayout>

@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:layout_marginTop="@dimen/status_bar_height"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/appbar_height"
+        layout="@layout/layout_back_title_action_appbar"/>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <ListView
+        android:id="@+id/lvGoods"
+        android:layout_weight="1"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:background="@color/colorWhite"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/button_height2">
+
+            <CheckBox
+                android:layout_marginLeft="@dimen/margin_large"
+                android:button="@null"
+                android:drawableLeft="@drawable/selector_check"
+                android:drawablePadding="@dimen/margin_small"
+                android:id="@+id/cbCheckAll"
+                android:text="@string/check_all"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_height2" />
+
+            <RelativeLayout
+                android:layout_marginLeft="@dimen/margin_large"
+                android:layout_marginRight="@dimen/margin_large"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textStyle="bold"
+                    android:id="@+id/tvTotal"
+                    android:text="@string/total_"
+                    android:textColor="@color/textBlack"
+                    android:textSize="@dimen/text_size_large_x"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_marginTop="1dp"
+                    android:layout_below="@id/tvTotal"
+                    android:id="@+id/tvSum"
+                    android:text="@string/sum_"
+                    android:textColor="@color/textBlackTint"
+                    android:textSize="@dimen/text_size_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:layout_toRightOf="@id/tvSum"
+                    android:layout_alignBaseline="@id/tvSum"
+                    android:id="@+id/tvDiscounts"
+                    android:layout_marginLeft="@dimen/margin_normal"
+                    android:text="@string/discounts_"
+                    android:textColor="@color/textBlackTint"
+                    android:textSize="@dimen/text_size_small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+            </RelativeLayout>
+            
+            <TextView
+                android:id="@+id/tvGoDuoShou"
+                android:gravity="center"
+                android:textSize="@dimen/text_size_large_x"
+                android:textColor="@color/textWhite"
+                android:text="@string/go_duoshou_"
+                android:background="@color/colorGreen"
+                android:layout_alignParentRight="true"
+                android:paddingLeft="@dimen/margin_giant_xxx"
+                android:paddingRight="@dimen/margin_giant_x"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/button_height2" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:textColor="@color/textGray"
+            android:textSize="@dimen/text_size_giant"
+            android:drawablePadding="@dimen/margin_giant_x"
+            android:text="@string/empty_shop_cart_tag"
+            android:drawableTop="@mipmap/empty_cart"
+            android:layout_marginTop="57dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        
+        <TextView
+            android:id="@+id/tvGoShopping"
+            android:gravity="center"
+            android:text="@string/go_shopping"
+            android:layout_marginTop="@dimen/margin_giant_xxx"
+            android:background="@drawable/shape_tc_tran_green"
+            android:paddingLeft="36dp"
+            android:paddingRight="36dp"
+            android:textColor="@color/textWhite"
+            android:textSize="@dimen/text_size_large_x"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/button_height" />
+
+    </LinearLayout>
+
+</LinearLayout>

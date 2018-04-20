@@ -1,27 +1,30 @@
-package com.cxgm.app.ui.view.goods;
+package com.cxgm.app.ui.view.order;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.baidu.mapapi.map.TextureMapView;
 import com.cxgm.app.R;
 import com.cxgm.app.ui.base.BaseActivity;
+import com.deanlib.ootb.widget.ListViewForScrollView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
- * 搜索结果
+ * 地图定位
  *
- * @anthor Dean
- * @time 2018/4/19 0019 22:50
+ * @author dean
+ * @time 2018/4/20 上午10:19
  */
 
-public class SearchResultActivity extends BaseActivity {
+public class MapLocationActivity extends BaseActivity {
 
     @BindView(R.id.imgBack)
     ImageView imgBack;
@@ -29,10 +32,14 @@ public class SearchResultActivity extends BaseActivity {
     EditText etSearchWord;
     @BindView(R.id.imgTextClear)
     ImageView imgTextClear;
-    @BindView(R.id.gvGoods)
-    GridView gvGoods;
-    @BindView(R.id.imgShopCar)
-    ImageView imgShopCar;
+    @BindView(R.id.layoutInput)
+    LinearLayout layoutInput;
+    @BindView(R.id.mapView)
+    TextureMapView mapView;
+    @BindView(R.id.lvAddr)
+    ListViewForScrollView lvAddr;
+    @BindView(R.id.tvNoResult)
+    TextView tvNoResult;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +47,18 @@ public class SearchResultActivity extends BaseActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
-        setContentView(R.layout.activity_search_result);
+        setContentView(R.layout.activity_map_location);
         ButterKnife.bind(this);
 
         init();
     }
 
     private void init(){
+        etSearchWord.setHint(R.string.map_search_tag);
+    }
 
+    @OnClick(R.id.imgBack)
+    public void onClickBack() {
+        finish();
     }
 }

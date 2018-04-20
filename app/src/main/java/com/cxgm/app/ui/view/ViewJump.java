@@ -4,7 +4,10 @@ import android.app.Activity;
 import android.content.Intent;
 
 import com.cxgm.app.ui.view.common.MainActivity;
+import com.cxgm.app.ui.view.order.AddrListActivity;
+import com.cxgm.app.ui.view.order.MapLocationActivity;
 import com.cxgm.app.ui.view.goods.SearchActivity;
+import com.cxgm.app.ui.view.order.NewAddrActivity;
 
 /**
  * 界面跳转总控
@@ -21,6 +24,21 @@ public class ViewJump {
 
     public static void toSearch(Activity activity){
         Intent intent = new Intent(activity, SearchActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public static void toAddrList(Activity activity){
+        Intent intent = new Intent(activity, AddrListActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public static void toNewAddr(Activity activity){
+        Intent intent = new Intent(activity, NewAddrActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public static void toMapLocation(Activity activity){
+        Intent intent = new Intent(activity, MapLocationActivity.class);
         activity.startActivity(intent);
     }
 
