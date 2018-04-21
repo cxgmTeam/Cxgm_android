@@ -299,6 +299,7 @@
                     </LinearLayout>
 
                     <ImageView
+                        android:src="@mipmap/defualt"
                         android:elevation="@dimen/elevation"
                         android:id="@+id/imgAd"
                         android:layout_width="match_parent"
@@ -316,6 +317,8 @@
                         android:layout_height="wrap_content"
                         android:background="@color/colorWhite"
                         android:horizontalSpacing="@dimen/margin_normal"
+                        android:paddingLeft="@dimen/margin_normal"
+                        android:paddingRight="@dimen/margin_normal"
                         android:numColumns="2"
                         android:padding="@dimen/margin_large_t"
                         android:scrollbars="none"

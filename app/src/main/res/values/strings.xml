@@ -45,6 +45,10 @@
     <string name="total_">合计：$1%d</string>
     <string name="sum_">总额：$1%d</string>
     <string name="discounts_">优惠：$1%d</string>
+    <string name="subtotal_">小计：</string>
+    <string name="specification_">规格：$1%d</string>
+
+    <string name="goods_order_list">商品清单</string>
 
     <string name="hot_search">热门搜索</string>
     <string name="slogan1">品质臻选</string>

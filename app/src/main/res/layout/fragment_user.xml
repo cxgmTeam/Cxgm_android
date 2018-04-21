@@ -18,6 +18,7 @@
             android:background="@color/colorGreen">
 
             <ImageView
+                android:src="@mipmap/defualt"
                 android:id="@+id/imgUserCover"
                 android:layout_width="@dimen/user_cover_width"
                 android:layout_height="@dimen/user_cover_height"
@@ -152,6 +153,7 @@
                 android:textSize="@dimen/text_size_normal" />
 
             <ImageView
+                android:src="@mipmap/right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
@@ -201,6 +203,7 @@
                     android:textSize="@dimen/text_size_normal" />
 
                 <ImageView
+                    android:src="@mipmap/right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -225,7 +228,8 @@
                     android:src="@mipmap/addr" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_normal"
                     android:text="@string/receiver_addr"
@@ -233,6 +237,7 @@
                     android:textSize="@dimen/text_size_normal_x" />
 
                 <ImageView
+                    android:src="@mipmap/right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -257,7 +262,8 @@
                     android:src="@mipmap/help" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_normal"
                     android:text="@string/help"
@@ -265,6 +271,7 @@
                     android:textSize="@dimen/text_size_normal_x" />
 
                 <ImageView
+                    android:src="@mipmap/right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -289,7 +296,8 @@
                     android:src="@mipmap/service" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_normal"
                     android:text="@string/service"
@@ -297,6 +305,7 @@
                     android:textSize="@dimen/text_size_normal_x" />
 
                 <ImageView
+                    android:src="@mipmap/right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>
@@ -322,7 +331,8 @@
                     android:src="@mipmap/settings" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/margin_normal"
                     android:text="@string/settings"
@@ -330,6 +340,7 @@
                     android:textSize="@dimen/text_size_normal_x" />
 
                 <ImageView
+                    android:src="@mipmap/right"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </LinearLayout>

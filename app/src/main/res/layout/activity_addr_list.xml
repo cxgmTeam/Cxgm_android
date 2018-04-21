@@ -87,6 +87,7 @@
                         android:textSize="@dimen/text_size_normal_x" />
 
                     <ImageView
+                        android:src="@mipmap/right"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
 

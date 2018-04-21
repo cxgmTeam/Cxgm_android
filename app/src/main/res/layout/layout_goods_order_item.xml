@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@color/colorWhite"
+    android:paddingLeft="@dimen/margin_giant"
+    android:paddingRight="@dimen/margin_giant"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/goods_order_item_height">
+
+    <include
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/goods_order_item_height"
+        layout="@layout/layout_goods_order"/>
+
+    <TextView
+        android:id="@+id/tvCount"
+        android:layout_marginBottom="@dimen/margin_normal"
+        android:layout_gravity="bottom"
+        android:gravity="right"
+        android:textSize="@dimen/text_size_normal_x"
+        android:textColor="@color/textBlackTint"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content" />
+
+</LinearLayout>

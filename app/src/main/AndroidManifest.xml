@@ -56,6 +56,12 @@
         <activity android:name=".ui.view.order.AddrListActivity"
             android:screenOrientation="portrait"
             />
+        <activity android:name=".ui.view.order.GoodsOrderListActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".ui.view.order.AddrOptionActivity"
+            android:screenOrientation="portrait"
+            />
 
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"> </service>
         <meta-data

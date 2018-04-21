@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:layout_marginTop="@dimen/status_bar_height"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/appbar_height"
+        layout="@layout/layout_back_title_action_appbar"/>
+
+    <View
+        android:background="@color/colorLine"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line"/>
+
+    <ListView
+        android:layout_weight="1"
+        android:id="@+id/lvAddr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:divider="@color/translate"
+        android:dividerHeight="@dimen/margin_normal" />
+
+    <TextView
+        android:id="@+id/tvNewAddr"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height2"
+        android:background="@color/colorGreen"
+        android:gravity="center"
+        android:text="@string/new_addr"
+        android:textColor="@color/textWhite"
+        android:textSize="@dimen/text_size_giant" />
+</LinearLayout>

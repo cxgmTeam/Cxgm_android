@@ -35,4 +35,5 @@
     <dimen name="button_height">42dp</dimen>
     <dimen name="button_height2">50dp</dimen>
     <dimen name="map_height">273dp</dimen>
+    <dimen name="goods_order_item_height">110dp</dimen>
 </resources>

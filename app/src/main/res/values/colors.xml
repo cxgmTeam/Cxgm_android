@@ -11,8 +11,9 @@
     <color name="textBlack">#333333</color>
     <color name="textBlackTint">#666666</color>
     <color name="textWhite">@color/colorWhite</color>
-    <color name="textHint">#BDBDBD</color>
     <color name="textBlueTint">@color/colorBlueTint</color>
+    <color name="textHint">#BDBDBD</color>
+    <color name="textStrike">#D8D8D8</color>
 
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorGray">#F2F3F4</color>

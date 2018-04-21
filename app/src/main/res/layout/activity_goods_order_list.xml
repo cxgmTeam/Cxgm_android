@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include
+        android:layout_marginTop="@dimen/status_bar_height"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/appbar_height"
+        layout="@layout/layout_back_title_action_appbar"/>
+
+    <ListView
+        android:id="@+id/lvGoodsOrder"
+        android:divider="@color/colorLine"
+        android:dividerHeight="@dimen/line"
+        android:scrollbars="none"
+        android:paddingTop="@dimen/margin_normal"
+        android:paddingBottom="@dimen/margin_normal"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

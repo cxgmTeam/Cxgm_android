@@ -1,4 +1,4 @@
-package com.cxgm.app.ui.view.order;
+package com.cxgm.app.ui.view.goods;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -6,13 +6,12 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CheckBox;
+import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
-import com.cxgm.app.ui.adapter.CartGoodsAdapter;
+import com.cxgm.app.ui.adapter.GoodsFirstClassifyAdapter;
 import com.cxgm.app.ui.base.BaseFragment;
 
 import butterknife.BindView;
@@ -20,13 +19,12 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 
 /**
- * 购物车
+ * 一级分类
  *
- * @author dean
- * @time 2018/4/20 下午5:19
+ * @anthor Dean
+ * @time 2018/4/20 0020 22:59
  */
-
-public class ShopCartFragment extends BaseFragment {
+public class GoodsFirstClassifyFragment extends BaseFragment {
 
     @BindView(R.id.imgBack)
     ImageView imgBack;
@@ -36,26 +34,14 @@ public class ShopCartFragment extends BaseFragment {
     ImageView imgAction1;
     @BindView(R.id.tvAction1)
     TextView tvAction1;
+    @BindView(R.id.gvClassify)
+    GridView gvClassify;
     Unbinder unbinder;
-    @BindView(R.id.lvGoods)
-    ListView lvGoods;
-    @BindView(R.id.cbCheckAll)
-    CheckBox cbCheckAll;
-    @BindView(R.id.tvTotal)
-    TextView tvTotal;
-    @BindView(R.id.tvSum)
-    TextView tvSum;
-    @BindView(R.id.tvDiscounts)
-    TextView tvDiscounts;
-    @BindView(R.id.tvGoDuoShou)
-    TextView tvGoDuoShou;
-    @BindView(R.id.tvGoShopping)
-    TextView tvGoShopping;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_shop_cart, null);
+        View view = inflater.inflate(R.layout.fragment_goods_first_classify, null);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
@@ -67,11 +53,11 @@ public class ShopCartFragment extends BaseFragment {
     }
 
     private void init(){
-        tvTitle.setText(R.string.shop_cart);
-        tvAction1.setText(R.string.edit);
-        tvAction1.setVisibility(View.VISIBLE);
+        tvTitle.setText(R.string.classify);
+        imgAction1.setImageResource(R.mipmap.search3);
+        imgAction1.setVisibility(View.VISIBLE);
 
-        lvGoods.setAdapter(new CartGoodsAdapter());
+        gvClassify.setAdapter(new GoodsFirstClassifyAdapter());
     }
 
     @Override

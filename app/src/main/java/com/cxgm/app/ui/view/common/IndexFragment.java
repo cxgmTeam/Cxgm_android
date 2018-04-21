@@ -15,6 +15,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
+import com.cxgm.app.ui.adapter.GoodsAdapter;
 import com.cxgm.app.ui.adapter.ShopAdapter;
 import com.cxgm.app.ui.base.BaseFragment;
 import com.cxgm.app.ui.view.ViewJump;
@@ -107,6 +108,8 @@ public class IndexFragment extends BaseFragment {
                 loopBanner.getLoopData();
             }
         });
+
+        gvGoods.setAdapter(new GoodsAdapter(2,30));
     }
 
     private void loadData() {

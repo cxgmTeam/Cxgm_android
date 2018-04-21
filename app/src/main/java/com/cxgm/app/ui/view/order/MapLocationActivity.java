@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.baidu.mapapi.map.TextureMapView;
 import com.cxgm.app.R;
+import com.cxgm.app.ui.adapter.PoiAdapter;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.deanlib.ootb.widget.ListViewForScrollView;
 
@@ -55,6 +56,8 @@ public class MapLocationActivity extends BaseActivity {
 
     private void init(){
         etSearchWord.setHint(R.string.map_search_tag);
+
+        lvAddr.setAdapter(new PoiAdapter());
     }
 
     @OnClick(R.id.imgBack)

@@ -15,6 +15,7 @@ import android.widget.RadioGroup;
 import com.cxgm.app.R;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
+import com.cxgm.app.ui.view.goods.GoodsFirstClassifyFragment;
 import com.cxgm.app.ui.view.order.ShopCartFragment;
 import com.cxgm.app.ui.view.user.UserFragment;
 import com.deanlib.ootb.manager.PermissionManager;
@@ -47,9 +48,17 @@ public class MainActivity extends BaseActivity {
     @BindView(R.id.layoutMenu)
     RadioGroup layoutMenu;
 
-    IndexFragment mIndexFragment;
-    UserFragment mUserFragment;
-    ShopCartFragment mShopCartFragment;
+    static IndexFragment mIndexFragment;
+    static UserFragment mUserFragment;
+    static ShopCartFragment mShopCartFragment;
+    static GoodsFirstClassifyFragment mClassifyFragment;
+
+    static {
+        mIndexFragment = new IndexFragment();
+        mUserFragment = new UserFragment();
+        mShopCartFragment = new ShopCartFragment();
+        mClassifyFragment = new GoodsFirstClassifyFragment();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,15 +96,13 @@ public class MainActivity extends BaseActivity {
 
     private void init() {
 
-        mIndexFragment = new IndexFragment();
-        mUserFragment = new UserFragment();
-        mShopCartFragment = new ShopCartFragment();
-
-        getSupportFragmentManager().beginTransaction().add(R.id.layoutContainer, mIndexFragment)
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.layoutContainer, mIndexFragment)
                 .add(R.id.layoutContainer, mUserFragment)
                 .add(R.id.layoutContainer,mShopCartFragment)
+                .add(R.id.layoutContainer,mClassifyFragment)
                 .hide(mIndexFragment).hide(mUserFragment)
-                .hide(mShopCartFragment).commit();
+                .hide(mShopCartFragment).hide(mClassifyFragment).commit();
 
         layoutMenu.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -114,7 +121,7 @@ public class MainActivity extends BaseActivity {
     private void changeView(int checkedId) {
 
         getSupportFragmentManager().beginTransaction().hide(mIndexFragment).hide(mUserFragment)
-                .hide(mShopCartFragment).commit();
+                .hide(mShopCartFragment).hide(mClassifyFragment).commit();
 
         switch (checkedId) {
 
@@ -126,6 +133,9 @@ public class MainActivity extends BaseActivity {
                 break;
             case R.id.rbShopCart:
                 getSupportFragmentManager().beginTransaction().show(mShopCartFragment).commit();
+                break;
+            case R.id.rbGoods:
+                getSupportFragmentManager().beginTransaction().show(mClassifyFragment).commit();
                 break;
         }
     }

@@ -94,6 +94,7 @@
                 android:textSize="@dimen/text_size_normal_x" />
 
             <TextView
+                android:layout_weight="1"
                 android:id="@+id/tvDistrict"
                 style="@style/Edit"
                 android:layout_width="match_parent"
@@ -101,6 +102,7 @@
                 android:hint="@string/select" />
 
             <ImageView
+                android:src="@mipmap/right"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>

@@ -5,27 +5,23 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
-import com.cxgm.app.ui.adapter.AddrAdapter;
 import com.cxgm.app.ui.base.BaseActivity;
-import com.cxgm.app.ui.view.ViewJump;
-import com.deanlib.ootb.widget.ListViewForScrollView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 收货地址 列表
+ * 商品清单
  *
- * @author dean
- * @time 2018/4/20 下午1:49
+ * @anthor Dean
+ * @time 2018/4/21 0021 0:11
  */
-
-public class AddrListActivity extends BaseActivity {
+public class GoodsOrderListActivity extends BaseActivity {
 
     @BindView(R.id.imgBack)
     ImageView imgBack;
@@ -35,16 +31,8 @@ public class AddrListActivity extends BaseActivity {
     ImageView imgAction1;
     @BindView(R.id.tvAction1)
     TextView tvAction1;
-    @BindView(R.id.layoutReposition)
-    LinearLayout layoutReposition;
-    @BindView(R.id.layoutSurrounding)
-    LinearLayout layoutSurrounding;
-    @BindView(R.id.lvAddr)
-    ListViewForScrollView lvAddr;
-    @BindView(R.id.tvNewAddr)
-    TextView tvNewAddr;
-    @BindView(R.id.tvNoAddr)
-    TextView tvNoAddr;
+    @BindView(R.id.lvGoodsOrder)
+    ListView lvGoodsOrder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,21 +40,15 @@ public class AddrListActivity extends BaseActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
-        setContentView(R.layout.activity_addr_list);
+        setContentView(R.layout.activity_goods_order_list);
         ButterKnife.bind(this);
+
         init();
     }
 
-    private void init() {
+    private void init(){
+        tvTitle.setText(R.string.goods_order_list);
         imgBack.setVisibility(View.VISIBLE);
-        tvTitle.setText(R.string.receiver_addr);
-
-        lvAddr.setAdapter(new AddrAdapter());
-    }
-
-    @OnClick(R.id.tvNewAddr)
-    public void onClickNewAddr() {
-        ViewJump.toNewAddr(this);
     }
 
     @OnClick(R.id.imgBack)
