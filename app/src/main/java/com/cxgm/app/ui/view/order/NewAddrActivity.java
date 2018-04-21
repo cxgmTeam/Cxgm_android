@@ -59,10 +59,11 @@ public class NewAddrActivity extends BaseActivity {
     }
 
     private void init() {
+        tvTitle.setText(R.string.new_addr);
         imgBack.setVisibility(View.VISIBLE);
     }
 
-    @OnClick(R.id.tvDistrict)
+    @OnClick(R.id.layoutDistrict)
     public void onClickDistrict() {
         ViewJump.toMapLocation(this);
     }

@@ -32,7 +32,8 @@
     <string name="my_receiver_addr">我的收获地址</string>
     <string name="reposition">重新定位</string>
     <string name="surrounding">附近地址</string>
-    <string name="new_addr">新增收货地址</string>
+    <string name="new_receive_addr">新增收货地址</string>
+    <string name="new_addr">新增地址</string>
 
     <string name="save">保存</string>
     <string name="cancel">取消</string>
@@ -47,8 +48,20 @@
     <string name="discounts_">优惠：$1%d</string>
     <string name="subtotal_">小计：</string>
     <string name="specification_">规格：$1%d</string>
+    <string name="payment_">实付款：</string>
+    <string name="_total">共$1%d种</string>
 
     <string name="goods_order_list">商品清单</string>
+    <string name="receive_time">预计收货时间</string>
+    <string name="commit_order">提交订单</string>
+    <string name="goods_total">商品总额</string>
+    <string name="discounts">优惠</string>
+    <string name="carriage">运费</string>
+    <string name="invoice">发票</string>
+
+    <string name="wechat_pay">微信支付</string>
+    <string name="alipay">支付宝支付</string>
+    <string name="verify_order">确认订单</string>
 
     <string name="hot_search">热门搜索</string>
     <string name="slogan1">品质臻选</string>

@@ -73,4 +73,9 @@ public class AddrListActivity extends BaseActivity {
     public void onClickBack() {
         finish();
     }
+
+    @OnClick(R.id.layoutSurrounding)
+    public void onClickSurrounding() {
+        ViewJump.toMapLocation(this);
+    }
 }
