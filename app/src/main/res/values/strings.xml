@@ -59,9 +59,17 @@
     <string name="carriage">运费</string>
     <string name="invoice">发票</string>
 
+    <string name="goods_detail">商品详情</string>
+    <string name="trademark">品牌</string>
+    <string name="origin_place">产地</string>
+    <string name="produced_date">生产日期</string>
+    <string name="shelflife">保质期</string>
+    <string name="storage_condition">存储条件</string>
+
     <string name="wechat_pay">微信支付</string>
     <string name="alipay">支付宝支付</string>
     <string name="verify_order">确认订单</string>
+    <string name="option_specification">请选择 规格</string>
 
     <string name="hot_search">热门搜索</string>
     <string name="slogan1">品质臻选</string>
@@ -81,6 +89,7 @@
     <string name="search_no_result_tag">没有查询到结果～</string>
     <string name="not_set_addr_tag">您还没有设置收货地址～</string>
     <string name="empty_shop_cart_tag">购物车空空如也～</string>
+    <string name="guess_like">猜你喜欢</string>
 
 
 </resources>

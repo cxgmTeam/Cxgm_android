@@ -1,5 +1,6 @@
 package com.cxgm.app.ui.adapter;
 
+import android.graphics.Paint;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -58,8 +59,8 @@ public class GoodsOrderListAdatpter extends BaseAdapter {
     static class ViewHolder {
         @BindView(R.id.imgCover)
         ImageView imgCover;
-        @BindView(R.id.tvName)
-        TextView tvName;
+        @BindView(R.id.tvTitle)
+        TextView tvTitle;
         @BindView(R.id.tvSpecification)
         TextView tvSpecification;
         @BindView(R.id.tvPrice)
@@ -79,6 +80,7 @@ public class GoodsOrderListAdatpter extends BaseAdapter {
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
+            tvOriginal.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG|Paint.ANTI_ALIAS_FLAG);
         }
     }
 }
