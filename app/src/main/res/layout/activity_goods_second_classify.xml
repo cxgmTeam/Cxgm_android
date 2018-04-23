@@ -43,6 +43,7 @@
 
             <android.support.design.widget.TabLayout
                 app:tabIndicatorHeight="0dp"
+                app:tabTextAppearance="@style/TabTextSize14"
                 app:tabTextColor="@color/textBlackTint"
                 app:tabSelectedTextColor="@color/textGreen"
                 android:id="@+id/tabSubClassify"

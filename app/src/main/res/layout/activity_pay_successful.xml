@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
+    android:background="@color/colorWhite"
+    tools:layout_editor_absoluteY="25dp">
+
+    <include
+        android:id="@+id/include"
+        layout="@layout/layout_back_title_action_appbar"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorLine"
+        app:layout_constraintTop_toBottomOf="@+id/include"
+        />
+
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:src="@mipmap/pay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/view" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="36dp"
+        android:drawableLeft="@mipmap/tick"
+        android:drawablePadding="@dimen/margin_small"
+        android:text="@string/pay_successful"
+        android:textColor="@color/textBlackTint"
+        android:textSize="@dimen/text_size_giant_x"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+
+    <TextView
+        android:id="@+id/tvPaySuccessful"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/wechat_pay_"
+        android:textColor="@color/textBlackTint"
+        android:textSize="@dimen/text_size_giant_x"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <TextView
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/margin_giant"
+        android:layout_marginRight="@dimen/margin_giant"
+        android:textColor="@color/textGreen"
+        android:textSize="@dimen/text_size_large_x"
+        android:background="@drawable/shape_tc_green_tran"
+        android:id="@+id/tvBackIndex"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginBottom="80dp"
+        android:text="@string/return_index"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:gravity="center"
+        android:textColor="@color/textWhite"
+        android:background="@drawable/shape_tc_tran_green"
+        android:textSize="@dimen/text_size_large_x"
+        android:layout_marginLeft="@dimen/margin_giant"
+        android:layout_marginRight="@dimen/margin_giant"
+        android:id="@+id/tvCheckOrder"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:layout_marginBottom="20dp"
+        android:text="@string/check_order"
+        app:layout_constraintBottom_toTopOf="@+id/tvBackIndex"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</android.support.constraint.ConstraintLayout>

@@ -42,12 +42,12 @@
     <string name="set_default">设为默认</string>
 
     <string name="go_shopping">去逛逛</string>
-    <string name="go_duoshou_">去结算($1%d)</string>
-    <string name="total_">合计：$1%d</string>
-    <string name="sum_">总额：$1%d</string>
-    <string name="discounts_">优惠：$1%d</string>
+    <string name="go_duoshou_">去结算($1%s)</string>
+    <string name="total_">合计：$1%s</string>
+    <string name="sum_">总额：$1%s</string>
+    <string name="discounts_">优惠：$1%s</string>
     <string name="subtotal_">小计：</string>
-    <string name="specification_">规格：$1%d</string>
+    <string name="specification_">规格：$1%s</string>
     <string name="payment_">实付款：</string>
     <string name="_total">共$1%d种</string>
 
@@ -71,6 +71,27 @@
     <string name="verify_order">确认订单</string>
     <string name="option_specification">请选择 规格</string>
 
+    <string name="pay_successful">支付成功</string>
+    <string name="wechat_pay_">微信支付：$1%s</string>
+    <string name="alipay_">支付宝支付：$1%s</string>
+    <string name="check_order">查看订单</string>
+    <string name="return_index">返回首页</string>
+    <string name="invoice_type">发票类型</string>
+    <string name="common_invoice">普通发票</string>
+    <string name="e_invoice">电子发票</string>
+    <string name="invoice_receiver">收票人信息</string>
+    <string name="invoice_content">发票内容</string>
+    <string name="goods_detail2">商品明细</string>
+    <string name="invoice_head">发票抬头</string>
+    <string name="person">个人</string>
+    <string name="company">公司</string>
+    <string name="input_invoice_head">请在此填写准确的抬头名称</string>
+    <string name="input_invoice_num">请在此填写纳税人识别号</string>
+
+    <string name="available">可用（$1%d）</string>
+    <string name="disabled">不可用（$1%d）</string>
+    <string name="coupon_empty">目前没有可用优惠券</string>
+
     <string name="hot_search">热门搜索</string>
     <string name="slogan1">品质臻选</string>
     <string name="slogan2">优惠折扣</string>
@@ -90,6 +111,10 @@
     <string name="not_set_addr_tag">您还没有设置收货地址～</string>
     <string name="empty_shop_cart_tag">购物车空空如也～</string>
     <string name="guess_like">猜你喜欢</string>
+    <string name="hint_">温馨提示：</string>
+    <string name="_currency_">¥</string>
+    <string name="use">立即使用</string>
+    <string name="rules">详细规则</string>
 
 
 </resources>

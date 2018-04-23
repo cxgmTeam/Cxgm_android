@@ -20,4 +20,23 @@
         <item name="android:textColorHint">@color/textHint</item>
     </style>
 
+    <style name="SmallButton">
+        <item name="android:paddingLeft">@dimen/margin_large_t</item>
+        <item name="android:paddingRight">@dimen/margin_large_t</item>
+        <item name="android:textColor">@color/color_green_black</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:layout_height">@dimen/button_height3</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:button">@null</item>
+        <item name="android:gravity">center</item>
+        <item name="android:background">@drawable/selector_button3</item>
+    </style>
+
+    <style name="TabTextSize14">
+        <item name="android:textSize">@dimen/text_size_large_x</item>
+    </style>
+    <style name="TabTextSize15">
+        <item name="android:textSize">@dimen/text_size_large</item>
+    </style>
+
 </resources>

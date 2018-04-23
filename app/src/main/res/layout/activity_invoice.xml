@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_back_title_action_appbar" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorLine" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:elevation="@dimen/elevation"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/margin_giant"
+                android:paddingLeft="@dimen/margin_giant"
+                android:paddingRight="@dimen/margin_giant"
+                android:paddingTop="@dimen/margin_large_t">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/invoice_type"
+                    android:textColor="@color/textBlack"
+                    android:textSize="@dimen/text_size_normal_x" />
+
+                <RadioGroup
+                    android:id="@+id/rgInvoiceType"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rbCommonInvoice"
+                        style="@style/SmallButton"
+                        android:text="@string/common_invoice" />
+
+                    <RadioButton
+                        android:id="@+id/rbEInvoice"
+                        style="@style/SmallButton"
+                        android:layout_marginLeft="@dimen/margin_normal"
+                        android:text="@string/e_invoice" />
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:background="@color/colorWhite"
+                android:elevation="@dimen/elevation"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/margin_giant"
+                android:paddingRight="@dimen/margin_giant">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/invoice_receiver"
+                    android:textColor="@color/textBlack"
+                    android:textSize="@dimen/text_size_normal_x" />
+
+                <TextView
+                    android:id="@+id/tvInvoiceReceiver"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_giant_xx"
+                    android:textColor="@color/textBlack"
+                    android:textSize="@dimen/text_size_normal_x" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:background="@color/colorWhite"
+                android:elevation="@dimen/elevation"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/margin_giant"
+                android:paddingRight="@dimen/margin_giant">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/invoice_content"
+                    android:textColor="@color/textBlack"
+                    android:textSize="@dimen/text_size_normal_x" />
+
+                <RadioGroup
+                    android:id="@+id/rgInvoiceContent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/margin_giant"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rbGoodsDetail"
+                        style="@style/SmallButton"
+                        android:text="@string/goods_detail2" />
+                </RadioGroup>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:background="@color/colorWhite"
+                android:elevation="@dimen/elevation"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/margin_giant"
+                android:paddingLeft="@dimen/margin_giant"
+                android:paddingRight="@dimen/margin_giant"
+                android:paddingTop="@dimen/margin_large">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/invoice_head"
+                    android:textColor="@color/textBlack"
+                    android:textSize="@dimen/text_size_normal_x" />
+
+                <RadioGroup
+                    android:id="@+id/rgInvoiceHead"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rbPerson"
+                        style="@style/SmallButton"
+                        android:layout_width="72dp"
+                        android:text="@string/person" />
+
+                    <RadioButton
+                        android:id="@+id/rbCompany"
+                        style="@style/SmallButton"
+                        android:layout_width="72dp"
+                        android:layout_marginLeft="@dimen/margin_normal"
+                        android:text="@string/company" />
+                </RadioGroup>
+
+                <EditText
+                    android:id="@+id/etInvoiceHead"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="@dimen/margin_giant"
+                    android:background="@drawable/shape_tc_tran_gray"
+                    android:gravity="center_vertical"
+                    android:hint="@string/input_invoice_head"
+                    android:paddingLeft="@dimen/margin_normal"
+                    android:paddingRight="@dimen/margin_normal"
+                    android:textColor="@color/textBlack"
+                    android:textColorHint="@color/textRed"
+                    android:textSize="@dimen/text_size_normal_x" />
+
+                <EditText
+                    android:id="@+id/etInvoiceNum"
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:layout_marginTop="@dimen/margin_normal"
+                    android:background="@drawable/shape_tc_tran_gray"
+                    android:gravity="center_vertical"
+                    android:hint="@string/input_invoice_num"
+                    android:paddingLeft="@dimen/margin_normal"
+                    android:paddingRight="@dimen/margin_normal"
+                    android:textColor="@color/textBlack"
+                    android:textColorHint="@color/textRed"
+                    android:textSize="@dimen/text_size_normal_x" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_giant"
+                android:layout_marginTop="@dimen/margin_giant"
+                android:text="@string/hint_"
+                android:textColor="@color/textGray"
+                android:textSize="@dimen/text_size_normal" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_giant"
+                android:layout_marginRight="@dimen/margin_giant"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:textColor="@color/textGray"
+                android:textSize="@dimen/text_size_normal" />
+
+            <TextView
+                android:id="@+id/tvSave"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/button_height"
+                android:layout_marginLeft="@dimen/margin_giant"
+                android:layout_marginRight="@dimen/margin_giant"
+                android:background="@drawable/shape_tc_tran_green"
+                android:gravity="center"
+                android:text="@string/save"
+                android:textColor="@color/textWhite"
+                android:textSize="@dimen/text_size_large_x" />
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

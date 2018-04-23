@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:fitsSystemWindows="true"
+    android:clipToPadding="true"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <include layout="@layout/layout_back_title_action_appbar"/>
+
+    <View
+        android:background="@color/colorLine"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <android.support.design.widget.TabLayout
+        android:id="@+id/tabAble"
+        android:background="@color/colorWhite"
+        app:tabSelectedTextColor="@color/textGreen"
+        app:tabTextColor="@color/textGray"
+        app:tabTextAppearance="@style/TabTextSize15"
+        app:tabIndicatorColor="@color/colorGreen"
+        app:tabIndicatorHeight="@dimen/margin_micro_t"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"/>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/layoutEmpty"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center"
+        android:layout_marginTop="50dp"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:src="@mipmap/empty_coupon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:text="@string/coupon_empty"
+            android:layout_marginTop="@dimen/margin_normal"
+            android:textColor="@color/textGray"
+            android:textSize="@dimen/text_size_large"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vpContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</LinearLayout>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:elevation="@dimen/elevation"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <RelativeLayout
+            android:paddingLeft="@dimen/margin_giant_xx"
+            android:paddingRight="@dimen/margin_giant_xx"
+            android:background="@mipmap/coupon_bg"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_centerVertical="true"
+                android:id="@+id/tvCurrency"
+                android:text="@string/_currency_"
+                android:textColor="@color/textWhite"
+                android:textSize="@dimen/text_size_giant_x"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginLeft="3dp"
+                android:layout_toRightOf="@id/tvCurrency"
+                android:id="@+id/tvValue"
+                android:layout_alignBaseline="@id/tvCurrency"
+                android:textColor="@color/textWhite"
+                android:textSize="@dimen/text_size_giant_xxxxx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_marginTop="@dimen/margin_micro"
+                android:layout_below="@id/tvCurrency"
+                android:id="@+id/tvCondition"
+                android:textColor="@color/textWhite"
+                android:textSize="@dimen/text_size_normal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:paddingBottom="@dimen/margin_micro"
+            android:paddingTop="@dimen/margin_large"
+            android:paddingLeft="@dimen/margin_micro"
+            android:paddingRight="@dimen/margin_normal"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:textSize="@dimen/text_size_normal"
+                android:textColor="@color/textBlack"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_above="@+id/view1"
+                android:layout_marginBottom="6dp"
+                android:id="@+id/tvIndate"
+                android:textColor="@color/textGray"
+                android:textSize="@dimen/text_size_small_t"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_alignParentRight="true"
+                android:layout_above="@id/view1"
+                android:layout_marginBottom="3dp"
+                android:id="@+id/tvUse"
+                android:text="@string/use"
+                android:gravity="center"
+                android:paddingLeft="@dimen/margin_small"
+                android:paddingRight="@dimen/margin_small"
+                android:textSize="@dimen/text_size_small"
+                android:textColor="@color/textGreen"
+                android:background="@drawable/shape_ct_green_tran"
+                android:layout_width="wrap_content"
+                android:layout_height="22dp" />
+
+            <View
+                android:layout_above="@+id/tvRules"
+                android:id="@+id/view1"
+                android:background="@drawable/shape_dashed_line_gray"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"/>
+
+            <TextView
+                android:id="@+id/tvRules"
+                android:layout_marginTop="@dimen/margin_micro"
+                android:layout_alignParentBottom="true"
+                android:text="@string/rules"
+                android:textColor="@color/textGray"
+                android:textSize="@dimen/text_size_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:id="@+id/imgShowRules"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentBottom="true"
+                android:src="@mipmap/round_up"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </RelativeLayout>
+
+    </LinearLayout>
+    <View
+        android:background="@color/colorLine"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line"/>
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tvRulesContent"
+        android:textSize="@dimen/text_size_normal"
+        android:textColor="@color/textBlackTint"
+        android:padding="@dimen/margin_normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+</LinearLayout>
