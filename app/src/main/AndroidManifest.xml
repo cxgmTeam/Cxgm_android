@@ -47,6 +47,12 @@
         <activity android:name=".ui.view.goods.SearchResultActivity"
             android:screenOrientation="portrait"
             />
+        <activity android:name=".ui.view.goods.GoodsDetailActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".ui.view.goods.GoodsSecondClassifyActivity"
+            android:screenOrientation="portrait"
+            />
         <activity android:name=".ui.view.order.NewAddrActivity"
             android:screenOrientation="portrait"
             />
@@ -68,7 +74,21 @@
         <activity android:name=".ui.view.goods.GoodsSecondClassifyActivity"
             android:screenOrientation="portrait"
             />
-
+        <activity android:name=".ui.view.order.UserOrderActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".ui.view.order.OrderDetailActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".ui.view.order.PaySuccessfulActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".ui.view.order.InvoiceActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".ui.view.user.CouponActivity"
+            android:screenOrientation="portrait"
+            />
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"> </service>
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"

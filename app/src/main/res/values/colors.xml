@@ -25,5 +25,6 @@
     <color name="colorGreen">#00A862</color>
     <color name="colorGreenDark">#30A862</color>
     <color name="colorBlueTint">#3AB0F2</color>
+    <color name="colorRedTint">#FE7777</color>
 
 </resources>

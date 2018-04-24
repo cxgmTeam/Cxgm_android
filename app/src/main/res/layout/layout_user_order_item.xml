@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:elevation="@dimen/elevation"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/margin_giant"
+        android:paddingRight="@dimen/margin_giant"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height">
+
+        <TextView
+            android:id="@+id/tvOrderNum"
+            android:layout_weight="1"
+            android:text="@string/order_num_"
+            android:textSize="@dimen/text_size_normal_x"
+            android:textColor="@color/textBlack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvOrderState"
+            android:textSize="@dimen/text_size_normal_x"
+            android:textColor="@color/textBlack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+    <View
+        android:background="@color/colorLine"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line"/>
+
+    <LinearLayout
+        android:id="@+id/layoutContainer"
+        android:paddingLeft="@dimen/margin_giant"
+        android:paddingRight="@dimen/margin_giant"
+        android:paddingTop="@dimen/margin_large_t"
+        android:paddingBottom="@dimen/margin_large_t"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="104dp">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:paddingLeft="@dimen/margin_giant"
+        android:paddingRight="@dimen/margin_giant"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/tvCount"
+            android:layout_weight="1"
+            android:textColor="@color/textBlackTint"
+            android:textSize="@dimen/text_size_normal_x"
+            android:text="@string/_count"
+            android:gravity="right"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginLeft="@dimen/margin_normal"
+            android:textColor="@color/textBlackTint"
+            android:textSize="@dimen/text_size_normal_x"
+            android:text="@string/payment2_"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvTotal"
+            android:layout_marginLeft="@dimen/margin_micro_t"
+            android:textColor="@color/textGreen"
+            android:textSize="@dimen/text_size_large_x"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+    <View
+        android:layout_marginTop="@dimen/margin_normal"
+        android:background="@color/colorLine"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line"/>
+    
+    <TextView
+        android:textColor="@color/textBlack"
+        android:textSize="@dimen/text_size_small"
+        android:id="@+id/tvOrderAction"
+        android:layout_gravity="right"
+        android:gravity="center"
+        android:background="@drawable/shape_tc_gray_tran"
+        android:layout_marginRight="@dimen/margin_giant"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:layout_marginBottom="@dimen/margin_normal"
+        android:paddingLeft="@dimen/margin_large_t"
+        android:paddingRight="@dimen/margin_large_t"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/button_height3" />
+
+</LinearLayout>

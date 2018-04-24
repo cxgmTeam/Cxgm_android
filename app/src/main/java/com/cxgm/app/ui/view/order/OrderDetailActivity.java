@@ -4,26 +4,28 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
+import com.cxgm.app.ui.adapter.GoodsOrderListAdatpter;
 import com.cxgm.app.ui.base.BaseActivity;
+import com.deanlib.ootb.widget.ListViewForScrollView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * 确认订单
+ * 订单详情
  *
  * @anthor Dean
- * @time 2018/4/21 0021 19:39
+ * @time 2018/4/24 0024 22:27
  */
-public class VerifyOrderActivity extends BaseActivity {
+public class OrderDetailActivity extends BaseActivity {
 
     @BindView(R.id.imgBack)
     ImageView imgBack;
@@ -31,8 +33,18 @@ public class VerifyOrderActivity extends BaseActivity {
     TextView tvTitle;
     @BindView(R.id.imgAction1)
     ImageView imgAction1;
+    @BindView(R.id.imgAction2)
+    ImageView imgAction2;
     @BindView(R.id.tvAction1)
     TextView tvAction1;
+    @BindView(R.id.imgIcon)
+    ImageView imgIcon;
+    @BindView(R.id.tvOrderState)
+    TextView tvOrderState;
+    @BindView(R.id.OrderTag)
+    TextView OrderTag;
+    @BindView(R.id.layoutOrderState)
+    RelativeLayout layoutOrderState;
     @BindView(R.id.tvName)
     TextView tvName;
     @BindView(R.id.tvPhoneNumber)
@@ -45,40 +57,28 @@ public class VerifyOrderActivity extends BaseActivity {
     TextView tvReceiveTime;
     @BindView(R.id.layoutReceiveTime)
     FrameLayout layoutReceiveTime;
+    @BindView(R.id.tvShopName)
+    TextView tvShopName;
+    @BindView(R.id.tvShopAddr)
+    TextView tvShopAddr;
+    @BindView(R.id.lvGoods)
+    ListViewForScrollView lvGoods;
+    @BindView(R.id.tvOrderNum)
+    TextView tvOrderNum;
+    @BindView(R.id.tvOrderTime)
+    TextView tvOrderTime;
+    @BindView(R.id.tvPayWay)
+    TextView tvPayWay;
+    @BindView(R.id.tvInvoiceType)
+    TextView tvInvoiceType;
     @BindView(R.id.tvGoodsTotal)
     TextView tvGoodsTotal;
     @BindView(R.id.tvDiscounts)
     TextView tvDiscounts;
     @BindView(R.id.tvCarriage)
     TextView tvCarriage;
-    @BindView(R.id.tvCoupon)
-    TextView tvCoupon;
-    @BindView(R.id.layoutCoupon)
-    LinearLayout layoutCoupon;
-    @BindView(R.id.tvInvoice)
-    TextView tvInvoice;
-    @BindView(R.id.layoutInvoice)
-    LinearLayout layoutInvoice;
-    @BindView(R.id.cbWeChatPay)
-    CheckBox cbWeChatPay;
-    @BindView(R.id.layoutWeChatPay)
-    LinearLayout layoutWeChatPay;
-    @BindView(R.id.cbAlipay)
-    CheckBox cbAlipay;
-    @BindView(R.id.layoutAlipay)
-    LinearLayout layoutAlipay;
     @BindView(R.id.tvPayment)
     TextView tvPayment;
-    @BindView(R.id.tvCommitOrder)
-    TextView tvCommitOrder;
-    @BindView(R.id.imgAction2)
-    ImageView imgAction2;
-    @BindView(R.id.tvHintPay)
-    TextView tvHintPay;
-    @BindView(R.id.tvTimeRemaining)
-    TextView tvTimeRemaining;
-    @BindView(R.id.layoutHintPay)
-    LinearLayout layoutHintPay;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,19 +86,20 @@ public class VerifyOrderActivity extends BaseActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
-        setContentView(R.layout.activity_verify_order);
+        setContentView(R.layout.activity_order_detail);
         ButterKnife.bind(this);
-
         init();
     }
 
-    private void init() {
-        tvTitle.setText(R.string.verify_order);
+    private void init(){
+        tvTitle.setText(R.string.order_detail);
         imgBack.setVisibility(View.VISIBLE);
+
+        lvGoods.setAdapter(new GoodsOrderListAdatpter());
     }
 
     @OnClick(R.id.imgBack)
-    public void onClickBack() {
+    public void onViewClicked() {
         finish();
     }
 }

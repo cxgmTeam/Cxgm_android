@@ -13,6 +13,37 @@
         android:layout_height="1dp"
         android:background="@color/colorLine" />
 
+    <LinearLayout
+        android:id="@+id/layoutHintPay"
+        android:paddingLeft="@dimen/margin_giant"
+        android:paddingRight="@dimen/margin_giant"
+        android:paddingTop="@dimen/margin_small"
+        android:paddingBottom="@dimen/margin_small"
+        android:background="@color/colorRedTint"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvHintPay"
+            android:text="@string/hint_pay"
+            android:textColor="@color/textWhite"
+            android:textSize="@dimen/text_size_small"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvTimeRemaining"
+            android:layout_marginLeft="@dimen/margin_normal"
+            android:text="@string/time_remaining"
+            android:textColor="@color/textWhite"
+            android:textSize="@dimen/text_size_small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,80 +55,7 @@
             android:orientation="vertical">
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@color/colorWhite"
-                android:elevation="@dimen/elevation"
-                android:orientation="vertical">
-
-                <LinearLayout
-                    android:id="@+id/layoutAddr"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:paddingBottom="@dimen/margin_giant"
-                    android:paddingLeft="@dimen/margin_normal"
-                    android:paddingRight="@dimen/margin_large_x"
-                    android:paddingTop="@dimen/margin_giant">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/location" />
-
-                    <include
-                        layout="@layout/layout_addr"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/margin_normal"
-                        android:layout_marginRight="@dimen/margin_giant_xx"
-                        android:layout_weight="1" />
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@mipmap/right" />
-
-                </LinearLayout>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/line"
-                    android:background="@color/colorLine" />
-
-                <FrameLayout
-                    android:id="@+id/layoutReceiveTime"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/item_height"
-                    android:paddingLeft="@dimen/margin_giant"
-                    android:paddingRight="@dimen/margin_giant">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="left|center_vertical"
-                        android:drawableLeft="@mipmap/time"
-                        android:drawablePadding="@dimen/margin_large_t"
-                        android:gravity="center_vertical"
-                        android:text="@string/receive_time"
-                        android:textColor="@color/textBlack"
-                        android:textSize="@dimen/text_size_normal_x" />
-
-                    <TextView
-                        android:id="@+id/tvReceiveTime"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="right|center_vertical"
-                        android:drawablePadding="@dimen/margin_small"
-                        android:drawableRight="@mipmap/right"
-                        android:gravity="center_vertical"
-                        android:textColor="@color/textBlack"
-                        android:textSize="@dimen/text_size_normal_x" />
-
-                </FrameLayout>
-
-            </LinearLayout>
+            <include layout="@layout/layout_addr_and_receive_time"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -126,7 +84,7 @@
                         android:drawablePadding="@dimen/margin_small"
                         android:drawableRight="@mipmap/right"
                         android:gravity="right"
-                        android:text="@string/_total"
+                        android:text="@string/_count"
                         android:textColor="@color/textBlack"
                         android:textSize="@dimen/text_size_normal_x" />
 
