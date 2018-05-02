@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
+    android:background="@color/colorWhite"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/layout_back_title_action_appbar"/>
+
+    <View
+        android:background="@color/colorLine"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"/>
+
+    <RelativeLayout
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="@dimen/margin_giant_xxxx"
+        android:layout_marginRight="@dimen/margin_giant_xxxx"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:inputType="phone"
+            android:layout_marginRight="@dimen/margin_normal"
+            android:layout_toLeftOf="@+id/tvGetCheckCode"
+            android:id="@+id/etPhoneNum"
+            android:layout_alignBaseline="@+id/tvGetCheckCode"
+            android:textColor="@color/textBlack"
+            android:background="@null"
+            android:hint="@string/input_your_phone_num"
+            android:textColorHint="@color/textGray"
+            android:textSize="@dimen/text_size_normal_x"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:enabled="false"
+            android:id="@+id/tvGetCheckCode"
+            android:layout_alignParentRight="true"
+            android:text="@string/get_check_code"
+            android:background="@drawable/shape_tc_tran_gray_2"
+            android:paddingLeft="@dimen/margin_small"
+            android:paddingRight="@dimen/margin_small"
+            android:paddingTop="@dimen/margin_micro"
+            android:paddingBottom="@dimen/margin_micro"
+            android:textSize="@dimen/text_size_normal_x"
+            android:textColor="@color/textWhite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <View
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_below="@+id/etPhoneNum"
+            android:background="@color/colorLine"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line"/>
+    </RelativeLayout>
+    <RelativeLayout
+        android:layout_marginLeft="@dimen/margin_giant_xxxx"
+        android:layout_marginRight="@dimen/margin_giant_xxxx"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:id="@+id/etCheckCode"
+            android:layout_marginTop="@dimen/margin_giant"
+            android:textColor="@color/textBlack"
+            android:background="@null"
+            android:hint="@string/input_check_code"
+            android:textColorHint="@color/textGray"
+            android:textSize="@dimen/text_size_normal_x"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <View
+            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_below="@+id/etCheckCode"
+            android:background="@color/colorLine"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/line"/>
+    </RelativeLayout>
+
+    <TextView
+        android:enabled="false"
+        android:id="@+id/tvLogin"
+        android:layout_marginLeft="@dimen/margin_giant_xxxx"
+        android:layout_marginRight="@dimen/margin_giant_xxxx"
+        android:layout_marginTop="42dp"
+        android:text="@string/login"
+        android:gravity="center"
+        android:paddingTop="@dimen/margin_normal"
+        android:paddingBottom="@dimen/margin_normal"
+        android:background="@drawable/shape_tc_tran_gray_2"
+        android:textColor="@color/textWhite"
+        android:textSize="@dimen/text_size_large_x"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:layout_weight="1"
+        android:layout_marginLeft="@dimen/margin_giant_xxxx"
+        android:layout_marginRight="@dimen/margin_giant_xxxx"
+        android:layout_marginTop="@dimen/margin_large_t"
+        android:textColor="@color/textGray"
+        android:text="@string/login_tag"
+        android:textSize="@dimen/text_size_small"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <TextView
+        android:id="@+id/tvProtocol"
+        android:layout_marginLeft="@dimen/margin_giant"
+        android:layout_marginRight="@dimen/margin_giant"
+        android:textColor="@color/textGray"
+        android:textSize="@dimen/text_size_small"
+        android:text="@string/login_tag2"
+        android:layout_marginBottom="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

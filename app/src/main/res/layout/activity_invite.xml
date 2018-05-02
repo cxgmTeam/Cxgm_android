@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_back_title_action_appbar" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/invite_bg" />
+
+            <android.support.v7.widget.CardView
+                android:id="@+id/layout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_giant"
+                android:layout_marginRight="@dimen/margin_giant"
+                android:layout_marginTop="234dp"
+                android:elevation="@dimen/elevation"
+                app:cardBackgroundColor="@color/colorWhite"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingBottom="@dimen/margin_giant_xxxx"
+                    android:paddingLeft="@dimen/margin_normal"
+                    android:paddingRight="@dimen/margin_normal"
+                    android:paddingTop="@dimen/margin_giant_xxxx">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/invite_new"
+                        android:textColor="@color/textBlack"
+                        android:textSize="@dimen/text_size_giant"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:text="@string/invite_new_tag"
+                        android:textColor="@color/textBlackTint"
+                        android:textSize="@dimen/text_size_small_t" />
+
+                    <TextView
+                        android:id="@+id/tvInvite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_giant_xxx"
+                        android:background="@drawable/shape_tc_tran_green"
+                        android:gravity="center"
+                        android:paddingBottom="@dimen/margin_normal"
+                        android:paddingTop="@dimen/margin_normal"
+                        android:text="@string/invite"
+                        android:textColor="@color/textWhite"
+                        android:textSize="@dimen/text_size_large_x"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+            <LinearLayout
+                android:layout_marginTop="35dp"
+                android:id="@+id/layout2"
+                android:gravity="center_vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout1"
+                android:layout_centerHorizontal="true"
+                android:orientation="horizontal">
+                <View
+                    android:background="@drawable/shape_oval_orange"
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"/>
+                <TextView
+                    android:layout_marginLeft="@dimen/margin_small"
+                    android:layout_marginRight="@dimen/margin_small"
+                    android:id="@+id/tvInviteFriendNum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/invite_friend"
+                    android:textColor="@color/textOrangeDark"
+                    android:textSize="@dimen/text_size_large_x" />
+
+                <View
+                    android:background="@drawable/shape_oval_orange"
+                    android:layout_width="7dp"
+                    android:layout_height="7dp"/>
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvActivityTag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout2"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/margin_small"
+                android:text="@string/invite_gift_activity"
+                android:textColor="@color/textGreen"
+                android:textSize="@dimen/text_size_large_x"
+                android:visibility="gone" />
+
+            <android.support.v7.widget.CardView
+                android:layout_marginBottom="29dp"
+                android:id="@+id/layoutList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/layout2"
+                android:layout_marginLeft="@dimen/margin_giant"
+                android:layout_marginRight="@dimen/margin_giant"
+                android:layout_marginTop="@dimen/margin_large"
+                app:cardBackgroundColor="@color/colorKhaki"
+                app:cardCornerRadius="5dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/layout_invite_item" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="2dp"
+                        android:layout_marginLeft="@dimen/margin_large_t"
+                        android:layout_marginRight="@dimen/margin_large_t"
+                        android:background="@drawable/shape_dashed_line_brown" />
+
+                    <com.deanlib.ootb.widget.ListViewForScrollView
+                        android:id="@+id/lvInvite"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:divider="@null" />
+
+                </LinearLayout>
+
+            </android.support.v7.widget.CardView>
+
+
+        </RelativeLayout>
+    </ScrollView>
+
+
+</LinearLayout>

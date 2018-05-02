@@ -14,11 +14,11 @@
             android:clipToPadding="true"
             android:id="@+id/layoutUserBg"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/user_bg_height"
-            android:background="@color/colorGreen">
+            android:layout_height="wrap_content"
+            android:background="@mipmap/user_bg">
 
             <ImageView
-                android:src="@mipmap/defualt"
+                android:src="@mipmap/default_head"
                 android:id="@+id/imgUserCover"
                 android:layout_width="@dimen/user_cover_width"
                 android:layout_height="@dimen/user_cover_height"
@@ -26,11 +26,13 @@
                 android:layout_marginTop="55dp" />
 
             <TextView
+                android:text="@string/login_or_regist"
                 android:id="@+id/tvUserName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="143dp"
+                android:layout_marginBottom="27dp"
                 android:textColor="@color/colorWhite"
                 android:textSize="@dimen/text_size_giant" />
 
@@ -119,7 +121,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/layoutGift"
+            android:id="@+id/layoutInvite"
             android:layout_width="match_parent"
             android:layout_height="@dimen/item_height"
             android:layout_marginTop="@dimen/margin_normal"
@@ -139,7 +141,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
-                android:text="@string/gift"
+                android:text="@string/invite_gift"
                 android:textColor="@color/textBlack"
                 android:textSize="@dimen/text_size_normal_x" />
 

@@ -8,7 +8,7 @@
     android:layout_height="@dimen/goods_order_item_height">
 
     <ImageView
-        android:src="@mipmap/defualt"
+        android:src="@mipmap/default_img"
         android:layout_centerVertical="true"
         android:scaleType="center"
         android:id="@+id/imgCover"

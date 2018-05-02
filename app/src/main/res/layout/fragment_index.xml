@@ -300,7 +300,7 @@
                     </LinearLayout>
 
                     <ImageView
-                        android:src="@mipmap/defualt"
+                        android:src="@mipmap/default_img"
                         android:elevation="@dimen/elevation"
                         android:id="@+id/imgAd"
                         android:layout_width="match_parent"

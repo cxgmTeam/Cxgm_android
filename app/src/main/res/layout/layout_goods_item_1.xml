@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <ImageView
-        android:src="@mipmap/defualt"
+        android:src="@mipmap/default_img"
         android:id="@+id/imgCover"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

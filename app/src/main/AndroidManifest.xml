@@ -71,7 +71,8 @@
         <activity android:name=".ui.view.order.VerifyOrderActivity"
             android:screenOrientation="portrait"
             />
-        <activity android:name=".ui.view.goods.GoodsSecondClassifyActivity"
+        <activity android:name=".ui.view.user.InviteActivity"
+            android:hardwareAccelerated="false"
             android:screenOrientation="portrait"
             />
         <activity android:name=".ui.view.order.UserOrderActivity"
@@ -87,6 +88,9 @@
             android:screenOrientation="portrait"
             />
         <activity android:name=".ui.view.user.CouponActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".ui.view.user.LoginActivity"
             android:screenOrientation="portrait"
             />
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"> </service>

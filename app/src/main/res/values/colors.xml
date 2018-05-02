@@ -17,6 +17,9 @@
     <color name="textHint">#BDBDBD</color>
     <color name="textStrike">#D8D8D8</color>
     <color name="textRed">#FF4F4F</color>
+    <color name="textOrangeDark">#FF5733</color>
+    <color name="textBrown">#836C50</color>
+    <color name="textBrownTint">#938062</color>
 
     <color name="colorBlack">#000000</color>
     <color name="colorWhite">#FFFFFF</color>
@@ -26,5 +29,6 @@
     <color name="colorGreenDark">#30A862</color>
     <color name="colorBlueTint">#3AB0F2</color>
     <color name="colorRedTint">#FE7777</color>
+    <color name="colorKhaki">#FFEED0</color>
 
 </resources>

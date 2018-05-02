@@ -36,7 +36,6 @@
     <dimen name="banner_height">190dp</dimen>
     <dimen name="ad_height">139dp</dimen>
     <dimen name="status_bar_height">24dp</dimen>
-    <dimen name="user_bg_height">195dp</dimen>
     <dimen name="user_cover_width">80dp</dimen>
     <dimen name="user_cover_height">@dimen/user_cover_width</dimen>
     <dimen name="item_height">45dp</dimen>

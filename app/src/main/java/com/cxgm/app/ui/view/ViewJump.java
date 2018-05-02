@@ -8,6 +8,8 @@ import com.cxgm.app.ui.view.order.AddrListActivity;
 import com.cxgm.app.ui.view.order.MapLocationActivity;
 import com.cxgm.app.ui.view.goods.SearchActivity;
 import com.cxgm.app.ui.view.order.NewAddrActivity;
+import com.cxgm.app.ui.view.user.InviteActivity;
+import com.cxgm.app.ui.view.user.LoginActivity;
 
 /**
  * 界面跳转总控
@@ -39,6 +41,16 @@ public class ViewJump {
 
     public static void toMapLocation(Activity activity){
         Intent intent = new Intent(activity, MapLocationActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public static void toInvite(Activity activity){
+        Intent intent = new Intent(activity, InviteActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public static void toLogin(Activity activity){
+        Intent intent = new Intent(activity, LoginActivity.class);
         activity.startActivity(intent);
     }
 

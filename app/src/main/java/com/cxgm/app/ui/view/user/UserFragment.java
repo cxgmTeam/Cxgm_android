@@ -13,9 +13,12 @@ import android.widget.TextView;
 
 import com.cxgm.app.R;
 import com.cxgm.app.ui.base.BaseFragment;
+import com.cxgm.app.ui.view.ViewJump;
+import com.cxgm.app.utils.UserManager;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -44,8 +47,8 @@ public class UserFragment extends BaseFragment {
     TextView tvReceive;
     @BindView(R.id.tvRefund)
     TextView tvRefund;
-    @BindView(R.id.layoutGift)
-    LinearLayout layoutGift;
+    @BindView(R.id.layoutInvite)
+    LinearLayout layoutInvite;
     @BindView(R.id.layoutCoupon)
     LinearLayout layoutCoupon;
     @BindView(R.id.layoutReceiverAddr)
@@ -70,5 +73,41 @@ public class UserFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @OnClick({R.id.tvUserName, R.id.tvEdit, R.id.tvOrder, R.id.tvUnpaid, R.id.tvDistribution, R.id.tvReceive, R.id.tvRefund, R.id.layoutInvite, R.id.layoutCoupon, R.id.layoutReceiverAddr, R.id.layoutHelp, R.id.layoutService, R.id.layoutSettings})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tvUserName:
+                if (!UserManager.isUserLogin()){
+                    ViewJump.toLogin(getActivity());
+                }
+                break;
+            case R.id.tvEdit:
+                break;
+            case R.id.tvOrder:
+                break;
+            case R.id.tvUnpaid:
+                break;
+            case R.id.tvDistribution:
+                break;
+            case R.id.tvReceive:
+                break;
+            case R.id.tvRefund:
+                break;
+            case R.id.layoutInvite:
+                ViewJump.toInvite(getActivity());
+                break;
+            case R.id.layoutCoupon:
+                break;
+            case R.id.layoutReceiverAddr:
+                break;
+            case R.id.layoutHelp:
+                break;
+            case R.id.layoutService:
+                break;
+            case R.id.layoutSettings:
+                break;
+        }
     }
 }

@@ -66,6 +66,7 @@
     <string name="produced_date">生产日期</string>
     <string name="shelflife">保质期</string>
     <string name="storage_condition">存储条件</string>
+    <string name="login_or_regist">登录/注册</string>
 
     <string name="wechat_pay">微信支付</string>
     <string name="alipay">支付宝支付</string>
@@ -106,6 +107,11 @@
     <string name="order_detail">订单详情</string>
     <string name="time_remaining">剩余时间 $1%s</string>
 
+    <string name="input_your_phone_num">请输入您的手机号</string>
+    <string name="input_check_code">请输入验证码</string>
+    <string name="get_check_code">获取验证码</string>
+    <string name="login">登录</string>
+
     <string name="hot_search">热门搜索</string>
     <string name="slogan1">品质臻选</string>
     <string name="slogan2">优惠折扣</string>
@@ -115,7 +121,7 @@
     <string name="recommend_tag">精心挑选的超级好货</string>
     <string name="new_goods">新品上市</string>
     <string name="new_goods_tag">搜索好味道，抢先品尝</string>
-    <string name="gift">邀请有礼</string>
+    <string name="invite_gift">邀请有礼</string>
     <string name="gift_tag">新鲜生鲜水果邀请好友共享</string>
     <string name="coupon_tag">兑换、查看优惠券</string>
     <string name="select">请选择</string>
@@ -130,6 +136,16 @@
     <string name="_currency_">¥</string>
     <string name="use">立即使用</string>
     <string name="rules">详细规则</string>
+    <string name="invite">立即邀请</string>
+    <string name="invite_new">邀请新人送30元</string>
+    <string name="invite_friend">您已邀请$1%d位好友</string>
+    <string name="invite_gift_activity">邀请有礼活动  已结束</string>
+    <string name="invite_new_tag">邀请新用户下单签收，即得30元红包，新用户另得60元新人礼包</string>
+    <string name="friend_phone_num">好友手机号</string>
+    <string name="get_date">获得时间</string>
+    <string name="whether_got_lucky_money_or_not">是否得到红包</string>
+    <string name="login_tag">未注册过的手机号码将自动注册为菜鲜果美账号</string>
+    <string name="login_tag2">登录即代表同意《菜鲜果美注册协议》《菜鲜果美用户隐私协议》</string>
 
 
 
