@@ -1,0 +1,46 @@
+package com.cxgm.app.data.entity;
+
+import com.deanlib.ootb.entity.BaseEntity;
+
+public class Login extends BaseEntity {
+
+    public Login(String userAccount, String password, String mobileValidCode) {
+        this.userAccount = userAccount;
+        this.password = password;
+        this.mobileValidCode = mobileValidCode;
+    }
+
+    /**
+     * mobileValidCode : string
+     * password : string
+     * userAccount : string
+     */
+
+    private String userAccount;
+    private String password;
+    private String mobileValidCode;
+
+    public String getMobileValidCode() {
+        return mobileValidCode;
+    }
+
+    public void setMobileValidCode(String mobileValidCode) {
+        this.mobileValidCode = mobileValidCode;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUserAccount() {
+        return userAccount;
+    }
+
+    public void setUserAccount(String userAccount) {
+        this.userAccount = userAccount;
+    }
+}

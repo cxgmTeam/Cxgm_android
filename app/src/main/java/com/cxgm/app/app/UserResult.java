@@ -9,10 +9,11 @@ import com.deanlib.ootb.data.io.Request;
  * @time 2018/4/18 下午5:47
  */
 
-public class UserResult extends Request.Result {
+public class UserResult<T> extends Request.Result {
 
-    public String code;
+    public int code;
     public String msg;
+    public T data;
 
     public UserResult() {
         super("200");
@@ -20,7 +21,7 @@ public class UserResult extends Request.Result {
 
     @Override
     public String getResultCode() {
-        return code;
+        return code+"";
     }
 
     @Override
