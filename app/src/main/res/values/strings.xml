@@ -42,15 +42,15 @@
     <string name="set_default">设为默认</string>
 
     <string name="go_shopping">去逛逛</string>
-    <string name="go_duoshou_">去结算($1%s)</string>
-    <string name="total_">合计：$1%s</string>
-    <string name="sum_">总额：$1%s</string>
-    <string name="discounts_">优惠：$1%s</string>
+    <string name="go_duoshou_">去结算(%s)</string>
+    <string name="total_">合计：%s</string>
+    <string name="sum_">总额：%s</string>
+    <string name="discounts_">优惠：%s</string>
     <string name="subtotal_">小计：</string>
-    <string name="specification_">规格：$1%s</string>
+    <string name="specification_">规格：%s</string>
     <string name="payment_">实付款：</string>
     <string name="payment2_">需付款：</string>
-    <string name="_count">共$1%d种</string>
+    <string name="_count">共%d种</string>
 
     <string name="goods_order_list">商品清单</string>
     <string name="receive_time">预计收货时间</string>
@@ -74,8 +74,8 @@
     <string name="option_specification">请选择 规格</string>
 
     <string name="pay_successful">支付成功</string>
-    <string name="wechat_pay_">微信支付：$1%s</string>
-    <string name="alipay_">支付宝支付：$1%s</string>
+    <string name="wechat_pay_">微信支付：%s</string>
+    <string name="alipay_">支付宝支付：%s</string>
     <string name="check_order">查看订单</string>
     <string name="return_index">返回首页</string>
     <string name="invoice_type">发票类型</string>
@@ -90,8 +90,8 @@
     <string name="input_invoice_head">请在此填写准确的抬头名称</string>
     <string name="input_invoice_num">请在此填写纳税人识别号</string>
 
-    <string name="available">可用（$1%d）</string>
-    <string name="disabled">不可用（$1%d）</string>
+    <string name="available">可用（%d）</string>
+    <string name="disabled">不可用（%d）</string>
     <string name="coupon_empty">目前没有可用优惠券</string>
 
     <string name="user_order">我的订单</string>
@@ -99,17 +99,19 @@
     <string name="distributing">配送中</string>
     <string name="complete">已完成</string>
     <string name="refund2">退货</string>
-    <string name="order_num_">订单号:$1%s</string>
+    <string name="order_num_">订单号:%s</string>
     <string name="order_num2_">订单编号：</string>
     <string name="order_time_">下单时间：</string>
     <string name="pay_way_">支付方式：</string>
     <string name="invoice_type_">发票类型：</string>
     <string name="order_detail">订单详情</string>
-    <string name="time_remaining">剩余时间 $1%s</string>
+    <string name="time_remaining">剩余时间 %s</string>
 
     <string name="input_your_phone_num">请输入您的手机号</string>
     <string name="input_check_code">请输入验证码</string>
     <string name="get_check_code">获取验证码</string>
+    <string name="get_check_code_again">重新获取</string>
+    <string name="get_check_code_again_">重新获取（%ds）</string>
     <string name="login">登录</string>
 
     <string name="hot_search">热门搜索</string>
@@ -138,7 +140,7 @@
     <string name="rules">详细规则</string>
     <string name="invite">立即邀请</string>
     <string name="invite_new">邀请新人送30元</string>
-    <string name="invite_friend">您已邀请$1%d位好友</string>
+    <string name="invite_friend">您已邀请%d位好友</string>
     <string name="invite_gift_activity">邀请有礼活动  已结束</string>
     <string name="invite_new_tag">邀请新用户下单签收，即得30元红包，新用户另得60元新人礼包</string>
     <string name="friend_phone_num">好友手机号</string>
@@ -146,6 +148,12 @@
     <string name="whether_got_lucky_money_or_not">是否得到红包</string>
     <string name="login_tag">未注册过的手机号码将自动注册为菜鲜果美账号</string>
     <string name="login_tag2">登录即代表同意《菜鲜果美注册协议》《菜鲜果美用户隐私协议》</string>
+
+
+    <string name="check_code_sent">验证码已发送</string>
+    <string name="phone_num_invalid">手机号码无效</string>
+    <string name="check_code_invalid">验证码无效</string>
+    <string name="login_successful">登录成功</string>
 
 
 

@@ -4,9 +4,8 @@ import com.deanlib.ootb.entity.BaseEntity;
 
 public class Login extends BaseEntity {
 
-    public Login(String userAccount, String password, String mobileValidCode) {
+    public Login(String userAccount, String mobileValidCode) {
         this.userAccount = userAccount;
-        this.password = password;
         this.mobileValidCode = mobileValidCode;
     }
 

@@ -169,18 +169,6 @@ public class UserManager {
         return getUser()!=null;
     }
 
-    /**
-     * 是否可更改值守模式
-     * 5分钟
-     * @return
-     */
-    public static boolean canChangeDoorStatus(){
-
-        getUser();
-
-        return System.currentTimeMillis()>(user.doorStatusTime+5*60*1000);
-    }
-
 
     public static UserManager getInstance(Context context){
 

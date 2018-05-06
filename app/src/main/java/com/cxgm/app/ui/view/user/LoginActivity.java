@@ -2,6 +2,7 @@ package com.cxgm.app.ui.view.user;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -10,10 +11,21 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.cxgm.app.R;
+import com.cxgm.app.data.entity.User;
+import com.cxgm.app.data.io.user.LoginReq;
+import com.cxgm.app.data.io.user.SendSMSReq;
 import com.cxgm.app.ui.base.BaseActivity;
-import com.deanlib.ootb.utils.ValidateUtils;
+import com.cxgm.app.utils.ToastManager;
+import com.cxgm.app.utils.UserManager;
+import com.deanlib.ootb.data.io.Request;
+
+import org.xutils.common.Callback;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -48,6 +60,22 @@ public class LoginActivity extends BaseActivity {
     @BindView(R.id.tvProtocol)
     TextView tvProtocol;
 
+    String mCheckCode;
+
+    CountDownTimer mDownTimer = new CountDownTimer(60 * 1000,1000) {
+        @Override
+        public void onTick(long l) {
+            enabledBtn(tvGetCheckCode,false);
+            tvGetCheckCode.setText(getString(R.string.get_check_code_again_,l/1000));
+        }
+
+        @Override
+        public void onFinish() {
+            enabledBtn(tvGetCheckCode,true);
+            tvGetCheckCode.setText(R.string.get_check_code_again);
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -77,7 +105,7 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                enabledBtn(tvGetCheckCode,ValidateUtils.isMobileNum(editable.toString()));
+                enabledBtn(tvGetCheckCode,isMobileNum(editable.toString()));
             }
         });
         etCheckCode.addTextChangedListener(new TextWatcher() {
@@ -93,7 +121,7 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                enabledBtn(tvLogin,ValidateUtils.isMobileNum(etPhoneNum.getText().toString()) && !TextUtils.isEmpty(editable));
+                enabledBtn(tvLogin,isMobileNum(etPhoneNum.getText().toString()) && !TextUtils.isEmpty(editable) && editable.length() == 6);
             }
         });
     }
@@ -105,18 +133,110 @@ public class LoginActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tvGetCheckCode:
+                new SendSMSReq(this,etPhoneNum.getText().toString()).execute(new Request.RequestCallback<String>(){
+
+                    @Override
+                    public void onSuccess(String s) {
+                        ToastManager.sendToast(getString(R.string.check_code_sent));
+                        mCheckCode = s;
+                        mDownTimer.start();
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(Callback.CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
                 break;
             case R.id.tvLogin:
+                if (!isMobileNum(etPhoneNum.getText().toString())){
+                    ToastManager.sendToast(getString(R.string.phone_num_invalid));
+                }
+                if (!etCheckCode.getText().toString().equals(mCheckCode)){
+                    ToastManager.sendToast(getString(R.string.check_code_invalid));
+                }
+
+                new LoginReq(this,etPhoneNum.getText().toString(),etCheckCode.getText().toString()).execute(new Request.RequestCallback<User>() {
+                    @Override
+                    public void onSuccess(User user) {
+                        if (user != null){
+                            ToastManager.sendToast(getString(R.string.login_successful));
+                            UserManager.saveUser(user);
+                            for (UserManager.OnUserActionListener listener:UserManager.mListenerList){
+                                listener.onLogin(user);
+                            }
+                            finish();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(Callback.CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
                 break;
         }
     }
 
-    private void enabledBtn(View view,boolean enabled){
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mDownTimer.cancel();
+    }
+
+    private void enabledBtn(View view, boolean enabled){
         if (enabled){
             view.setBackgroundResource(R.drawable.shape_tc_tran_green);
         }else {
             view.setBackgroundResource(R.drawable.shape_tc_tran_gray_2);
         }
         view.setEnabled(enabled);
+    }
+
+    private boolean isMobileNum(String mobileNum){
+        if (android.text.TextUtils.isEmpty(mobileNum))
+            return false;
+
+        if (mobileNum.length() > 11) {
+            return false;
+        }
+
+        boolean result = false;
+
+        try {
+
+            Pattern p = Pattern.compile("^((13[0-9])|(14[0-9])|(15[0-9])|(17[0-9])|(18[0-9])|(16[0-9]))\\d{8}$");
+
+            Matcher m = p.matcher(mobileNum);
+
+            result = m.matches();
+
+        } catch (Exception e) {
+
+            e.printStackTrace();
+
+        }
+
+        return result;
     }
 }

@@ -11,6 +11,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.cxgm.app.R;
 import com.cxgm.app.ui.base.BaseFragment;
 import com.cxgm.app.ui.view.ViewJump;
@@ -67,6 +69,24 @@ public class UserFragment extends BaseFragment {
         View view = inflater.inflate(R.layout.fragment_user, null);
         unbinder = ButterKnife.bind(this, view);
         return view;
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden){
+            init();
+        }
+    }
+
+    private void init(){
+        if (UserManager.isUserLogin()){
+            tvUserName.setText(UserManager.user.getUserName());
+            Glide.with(this).load(UserManager.user.getHeadUrl())
+                    .apply(RequestOptions.circleCropTransform()
+                    .placeholder(R.mipmap.default_head)
+                    .error(R.mipmap.default_head)).into(imgUserCover);
+        }
     }
 
     @Override

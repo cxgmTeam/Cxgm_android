@@ -1,4 +1,4 @@
-package com.cxgm.app.data.io;
+package com.cxgm.app.data.io.user;
 
 import android.content.Context;
 
@@ -18,9 +18,9 @@ import org.xutils.http.RequestParams;
  */
 public class LoginReq extends Request {
     Login mLogin;
-    public LoginReq(Context context,String userAccount,String password,String mobileValidCode) {
+    public LoginReq(Context context,String userAccount,String mobileValidCode) {
         super(context);
-        mLogin = new Login(userAccount,password,mobileValidCode);
+        mLogin = new Login(userAccount,mobileValidCode);
     }
 
     @Override
