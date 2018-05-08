@@ -3,27 +3,29 @@ package com.cxgm.app.ui.view.common;
 import android.Manifest;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.View;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.baidu.location.BDLocation;
 import com.cxgm.app.R;
+import com.cxgm.app.data.entity.Shop;
+import com.cxgm.app.data.io.common.CheckAddressReq;
 import com.cxgm.app.ui.base.BaseActivity;
-import com.cxgm.app.ui.view.ViewJump;
+
 import com.cxgm.app.ui.view.goods.GoodsFirstClassifyFragment;
 import com.cxgm.app.ui.view.order.ShopCartFragment;
 import com.cxgm.app.ui.view.user.UserFragment;
+import com.cxgm.app.utils.MapHelper;
+import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.manager.PermissionManager;
 import com.tbruyelle.rxpermissions.Permission;
 
+import org.xutils.common.Callback;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import rx.functions.Action1;
 
 /**
@@ -33,7 +35,7 @@ import rx.functions.Action1;
  * @time 2018/4/18 下午5:47
  */
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity{
 
     @BindView(R.id.layoutContainer)
     FrameLayout layoutContainer;
@@ -47,6 +49,8 @@ public class MainActivity extends BaseActivity {
     RadioButton rbUser;
     @BindView(R.id.layoutMenu)
     RadioGroup layoutMenu;
+
+    BDLocation mLocation;
 
     static IndexFragment mIndexFragment;
     static UserFragment mUserFragment;
@@ -71,27 +75,11 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
 
+        mLocation = getIntent().getParcelableExtra("location");
+
+
         init();
 
-        String[] permissions = {
-                Manifest.permission.WRITE_EXTERNAL_STORAGE,
-                Manifest.permission.READ_PHONE_STATE,
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION,
-        };
-
-        //请求权限
-        PermissionManager.requstPermission(this, new Action1<Permission>() {
-            @Override
-            public void call(Permission permission) {
-
-                if (permission.granted) {
-
-
-                }
-
-            }
-        }, permissions);
     }
 
     private void init() {
@@ -126,6 +114,9 @@ public class MainActivity extends BaseActivity {
         switch (checkedId) {
 
             case R.id.rbIndex:
+                Bundle bundle = new Bundle();
+                bundle.putParcelable("location",mLocation);
+                mIndexFragment.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction().show(mIndexFragment).commit();
                 break;
             case R.id.rbUser:

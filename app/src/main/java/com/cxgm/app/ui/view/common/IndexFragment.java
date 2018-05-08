@@ -1,5 +1,6 @@
 package com.cxgm.app.ui.view.common;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -8,22 +9,30 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.baidu.location.BDLocation;
 import com.cxgm.app.R;
+import com.cxgm.app.data.entity.Shop;
+import com.cxgm.app.data.io.common.CheckAddressReq;
 import com.cxgm.app.ui.adapter.GoodsAdapter;
 import com.cxgm.app.ui.adapter.ShopAdapter;
 import com.cxgm.app.ui.base.BaseFragment;
 import com.cxgm.app.ui.view.ViewJump;
+import com.deanlib.ootb.data.io.Request;
+import com.deanlib.ootb.widget.GridViewForScrollView;
 import com.deanlib.ootb.widget.HorizontalListView;
 import com.kevin.loopview.AdLoopView;
 import com.kevin.loopview.internal.BaseLoopAdapter;
 import com.kevin.loopview.internal.LoopData;
 import com.kevin.loopview.utils.JsonTool;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+
+import org.xutils.common.Callback;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,7 +65,7 @@ public class IndexFragment extends BaseFragment {
     AdLoopView loopBanner;
     @BindView(R.id.lvShop)
     ListView lvShop;
-    Unbinder unbinder;
+
     @BindView(R.id.layoutShopShow)
     LinearLayout layoutShopShow;
     @BindView(R.id.tvFresh)
@@ -73,12 +82,29 @@ public class IndexFragment extends BaseFragment {
     HorizontalListView hlvRecommend;
     @BindView(R.id.hlvNewGoods)
     HorizontalListView hlvNewGoods;
-    @BindView(R.id.imgAd)
-    ImageView imgAd;
-    @BindView(R.id.gvGoods)
-    GridView gvGoods;
     @BindView(R.id.layoutGoodsShow)
     LinearLayout layoutGoodsShow;
+
+    @BindView(R.id.imgAd1)
+    ImageView imgAd1;
+    @BindView(R.id.hlvAdGoods1)
+    HorizontalListView hlvAdGoods1;
+    @BindView(R.id.imgAd2)
+    ImageView imgAd2;
+    @BindView(R.id.hlvAdGoods2)
+    HorizontalListView hlvAdGoods2;
+    @BindView(R.id.imgAd3)
+    ImageView imgAd3;
+    @BindView(R.id.hlvAdGoods3)
+    HorizontalListView hlvAdGoods3;
+    @BindView(R.id.gvGoods)
+    GridViewForScrollView gvGoods;
+    @BindView(R.id.srl)
+    SmartRefreshLayout srl;
+
+    Shop mShop;
+    BDLocation mLocation;
+    Unbinder unbinder;
 
     @Nullable
     @Override
@@ -92,15 +118,40 @@ public class IndexFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        init();
+        if (getArguments() != null) {
+            mLocation = getArguments().getParcelable("location");
+        }
+        if (mLocation != null) {
+            new CheckAddressReq(getActivity(), mLocation.getLongitude() + "", mLocation.getLatitude() + "").execute(new Request.RequestCallback<Shop>() {
+
+                @Override
+                public void onSuccess(Shop shop) {
+                    mShop = shop;
+                }
+
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+
+                }
+
+                @Override
+                public void onCancelled(Callback.CancelledException cex) {
+
+                }
+
+                @Override
+                public void onFinished() {
+                    init();
+                }
+            });
+        }
+
     }
 
     private void init() {
 
         etSearchWord.setFocusable(false);
         etSearchWord.setKeyListener(null);
-
-        lvShop.setAdapter(new ShopAdapter());
 
         loopBanner.setOnClickListener(new BaseLoopAdapter.OnItemClickListener() {
             @Override
@@ -109,7 +160,20 @@ public class IndexFragment extends BaseFragment {
             }
         });
 
-        gvGoods.setAdapter(new GoodsAdapter(2,30));
+        if (mShop == null) {
+            //无可配送商铺
+            layoutShopShow.setVisibility(View.VISIBLE);
+            layoutGoodsShow.setVisibility(View.GONE);
+
+            showPopLocationInfo(getString(R.string.out_of_distribution));
+            lvShop.setAdapter(new ShopAdapter());
+
+        } else {
+            layoutShopShow.setVisibility(View.GONE);
+            layoutGoodsShow.setVisibility(View.VISIBLE);
+            gvGoods.setAdapter(new GoodsAdapter(2, 30));
+        }
+
     }
 
     private void loadData() {
@@ -118,9 +182,13 @@ public class IndexFragment extends BaseFragment {
         loopBanner.startAutoLoop();
     }
 
-    @OnClick({R.id.etSearchWord})
-    public void onClickSearch() {
-        ViewJump.toSearch(getActivity());
+    private void showPopLocationInfo(String message) {
+        PopupWindow popupWindow = new PopupWindow();
+        View view = View.inflate(getActivity(), R.layout.layout_location_info, null);
+        TextView tvContent = view.findViewById(R.id.tvContent);
+        tvContent.setText(message);
+        popupWindow.setContentView(view);
+        popupWindow.showAsDropDown(imgLocation);
     }
 
     @Override
@@ -129,8 +197,21 @@ public class IndexFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick(R.id.imgLocation)
-    public void onClickLocation() {
-        ViewJump.toAddrList(getActivity());
+    @OnClick({R.id.imgLocation, R.id.etSearchWord})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.imgLocation:
+                ViewJump.toAddrList(getActivity(),this);
+                break;
+            case R.id.etSearchWord:
+                ViewJump.toSearch(getActivity());
+                break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //TODO
     }
 }

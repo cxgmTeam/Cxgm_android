@@ -148,13 +148,13 @@
     <string name="whether_got_lucky_money_or_not">是否得到红包</string>
     <string name="login_tag">未注册过的手机号码将自动注册为菜鲜果美账号</string>
     <string name="login_tag2">登录即代表同意《菜鲜果美注册协议》《菜鲜果美用户隐私协议》</string>
+    <string name="out_of_distribution">不在配送范围之内，请选择收货地址</string>
 
 
     <string name="check_code_sent">验证码已发送</string>
     <string name="phone_num_invalid">手机号码无效</string>
     <string name="check_code_invalid">验证码无效</string>
     <string name="login_successful">登录成功</string>
-
 
 
 </resources>

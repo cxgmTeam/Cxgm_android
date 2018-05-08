@@ -2,7 +2,9 @@ package com.cxgm.app.ui.view;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.support.v4.app.Fragment;
 
+import com.baidu.location.BDLocation;
 import com.cxgm.app.ui.view.common.MainActivity;
 import com.cxgm.app.ui.view.order.AddrListActivity;
 import com.cxgm.app.ui.view.order.MapLocationActivity;
@@ -19,8 +21,11 @@ import com.cxgm.app.ui.view.user.LoginActivity;
  */
 public class ViewJump {
 
-    public static void toMain(Activity activity){
+    public static final int CODE_ADDR_LIST = 0;
+
+    public static void toMain(Activity activity, BDLocation location){
         Intent intent = new Intent(activity, MainActivity.class);
+        intent.putExtra("location",location);
         activity.startActivity(intent);
     }
 
@@ -30,8 +35,14 @@ public class ViewJump {
     }
 
     public static void toAddrList(Activity activity){
+        toAddrList(activity,null);
+    }
+
+    public static void toAddrList(Activity activity,Fragment fragment){
         Intent intent = new Intent(activity, AddrListActivity.class);
-        activity.startActivity(intent);
+        if (fragment!=null)
+            fragment.startActivityForResult(intent,CODE_ADDR_LIST);
+        else activity.startActivityForResult(intent,CODE_ADDR_LIST);
     }
 
     public static void toNewAddr(Activity activity){

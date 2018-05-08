@@ -108,14 +108,15 @@
                     android:id="@+id/layoutGoodsShow"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
 
                     <LinearLayout
-                        android:elevation="@dimen/elevation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/colorWhite"
+                        android:elevation="@dimen/elevation"
                         android:orientation="horizontal"
                         android:paddingBottom="@dimen/margin_giant_xxx"
                         android:paddingTop="@dimen/margin_giant_xxx">
@@ -176,10 +177,10 @@
                         android:background="@color/colorLine" />
 
                     <LinearLayout
-                        android:elevation="@dimen/elevation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/colorWhite"
+                        android:elevation="@dimen/elevation"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:paddingBottom="@dimen/margin_large"
@@ -224,14 +225,48 @@
                     </LinearLayout>
 
                     <LinearLayout
-                        android:paddingTop="@dimen/margin_giant_xx"
-                        android:paddingBottom="@dimen/margin_giant_xx"
-                        android:elevation="@dimen/elevation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_normal"
                         android:background="@color/colorWhite"
-                        android:orientation="vertical">
+                        android:orientation="horizontal"
+                        android:padding="@dimen/margin_normal">
+
+                        <ImageView
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1" />
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/margin_micro"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1" />
+
+                            <ImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_marginTop="@dimen/margin_micro"
+                                android:layout_weight="1" />
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:background="@color/colorWhite"
+                        android:elevation="@dimen/elevation"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/margin_giant_xx"
+                        android:paddingTop="@dimen/margin_giant_xx">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -255,21 +290,21 @@
                             android:id="@+id/hlvRecommend"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_large_t"
                             android:paddingLeft="@dimen/margin_normal"
                             android:paddingRight="@dimen/margin_normal"
-                            android:layout_marginTop="@dimen/margin_large_t"
                             android:scrollbars="none" />
                     </LinearLayout>
 
                     <LinearLayout
-                        android:paddingTop="@dimen/margin_giant_xx"
-                        android:paddingBottom="@dimen/margin_giant_xx"
-                        android:elevation="@dimen/elevation"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_normal"
                         android:background="@color/colorWhite"
-                        android:orientation="vertical">
+                        android:elevation="@dimen/elevation"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/margin_giant_xx"
+                        android:paddingTop="@dimen/margin_giant_xx">
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -291,39 +326,148 @@
 
                         <com.deanlib.ootb.widget.HorizontalListView
                             android:id="@+id/hlvNewGoods"
-                            android:scrollbars="none"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_large_t"
                             android:paddingLeft="@dimen/margin_normal"
                             android:paddingRight="@dimen/margin_normal"
-                            android:layout_marginTop="@dimen/margin_large_t" />
+                            android:scrollbars="none" />
                     </LinearLayout>
 
-                    <ImageView
-                        android:src="@mipmap/default_img"
-                        android:elevation="@dimen/elevation"
-                        android:id="@+id/imgAd"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/ad_height"
+                    <LinearLayout
+                        android:paddingTop="@dimen/margin_normal"
+                        android:paddingBottom="@dimen/margin_giant_xx"
                         android:layout_marginTop="@dimen/margin_normal"
+                        android:orientation="vertical"
                         android:background="@color/colorWhite"
-                        android:paddingLeft="@dimen/margin_normal"
-                        android:paddingRight="@dimen/margin_normal"
-                        android:paddingTop="@dimen/margin_normal" />
-
-                    <GridView
                         android:elevation="@dimen/elevation"
-                        android:id="@+id/gvGoods"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:scaleType="fitXY"
+                            android:id="@+id/imgAd1"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/ad_height"
+                            android:paddingLeft="@dimen/margin_normal"
+                            android:paddingRight="@dimen/margin_normal"
+                            android:src="@mipmap/default_img" />
+
+                        <com.deanlib.ootb.widget.HorizontalListView
+                            android:id="@+id/hlvAdGoods1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_giant"
+                            android:paddingLeft="@dimen/margin_normal"
+                            android:paddingRight="@dimen/margin_normal"
+                            android:scrollbars="none" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:paddingTop="@dimen/margin_normal"
+                        android:paddingBottom="@dimen/margin_giant_xx"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:orientation="vertical"
+                        android:background="@color/colorWhite"
+                        android:elevation="@dimen/elevation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:scaleType="fitXY"
+                            android:id="@+id/imgAd2"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/ad_height"
+                            android:paddingLeft="@dimen/margin_normal"
+                            android:paddingRight="@dimen/margin_normal"
+                            android:src="@mipmap/default_img" />
+
+                        <com.deanlib.ootb.widget.HorizontalListView
+                            android:id="@+id/hlvAdGoods2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_giant"
+                            android:paddingLeft="@dimen/margin_normal"
+                            android:paddingRight="@dimen/margin_normal"
+                            android:scrollbars="none" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:paddingTop="@dimen/margin_normal"
+                        android:paddingBottom="@dimen/margin_giant_xx"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:orientation="vertical"
+                        android:background="@color/colorWhite"
+                        android:elevation="@dimen/elevation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:scaleType="fitXY"
+                            android:id="@+id/imgAd3"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/ad_height"
+                            android:paddingLeft="@dimen/margin_normal"
+                            android:paddingRight="@dimen/margin_normal"
+                            android:src="@mipmap/default_img" />
+
+                        <com.deanlib.ootb.widget.HorizontalListView
+                            android:id="@+id/hlvAdGoods3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_giant"
+                            android:paddingLeft="@dimen/margin_normal"
+                            android:paddingRight="@dimen/margin_normal"
+                            android:scrollbars="none" />
+
+                    </LinearLayout>
+
+
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_normal"
                         android:background="@color/colorWhite"
-                        android:horizontalSpacing="@dimen/margin_normal"
-                        android:paddingLeft="@dimen/margin_normal"
-                        android:paddingRight="@dimen/margin_normal"
-                        android:numColumns="2"
-                        android:padding="@dimen/margin_large_t"
-                        android:scrollbars="none"
-                        android:verticalSpacing="@dimen/margin_giant" />
+                        android:elevation="@dimen/elevation"
+                        android:orientation="vertical"
+                        android:paddingBottom="@dimen/margin_giant_xx"
+                        android:paddingTop="@dimen/margin_giant_xx">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="@string/new_goods"
+                            android:textColor="@color/textBlack"
+                            android:textSize="@dimen/text_size_large"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_marginTop="@dimen/margin_micro_t"
+                            android:text="@string/new_goods_tag"
+                            android:textColor="@color/textGray"
+                            android:textSize="@dimen/text_size_small" />
+
+                        <com.deanlib.ootb.widget.GridViewForScrollView
+                            android:id="@+id/gvGoods"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@color/colorWhite"
+                            android:elevation="@dimen/elevation"
+                            android:horizontalSpacing="@dimen/margin_normal"
+                            android:numColumns="2"
+                            android:padding="@dimen/margin_large_t"
+                            android:paddingLeft="@dimen/margin_normal"
+                            android:paddingRight="@dimen/margin_normal"
+                            android:scrollbars="none"
+                            android:verticalSpacing="@dimen/margin_giant" />
+                    </LinearLayout>
+
                 </LinearLayout>
 
             </LinearLayout>

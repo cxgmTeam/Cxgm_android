@@ -2,6 +2,12 @@ package com.cxgm.app.data.entity;
 
 import com.deanlib.ootb.entity.BaseEntity;
 
+/**
+ * 登录信息
+ *
+ * @author dean
+ * @time 2018/5/8 上午11:56
+ */
 public class Login extends BaseEntity {
 
     public Login(String userAccount, String mobileValidCode) {
