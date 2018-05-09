@@ -34,12 +34,13 @@ public class ViewJump {
         activity.startActivity(intent);
     }
 
-    public static void toAddrList(Activity activity){
-        toAddrList(activity,null);
+    public static void toAddrList(Activity activity,BDLocation location){
+        toAddrList(activity,null,location);
     }
 
-    public static void toAddrList(Activity activity,Fragment fragment){
+    public static void toAddrList(Activity activity,Fragment fragment,BDLocation location){
         Intent intent = new Intent(activity, AddrListActivity.class);
+        intent.putExtra("location",location);
         if (fragment!=null)
             fragment.startActivityForResult(intent,CODE_ADDR_LIST);
         else activity.startActivityForResult(intent,CODE_ADDR_LIST);

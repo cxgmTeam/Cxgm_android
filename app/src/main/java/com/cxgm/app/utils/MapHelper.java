@@ -23,6 +23,9 @@ public class MapHelper extends BDAbstractLocationListener {
         mLocationClient = new LocationClient(context);
         LocationClientOption option = new LocationClientOption();
 
+        option.setIsNeedAddress(true);
+        option.setIsNeedLocationDescribe(true);
+
         option.setLocationMode(LocationClientOption.LocationMode.Hight_Accuracy);
 //可选，设置定位模式，默认高精度
 //LocationMode.Hight_Accuracy：高精度；

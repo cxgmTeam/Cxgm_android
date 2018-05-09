@@ -33,6 +33,7 @@ import com.kevin.loopview.utils.JsonTool;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import org.xutils.common.Callback;
+import org.xutils.common.util.DensityUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -188,7 +189,9 @@ public class IndexFragment extends BaseFragment {
         TextView tvContent = view.findViewById(R.id.tvContent);
         tvContent.setText(message);
         popupWindow.setContentView(view);
-        popupWindow.showAsDropDown(imgLocation);
+        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        popupWindow.showAsDropDown(imgLocation, DensityUtil.dip2px(6),DensityUtil.dip2px(-6));
     }
 
     @Override
@@ -201,7 +204,7 @@ public class IndexFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgLocation:
-                ViewJump.toAddrList(getActivity(),this);
+                ViewJump.toAddrList(getActivity(),this,mLocation);
                 break;
             case R.id.etSearchWord:
                 ViewJump.toSearch(getActivity());
@@ -212,6 +215,14 @@ public class IndexFragment extends BaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        //TODO
+        if (resultCode == getActivity().RESULT_OK){
+            switch (requestCode){
+                case ViewJump.CODE_ADDR_LIST:
+                    if (data!=null){
+                        mLocation = data.getParcelableExtra("location");
+                    }
+                    break;
+            }
+        }
     }
 }
