@@ -18,7 +18,10 @@ import android.widget.TextView;
 import com.baidu.location.BDLocation;
 import com.cxgm.app.R;
 import com.cxgm.app.data.entity.Shop;
+import com.cxgm.app.data.entity.ShopCategory;
 import com.cxgm.app.data.io.common.CheckAddressReq;
+import com.cxgm.app.data.io.goods.FindFirstCategoryReq;
+import com.cxgm.app.ui.adapter.FirstCategoryAdapter;
 import com.cxgm.app.ui.adapter.GoodsAdapter;
 import com.cxgm.app.ui.adapter.ShopAdapter;
 import com.cxgm.app.ui.base.BaseFragment;
@@ -34,6 +37,9 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 
 import org.xutils.common.Callback;
 import org.xutils.common.util.DensityUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -69,14 +75,8 @@ public class IndexFragment extends BaseFragment {
 
     @BindView(R.id.layoutShopShow)
     LinearLayout layoutShopShow;
-    @BindView(R.id.tvFresh)
-    TextView tvFresh;
-    @BindView(R.id.tvGardenStuff)
-    TextView tvGardenStuff;
-    @BindView(R.id.tvSnacks)
-    TextView tvSnacks;
-    @BindView(R.id.tvGrainOil)
-    TextView tvGrainOil;
+    @BindView(R.id.gvFirstCategory)
+    GridViewForScrollView gvFirstCategory;
     @BindView(R.id.tvNewsContent)
     TextView tvNewsContent;
     @BindView(R.id.hlvRecommend)
@@ -107,6 +107,9 @@ public class IndexFragment extends BaseFragment {
     BDLocation mLocation;
     Unbinder unbinder;
 
+    FirstCategoryAdapter mFCAdapter;
+    List<ShopCategory> mFCList;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -123,11 +126,12 @@ public class IndexFragment extends BaseFragment {
             mLocation = getArguments().getParcelable("location");
         }
         if (mLocation != null) {
-            new CheckAddressReq(getActivity(), mLocation.getLongitude() + "", mLocation.getLatitude() + "").execute(new Request.RequestCallback<Shop>() {
+            new CheckAddressReq(getActivity(), mLocation.getLongitude() + "", mLocation.getLatitude() + "").execute(new Request.RequestCallback<List<Shop>>() {
 
                 @Override
-                public void onSuccess(Shop shop) {
-                    mShop = shop;
+                public void onSuccess(List<Shop> shops) {
+                    if (shops!=null && shops.size()>0)
+                        mShop = shops.get(0);
                 }
 
                 @Override
@@ -143,6 +147,7 @@ public class IndexFragment extends BaseFragment {
                 @Override
                 public void onFinished() {
                     init();
+                    loadData();
                 }
             });
         }
@@ -172,6 +177,11 @@ public class IndexFragment extends BaseFragment {
         } else {
             layoutShopShow.setVisibility(View.GONE);
             layoutGoodsShow.setVisibility(View.VISIBLE);
+            //First Category
+            mFCList = new ArrayList<>();
+            mFCAdapter = new FirstCategoryAdapter(mFCList);
+            gvFirstCategory.setAdapter(mFCAdapter);
+
             gvGoods.setAdapter(new GoodsAdapter(2, 30));
         }
 
@@ -181,6 +191,35 @@ public class IndexFragment extends BaseFragment {
         LoopData loopData = JsonTool.toBean("", LoopData.class);
         loopBanner.refreshData(loopData);
         loopBanner.startAutoLoop();
+
+        if (mShop == null){
+
+        }else {
+//            new FindFirstCategoryReq(getActivity(), mShop.getId()).execute(new Request.RequestCallback<List<ShopCategory>>() {
+//                @Override
+//                public void onSuccess(List<ShopCategory> list) {
+//                    if (list!=null){
+//                        mFCList.addAll(list);
+//                        mFCAdapter.notifyDataSetChanged();
+//                    }
+//                }
+//
+//                @Override
+//                public void onError(Throwable ex, boolean isOnCallback) {
+//
+//                }
+//
+//                @Override
+//                public void onCancelled(Callback.CancelledException cex) {
+//
+//                }
+//
+//                @Override
+//                public void onFinished() {
+//
+//                }
+//            });
+        }
     }
 
     private void showPopLocationInfo(String message) {

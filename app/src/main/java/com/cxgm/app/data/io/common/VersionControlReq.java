@@ -3,6 +3,7 @@ package com.cxgm.app.data.io.common;
 import android.content.Context;
 
 import com.alibaba.fastjson.JSON;
+import com.cxgm.app.app.Constants;
 import com.cxgm.app.app.UserResult;
 import com.deanlib.ootb.data.io.Request;
 
@@ -30,7 +31,7 @@ public class VersionControlReq extends Request {
     @Override
     public RequestParams params() {
 
-        RequestParams params = new RequestParams(SERVER + "/user/visionControl");
+        RequestParams params = new RequestParams(SERVER + Constants.PORT7 + "/user/visionControl");
         params.addQueryStringParameter("visionCode",versionCode);
         return params;
     }

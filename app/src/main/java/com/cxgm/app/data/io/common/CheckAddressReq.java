@@ -3,11 +3,14 @@ package com.cxgm.app.data.io.common;
 import android.content.Context;
 
 import com.alibaba.fastjson.JSON;
+import com.cxgm.app.app.Constants;
 import com.cxgm.app.app.UserResult;
 import com.cxgm.app.data.entity.Shop;
 import com.deanlib.ootb.data.io.Request;
 
 import org.xutils.http.RequestParams;
+
+import java.util.List;
 
 /**
  * 判断用户配送地址是否在配送范围
@@ -34,7 +37,7 @@ public class CheckAddressReq extends Request {
     @Override
     public RequestParams params() {
 
-        RequestParams params = new RequestParams(SERVER + "/user/checkAddress");
+        RequestParams params = new RequestParams(SERVER + Constants.PORT7 + "/user/checkAddress");
         params.addQueryStringParameter("longitude",longitude);
         params.addQueryStringParameter("dimension",dimension);
 
@@ -42,8 +45,8 @@ public class CheckAddressReq extends Request {
     }
 
     @Override
-    public Shop parse(String json) {
-        UserResult<Shop> result = JSON.parseObject(json,new UserResult<Shop>(){}.getEntityType());
+    public List<Shop> parse(String json) {
+        UserResult<List<Shop>> result = JSON.parseObject(json,new UserResult<List<Shop>>(){}.getEntityType());
         return result.data;
     }
 }

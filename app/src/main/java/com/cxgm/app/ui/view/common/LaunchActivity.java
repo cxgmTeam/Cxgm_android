@@ -86,7 +86,7 @@ public class LaunchActivity extends BaseActivity implements MapHelper.LocationCa
 
                 }
                 mCount++;
-                if (mCount == mPermissions.length){
+                if (mCount >= mPermissions.length){
                     //需要限定权限框询问结束时 打开定位打开Main
                     MapHelper mapHelper = new MapHelper(getApplicationContext(),LaunchActivity.this);
                     mapHelper.startLocation();

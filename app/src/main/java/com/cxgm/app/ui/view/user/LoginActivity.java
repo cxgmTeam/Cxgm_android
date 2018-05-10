@@ -21,6 +21,7 @@ import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.utils.ToastManager;
 import com.cxgm.app.utils.UserManager;
 import com.deanlib.ootb.data.io.Request;
+import com.deanlib.ootb.utils.ValidateUtils;
 
 import org.xutils.common.Callback;
 
@@ -105,7 +106,7 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                enabledBtn(tvGetCheckCode,isMobileNum(editable.toString()));
+                enabledBtn(tvGetCheckCode,ValidateUtils.isMobileNum(editable.toString()));
             }
         });
         etCheckCode.addTextChangedListener(new TextWatcher() {
@@ -121,7 +122,7 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                enabledBtn(tvLogin,isMobileNum(etPhoneNum.getText().toString()) && !TextUtils.isEmpty(editable) && editable.length() == 6);
+                enabledBtn(tvLogin,ValidateUtils.isMobileNum(etPhoneNum.getText().toString()) && !TextUtils.isEmpty(editable) && editable.length() == 6);
             }
         });
     }
@@ -159,7 +160,7 @@ public class LoginActivity extends BaseActivity {
                 });
                 break;
             case R.id.tvLogin:
-                if (!isMobileNum(etPhoneNum.getText().toString())){
+                if (!ValidateUtils.isMobileNum(etPhoneNum.getText().toString())){
                     ToastManager.sendToast(getString(R.string.phone_num_invalid));
                 }
                 if (!etCheckCode.getText().toString().equals(mCheckCode)){
@@ -213,30 +214,4 @@ public class LoginActivity extends BaseActivity {
         view.setEnabled(enabled);
     }
 
-    private boolean isMobileNum(String mobileNum){
-        if (android.text.TextUtils.isEmpty(mobileNum))
-            return false;
-
-        if (mobileNum.length() > 11) {
-            return false;
-        }
-
-        boolean result = false;
-
-        try {
-
-            Pattern p = Pattern.compile("^((13[0-9])|(14[0-9])|(15[0-9])|(17[0-9])|(18[0-9])|(16[0-9]))\\d{8}$");
-
-            Matcher m = p.matcher(mobileNum);
-
-            result = m.matches();
-
-        } catch (Exception e) {
-
-            e.printStackTrace();
-
-        }
-
-        return result;
-    }
 }

@@ -3,6 +3,7 @@ package com.cxgm.app.data.io.user;
 import android.content.Context;
 
 import com.alibaba.fastjson.JSON;
+import com.cxgm.app.app.Constants;
 import com.cxgm.app.app.UserResult;
 import com.cxgm.app.data.entity.Login;
 import com.cxgm.app.data.entity.User;
@@ -31,7 +32,7 @@ public class LoginReq extends Request {
     @Override
     public RequestParams params() {
 
-        RequestParams params = new RequestParams(SERVER + "/user/login");
+        RequestParams params = new RequestParams(SERVER + Constants.PORT7 + "/user/login");
         params.setBodyContent(JSON.toJSONString(mLogin,false));
         return params;
     }

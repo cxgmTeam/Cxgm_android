@@ -3,6 +3,7 @@ package com.cxgm.app.data.io;
 import android.content.Context;
 
 import com.alibaba.fastjson.JSON;
+import com.cxgm.app.app.Constants;
 import com.cxgm.app.app.UserResult;
 import com.deanlib.ootb.data.io.Request;
 
@@ -22,7 +23,7 @@ public class TempReq extends Request {
     @Override
     public RequestParams params() {
 
-        RequestParams params = new RequestParams(SERVER + "");
+        RequestParams params = new RequestParams(SERVER + Constants.PORT7 + "");
 
         return params;
     }

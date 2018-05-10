@@ -112,64 +112,15 @@
                     android:visibility="gone">
 
 
-                    <LinearLayout
+                    <com.deanlib.ootb.widget.GridViewForScrollView
+                        android:id="@+id/gvFirstCategory"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/colorWhite"
                         android:elevation="@dimen/elevation"
-                        android:orientation="horizontal"
+                        android:numColumns="4"
                         android:paddingBottom="@dimen/margin_giant_xxx"
-                        android:paddingTop="@dimen/margin_giant_xxx">
-
-                        <TextView
-                            android:id="@+id/tvFresh"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawablePadding="@dimen/margin_micro"
-                            android:drawableTop="@mipmap/fresh"
-                            android:gravity="center"
-                            android:text="@string/fresh"
-                            android:textColor="@color/textBlack"
-                            android:textSize="@dimen/text_size_normal" />
-
-                        <TextView
-                            android:id="@+id/tvGardenStuff"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawablePadding="@dimen/margin_micro"
-                            android:drawableTop="@mipmap/garden_stuff"
-                            android:gravity="center"
-                            android:text="@string/garden_stuff"
-                            android:textColor="@color/textBlack"
-                            android:textSize="@dimen/text_size_normal" />
-
-                        <TextView
-                            android:id="@+id/tvSnacks"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawablePadding="@dimen/margin_micro"
-                            android:drawableTop="@mipmap/snacks"
-                            android:gravity="center"
-                            android:text="@string/snacks"
-                            android:textColor="@color/textBlack"
-                            android:textSize="@dimen/text_size_normal" />
-
-                        <TextView
-                            android:id="@+id/tvGrainOil"
-                            android:layout_width="0dp"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:drawablePadding="@dimen/margin_micro"
-                            android:drawableTop="@mipmap/grain_oil"
-                            android:gravity="center"
-                            android:text="@string/grain_oil"
-                            android:textColor="@color/textBlack"
-                            android:textSize="@dimen/text_size_normal" />
-
-                    </LinearLayout>
+                        android:paddingTop="@dimen/margin_giant_xxx"/>
 
                     <View
                         android:layout_width="match_parent"
