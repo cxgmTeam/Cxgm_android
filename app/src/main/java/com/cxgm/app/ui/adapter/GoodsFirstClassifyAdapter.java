@@ -7,6 +7,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
+import com.cxgm.app.data.entity.ShopCategory;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,24 +21,24 @@ import butterknife.ButterKnife;
  * @time 2018/4/20 0020 23:39
  */
 public class GoodsFirstClassifyAdapter extends BaseAdapter {
-
-    public GoodsFirstClassifyAdapter() {
-
+    List<ShopCategory> mList;
+    public GoodsFirstClassifyAdapter(List<ShopCategory> mList) {
+        this.mList = mList;
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return mList.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return mList.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
 
     @Override
@@ -49,6 +52,7 @@ public class GoodsFirstClassifyAdapter extends BaseAdapter {
         }else {
             holder = (ViewHolder) view.getTag();
         }
+        holder.tvName.setText(mList.get(i).getName());
 
         return view;
     }

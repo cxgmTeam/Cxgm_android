@@ -14,7 +14,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * 商品清单列表适配
+ * 订单 商品清单列表适配
  *
  * @anthor Dean
  * @time 2018/4/21 0021 0:50

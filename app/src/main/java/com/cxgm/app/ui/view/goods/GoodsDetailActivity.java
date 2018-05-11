@@ -90,7 +90,7 @@ public class GoodsDetailActivity extends BaseActivity {
         imgAction1.setImageResource(R.mipmap.shop_cart3);
         imgAction1.setVisibility(View.VISIBLE);
 
-        gvGoods.setAdapter(new GoodsAdapter(2,30));
+//        gvGoods.setAdapter(new GoodsAdapter(2,30));
     }
 
     @OnClick({R.id.imgBack, R.id.imgAction1})

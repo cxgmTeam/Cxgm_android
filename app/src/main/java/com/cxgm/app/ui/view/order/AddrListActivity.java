@@ -108,7 +108,7 @@ public class AddrListActivity extends BaseActivity implements MapHelper.Location
     public void onReceiveLocation(BDLocation bdLocation) {
         if (bdLocation!=null) {
             mLocation = bdLocation;
-            tvCurrentAddr.setText(mLocation.getStreet() + mLocation.getBuildingName());
+            tvCurrentAddr.setText(mLocation.getDistrict() + mLocation.getStreet() + mLocation.getLocationDescribe());
         }
     }
 

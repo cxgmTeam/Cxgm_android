@@ -77,7 +77,6 @@ public class MainActivity extends BaseActivity{
 
         mLocation = getIntent().getParcelableExtra("location");
 
-
         init();
 
     }

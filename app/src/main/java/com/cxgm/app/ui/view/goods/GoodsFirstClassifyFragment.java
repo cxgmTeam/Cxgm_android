@@ -11,8 +11,17 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
+import com.cxgm.app.data.entity.ShopCategory;
+import com.cxgm.app.data.io.goods.FindFirstCategoryReq;
+import com.cxgm.app.ui.adapter.FirstCategoryAdapter;
 import com.cxgm.app.ui.adapter.GoodsFirstClassifyAdapter;
 import com.cxgm.app.ui.base.BaseFragment;
+import com.deanlib.ootb.data.io.Request;
+
+import org.xutils.common.Callback;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -38,6 +47,9 @@ public class GoodsFirstClassifyFragment extends BaseFragment {
     GridView gvClassify;
     Unbinder unbinder;
 
+    GoodsFirstClassifyAdapter mFCAdapter;
+    List<ShopCategory> mFCList;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -50,6 +62,7 @@ public class GoodsFirstClassifyFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init();
+        loadData();
     }
 
     private void init(){
@@ -57,7 +70,37 @@ public class GoodsFirstClassifyFragment extends BaseFragment {
         imgAction1.setImageResource(R.mipmap.search3);
         imgAction1.setVisibility(View.VISIBLE);
 
-        gvClassify.setAdapter(new GoodsFirstClassifyAdapter());
+        mFCList = new ArrayList<>();
+        mFCAdapter = new GoodsFirstClassifyAdapter(mFCList);
+
+        gvClassify.setAdapter(mFCAdapter);
+    }
+
+    private void loadData(){
+//        new FindFirstCategoryReq(getActivity(), mShop.getId()).execute(new Request.RequestCallback<List<ShopCategory>>() {
+//            @Override
+//            public void onSuccess(List<ShopCategory> list) {
+//                if (list!=null){
+//                    mFCList.addAll(list);
+//                    mFCAdapter.notifyDataSetChanged();
+//                }
+//            }
+//
+//            @Override
+//            public void onError(Throwable ex, boolean isOnCallback) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(Callback.CancelledException cex) {
+//
+//            }
+//
+//            @Override
+//            public void onFinished() {
+//
+//            }
+//        });
     }
 
     @Override
