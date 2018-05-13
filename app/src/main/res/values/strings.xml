@@ -34,6 +34,7 @@
     <string name="surrounding">附近地址</string>
     <string name="new_receive_addr">新增收货地址</string>
     <string name="new_addr">新增地址</string>
+    <string name="edit_addr">编辑地址</string>
 
     <string name="save">保存</string>
     <string name="cancel">取消</string>
@@ -42,7 +43,7 @@
     <string name="set_default">设为默认</string>
 
     <string name="go_shopping">去逛逛</string>
-    <string name="go_duoshou_">去结算(%s)</string>
+    <string name="go_duoshou_">去结算(%d)</string>
     <string name="total_">合计：%s</string>
     <string name="sum_">总额：%s</string>
     <string name="discounts_">优惠：%s</string>
@@ -156,6 +157,14 @@
     <string name="phone_num_invalid">手机号码无效</string>
     <string name="check_code_invalid">验证码无效</string>
     <string name="login_successful">登录成功</string>
+    <string name="location_fail">定位失败</string>
+
+    <string name="save_successful">保存成功</string>
+    <string name="delete_successful">删除成功</string>
+
+    <string name="consignee_empty">收货人不能为空</string>
+    <string name="invaild_phone_num">无效的手机号</string>
+    <string name="delivery_address_empty">收货地址不能为空</string>
 
 
 </resources>

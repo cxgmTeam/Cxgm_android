@@ -119,6 +119,7 @@ public class UserFragment extends BaseFragment {
                 ViewJump.toInvite(getActivity());
                 break;
             case R.id.layoutCoupon:
+                ViewJump.toCoupon(getActivity());
                 break;
             case R.id.layoutReceiverAddr:
                 break;

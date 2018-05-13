@@ -20,11 +20,20 @@ public class User extends BaseEntity {
      * userPwd : string
      */
 
+    private int userId;
     private String headUrl;
     private String mobile;
     private String token;
     private String userName;
     private String userPwd;
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
     public String getHeadUrl() {
         return headUrl;

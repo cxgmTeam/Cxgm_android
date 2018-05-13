@@ -8,7 +8,16 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.cxgm.app.R;
+import com.cxgm.app.data.entity.ProductTransfer;
+import com.cxgm.app.data.entity.ShopCategory;
+import com.cxgm.app.utils.StringHelper;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,35 +29,45 @@ import butterknife.ButterKnife;
  * @time 2018/4/22 0022 16:52
  */
 
-public class GoodsSecondClassifyAdapter extends BaseExpandableListAdapter {
+public class ExpandableGoodsListAdapter extends BaseExpandableListAdapter {
+    List<String> mKeyList;
+    Map<String,List<ProductTransfer>> mProductMap;
+    public ExpandableGoodsListAdapter(Map<String,List<ProductTransfer>> mProductMap){
+        this.mProductMap = mProductMap;
+        mKeyList = new ArrayList<>();
+        Set<Map.Entry<String, List<ProductTransfer>>> entries = mProductMap.entrySet();
+        for (Map.Entry<String,List<ProductTransfer>> entry : entries){
+            mKeyList.add(entry.getKey());
+        }
+    }
     @Override
     public int getGroupCount() {
-        return 0;
+        return mProductMap.size();
     }
 
     @Override
     public int getChildrenCount(int i) {
-        return 0;
+        return mProductMap.get(mKeyList.get(i)).size();
     }
 
     @Override
     public Object getGroup(int i) {
-        return null;
+        return mProductMap.get(mKeyList.get(i));
     }
 
     @Override
     public Object getChild(int i, int i1) {
-        return null;
+        return mProductMap.get(mKeyList.get(i)).get(i1);
     }
 
     @Override
     public long getGroupId(int i) {
-        return 0;
+        return i;
     }
 
     @Override
     public long getChildId(int i, int i1) {
-        return 0;
+        return i1;
     }
 
     @Override
@@ -58,7 +77,9 @@ public class GoodsSecondClassifyAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
-        return null;
+        TextView view1 = new TextView(viewGroup.getContext());
+        view1.setText(mKeyList.get(i));
+        return view1;
     }
 
     @Override
@@ -72,6 +93,10 @@ public class GoodsSecondClassifyAdapter extends BaseExpandableListAdapter {
         } else {
             holder = (SubViewHolder) view.getTag();
         }
+        Glide.with(view).load(mProductMap.get(mKeyList.get(i)).get(i1).getImage())
+                .into(holder.imgCover);
+        holder.tvTitle.setText(mProductMap.get(mKeyList.get(i)).get(i1).getFullName());
+        holder.tvPrice.setText(StringHelper.getRMBFormat(mProductMap.get(mKeyList.get(i)).get(i1).getPrice()));
 
         return view;
     }

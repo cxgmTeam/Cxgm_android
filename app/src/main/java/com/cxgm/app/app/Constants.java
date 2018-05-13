@@ -1,5 +1,8 @@
 package com.cxgm.app.app;
 
+import com.baidu.location.BDLocation;
+import com.cxgm.app.data.entity.Shop;
+
 /**
  * 常量
  * Created by dean on 2017/7/8.
@@ -31,5 +34,9 @@ public class Constants {
 
 //    public static String WECHAT_APP_ID = "wx614763e83a977f41";
 //    public static String BAIDU_AK = "Kuu8NxsbIOHBtkgTYXX8vfNqqsBuPZ9U";
+
+    public static BDLocation currentLocation;//当前定位
+    public static Shop currentShop;//当前商铺
+    public static boolean checkAddress = false;//当前地址可配送
 
 }

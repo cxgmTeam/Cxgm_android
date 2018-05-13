@@ -7,6 +7,10 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
+import com.cxgm.app.data.entity.UserAddress;
+import com.deanlib.ootb.utils.TextUtils;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -20,23 +24,24 @@ import butterknife.ButterKnife;
 
 public class AddrAdapter extends BaseAdapter {
 
-    public AddrAdapter() {
-
+    List<UserAddress> mList;
+    public AddrAdapter(List<UserAddress> mList) {
+        this.mList = mList;
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return mList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return mList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -51,6 +56,11 @@ public class AddrAdapter extends BaseAdapter {
         }else {
             holder = (ViewHolder) convertView.getTag();
         }
+
+        holder.tvName.setText(mList.get(position).getRealName());
+        holder.tvPhoneNumber.setText(TextUtils.hidePhoneNum(mList.get(position).getPhone()));
+        holder.tvAddr.setText(mList.get(position).getAddress());
+        //TODO 编辑，设为默认
 
         return convertView;
     }

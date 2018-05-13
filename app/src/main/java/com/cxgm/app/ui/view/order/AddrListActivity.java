@@ -11,11 +11,21 @@ import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
 import com.cxgm.app.R;
+import com.cxgm.app.app.Constants;
+import com.cxgm.app.data.entity.UserAddress;
+import com.cxgm.app.data.io.order.AddressListReq;
 import com.cxgm.app.ui.adapter.AddrAdapter;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.utils.MapHelper;
+import com.cxgm.app.utils.UserManager;
+import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.widget.ListViewForScrollView;
+
+import org.xutils.common.Callback;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,11 +59,14 @@ public class AddrListActivity extends BaseActivity implements MapHelper.Location
     @BindView(R.id.tvNoAddr)
     TextView tvNoAddr;
 
-    BDLocation mLocation;
     @BindView(R.id.tvCurrentAddr)
     TextView tvCurrentAddr;
     @BindView(R.id.tvRelocation)
     TextView tvRelocation;
+
+    boolean mUpdatedLocation = false;//地址更新
+    List<UserAddress> mAddrList;
+    AddrAdapter mAddrAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,21 +77,51 @@ public class AddrListActivity extends BaseActivity implements MapHelper.Location
         setContentView(R.layout.activity_addr_list);
         ButterKnife.bind(this);
 
-        mLocation = getIntent().getParcelableExtra("location");
         init();
-
-        if (mLocation != null) {
-            tvCurrentAddr.setText(mLocation.getStreet() + mLocation.getBuildingName());
-        } else {
-            location();
-        }
+        loadData();
     }
 
     private void init() {
         imgBack.setVisibility(View.VISIBLE);
         tvTitle.setText(R.string.receiver_addr);
 
-        lvAddr.setAdapter(new AddrAdapter());
+        if (Constants.currentLocation != null) {
+            tvCurrentAddr.setText(Constants.currentLocation.getDistrict() + Constants.currentLocation.getStreet() + Constants.currentLocation.getLocationDescribe());
+        } else {
+            location();
+        }
+
+        mAddrList = new ArrayList<>();
+        mAddrAdapter = new AddrAdapter(mAddrList);
+        lvAddr.setAdapter(mAddrAdapter);
+    }
+
+    private void loadData(){
+        new AddressListReq(this)
+                .execute(new Request.RequestCallback<List<UserAddress>>() {
+                    @Override
+                    public void onSuccess(List<UserAddress> userAddresses) {
+                        if (userAddresses!=null){
+                            mAddrList.addAll(userAddresses);
+                            mAddrAdapter.notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(Callback.CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
     }
 
     @OnClick({R.id.imgBack, R.id.layoutSurrounding, R.id.tvNewAddr,R.id.tvRelocation})
@@ -100,6 +143,7 @@ public class AddrListActivity extends BaseActivity implements MapHelper.Location
     }
 
     private void location(){
+        mUpdatedLocation = true;
         MapHelper helper = new MapHelper(this,this);
         helper.startLocation();
     }
@@ -107,18 +151,15 @@ public class AddrListActivity extends BaseActivity implements MapHelper.Location
     @Override
     public void onReceiveLocation(BDLocation bdLocation) {
         if (bdLocation!=null) {
-            mLocation = bdLocation;
-            tvCurrentAddr.setText(mLocation.getDistrict() + mLocation.getStreet() + mLocation.getLocationDescribe());
+            Constants.currentLocation = bdLocation;
+            tvCurrentAddr.setText(Constants.currentLocation.getDistrict() + Constants.currentLocation.getStreet() + Constants.currentLocation.getLocationDescribe());
         }
     }
 
     @Override
     public void finish() {
-        if (mLocation!=null) {
-            Intent intent = new Intent();
-            intent.putExtra("location", mLocation);
-            setResult(RESULT_OK, intent);
-        }
+        if (mUpdatedLocation)
+            setResult(RESULT_OK);
         super.finish();
     }
 

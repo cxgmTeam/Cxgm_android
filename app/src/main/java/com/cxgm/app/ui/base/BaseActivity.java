@@ -23,7 +23,6 @@ public class BaseActivity extends AppCompatActivity implements UserManager.OnUse
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		
 //		x.view().inject(this);
@@ -33,7 +32,7 @@ public class BaseActivity extends AppCompatActivity implements UserManager.OnUse
 		NetworkManager.getInstance().addOnNetworkListener(this);
 
 		//推送统计应用启动数据  统计分析sdk中统计日活的方法无关
-		PushAgent.getInstance(this).onAppStart();
+		//PushAgent.getInstance(this).onAppStart();
 		
 	}
 
@@ -53,7 +52,7 @@ public class BaseActivity extends AppCompatActivity implements UserManager.OnUse
 	protected void onResume() {
 		super.onResume();
 
-		MobclickAgent.onResume(this);
+//		MobclickAgent.onResume(this);
 	}
 
 	@Override
@@ -62,7 +61,7 @@ public class BaseActivity extends AppCompatActivity implements UserManager.OnUse
 
 //		cancelAllRequestCancelable();
 
-		MobclickAgent.onPause(this);
+//		MobclickAgent.onPause(this);
 	}
 
 	@Override

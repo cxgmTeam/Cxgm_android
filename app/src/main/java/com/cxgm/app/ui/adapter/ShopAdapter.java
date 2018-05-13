@@ -9,6 +9,9 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.cxgm.app.R;
+import com.cxgm.app.data.entity.Shop;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -23,18 +26,19 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class ShopAdapter extends BaseAdapter {
 
-    public ShopAdapter() {
-
+    List<Shop> mList;
+    public ShopAdapter(List<Shop> mList) {
+        this.mList = mList;
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return mList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return mList.get(position);
     }
 
     @Override
@@ -55,10 +59,13 @@ public class ShopAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        Glide.with(parent.getContext()).load("")
+        Glide.with(parent.getContext()).load(mList.get(position).getImageUrl())
                 .apply(RequestOptions.bitmapTransform(
-                        new RoundedCornersTransformation(128,0, RoundedCornersTransformation.CornerType.TOP)))
+                        new RoundedCornersTransformation(128,0, RoundedCornersTransformation.CornerType.TOP))
+                .placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
                 .into(holder.imgShopCover);
+        holder.tvShopName.setText(mList.get(position).getShopName());
+        holder.tvShopAdds.setText(mList.get(position).getShopAddress());
 
         return convertView;
     }

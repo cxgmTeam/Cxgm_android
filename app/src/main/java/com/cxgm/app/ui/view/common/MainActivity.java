@@ -50,8 +50,6 @@ public class MainActivity extends BaseActivity{
     @BindView(R.id.layoutMenu)
     RadioGroup layoutMenu;
 
-    BDLocation mLocation;
-
     static IndexFragment mIndexFragment;
     static UserFragment mUserFragment;
     static ShopCartFragment mShopCartFragment;
@@ -74,8 +72,6 @@ public class MainActivity extends BaseActivity{
 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
-        mLocation = getIntent().getParcelableExtra("location");
 
         init();
 
@@ -113,9 +109,6 @@ public class MainActivity extends BaseActivity{
         switch (checkedId) {
 
             case R.id.rbIndex:
-                Bundle bundle = new Bundle();
-                bundle.putParcelable("location",mLocation);
-                mIndexFragment.setArguments(bundle);
                 getSupportFragmentManager().beginTransaction().show(mIndexFragment).commit();
                 break;
             case R.id.rbUser:

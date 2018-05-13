@@ -7,6 +7,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
+import com.cxgm.app.data.entity.CouponDetail;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,19 +21,23 @@ import butterknife.ButterKnife;
  * @time 2018/4/24 0024 0:07
  */
 public class CouponAdapter extends BaseAdapter {
+    List<CouponDetail> mList;
+    public CouponAdapter(List<CouponDetail> mList){
+        this.mList = mList;
+    }
     @Override
     public int getCount() {
-        return 0;
+        return mList.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return mList.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
 
     @Override
@@ -44,6 +51,7 @@ public class CouponAdapter extends BaseAdapter {
         }else {
             holder = (ViewHolder) view.getTag();
         }
+        //TODO
 
         return view;
     }

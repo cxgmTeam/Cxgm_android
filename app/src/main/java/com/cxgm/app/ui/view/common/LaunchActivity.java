@@ -6,16 +6,22 @@ import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
 import com.cxgm.app.R;
+import com.cxgm.app.app.Constants;
+import com.cxgm.app.data.entity.Shop;
+import com.cxgm.app.data.io.common.CheckAddressReq;
 import com.cxgm.app.data.io.common.VersionControlReq;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.utils.MapHelper;
+import com.cxgm.app.utils.ToastManager;
 import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.manager.PermissionManager;
 import com.deanlib.ootb.utils.VersionUtils;
 import com.tbruyelle.rxpermissions.Permission;
 
 import org.xutils.common.Callback;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -86,9 +92,9 @@ public class LaunchActivity extends BaseActivity implements MapHelper.LocationCa
 
                 }
                 mCount++;
-                if (mCount >= mPermissions.length){
+                if (mCount >= mPermissions.length) {
                     //需要限定权限框询问结束时 打开定位打开Main
-                    MapHelper mapHelper = new MapHelper(getApplicationContext(),LaunchActivity.this);
+                    MapHelper mapHelper = new MapHelper(getApplicationContext(), LaunchActivity.this);
                     mapHelper.startLocation();
                 }
             }
@@ -98,7 +104,42 @@ public class LaunchActivity extends BaseActivity implements MapHelper.LocationCa
 
     @Override
     public void onReceiveLocation(BDLocation bdLocation) {
-        ViewJump.toMain(this,bdLocation);
-        finish();
+        if (bdLocation != null) {
+            Constants.currentLocation = bdLocation;
+
+            new CheckAddressReq(this, Constants.currentLocation.getLongitude() + "", Constants.currentLocation.getLatitude() + "")
+                    .execute(new Request.RequestCallback<List<Shop>>() {
+
+                @Override
+                public void onSuccess(List<Shop> shops) {
+                    if (shops != null && shops.size() > 0) {
+                        Constants.currentShop = shops.get(0);
+                        Constants.checkAddress = true;
+                    }
+                }
+
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+
+                }
+
+                @Override
+                public void onCancelled(Callback.CancelledException cex) {
+
+                }
+
+                @Override
+                public void onFinished() {
+                    ViewJump.toMain(LaunchActivity.this);
+                    finish();
+                }
+            });
+
+        }else {
+            //定位失败
+            ToastManager.sendToast(getString(R.string.location_fail));
+            ViewJump.toMain(this);
+            finish();
+        }
     }
 }

@@ -7,13 +7,31 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
+import com.cxgm.app.data.entity.ShopCart;
+import com.cxgm.app.data.entity.base.PageInfo;
+import com.cxgm.app.data.io.order.DeleteCartReq;
+import com.cxgm.app.data.io.order.ShopCartListReq;
+import com.cxgm.app.data.io.order.UpdateCartReq;
 import com.cxgm.app.ui.adapter.CartGoodsAdapter;
 import com.cxgm.app.ui.base.BaseFragment;
+import com.cxgm.app.utils.Helper;
+import com.cxgm.app.utils.StringHelper;
+import com.cxgm.app.utils.ToastManager;
+import com.deanlib.ootb.data.io.Request;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+
+import org.xutils.common.Callback;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -26,7 +44,7 @@ import butterknife.Unbinder;
  * @time 2018/4/20 下午5:19
  */
 
-public class ShopCartFragment extends BaseFragment {
+public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.OnShopCartActionListener {
 
     @BindView(R.id.imgBack)
     ImageView imgBack;
@@ -51,6 +69,16 @@ public class ShopCartFragment extends BaseFragment {
     TextView tvGoDuoShou;
     @BindView(R.id.tvGoShopping)
     TextView tvGoShopping;
+    @BindView(R.id.srl)
+    SmartRefreshLayout srl;
+
+    int mPageNum = 1;
+    List<ShopCart> mCartList;
+    CartGoodsAdapter mCartAdapter;
+
+    //用于拦截OnShopCartActionListener.onChangeCheck方法更新数据时
+    // cbCheckAll的setOnCheckedChangeListener方法
+    boolean mInterceptChecked = false;
 
     @Nullable
     @Override
@@ -64,6 +92,7 @@ public class ShopCartFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init();
+        loadData();
     }
 
     private void init(){
@@ -71,12 +100,154 @@ public class ShopCartFragment extends BaseFragment {
         tvAction1.setText(R.string.edit);
         tvAction1.setVisibility(View.VISIBLE);
 
-        lvGoods.setAdapter(new CartGoodsAdapter());
+        mCartList = new ArrayList<>();
+        mCartAdapter = new CartGoodsAdapter(mCartList,this);
+        lvGoods.setAdapter(mCartAdapter);
+        srl.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mPageNum++;
+                loadData();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mPageNum = 1;
+                mCartList.clear();
+                loadData();
+            }
+        });
+
+        cbCheckAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!mInterceptChecked) {
+                    for (ShopCart cart : mCartList) {
+                        cart.isChecked = isChecked;
+                    }
+                    mCartAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+    }
+
+    private void loadData(){
+        new ShopCartListReq(getActivity(),mPageNum,10)
+                .execute(new Request.RequestCallback<PageInfo<ShopCart>>() {
+                    @Override
+                    public void onSuccess(PageInfo<ShopCart> shopCartPageInfo) {
+                        if (shopCartPageInfo!=null && shopCartPageInfo.getList()!=null){
+                            mCartList.addAll(shopCartPageInfo.getList());
+                            mCartAdapter.notifyDataSetChanged();
+                            loadBottomData();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(Callback.CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
     }
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onDeleteGoods(String ids) {
+        new DeleteCartReq(getActivity(),ids).execute(false,new Request.RequestCallback<Integer>() {
+            @Override
+            public void onSuccess(Integer integer) {
+                loadBottomData();
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(Callback.CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
+    @Override
+    public void onUpdateGoods(ShopCart cartGoods) {
+        new UpdateCartReq(getActivity(),cartGoods).execute(false,new Request.RequestCallback<Integer>() {
+            @Override
+            public void onSuccess(Integer integer) {
+                loadBottomData();
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(Callback.CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+    }
+
+    @Override
+    public void onChangeCheck(int postion, boolean isChecked) {
+        mInterceptChecked = true;
+        if (cbCheckAll.isChecked() || !isChecked){
+            cbCheckAll.setChecked(isChecked);
+        }else {
+            boolean isCheckedAll = isChecked;
+            for (ShopCart cart:mCartList){
+                if (cart.isChecked != isChecked) {
+                    isCheckedAll = false;
+                    break;
+                }
+            }
+            cbCheckAll.setChecked(isCheckedAll);
+        }
+        mInterceptChecked = false;
+    }
+
+    private void loadBottomData(){
+        float totalAmount = 0.00f;
+        float totalDiscounts = 0.00f;
+        int totalNum = 0;
+        for (ShopCart cart:mCartList){
+            totalAmount = Helper.moneyAdd(totalAmount,cart.getAmount());
+            //TODO 满减
+            //totalDiscounts
+            totalNum+=cart.getGoodNum();
+        }
+
+        tvTotal.setText(StringHelper.getRMBFormat(Helper.moneySubtract(totalAmount,totalDiscounts)));
+        tvSum.setText(StringHelper.getRMBFormat(totalAmount));
+        tvDiscounts.setText(StringHelper.getRMBFormat(totalDiscounts));
+        tvGoDuoShou.setText(getString(R.string.go_duoshou_,totalNum));
     }
 }

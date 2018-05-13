@@ -68,10 +68,11 @@ public class App extends MultiDexApplication {
 
         OotbConfig.init(this,Constants.DEBUG);
 
-        OotbConfig.setRequestServer(Constants.SERVICE_URL,null,new UserResult(),new DefaultLoadingDialog());
+        OotbConfig.setRequestServer(Constants.SERVICE_URL,new UserParam(),new UserResult(),new DefaultLoadingDialog());
 
+        /*
         //TODO 友盟统计
-        UMConfigure.init(this, "友盟 app key", "友盟 channel", UMConfigure.DEVICE_TYPE_PHONE, "Push推送业务的secret");
+        UMConfigure.init(this, "5af6acadb27b0a761e000306", "channel", UMConfigure.DEVICE_TYPE_PHONE, "Push推送业务的secret");
         UMConfigure.setLogEnabled(Constants.DEBUG);
 
         //友盟推送
@@ -101,15 +102,18 @@ public class App extends MultiDexApplication {
         //场景类型设置接口
         MobclickAgent.setScenarioType(this, MobclickAgent.EScenarioType.E_UM_NORMAL);
 
+        Constants.deviceToken = mPushAgent.getRegistrationId();
+
+        DLogUtils.d("设备TOKEN:"+Constants.deviceToken);
+
+        */
+
         //设备ID
         Constants.deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         Constants.versionName = VersionUtils.getAppVersionName();
-        Constants.deviceToken = mPushAgent.getRegistrationId();
 
         //用户
         UserManager.getInstance(this);
-
-        DLogUtils.d("设备TOKEN:"+Constants.deviceToken);
     }
 
     UmengMessageHandler messageHandler = new UmengMessageHandler() {

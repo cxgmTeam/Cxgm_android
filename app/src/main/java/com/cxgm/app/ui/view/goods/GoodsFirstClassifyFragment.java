@@ -6,16 +6,19 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
+import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.entity.ShopCategory;
 import com.cxgm.app.data.io.goods.FindFirstCategoryReq;
 import com.cxgm.app.ui.adapter.FirstCategoryAdapter;
 import com.cxgm.app.ui.adapter.GoodsFirstClassifyAdapter;
 import com.cxgm.app.ui.base.BaseFragment;
+import com.cxgm.app.ui.view.ViewJump;
 import com.deanlib.ootb.data.io.Request;
 
 import org.xutils.common.Callback;
@@ -74,33 +77,43 @@ public class GoodsFirstClassifyFragment extends BaseFragment {
         mFCAdapter = new GoodsFirstClassifyAdapter(mFCList);
 
         gvClassify.setAdapter(mFCAdapter);
+        gvClassify.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ViewJump.toGoodsSecondClassify(getActivity(),mFCList.get((int)id));
+            }
+        });
     }
 
     private void loadData(){
-//        new FindFirstCategoryReq(getActivity(), mShop.getId()).execute(new Request.RequestCallback<List<ShopCategory>>() {
-//            @Override
-//            public void onSuccess(List<ShopCategory> list) {
-//                if (list!=null){
-//                    mFCList.addAll(list);
-//                    mFCAdapter.notifyDataSetChanged();
-//                }
-//            }
-//
-//            @Override
-//            public void onError(Throwable ex, boolean isOnCallback) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(Callback.CancelledException cex) {
-//
-//            }
-//
-//            @Override
-//            public void onFinished() {
-//
-//            }
-//        });
+        if (Constants.currentShop == null){
+            //TODO
+        }else {
+            new FindFirstCategoryReq(getActivity(), Constants.currentShop.getId()).execute(new Request.RequestCallback<List<ShopCategory>>() {
+                @Override
+                public void onSuccess(List<ShopCategory> list) {
+                    if (list != null) {
+                        mFCList.addAll(list);
+                        mFCAdapter.notifyDataSetChanged();
+                    }
+                }
+
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+
+                }
+
+                @Override
+                public void onCancelled(Callback.CancelledException cex) {
+
+                }
+
+                @Override
+                public void onFinished() {
+
+                }
+            });
+        }
     }
 
     @Override

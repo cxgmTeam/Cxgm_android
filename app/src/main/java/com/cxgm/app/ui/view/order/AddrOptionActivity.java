@@ -9,9 +9,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
+import com.cxgm.app.data.entity.UserAddress;
+import com.cxgm.app.data.io.order.AddressListReq;
 import com.cxgm.app.ui.adapter.AddrAdapter;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
+import com.deanlib.ootb.data.io.Request;
+
+import org.xutils.common.Callback;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,6 +47,9 @@ public class AddrOptionActivity extends BaseActivity {
     @BindView(R.id.tvNewAddr)
     TextView tvNewAddr;
 
+    List<UserAddress> mAddrList;
+    AddrAdapter mAddrAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,13 +60,45 @@ public class AddrOptionActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         init();
+        loadData();
+
     }
 
     private void init() {
         tvTitle.setText(R.string.goods_order_list);
         imgBack.setVisibility(View.VISIBLE);
 
-        lvAddr.setAdapter(new AddrAdapter());
+        mAddrList = new ArrayList<>();
+        mAddrAdapter = new AddrAdapter(mAddrList);
+        lvAddr.setAdapter(mAddrAdapter);
+    }
+
+    private void loadData(){
+        new AddressListReq(this)
+                .execute(new Request.RequestCallback<List<UserAddress>>() {
+                    @Override
+                    public void onSuccess(List<UserAddress> userAddresses) {
+                        if (userAddresses!=null){
+                            mAddrList.addAll(userAddresses);
+                            mAddrAdapter.notifyDataSetChanged();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(Callback.CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
     }
 
     @OnClick(R.id.imgBack)

@@ -96,7 +96,8 @@
 
                     </LinearLayout>
 
-                    <ListView
+                    <com.deanlib.ootb.widget.ListViewForScrollView
+                        android:layout_marginTop="@dimen/margin_large_t"
                         android:id="@+id/lvShop"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

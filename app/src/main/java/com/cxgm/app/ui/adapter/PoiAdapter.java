@@ -6,7 +6,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.baidu.mapapi.search.poi.PoiAddrInfo;
 import com.cxgm.app.R;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,23 +22,24 @@ import butterknife.ButterKnife;
  */
 public class PoiAdapter extends BaseAdapter {
 
-    public PoiAdapter() {
-
+    List<PoiAddrInfo> mList;
+    public PoiAdapter(List<PoiAddrInfo> mList) {
+        this.mList = mList;
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return mList.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return mList.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
 
     @Override
@@ -49,6 +53,13 @@ public class PoiAdapter extends BaseAdapter {
         }else {
             holder = (ViewHolder) view.getTag();
         }
+        holder.tvName.setText(mList.get(i).name);
+        holder.tvAddr.setText(mList.get(i).address);
+        if (i == 0)
+            holder.imgPosition.setVisibility(View.VISIBLE);
+        else
+            holder.imgPosition.setVisibility(View.INVISIBLE);
+
         return view;
     }
 
