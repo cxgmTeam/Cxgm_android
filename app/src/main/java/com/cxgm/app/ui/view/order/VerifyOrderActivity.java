@@ -11,7 +11,12 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
+import com.cxgm.app.data.io.order.AddOrderReq;
 import com.cxgm.app.ui.base.BaseActivity;
+import com.cxgm.app.ui.view.ViewJump;
+import com.deanlib.ootb.data.io.Request;
+
+import org.xutils.common.Callback;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -90,6 +95,7 @@ public class VerifyOrderActivity extends BaseActivity {
         ButterKnife.bind(this);
 
         init();
+        loadData();
     }
 
     private void init() {
@@ -97,8 +103,57 @@ public class VerifyOrderActivity extends BaseActivity {
         imgBack.setVisibility(View.VISIBLE);
     }
 
-    @OnClick(R.id.imgBack)
-    public void onClickBack() {
-        finish();
+    private void loadData(){
+
+    }
+
+
+    @OnClick({R.id.imgBack, R.id.layoutAddr, R.id.layoutReceiveTime, R.id.tvGoodsTotal, R.id.layoutCoupon, R.id.layoutInvoice, R.id.tvCommitOrder})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.imgBack:
+                finish();
+                break;
+            case R.id.layoutAddr:
+                //选择地址
+                ViewJump.toAddrOption(this);
+                break;
+            case R.id.layoutReceiveTime:
+                //选择送货时间
+                break;
+            case R.id.tvGoodsTotal:
+                //商品清单
+                break;
+            case R.id.layoutCoupon:
+                //优惠券
+                break;
+            case R.id.layoutInvoice:
+                //发票
+                break;
+            case R.id.tvCommitOrder:
+                //提交订单
+                new AddOrderReq(this,null).execute(new Request.RequestCallback<Integer>() {
+                    @Override
+                    public void onSuccess(Integer integer) {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(Callback.CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
+                break;
+        }
     }
 }

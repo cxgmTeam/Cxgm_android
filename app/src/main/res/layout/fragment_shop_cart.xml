@@ -11,6 +11,8 @@
         android:layout_marginTop="@dimen/status_bar_height" />
 
     <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/layoutGoodsList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -102,6 +104,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/layoutEmptyShopCart"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center_horizontal"

@@ -11,9 +11,11 @@ import com.cxgm.app.ui.view.common.MainActivity;
 import com.cxgm.app.ui.view.goods.GoodsDetailActivity;
 import com.cxgm.app.ui.view.goods.GoodsSecondClassifyActivity;
 import com.cxgm.app.ui.view.order.AddrListActivity;
+import com.cxgm.app.ui.view.order.AddrOptionActivity;
 import com.cxgm.app.ui.view.order.MapLocationActivity;
 import com.cxgm.app.ui.view.goods.SearchActivity;
 import com.cxgm.app.ui.view.order.NewAddrActivity;
+import com.cxgm.app.ui.view.order.VerifyOrderActivity;
 import com.cxgm.app.ui.view.user.CouponActivity;
 import com.cxgm.app.ui.view.user.InviteActivity;
 import com.cxgm.app.ui.view.user.LoginActivity;
@@ -94,6 +96,16 @@ public class ViewJump {
 
     public static void toCoupon(Activity activity){
         Intent intent = new Intent(activity,CouponActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public static void toVerifyOrder(Activity activity){
+        Intent intent = new Intent(activity,VerifyOrderActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public static void toAddrOption(Activity activity){
+        Intent intent = new Intent(activity,AddrOptionActivity.class);
         activity.startActivity(intent);
     }
 

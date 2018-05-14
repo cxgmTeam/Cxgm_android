@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.View;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
@@ -100,6 +101,13 @@ public class MainActivity extends BaseActivity{
 
     private void loadData() {
 
+    }
+
+    public void publicChangeView(int resId){
+        View view = findViewById(resId);
+        if (view!=null && view instanceof RadioButton){
+            ((RadioButton)view).setChecked(true);
+        }
     }
 
     private void changeView(int checkedId) {

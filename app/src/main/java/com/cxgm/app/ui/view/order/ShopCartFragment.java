@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,9 +21,10 @@ import com.cxgm.app.data.io.order.ShopCartListReq;
 import com.cxgm.app.data.io.order.UpdateCartReq;
 import com.cxgm.app.ui.adapter.CartGoodsAdapter;
 import com.cxgm.app.ui.base.BaseFragment;
+import com.cxgm.app.ui.view.ViewJump;
+import com.cxgm.app.ui.view.common.MainActivity;
 import com.cxgm.app.utils.Helper;
 import com.cxgm.app.utils.StringHelper;
-import com.cxgm.app.utils.ToastManager;
 import com.deanlib.ootb.data.io.Request;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -35,6 +37,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -79,6 +82,10 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
     //用于拦截OnShopCartActionListener.onChangeCheck方法更新数据时
     // cbCheckAll的setOnCheckedChangeListener方法
     boolean mInterceptChecked = false;
+    @BindView(R.id.layoutGoodsList)
+    LinearLayout layoutGoodsList;
+    @BindView(R.id.layoutEmptyShopCart)
+    LinearLayout layoutEmptyShopCart;
 
     @Nullable
     @Override
@@ -95,13 +102,13 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
         loadData();
     }
 
-    private void init(){
+    private void init() {
         tvTitle.setText(R.string.shop_cart);
         tvAction1.setText(R.string.edit);
         tvAction1.setVisibility(View.VISIBLE);
 
         mCartList = new ArrayList<>();
-        mCartAdapter = new CartGoodsAdapter(mCartList,this);
+        mCartAdapter = new CartGoodsAdapter(mCartList, this);
         lvGoods.setAdapter(mCartAdapter);
         srl.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -129,17 +136,23 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
                 }
             }
         });
+
     }
 
-    private void loadData(){
-        new ShopCartListReq(getActivity(),mPageNum,10)
+    private void loadData() {
+        new ShopCartListReq(getActivity(), mPageNum, 10)
                 .execute(new Request.RequestCallback<PageInfo<ShopCart>>() {
                     @Override
                     public void onSuccess(PageInfo<ShopCart> shopCartPageInfo) {
-                        if (shopCartPageInfo!=null && shopCartPageInfo.getList()!=null){
+                        if (shopCartPageInfo != null && shopCartPageInfo.getList() != null && shopCartPageInfo.getList().size()>0) {
+                            layoutGoodsList.setVisibility(View.VISIBLE);
+                            layoutEmptyShopCart.setVisibility(View.GONE);
                             mCartList.addAll(shopCartPageInfo.getList());
                             mCartAdapter.notifyDataSetChanged();
                             loadBottomData();
+                        } else {
+                            layoutGoodsList.setVisibility(View.GONE);
+                            layoutEmptyShopCart.setVisibility(View.VISIBLE);
                         }
                     }
 
@@ -160,6 +173,7 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
                 });
     }
 
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
@@ -168,7 +182,7 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
 
     @Override
     public void onDeleteGoods(String ids) {
-        new DeleteCartReq(getActivity(),ids).execute(false,new Request.RequestCallback<Integer>() {
+        new DeleteCartReq(getActivity(), ids).execute(false, new Request.RequestCallback<Integer>() {
             @Override
             public void onSuccess(Integer integer) {
                 loadBottomData();
@@ -193,7 +207,7 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
 
     @Override
     public void onUpdateGoods(ShopCart cartGoods) {
-        new UpdateCartReq(getActivity(),cartGoods).execute(false,new Request.RequestCallback<Integer>() {
+        new UpdateCartReq(getActivity(), cartGoods).execute(false, new Request.RequestCallback<Integer>() {
             @Override
             public void onSuccess(Integer integer) {
                 loadBottomData();
@@ -219,11 +233,11 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
     @Override
     public void onChangeCheck(int postion, boolean isChecked) {
         mInterceptChecked = true;
-        if (cbCheckAll.isChecked() || !isChecked){
+        if (cbCheckAll.isChecked() || !isChecked) {
             cbCheckAll.setChecked(isChecked);
-        }else {
+        } else {
             boolean isCheckedAll = isChecked;
-            for (ShopCart cart:mCartList){
+            for (ShopCart cart : mCartList) {
                 if (cart.isChecked != isChecked) {
                     isCheckedAll = false;
                     break;
@@ -234,20 +248,32 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
         mInterceptChecked = false;
     }
 
-    private void loadBottomData(){
+    private void loadBottomData() {
         float totalAmount = 0.00f;
         float totalDiscounts = 0.00f;
         int totalNum = 0;
-        for (ShopCart cart:mCartList){
-            totalAmount = Helper.moneyAdd(totalAmount,cart.getAmount());
+        for (ShopCart cart : mCartList) {
+            totalAmount = Helper.moneyAdd(totalAmount, cart.getAmount());
             //TODO 满减
             //totalDiscounts
-            totalNum+=cart.getGoodNum();
+            totalNum += cart.getGoodNum();
         }
 
-        tvTotal.setText(getString(R.string.total_,StringHelper.getRMBFormat(Helper.moneySubtract(totalAmount,totalDiscounts))));
-        tvSum.setText(getString(R.string.sum_,StringHelper.getRMBFormat(totalAmount)));
-        tvDiscounts.setText(getString(R.string.discounts_,StringHelper.getRMBFormat(totalDiscounts)));
-        tvGoDuoShou.setText(getString(R.string.go_duoshou_,totalNum));
+        tvTotal.setText(getString(R.string.total_, StringHelper.getRMBFormat(Helper.moneySubtract(totalAmount, totalDiscounts))));
+        tvSum.setText(getString(R.string.sum_, StringHelper.getRMBFormat(totalAmount)));
+        tvDiscounts.setText(getString(R.string.discounts_, StringHelper.getRMBFormat(totalDiscounts)));
+        tvGoDuoShou.setText(getString(R.string.go_duoshou_, totalNum));
+    }
+
+    @OnClick({R.id.tvGoDuoShou, R.id.tvGoShopping})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.tvGoDuoShou:
+                ViewJump.toVerifyOrder(getActivity());
+                break;
+            case R.id.tvGoShopping:
+                ((MainActivity)getActivity()).publicChangeView(R.id.rbGoods);
+                break;
+        }
     }
 }
