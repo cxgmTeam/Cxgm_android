@@ -124,6 +124,8 @@
     <string name="recommend_tag">精心挑选的超级好货</string>
     <string name="new_goods">新品上市</string>
     <string name="new_goods_tag">搜索好味道，抢先品尝</string>
+    <string name="hot_goods">热销推荐</string>
+    <string name="hot_goods_tag">快来看看大家都在买什么</string>
     <string name="invite_gift">邀请有礼</string>
     <string name="gift_tag">新鲜生鲜水果邀请好友共享</string>
     <string name="coupon_tag">兑换、查看优惠券</string>
@@ -165,6 +167,7 @@
     <string name="consignee_empty">收货人不能为空</string>
     <string name="invaild_phone_num">无效的手机号</string>
     <string name="delivery_address_empty">收货地址不能为空</string>
+    <string name="added_shop_cart">已添加到购物车</string>
 
 
 </resources>

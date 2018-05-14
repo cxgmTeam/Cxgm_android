@@ -116,6 +116,15 @@ public class ProductTransfer extends BaseEntity {
     private String weekSalesDate;
     private int weight;
     private List<ProductImage> productImageList;
+    private String goodCode;
+
+    public String getGoodCode() {
+        return goodCode;
+    }
+
+    public void setGoodCode(String goodCode) {
+        this.goodCode = goodCode;
+    }
 
     public int getAllocatedStock() {
         return allocatedStock;

@@ -1,5 +1,6 @@
 package com.cxgm.app.ui.view.goods;
 
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -100,19 +101,9 @@ public class GoodsSecondClassifyActivity extends BaseActivity {
         mTCList = new ArrayList<>();
         //商品列表
         mProductMap = new LinkedHashMap<>();
-        mEGLAdapter = new ExpandableGoodsListAdapter(mProductMap);
+        mEGLAdapter = new ExpandableGoodsListAdapter(this,mProductMap);
         lvGoods.setAdapter(mEGLAdapter);
-        //全部展开
-        for (int i = 0; i < mEGLAdapter.getGroupCount(); i++) {
-            lvGoods.expandGroup(i);
-        }
-        //拦截组点击事件，防止点击收起组
-        lvGoods.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
-            @Override
-            public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
-                return true;
-            }
-        });
+
         lvGoods.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
@@ -129,7 +120,7 @@ public class GoodsSecondClassifyActivity extends BaseActivity {
                 .execute(new Request.RequestCallback<List<ShopCategory>>() {
                     @Override
                     public void onSuccess(final List<ShopCategory> shopCategories) {
-                        if (shopCategories != null) {
+                        if (shopCategories != null && shopCategories.size()>0) {
                             tabClassify.setTabAdapter(new TabAdapter() {
                                 @Override
                                 public int getCount() {
@@ -149,7 +140,9 @@ public class GoodsSecondClassifyActivity extends BaseActivity {
                                 @Override
                                 public ITabView.TabTitle getTitle(int position) {
                                     return new ITabView.TabTitle.Builder()
-                                            .setContent(shopCategories.get(position).getName()).build();
+                                            .setContent(shopCategories.get(position).getName())
+                                            .setTextColor(getResources().getColor(R.color.textBlack)
+                                                    ,getResources().getColor(R.color.textBlackTint)).build();
                                 }
 
                                 @Override
@@ -160,6 +153,11 @@ public class GoodsSecondClassifyActivity extends BaseActivity {
                             tabClassify.addOnTabSelectedListener(new VerticalTabLayout.OnTabSelectedListener() {
                                 @Override
                                 public void onTabSelected(TabView tab, int position) {
+                                    for (int i = 0;i<tabClassify.getTabCount();i++){
+                                        if (i != position)
+                                            tabClassify.getTabAt(i).setBackgroundColor(0);
+                                    }
+                                    tab.getTabView().setBackgroundColor(getResources().getColor(R.color.colorWhite));
                                     loadSubTabs(shopCategories.get(position).getId());
                                 }
 
@@ -168,6 +166,8 @@ public class GoodsSecondClassifyActivity extends BaseActivity {
 
                                 }
                             });
+
+                            tabClassify.setTabSelected(0,true);
                         }
                     }
 
@@ -194,6 +194,7 @@ public class GoodsSecondClassifyActivity extends BaseActivity {
      * @param tabId 二级分类ID
      */
     private void loadSubTabs(final int tabId) {
+        mTCList.clear();
         new FindThirdCategoryReq(this, Constants.currentShop.getId(), tabId)
                 .execute(new Request.RequestCallback<List<ShopCategory>>() {
                     @Override
@@ -228,8 +229,6 @@ public class GoodsSecondClassifyActivity extends BaseActivity {
 
                                 }
                             });
-
-                            loadGoodsList(tabId);
                         }
                     }
 
@@ -245,7 +244,7 @@ public class GoodsSecondClassifyActivity extends BaseActivity {
 
                     @Override
                     public void onFinished() {
-
+                        loadGoodsList(tabId);
                     }
                 });
     }
@@ -255,11 +254,12 @@ public class GoodsSecondClassifyActivity extends BaseActivity {
      * @param tabId 二级分类ID
      */
     private void loadGoodsList(int tabId) {
+        mProductMap.clear();
         new FindProductByCategoryReq(this, Constants.currentShop.getId(),tabId)
-                .execute(new Request.RequestCallback<PageInfo<ProductTransfer>>() {
+                .execute(new Request.RequestCallback<List<ProductTransfer>>() {
                     @Override
-                    public void onSuccess(PageInfo<ProductTransfer> productTransferPageInfo) {
-                        if (productTransferPageInfo != null && productTransferPageInfo.getList() != null) {
+                    public void onSuccess(List<ProductTransfer> productTransferPageInfo) {
+                        if (productTransferPageInfo != null ) {
                             for (ShopCategory category : mTCList) {
                                 //调整顺序到与 mTCList 一致
                                 List<ProductTransfer> list = mProductMap.get(category.getName());
@@ -267,13 +267,34 @@ public class GoodsSecondClassifyActivity extends BaseActivity {
                                     list = new ArrayList<>();
                                     mProductMap.put(category.getName(), list);
                                 }
-                                for (ProductTransfer product : productTransferPageInfo.getList()) {
+                                for (ProductTransfer product : productTransferPageInfo) {
                                     if (product.getProductCategoryThirdId() == category.getId()) {
                                         list.add(product);
                                     }
                                 }
                             }
+
+//                            List<ProductTransfer> otherList = new ArrayList<>();
+//                            for (ProductTransfer product : productTransferPageInfo){
+//                                if (product.getProductCategoryThirdId()==0){
+//                                    otherList.add(product);
+//                                }
+//                            }
+//                            mProductMap.put("其他",otherList);
+
                             mEGLAdapter.notifyDataSetChanged();
+
+                            //全部展开
+                            for (int i = 0; i < mEGLAdapter.getGroupCount(); i++) {
+                                lvGoods.expandGroup(i);
+                            }
+                            //拦截组点击事件，防止点击收起组
+                            lvGoods.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+                                @Override
+                                public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+                                    return true;
+                                }
+                            });
                         }
                     }
 

@@ -391,7 +391,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
-                            android:text="@string/new_goods"
+                            android:text="@string/hot_goods"
                             android:textColor="@color/textBlack"
                             android:textSize="@dimen/text_size_large"
                             android:textStyle="bold" />
@@ -401,7 +401,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_horizontal"
                             android:layout_marginTop="@dimen/margin_micro_t"
-                            android:text="@string/new_goods_tag"
+                            android:text="@string/hot_goods_tag"
                             android:textColor="@color/textGray"
                             android:textSize="@dimen/text_size_small" />
 

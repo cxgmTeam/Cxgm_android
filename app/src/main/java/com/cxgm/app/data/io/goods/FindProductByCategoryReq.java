@@ -12,6 +12,8 @@ import com.deanlib.ootb.data.io.Request;
 import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
 
+import java.util.List;
+
 /**
  * 根据门店ID和商品类别ID查询商品信息
  *
@@ -44,8 +46,8 @@ public class FindProductByCategoryReq extends Request {
     }
 
     @Override
-    public PageInfo<ProductTransfer> parse(String json) {
-        UserResult<PageInfo<ProductTransfer>> result = JSON.parseObject(json,new UserResult<PageInfo<ProductTransfer>>(){}.getEntityType());
+    public List<ProductTransfer> parse(String json) {
+        UserResult<List<ProductTransfer>> result = JSON.parseObject(json,new UserResult<List<ProductTransfer>>(){}.getEntityType());
         return result.data;
     }
 }

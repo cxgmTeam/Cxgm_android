@@ -245,9 +245,9 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
             totalNum+=cart.getGoodNum();
         }
 
-        tvTotal.setText(StringHelper.getRMBFormat(Helper.moneySubtract(totalAmount,totalDiscounts)));
-        tvSum.setText(StringHelper.getRMBFormat(totalAmount));
-        tvDiscounts.setText(StringHelper.getRMBFormat(totalDiscounts));
+        tvTotal.setText(getString(R.string.total_,StringHelper.getRMBFormat(Helper.moneySubtract(totalAmount,totalDiscounts))));
+        tvSum.setText(getString(R.string.sum_,StringHelper.getRMBFormat(totalAmount)));
+        tvDiscounts.setText(getString(R.string.discounts_,StringHelper.getRMBFormat(totalDiscounts)));
         tvGoDuoShou.setText(getString(R.string.go_duoshou_,totalNum));
     }
 }

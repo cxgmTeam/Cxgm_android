@@ -122,6 +122,7 @@ public class UserFragment extends BaseFragment {
                 ViewJump.toCoupon(getActivity());
                 break;
             case R.id.layoutReceiverAddr:
+                ViewJump.toAddrList(getActivity());
                 break;
             case R.id.layoutHelp:
                 break;

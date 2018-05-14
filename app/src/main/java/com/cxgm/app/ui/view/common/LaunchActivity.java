@@ -108,7 +108,7 @@ public class LaunchActivity extends BaseActivity implements MapHelper.LocationCa
             Constants.currentLocation = bdLocation;
 
             new CheckAddressReq(this, Constants.currentLocation.getLongitude() + "", Constants.currentLocation.getLatitude() + "")
-                    .execute(new Request.RequestCallback<List<Shop>>() {
+                    .execute(false,new Request.RequestCallback<List<Shop>>() {
 
                 @Override
                 public void onSuccess(List<Shop> shops) {

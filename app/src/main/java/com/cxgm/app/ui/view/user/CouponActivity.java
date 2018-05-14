@@ -46,6 +46,8 @@ public class CouponActivity extends BaseActivity {
     @BindView(R.id.vpContainer)
     ViewPager vpContainer;
 
+    int[] titles = {R.string.available,R.string.disabled};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,14 +89,14 @@ public class CouponActivity extends BaseActivity {
 
         @Override
         public int getCount() {
-            return 2;
+            return titles.length;
         }
 
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
-            //TODO 可用不可用
-            return super.getPageTitle(position);
+            //TODO 可用不可用 数量
+            return getString(titles[position],0);
         }
     }
 

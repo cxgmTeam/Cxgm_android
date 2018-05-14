@@ -16,20 +16,19 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal">
 
-
-        <q.rorbin.verticaltablayout.VerticalTabLayout
-            android:id="@+id/tabClassify"
-            android:layout_width="93dp"
-            android:layout_height="match_parent"
-            android:background="#F7F8F7"
-            app:indicator_color="@color/colorGreen"
-            app:indicator_gravity="left"
-            app:indicator_width="4dp"
-            app:tab_height="@dimen/tab_item_height"
-            app:tab_mode="scrollable" />
+            <q.rorbin.verticaltablayout.VerticalTabLayout
+                android:id="@+id/tabClassify"
+                android:layout_width="93dp"
+                android:layout_height="match_parent"
+                android:background="#F7F8F7"
+                app:indicator_color="@color/colorGreen"
+                app:indicator_gravity="left"
+                app:indicator_width="4dp"
+                app:tab_height="@dimen/tab_item_height"
+                app:tab_mode="scrollable" />
 
         <View
             android:layout_width="@dimen/line"
@@ -59,6 +58,7 @@
             <ExpandableListView
                 android:paddingLeft="@dimen/margin_normal"
                 android:id="@+id/lvGoods"
+                android:groupIndicator="@null"
                 android:divider="@color/colorLine"
                 android:dividerHeight="@dimen/line"
                 android:layout_width="match_parent"

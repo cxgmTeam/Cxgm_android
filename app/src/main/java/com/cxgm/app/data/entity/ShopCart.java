@@ -26,6 +26,18 @@ public class ShopCart extends BaseEntity {
     private int shopId;
     private int userId;
 
+    public ShopCart(){
+
+    }
+
+    public ShopCart(String goodCode, String goodName, int goodNum,float amount, int shopId) {
+        this.goodCode = goodCode;
+        this.goodName = goodName;
+        this.goodNum = goodNum;
+        this.shopId = shopId;
+        this.amount = amount;
+    }
+
     public boolean isChecked;
 
     public float getAmount() {

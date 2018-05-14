@@ -252,8 +252,8 @@ public class IndexFragment extends BaseFragment {
                                 mShopList.addAll(shopPageInfo.getList());
                                 mShopAdapter.notifyDataSetChanged();
                             }else {
-                                if (srl.getState().isFooter)
-                                    srl.finishLoadMoreWithNoMoreData();
+//                                if (srl.getState().isFooter)
+//                                    srl.finishLoadMoreWithNoMoreData();
                             }
                         }
 
@@ -409,7 +409,7 @@ public class IndexFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgLocation:
-                ViewJump.toAddrList(getActivity());
+                ViewJump.toAddrList(getActivity(),this);
                 break;
             case R.id.etSearchWord:
                 ViewJump.toSearch(getActivity());
