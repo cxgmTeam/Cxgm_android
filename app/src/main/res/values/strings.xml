@@ -100,6 +100,7 @@
     <string name="distributing">配送中</string>
     <string name="complete">已完成</string>
     <string name="refund2">退货</string>
+    <string name="to_be_paid">待支付</string>
     <string name="order_num_">订单号:%s</string>
     <string name="order_num2_">订单编号：</string>
     <string name="order_time_">下单时间：</string>

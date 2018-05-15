@@ -106,6 +106,11 @@ public class UserFragment extends BaseFragment {
             case R.id.tvEdit:
                 break;
             case R.id.tvOrder:
+                if (!UserManager.isUserLogin()){
+                    ViewJump.toLogin(getActivity());
+                    return;
+                }
+                ViewJump.toUserOrder(getActivity());
                 break;
             case R.id.tvUnpaid:
                 break;
@@ -116,12 +121,25 @@ public class UserFragment extends BaseFragment {
             case R.id.tvRefund:
                 break;
             case R.id.layoutInvite:
+                //邀请有礼
+                if (!UserManager.isUserLogin()){
+                    ViewJump.toLogin(getActivity());
+                    return;
+                }
                 ViewJump.toInvite(getActivity());
                 break;
             case R.id.layoutCoupon:
+                if (!UserManager.isUserLogin()){
+                    ViewJump.toLogin(getActivity());
+                    return;
+                }
                 ViewJump.toCoupon(getActivity());
                 break;
             case R.id.layoutReceiverAddr:
+                if (!UserManager.isUserLogin()){
+                    ViewJump.toLogin(getActivity());
+                    return;
+                }
                 ViewJump.toAddrList(getActivity());
                 break;
             case R.id.layoutHelp:

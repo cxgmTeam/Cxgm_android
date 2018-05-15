@@ -3,10 +3,18 @@ package com.cxgm.app.ui.adapter;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.cxgm.app.R;
+import com.cxgm.app.data.entity.Order;
+import com.cxgm.app.data.entity.OrderProduct;
+import com.cxgm.app.utils.StringHelper;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -18,19 +26,24 @@ import butterknife.ButterKnife;
  * @time 2018/4/24 0024 22:20
  */
 public class UserOrderAdapter extends BaseAdapter {
+
+    List<Order> mList;
+    public UserOrderAdapter(List<Order> mList){
+        this.mList = mList;
+    }
     @Override
     public int getCount() {
-        return 0;
+        return mList.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return null;
+        return mList.get(i);
     }
 
     @Override
     public long getItemId(int i) {
-        return 0;
+        return i;
     }
 
     @Override
@@ -44,6 +57,60 @@ public class UserOrderAdapter extends BaseAdapter {
         }else {
             holder = (ViewHolder) view.getTag();
         }
+
+        holder.tvOrderNum.setText(mList.get(i).getOrderNum());
+        holder.layoutContainer.removeAllViews();
+        if (mList.get(i).getProductDetails().size()>1){
+            View itemView = View.inflate(viewGroup.getContext(),R.layout.layout_3goods_1info,null);
+            holder.layoutContainer.addView(itemView);
+            ImageView imgView1 = itemView.findViewById(R.id.imgView1);
+            ImageView imgView2 = itemView.findViewById(R.id.imgView2);
+            ImageView imgView3 = itemView.findViewById(R.id.imgView3);
+            TextView tvView = itemView.findViewById(R.id.tvView);
+            int number = mList.get(i).getProductDetails().size();
+            number = number>3?3:number;
+            switch (number){
+                case 3:
+                    Glide.with(view).load(mList.get(i).getProductDetails().get(2).getProductUrl())
+                            .apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
+                            .into(imgView3);
+                case 2:
+                    Glide.with(view).load(mList.get(i).getProductDetails().get(1).getProductUrl())
+                        .apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
+                        .into(imgView2);
+                    Glide.with(view).load(mList.get(i).getProductDetails().get(0).getProductUrl())
+                            .apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
+                            .into(imgView1);
+            }
+
+        }else {
+            View itemView = View.inflate(viewGroup.getContext(),R.layout.layout_goods_order_item,null);
+            holder.layoutContainer.addView(itemView);
+            TextView tvCount = itemView.findViewById(R.id.tvCount);
+            ImageView imgCover = itemView.findViewById(R.id.imgCover);
+            TextView tvTitle = itemView.findViewById(R.id.tvTitle);
+            TextView tvSpecification = itemView.findViewById(R.id.tvSpecification);
+            TextView tvPrice = itemView.findViewById(R.id.tvPrice);
+            TextView tvOriginal = itemView.findViewById(R.id.tvOriginal);
+            OrderProduct product = mList.get(i).getProductDetails().get(0);
+            Glide.with(view).load(product.getProductUrl())
+                    .apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
+                    .into(imgCover);
+            tvCount.setText("x"+product.getProductNum());
+            tvTitle.setText(product.getProductName());
+            tvSpecification.setText(viewGroup.getContext().getString(R.string.specification_,product.getWeight()+product.getUnit()));
+            tvPrice.setText(StringHelper.getRMBFormat(product.getPrice()));
+
+        }
+
+        holder.tvCount.setText(viewGroup.getContext().getString(R.string._count,mList.get(i).getProductDetails().size()));
+        holder.tvTotal.setText(StringHelper.getRMBFormat(mList.get(i).getOrderAmount()));
+        holder.tvOrderAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //TODO 去干啥
+            }
+        });
 
         return view;
     }

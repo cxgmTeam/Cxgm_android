@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="horizontal"
+    android:paddingLeft="@dimen/margin_giant"
+    android:paddingRight="@dimen/margin_giant"
+    android:background="@color/colorWhite"
+    android:paddingTop="@dimen/margin_large"
+    android:paddingBottom="@dimen/margin_large"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/imgView1"
+        android:src="@mipmap/default_img"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:scaleType="fitXY"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_marginLeft="@dimen/margin_normal"
+        android:scaleType="fitXY"
+        android:layout_weight="1"
+        android:id="@+id/imgView2"
+        android:src="@mipmap/default_img"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
+    <ImageView
+        android:layout_marginLeft="@dimen/margin_normal"
+        android:scaleType="fitXY"
+        android:layout_weight="1"
+        android:id="@+id/imgView3"
+        android:src="@mipmap/default_img"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:gravity="center"
+        android:layout_marginLeft="@dimen/margin_normal"
+        android:layout_weight="1"
+        android:id="@+id/tvView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content" />
+
+
+
+</LinearLayout>

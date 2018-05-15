@@ -15,6 +15,7 @@ import com.cxgm.app.ui.view.order.AddrOptionActivity;
 import com.cxgm.app.ui.view.order.MapLocationActivity;
 import com.cxgm.app.ui.view.goods.SearchActivity;
 import com.cxgm.app.ui.view.order.NewAddrActivity;
+import com.cxgm.app.ui.view.order.UserOrderActivity;
 import com.cxgm.app.ui.view.order.VerifyOrderActivity;
 import com.cxgm.app.ui.view.user.CouponActivity;
 import com.cxgm.app.ui.view.user.InviteActivity;
@@ -106,6 +107,10 @@ public class ViewJump {
 
     public static void toAddrOption(Activity activity){
         Intent intent = new Intent(activity,AddrOptionActivity.class);
+        activity.startActivity(intent);
+    }
+    public static void toUserOrder(Activity activity){
+        Intent intent = new Intent(activity,UserOrderActivity.class);
         activity.startActivity(intent);
     }
 

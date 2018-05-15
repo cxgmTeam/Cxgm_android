@@ -6,7 +6,12 @@ import java.util.List;
 
 public class Order extends BaseEntity {
 
-
+    //订单状态0待支付，1待配送（已支付），2配送中，3已完成，4退货
+    public static final String STATUS_TO_BE_PAID = "0";
+    public static final String STATUS_DISTRIBUTION = "1";
+    public static final String STATUS_DISTRIBUTING = "2";
+    public static final String STATUS_COMPLETE = "3";
+    public static final String STATUS_REFUND = "4";
     /**
      * orderAmount : 0
      * orderNum : string
@@ -19,7 +24,7 @@ public class Order extends BaseEntity {
      * storeId : 0
      */
 
-    private int orderAmount;
+    private float orderAmount;
     private String orderNum;
     private String orderTime;
     private String payType;
@@ -29,11 +34,11 @@ public class Order extends BaseEntity {
     private List<OrderProduct> productDetails;
     private List<OrderProduct> productList;
 
-    public int getOrderAmount() {
+    public float getOrderAmount() {
         return orderAmount;
     }
 
-    public void setOrderAmount(int orderAmount) {
+    public void setOrderAmount(float orderAmount) {
         this.orderAmount = orderAmount;
     }
 
