@@ -117,6 +117,15 @@ public class ProductTransfer extends BaseEntity {
     private int weight;
     private List<ProductImage> productImageList;
     private String goodCode;
+    private float originalPrice;
+
+    public float getOriginalPrice() {
+        return originalPrice;
+    }
+
+    public void setOriginalPrice(float originalPrice) {
+        this.originalPrice = originalPrice;
+    }
 
     public String getGoodCode() {
         return goodCode;

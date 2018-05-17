@@ -14,11 +14,13 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.cxgm.app.R;
+import com.cxgm.app.data.entity.CouponDetail;
 import com.cxgm.app.data.entity.Order;
 import com.cxgm.app.data.entity.OrderProduct;
 import com.cxgm.app.data.entity.UserAddress;
 import com.cxgm.app.data.io.order.AddOrderReq;
 import com.cxgm.app.data.io.order.AddressListReq;
+import com.cxgm.app.data.io.order.CheckCouponReq;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.utils.Helper;
@@ -104,7 +106,7 @@ public class VerifyOrderActivity extends BaseActivity {
 
     List<OrderProduct> mOrderProductList;
     UserAddress mUserAddress;
-    float mOrderAmount = 0f;//总价
+    float mOrderAmount = 0f;//总价 不包括优惠券
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -161,7 +163,8 @@ public class VerifyOrderActivity extends BaseActivity {
         for (OrderProduct product:mOrderProductList){
             goodsAmountTotal += product.getAmount();
 
-            //TODO 需要原价算优惠
+            //原价
+            goodsOriginalTotal += Helper.moneyMultiply(product.getOriginalPrice(),product.getProductNum());
         }
 
         tvGoodsTotal.setText(StringHelper.getRMBFormat(goodsOriginalTotal));
@@ -182,8 +185,41 @@ public class VerifyOrderActivity extends BaseActivity {
             @Override
             public void onSuccess(List<UserAddress> userAddresses) {
                 if (userAddresses!=null && userAddresses.size()>0){
-                    mUserAddress = userAddresses.get(0);
-                    initUserAddress();
+                    for (UserAddress address : userAddresses){
+                        if (address.getIdDef() == 1){
+                            mUserAddress = address;
+                            initUserAddress();
+                            break;
+                        }
+                    }
+
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(Callback.CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
+
+        new CheckCouponReq(this,null).execute(new Request.RequestCallback<List<CouponDetail>>() {
+            @Override
+            public void onSuccess(List<CouponDetail> couponDetails) {
+                if (couponDetails!=null && couponDetails.size()>0){
+                    //TODO 优惠券算法
+//                    couponDetails.get(0).get
+//                    mOrderAmount
+
                 }
             }
 

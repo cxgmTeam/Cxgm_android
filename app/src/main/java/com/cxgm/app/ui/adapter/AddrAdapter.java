@@ -61,6 +61,7 @@ public class AddrAdapter extends BaseAdapter {
         holder.tvPhoneNumber.setText(TextUtils.hidePhoneNum(mList.get(position).getPhone()));
         holder.tvAddr.setText(mList.get(position).getAddress());
         //TODO 编辑，设为默认
+        holder.cbDefault.setChecked(mList.get(position).getIdDef() == 1);
 
         return convertView;
     }

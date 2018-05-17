@@ -29,6 +29,15 @@ public class UserAddress extends BaseEntity{
     private String longitude;
     private String phone;
     private String realName;
+    private int idDef;//是否为默认值
+
+    public int getIdDef() {
+        return idDef;
+    }
+
+    public void setIdDef(int idDef) {
+        this.idDef = idDef;
+    }
 
     public String getAddress() {
         return address;

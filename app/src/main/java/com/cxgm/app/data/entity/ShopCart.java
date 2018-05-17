@@ -25,6 +25,15 @@ public class ShopCart extends BaseEntity {
     private float price;
     private int shopId;
     private int userId;
+    private float originalPrice;
+
+    public float getOriginalPrice() {
+        return originalPrice;
+    }
+
+    public void setOriginalPrice(float originalPrice) {
+        this.originalPrice = originalPrice;
+    }
 
     public ShopCart(){
 

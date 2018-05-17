@@ -18,6 +18,16 @@ public class OrderProduct implements Parcelable {
     private String weight;
     private int id;
 
+    private float originalPrice;
+
+    public float getOriginalPrice() {
+        return originalPrice;
+    }
+
+    public void setOriginalPrice(float originalPrice) {
+        this.originalPrice = originalPrice;
+    }
+
     public int getOrderId() {
         return orderId;
     }
@@ -134,18 +144,20 @@ public class OrderProduct implements Parcelable {
         dest.writeString(this.unit);
         dest.writeString(this.weight);
         dest.writeInt(this.id);
+        dest.writeFloat(this.originalPrice);
     }
 
     public OrderProduct() {
     }
 
-    public OrderProduct(String productName, int productNum, String productUrl, String productCode, float amount, float price) {
+    public OrderProduct(String productName, int productNum, String productUrl, String productCode, float amount, float price,float originalPrice) {
         this.productName = productName;
         this.productNum = productNum;
         this.productUrl = productUrl;
         this.productCode = productCode;
         this.amount = amount;
         this.price = price;
+        this.originalPrice = originalPrice;
     }
 
     protected OrderProduct(Parcel in) {
@@ -161,6 +173,7 @@ public class OrderProduct implements Parcelable {
         this.unit = in.readString();
         this.weight = in.readString();
         this.id = in.readInt();
+        this.originalPrice = in.readFloat();
     }
 
     public static final Creator<OrderProduct> CREATOR = new Creator<OrderProduct>() {
