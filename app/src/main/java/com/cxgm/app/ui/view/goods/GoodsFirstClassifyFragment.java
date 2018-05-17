@@ -65,7 +65,14 @@ public class GoodsFirstClassifyFragment extends BaseFragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         init();
-        loadData();
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden && Constants.currentShop != null){
+            loadData();
+        }
     }
 
     private void init(){
@@ -86,9 +93,7 @@ public class GoodsFirstClassifyFragment extends BaseFragment {
     }
 
     private void loadData(){
-        if (Constants.currentShop == null){
-            //TODO
-        }else {
+
             new FindFirstCategoryReq(getActivity(), Constants.currentShop.getId()).execute(new Request.RequestCallback<List<ShopCategory>>() {
                 @Override
                 public void onSuccess(List<ShopCategory> list) {
@@ -113,7 +118,7 @@ public class GoodsFirstClassifyFragment extends BaseFragment {
 
                 }
             });
-        }
+
     }
 
     @Override

@@ -12,14 +12,18 @@ import android.widget.RadioGroup;
 
 import com.baidu.location.BDLocation;
 import com.cxgm.app.R;
+import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.entity.Shop;
 import com.cxgm.app.data.io.common.CheckAddressReq;
 import com.cxgm.app.ui.base.BaseActivity;
 
+import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.ui.view.goods.GoodsFirstClassifyFragment;
 import com.cxgm.app.ui.view.order.ShopCartFragment;
 import com.cxgm.app.ui.view.user.UserFragment;
 import com.cxgm.app.utils.MapHelper;
+import com.cxgm.app.utils.ToastManager;
+import com.cxgm.app.utils.UserManager;
 import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.manager.PermissionManager;
 import com.tbruyelle.rxpermissions.Permission;
@@ -124,9 +128,18 @@ public class MainActivity extends BaseActivity{
                 getSupportFragmentManager().beginTransaction().show(mUserFragment).commit();
                 break;
             case R.id.rbShopCart:
+                if (!UserManager.isUserLogin()){
+                    ViewJump.toLogin(this);
+                    rbIndex.setChecked(true);
+                    return;
+                }
                 getSupportFragmentManager().beginTransaction().show(mShopCartFragment).commit();
                 break;
             case R.id.rbGoods:
+                if (Constants.currentShop==null){
+                    ToastManager.sendToast(getString(R.string.choice_shop));
+                    return;
+                }
                 getSupportFragmentManager().beginTransaction().show(mClassifyFragment).commit();
                 break;
         }

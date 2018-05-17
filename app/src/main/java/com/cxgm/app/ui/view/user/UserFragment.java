@@ -147,6 +147,7 @@ public class UserFragment extends BaseFragment {
             case R.id.layoutService:
                 break;
             case R.id.layoutSettings:
+                ViewJump.toSettings(getActivity());
                 break;
         }
     }

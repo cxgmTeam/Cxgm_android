@@ -172,6 +172,7 @@
     <string name="added_shop_cart">已添加到购物车</string>
     <string name="do_not_have_selected_goods">没有选中的商品</string>
     <string name="increase_receiving_information">请增加一个收货信息</string>
+    <string name="choice_shop">请选择一家店铺</string>
 
 
 </resources>

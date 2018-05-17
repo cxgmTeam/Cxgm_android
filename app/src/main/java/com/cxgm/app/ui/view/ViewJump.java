@@ -9,6 +9,7 @@ import com.cxgm.app.data.entity.OrderProduct;
 import com.cxgm.app.data.entity.ShopCategory;
 import com.cxgm.app.data.entity.UserAddress;
 import com.cxgm.app.ui.view.common.MainActivity;
+import com.cxgm.app.ui.view.common.SettingsActivity;
 import com.cxgm.app.ui.view.goods.GoodsDetailActivity;
 import com.cxgm.app.ui.view.goods.GoodsSecondClassifyActivity;
 import com.cxgm.app.ui.view.order.AddrListActivity;
@@ -128,6 +129,11 @@ public class ViewJump {
         Intent intent = new Intent(activity,InvoiceActivity.class);
         intent.putExtra("address",address);
         activity.startActivityForResult(intent,CODE_INVOICE);
+    }
+
+    public static void toSettings(Activity activity){
+        Intent intent = new Intent(activity, SettingsActivity.class);
+        activity.startActivity(intent);
     }
 
 }
