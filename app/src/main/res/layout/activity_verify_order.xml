@@ -58,37 +58,13 @@
             <include layout="@layout/layout_addr_and_receive_time"/>
 
             <LinearLayout
+                android:id="@+id/layoutGooods"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_normal"
                 android:background="@color/colorWhite"
                 android:elevation="@dimen/elevation"
                 android:orientation="vertical">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/margin_giant"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
-
-                    <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:drawablePadding="@dimen/margin_small"
-                        android:drawableRight="@mipmap/right"
-                        android:gravity="right"
-                        android:text="@string/_count"
-                        android:textColor="@color/textBlack"
-                        android:textSize="@dimen/text_size_normal_x" />
-
-                </LinearLayout>
 
                 <View
                     android:layout_width="match_parent"

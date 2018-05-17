@@ -60,6 +60,7 @@
     <string name="discounts">优惠</string>
     <string name="carriage">运费</string>
     <string name="invoice">发票</string>
+    <string name="not_invoice">不开发票</string>
 
     <string name="goods_detail">商品详情</string>
     <string name="trademark">品牌</string>
@@ -169,6 +170,8 @@
     <string name="invaild_phone_num">无效的手机号</string>
     <string name="delivery_address_empty">收货地址不能为空</string>
     <string name="added_shop_cart">已添加到购物车</string>
+    <string name="do_not_have_selected_goods">没有选中的商品</string>
+    <string name="increase_receiving_information">请增加一个收货信息</string>
 
 
 </resources>

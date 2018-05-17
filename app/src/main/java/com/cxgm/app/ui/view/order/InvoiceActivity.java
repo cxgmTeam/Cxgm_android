@@ -11,6 +11,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
+import com.cxgm.app.data.entity.UserAddress;
 import com.cxgm.app.ui.base.BaseActivity;
 
 import butterknife.BindView;
@@ -60,6 +61,8 @@ public class InvoiceActivity extends BaseActivity {
     @BindView(R.id.tvSave)
     TextView tvSave;
 
+    UserAddress mUserAddress;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,12 +72,17 @@ public class InvoiceActivity extends BaseActivity {
         setContentView(R.layout.activity_invoice);
         ButterKnife.bind(this);
 
+        mUserAddress = (UserAddress) getIntent().getSerializableExtra("address");
+
         init();
     }
 
     private void init() {
         tvTitle.setText(R.string.invoice);
         imgBack.setVisibility(View.VISIBLE);
+        if (mUserAddress!=null){
+            //TODO
+        }
     }
 
     @OnClick({R.id.imgBack, R.id.tvSave})
@@ -84,6 +92,7 @@ public class InvoiceActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tvSave:
+                //TODO 实体传回
                 break;
         }
     }

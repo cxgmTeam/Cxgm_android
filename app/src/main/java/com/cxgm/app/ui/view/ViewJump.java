@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 
 import com.baidu.location.BDLocation;
+import com.cxgm.app.data.entity.OrderProduct;
 import com.cxgm.app.data.entity.ShopCategory;
 import com.cxgm.app.data.entity.UserAddress;
 import com.cxgm.app.ui.view.common.MainActivity;
@@ -12,6 +13,7 @@ import com.cxgm.app.ui.view.goods.GoodsDetailActivity;
 import com.cxgm.app.ui.view.goods.GoodsSecondClassifyActivity;
 import com.cxgm.app.ui.view.order.AddrListActivity;
 import com.cxgm.app.ui.view.order.AddrOptionActivity;
+import com.cxgm.app.ui.view.order.InvoiceActivity;
 import com.cxgm.app.ui.view.order.MapLocationActivity;
 import com.cxgm.app.ui.view.goods.SearchActivity;
 import com.cxgm.app.ui.view.order.NewAddrActivity;
@@ -20,6 +22,10 @@ import com.cxgm.app.ui.view.order.VerifyOrderActivity;
 import com.cxgm.app.ui.view.user.CouponActivity;
 import com.cxgm.app.ui.view.user.InviteActivity;
 import com.cxgm.app.ui.view.user.LoginActivity;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * 界面跳转总控
@@ -31,6 +37,9 @@ public class ViewJump {
 
     public static final int CODE_ADDR_LIST = 0;
     public static final int CODE_MAP_LOCATION = 1;
+    public static final int CODE_NEW_ADDRESS = 2;
+    public static final int CODE_ADDR_OPTION = 3;
+    public static final int CODE_INVOICE = 4;
 
     public static void toMain(Activity activity){
         Intent intent = new Intent(activity, MainActivity.class);
@@ -60,7 +69,7 @@ public class ViewJump {
     public static void toNewOrUpdateAddr(Activity activity, UserAddress address){
         Intent intent = new Intent(activity, NewAddrActivity.class);
         intent.putExtra("address",address);
-        activity.startActivity(intent);
+        activity.startActivityForResult(intent,CODE_NEW_ADDRESS);
     }
 
     public static void toMapLocation(Activity activity){
@@ -100,18 +109,25 @@ public class ViewJump {
         activity.startActivity(intent);
     }
 
-    public static void toVerifyOrder(Activity activity){
+    public static void toVerifyOrder(Activity activity, ArrayList<OrderProduct> products){
         Intent intent = new Intent(activity,VerifyOrderActivity.class);
+        intent.putParcelableArrayListExtra("products",products);
         activity.startActivity(intent);
     }
 
     public static void toAddrOption(Activity activity){
         Intent intent = new Intent(activity,AddrOptionActivity.class);
-        activity.startActivity(intent);
+        activity.startActivityForResult(intent,CODE_ADDR_OPTION);
     }
     public static void toUserOrder(Activity activity){
         Intent intent = new Intent(activity,UserOrderActivity.class);
         activity.startActivity(intent);
+    }
+
+    public static void toInvoice(Activity activity,UserAddress address){
+        Intent intent = new Intent(activity,InvoiceActivity.class);
+        intent.putExtra("address",address);
+        activity.startActivityForResult(intent,CODE_INVOICE);
     }
 
 }

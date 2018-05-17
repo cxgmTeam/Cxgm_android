@@ -1,9 +1,11 @@
 package com.cxgm.app.ui.view.order;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -68,9 +70,21 @@ public class AddrOptionActivity extends BaseActivity {
         tvTitle.setText(R.string.goods_order_list);
         imgBack.setVisibility(View.VISIBLE);
 
+
         mAddrList = new ArrayList<>();
         mAddrAdapter = new AddrAdapter(mAddrList);
         lvAddr.setAdapter(mAddrAdapter);
+
+        lvAddr.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent data = new Intent();
+                data.putExtra("address",mAddrList.get((int)id));
+                setResult(RESULT_OK,data);
+                finish();
+            }
+        });
+
     }
 
     private void loadData(){
@@ -109,5 +123,17 @@ public class AddrOptionActivity extends BaseActivity {
     @OnClick(R.id.tvNewAddr)
     public void onClickNewAddr() {
         ViewJump.toNewAddr(this);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK){
+            switch (requestCode){
+                case ViewJump.CODE_NEW_ADDRESS:
+                    loadData();
+                    break;
+            }
+        }
     }
 }

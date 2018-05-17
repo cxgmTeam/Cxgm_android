@@ -13,6 +13,9 @@ import com.cxgm.app.R;
 import com.cxgm.app.data.entity.Order;
 import com.cxgm.app.data.entity.OrderProduct;
 import com.cxgm.app.utils.StringHelper;
+import com.deanlib.ootb.utils.DeviceUtils;
+
+import org.xutils.common.util.DensityUtil;
 
 import java.util.List;
 
@@ -67,19 +70,25 @@ public class UserOrderAdapter extends BaseAdapter {
             ImageView imgView2 = itemView.findViewById(R.id.imgView2);
             ImageView imgView3 = itemView.findViewById(R.id.imgView3);
             TextView tvView = itemView.findViewById(R.id.tvView);
+            int width = (DeviceUtils.getSreenWidth()-2* DensityUtil.dip2px(15) - 3*DensityUtil.dip2px(10))/3;
+            tvView.getLayoutParams().width = width;
+            tvView.getLayoutParams().height = width;
             int number = mList.get(i).getProductDetails().size();
             number = number>3?3:number;
             switch (number){
                 case 3:
                     Glide.with(view).load(mList.get(i).getProductDetails().get(2).getProductUrl())
-                            .apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
+                            .apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img)
+                            .override(width,width))
                             .into(imgView3);
                 case 2:
                     Glide.with(view).load(mList.get(i).getProductDetails().get(1).getProductUrl())
-                        .apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
+                        .apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img)
+                                .override(width,width))
                         .into(imgView2);
                     Glide.with(view).load(mList.get(i).getProductDetails().get(0).getProductUrl())
-                            .apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
+                            .apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img)
+                                    .override(width,width))
                             .into(imgView1);
             }
 

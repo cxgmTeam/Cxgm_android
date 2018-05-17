@@ -153,12 +153,14 @@ public class NewAddrActivity extends BaseActivity {
         }else {
             new AddAddressReq(this,mAddress).execute(callback);
         }
+
     }
 
     Request.RequestCallback callback = new Request.RequestCallback<Integer>() {
         @Override
         public void onSuccess(Integer integer) {
             ToastManager.sendToast(getString(R.string.save_successful));
+            setResult(RESULT_OK);
             finish();
         }
 

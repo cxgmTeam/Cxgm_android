@@ -1,16 +1,17 @@
 package com.cxgm.app.data.entity;
 
-import com.deanlib.ootb.entity.BaseEntity;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-public class OrderProduct extends BaseEntity {
+public class OrderProduct implements Parcelable {
 
     private int orderId;
     private int productId;
     private String productName;
-    private String productNum;
+    private int productNum;
     private String createTime;
     private String productUrl;
-    private int productCode;
+    private String productCode;
     private float amount;
     private float price;
     private String unit;
@@ -41,11 +42,11 @@ public class OrderProduct extends BaseEntity {
         this.productName = productName;
     }
 
-    public String getProductNum() {
+    public int getProductNum() {
         return productNum;
     }
 
-    public void setProductNum(String productNum) {
+    public void setProductNum(int productNum) {
         this.productNum = productNum;
     }
 
@@ -65,11 +66,11 @@ public class OrderProduct extends BaseEntity {
         this.productUrl = productUrl;
     }
 
-    public int getProductCode() {
+    public String getProductCode() {
         return productCode;
     }
 
-    public void setProductCode(int productCode) {
+    public void setProductCode(String productCode) {
         this.productCode = productCode;
     }
 
@@ -112,4 +113,65 @@ public class OrderProduct extends BaseEntity {
     public void setId(int id) {
         this.id = id;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(this.orderId);
+        dest.writeInt(this.productId);
+        dest.writeString(this.productName);
+        dest.writeInt(this.productNum);
+        dest.writeString(this.createTime);
+        dest.writeString(this.productUrl);
+        dest.writeString(this.productCode);
+        dest.writeFloat(this.amount);
+        dest.writeFloat(this.price);
+        dest.writeString(this.unit);
+        dest.writeString(this.weight);
+        dest.writeInt(this.id);
+    }
+
+    public OrderProduct() {
+    }
+
+    public OrderProduct(String productName, int productNum, String productUrl, String productCode, float amount, float price) {
+        this.productName = productName;
+        this.productNum = productNum;
+        this.productUrl = productUrl;
+        this.productCode = productCode;
+        this.amount = amount;
+        this.price = price;
+    }
+
+    protected OrderProduct(Parcel in) {
+        this.orderId = in.readInt();
+        this.productId = in.readInt();
+        this.productName = in.readString();
+        this.productNum = in.readInt();
+        this.createTime = in.readString();
+        this.productUrl = in.readString();
+        this.productCode = in.readString();
+        this.amount = in.readFloat();
+        this.price = in.readFloat();
+        this.unit = in.readString();
+        this.weight = in.readString();
+        this.id = in.readInt();
+    }
+
+    public static final Creator<OrderProduct> CREATOR = new Creator<OrderProduct>() {
+        @Override
+        public OrderProduct createFromParcel(Parcel source) {
+            return new OrderProduct(source);
+        }
+
+        @Override
+        public OrderProduct[] newArray(int size) {
+            return new OrderProduct[size];
+        }
+    };
 }

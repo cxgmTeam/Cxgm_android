@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
+import com.cxgm.app.data.entity.OrderProduct;
 import com.cxgm.app.data.entity.ShopCart;
 import com.cxgm.app.data.entity.base.PageInfo;
 import com.cxgm.app.data.io.order.DeleteCartReq;
@@ -25,6 +26,7 @@ import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.ui.view.common.MainActivity;
 import com.cxgm.app.utils.Helper;
 import com.cxgm.app.utils.StringHelper;
+import com.cxgm.app.utils.ToastManager;
 import com.deanlib.ootb.data.io.Request;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -269,7 +271,18 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tvGoDuoShou:
-                ViewJump.toVerifyOrder(getActivity());
+                ArrayList<OrderProduct> products = new ArrayList<>();
+                for (ShopCart cart : mCartList){
+                    if (cart.isChecked){
+                        products.add(new OrderProduct(cart.getGoodName(),cart.getGoodNum(),cart.getImageUrl(),cart.getGoodCode(),cart.getAmount(),cart.getPrice()));
+                    }
+                }
+                if (products.size() > 0){
+                    ViewJump.toVerifyOrder(getActivity(),products);
+                }else {
+                    ToastManager.sendToast(getString(R.string.do_not_have_selected_goods));
+                }
+
                 break;
             case R.id.tvGoShopping:
                 ((MainActivity)getActivity()).publicChangeView(R.id.rbGoods);

@@ -1,5 +1,8 @@
 package com.cxgm.app.data.entity;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.deanlib.ootb.entity.BaseEntity;
 
 /**
@@ -8,7 +11,7 @@ import com.deanlib.ootb.entity.BaseEntity;
  * @anthor Dean
  * @time 2018/5/12 0012 22:49
  */
-public class UserAddress extends BaseEntity {
+public class UserAddress extends BaseEntity{
 
 
     /**
@@ -74,4 +77,5 @@ public class UserAddress extends BaseEntity {
     public void setRealName(String realName) {
         this.realName = realName;
     }
+
 }

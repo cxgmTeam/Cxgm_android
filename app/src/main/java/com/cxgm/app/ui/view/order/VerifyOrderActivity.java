@@ -1,5 +1,6 @@
 package com.cxgm.app.ui.view.order;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -10,13 +11,27 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.cxgm.app.R;
+import com.cxgm.app.data.entity.Order;
+import com.cxgm.app.data.entity.OrderProduct;
+import com.cxgm.app.data.entity.UserAddress;
 import com.cxgm.app.data.io.order.AddOrderReq;
+import com.cxgm.app.data.io.order.AddressListReq;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
+import com.cxgm.app.utils.Helper;
+import com.cxgm.app.utils.StringHelper;
+import com.cxgm.app.utils.ToastManager;
 import com.deanlib.ootb.data.io.Request;
+import com.deanlib.ootb.utils.DeviceUtils;
+import com.deanlib.ootb.utils.TextUtils;
 
 import org.xutils.common.Callback;
+import org.xutils.common.util.DensityUtil;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -84,6 +99,12 @@ public class VerifyOrderActivity extends BaseActivity {
     TextView tvTimeRemaining;
     @BindView(R.id.layoutHintPay)
     LinearLayout layoutHintPay;
+    @BindView(R.id.layoutGooods)
+    LinearLayout layoutGooods;
+
+    List<OrderProduct> mOrderProductList;
+    UserAddress mUserAddress;
+    float mOrderAmount = 0f;//总价
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +115,8 @@ public class VerifyOrderActivity extends BaseActivity {
         setContentView(R.layout.activity_verify_order);
         ButterKnife.bind(this);
 
+        mOrderProductList = getIntent().getParcelableArrayListExtra("products");
+
         init();
         loadData();
     }
@@ -101,14 +124,88 @@ public class VerifyOrderActivity extends BaseActivity {
     private void init() {
         tvTitle.setText(R.string.verify_order);
         imgBack.setVisibility(View.VISIBLE);
+
+        //商品
+        View itemView = View.inflate(this,R.layout.layout_3goods_1info,null);
+        layoutGooods.addView(itemView,0);
+        ImageView imgView1 = itemView.findViewById(R.id.imgView1);
+        ImageView imgView2 = itemView.findViewById(R.id.imgView2);
+        ImageView imgView3 = itemView.findViewById(R.id.imgView3);
+        TextView tvView = itemView.findViewById(R.id.tvView);
+        int width = (DeviceUtils.getSreenWidth()-2* DensityUtil.dip2px(15) - 3*DensityUtil.dip2px(10))/3;
+        tvView.getLayoutParams().width = width;
+        tvView.getLayoutParams().height = width;
+        int number = mOrderProductList.size();
+        number = number>3?3:number;
+        switch (number){
+            case 3:
+                Glide.with(this).load(mOrderProductList.get(2).getProductUrl())
+                        .apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img)
+                                .override(width,width))
+                        .into(imgView3);
+            case 2:
+                Glide.with(this).load(mOrderProductList.get(1).getProductUrl())
+                        .apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img)
+                                .override(width,width))
+                        .into(imgView2);
+            case 1:
+                Glide.with(this).load(mOrderProductList.get(0).getProductUrl())
+                        .apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img)
+                                .override(width,width))
+                        .into(imgView1);
+        }
+
+        float goodsAmountTotal = 0;
+        float goodsOriginalTotal = 0;//原价
+
+        for (OrderProduct product:mOrderProductList){
+            goodsAmountTotal += product.getAmount();
+
+            //TODO 需要原价算优惠
+        }
+
+        tvGoodsTotal.setText(StringHelper.getRMBFormat(goodsOriginalTotal));
+        tvDiscounts.setText(StringHelper.getRMBFormat(Helper.moneySubtract(goodsOriginalTotal,goodsAmountTotal)));
+        //邮费固定值
+        tvCarriage.setText(StringHelper.getRMBFormat(10));
+        tvCoupon.setText(StringHelper.getRMBFormat(0));
+        tvInvoice.setText(R.string.not_invoice);
+
+        //TODO 优惠价 + 邮费 + 优惠券
+        mOrderAmount = Helper.moneySubtract(goodsAmountTotal+10,0);
+        tvPayment.setText(StringHelper.getRMBFormat(mOrderAmount));
+
     }
 
     private void loadData(){
+        new AddressListReq(this).execute(new Request.RequestCallback<List<UserAddress>>() {
+            @Override
+            public void onSuccess(List<UserAddress> userAddresses) {
+                if (userAddresses!=null && userAddresses.size()>0){
+                    mUserAddress = userAddresses.get(0);
+                    initUserAddress();
+                }
+            }
 
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(Callback.CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
     }
 
 
-    @OnClick({R.id.imgBack, R.id.layoutAddr, R.id.layoutReceiveTime, R.id.tvGoodsTotal, R.id.layoutCoupon, R.id.layoutInvoice, R.id.tvCommitOrder})
+    @OnClick({R.id.layoutGooods,R.id.imgBack, R.id.layoutAddr, R.id.layoutReceiveTime, R.id.tvGoodsTotal, R.id.layoutCoupon, R.id.layoutInvoice, R.id.tvCommitOrder})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgBack:
@@ -126,12 +223,23 @@ public class VerifyOrderActivity extends BaseActivity {
                 break;
             case R.id.layoutCoupon:
                 //优惠券
+                //TODO 优惠券 满减
                 break;
             case R.id.layoutInvoice:
                 //发票
+                if (mUserAddress!=null){
+                    ViewJump.toInvoice(this,mUserAddress);
+                }else {
+                    ToastManager.sendToast(getString(R.string.increase_receiving_information));
+                }
+
                 break;
             case R.id.tvCommitOrder:
                 //提交订单
+                Order order = new Order();
+                //TODO
+                order.setProductList(mOrderProductList);
+                order.setOrderAmount(mOrderAmount);
                 new AddOrderReq(this,null).execute(new Request.RequestCallback<Integer>() {
                     @Override
                     public void onSuccess(Integer integer) {
@@ -154,6 +262,36 @@ public class VerifyOrderActivity extends BaseActivity {
                     }
                 });
                 break;
+            case R.id.layoutGooods:
+                //TODO 商品列表
+                break;
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == RESULT_OK){
+            switch (requestCode){
+                case ViewJump.CODE_ADDR_OPTION:
+                    if (data!=null){
+                        //更新配送信息
+                        UserAddress address = (UserAddress) data.getSerializableExtra("address");
+                        if (address!=null){
+                            mUserAddress = address;
+                            initUserAddress();
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
+    private void initUserAddress(){
+        if (mUserAddress!=null) {
+            tvName.setText(mUserAddress.getRealName());
+            tvAddr.setText(mUserAddress.getArea() + mUserAddress.getAddress());
+            tvPhoneNumber.setText(TextUtils.hidePhoneNum(mUserAddress.getPhone()));
         }
     }
 }
