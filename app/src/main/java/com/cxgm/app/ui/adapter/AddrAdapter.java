@@ -4,6 +4,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
@@ -45,7 +46,7 @@ public class AddrAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
 
         ViewHolder holder;
 
@@ -60,8 +61,17 @@ public class AddrAdapter extends BaseAdapter {
         holder.tvName.setText(mList.get(position).getRealName());
         holder.tvPhoneNumber.setText(TextUtils.hidePhoneNum(mList.get(position).getPhone()));
         holder.tvAddr.setText(mList.get(position).getAddress());
-        //TODO 编辑，设为默认
+        //编辑，设为默认
         holder.cbDefault.setChecked(mList.get(position).getIdDef() == 1);
+        holder.cbDefault.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+
+                for (int i = 0;i<mList.size() ;i++){
+                    mList.get(i).setIdDef(i == position?1:0);
+                }
+            }
+        });
 
         return convertView;
     }
