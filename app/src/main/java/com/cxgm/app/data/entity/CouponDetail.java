@@ -30,6 +30,15 @@ public class CouponDetail extends BaseEntity {
     private String name;
     private int productId;
     private int status;
+    private String priceExpression;//正则[+\-*\/]\d+
+
+    public String getPriceExpression() {
+        return priceExpression;
+    }
+
+    public void setPriceExpression(String priceExpression) {
+        this.priceExpression = priceExpression;
+    }
 
     public String getBeginDate() {
         return beginDate;

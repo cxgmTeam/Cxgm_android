@@ -26,7 +26,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin_large"
             android:layout_marginTop="@dimen/margin_large"
-            android:text="开启通知"
+            android:text="@string/open_notify"
             android:textColor="@color/textBlack"
             android:textSize="@dimen/text_size_normal_x" />
     </LinearLayout>
@@ -46,7 +46,7 @@
         android:paddingLeft="@dimen/margin_giant"
         android:paddingRight="@dimen/margin_giant"
         android:paddingTop="@dimen/margin_large"
-        android:text="清除缓存"
+        android:text="@string/clear_cache"
         android:textColor="@color/textBlack"
         android:textSize="@dimen/text_size_normal_x" />
 
@@ -70,7 +70,7 @@
             android:layout_marginBottom="@dimen/margin_large"
             android:layout_marginTop="@dimen/margin_large"
             android:layout_weight="1"
-            android:text="在线更新"
+            android:text="@string/update_online"
             android:textColor="@color/textBlack"
             android:textSize="@dimen/text_size_normal_x" />
 
@@ -79,7 +79,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:text="已是最新版本"
             android:textColor="@color/textRed"
             android:textSize="@dimen/text_size_normal" />
 
@@ -89,7 +88,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/margin_giant"
-            android:text="1.0"
             android:textColor="@color/textBlack"
             android:textSize="@dimen/text_size_large" />
     </LinearLayout>
@@ -109,7 +107,7 @@
         android:paddingLeft="@dimen/margin_giant"
         android:paddingRight="@dimen/margin_giant"
         android:paddingTop="@dimen/margin_large"
-        android:text="关于我们"
+        android:text="@string/about_me"
         android:textColor="@color/textBlack"
         android:textSize="@dimen/text_size_normal_x" />
 
@@ -124,7 +122,7 @@
         android:gravity="center"
         android:paddingBottom="@dimen/margin_normal"
         android:paddingTop="@dimen/margin_normal"
-        android:text="注销账号"
+        android:text="@string/logout"
         android:textColor="@color/textWhite"
         android:textSize="@dimen/text_size_large_x" />
 </LinearLayout>

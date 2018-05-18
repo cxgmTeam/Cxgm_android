@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.cxgm.app.R;
 import com.cxgm.app.ui.adapter.GoodsAdapter;
 import com.cxgm.app.ui.base.BaseActivity;
+import com.cxgm.app.utils.UserManager;
 import com.deanlib.ootb.widget.GridViewForScrollView;
 import com.kevin.loopview.AdLoopView;
 

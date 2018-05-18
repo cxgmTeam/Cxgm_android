@@ -46,6 +46,11 @@ public class ViewJump {
         Intent intent = new Intent(activity, MainActivity.class);
         activity.startActivity(intent);
     }
+    public static void toMain(Activity activity,int resId){
+        Intent intent = new Intent(activity, MainActivity.class);
+        intent.putExtra("resId",resId);
+        activity.startActivity(intent);
+    }
 
     public static void toSearch(Activity activity){
         Intent intent = new Intent(activity, SearchActivity.class);

@@ -22,6 +22,7 @@ import com.cxgm.app.data.io.goods.FindThirdCategoryReq;
 import com.cxgm.app.ui.adapter.ExpandableGoodsListAdapter;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
+import com.cxgm.app.ui.view.common.MainActivity;
 import com.deanlib.ootb.data.io.Request;
 
 import org.xutils.common.Callback;
@@ -322,8 +323,12 @@ public class GoodsSecondClassifyActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.imgAction1:
+                //搜索
+                ViewJump.toSearch(this);
                 break;
             case R.id.imgAction2:
+                //购物车
+                ViewJump.toMain(this,R.id.rbShopCart);
                 break;
         }
     }

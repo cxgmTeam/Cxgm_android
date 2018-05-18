@@ -5,15 +5,21 @@ import com.deanlib.ootb.entity.BaseEntity;
 public class ShopCart extends BaseEntity {
 
     /**
-     * amount : 0
-     * goodCode : string
-     * goodName : string
-     * goodNum : 0
-     * id : 0
-     * imageUrl : string
-     * price : 0
-     * shopId : 0
-     * userId : 0
+      {
+     "id": 26,
+     "userId": 3,
+     "shopId": 4,
+     "goodName": "多宝鱼",
+     "goodCode": "87",
+     "specifications": "500/g",
+     "goodNum": 1,
+     "amount": 60,
+     "imageUrl": null,
+     "originalPrice": null,
+     "price": 60,
+     "coupon": null,
+     "couponId": null
+     }
      */
 
     private float amount;
@@ -26,6 +32,9 @@ public class ShopCart extends BaseEntity {
     private int shopId;
     private int userId;
     private float originalPrice;
+    private String specifications;
+    private CouponDetail coupon;
+    private int couponId;
 
     public float getOriginalPrice() {
         return originalPrice;
@@ -45,6 +54,30 @@ public class ShopCart extends BaseEntity {
         this.goodNum = goodNum;
         this.shopId = shopId;
         this.amount = amount;
+    }
+
+    public String getSpecifications() {
+        return specifications;
+    }
+
+    public void setSpecifications(String specifications) {
+        this.specifications = specifications;
+    }
+
+    public CouponDetail getCoupon() {
+        return coupon;
+    }
+
+    public void setCoupon(CouponDetail coupon) {
+        this.coupon = coupon;
+    }
+
+    public int getCouponId() {
+        return couponId;
+    }
+
+    public void setCouponId(int couponId) {
+        this.couponId = couponId;
     }
 
     public boolean isChecked;

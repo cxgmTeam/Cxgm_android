@@ -119,7 +119,11 @@ public class AddrListActivity extends BaseActivity implements MapHelper.Location
 
                     @Override
                     public void onFinished() {
-
+                        if (mAddrList.size()==0){
+                            tvNoAddr.setVisibility(View.VISIBLE);
+                        }else {
+                            tvNoAddr.setVisibility(View.GONE);
+                        }
                     }
                 });
     }

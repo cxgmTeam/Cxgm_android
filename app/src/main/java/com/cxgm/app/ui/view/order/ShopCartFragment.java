@@ -265,8 +265,16 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
         int totalNum = 0;
         for (ShopCart cart : mCartList) {
             totalAmount = Helper.moneyAdd(totalAmount, cart.getAmount());
-            //TODO 满减
-            //totalDiscounts
+            //满减
+            if (cart.getCoupon()!=null) {
+                //TODO cart.getAmount() 符合满减条件
+                //TODO 这里的优惠是指什么 折扣差还是满减
+                //TODO 位置点小 ，数值大的时候 就会换行
+                if (cart.getAmount()>100) {
+                    float discountsAfterAmount = Helper.calculateDiscounted(cart.getAmount(),cart.getCoupon().getPriceExpression());
+                    totalDiscounts += Helper.moneySubtract(cart.getAmount(),discountsAfterAmount);
+                }
+            }
             totalNum += cart.getGoodNum();
         }
 

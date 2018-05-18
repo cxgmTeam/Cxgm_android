@@ -162,7 +162,7 @@ public class ExpandableGoodsListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public boolean isChildSelectable(int i, int i1) {
-        return false;
+        return true;
     }
 
     static class SubViewHolder {

@@ -68,6 +68,8 @@ public class MainActivity extends BaseActivity{
         mClassifyFragment = new GoodsFirstClassifyFragment();
     }
 
+    int mCheckResId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +80,8 @@ public class MainActivity extends BaseActivity{
 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+
+        mCheckResId = getIntent().getIntExtra("resId",R.id.rbIndex);
 
         init();
 
@@ -100,7 +104,9 @@ public class MainActivity extends BaseActivity{
             }
         });
 
-        rbIndex.setChecked(true);
+        View view = findViewById(mCheckResId);
+        if (view!=null &&view instanceof RadioButton)
+            ((RadioButton)view).setChecked(true);
     }
 
     private void loadData() {
@@ -110,12 +116,13 @@ public class MainActivity extends BaseActivity{
     public void publicChangeView(int resId){
         View view = findViewById(resId);
         if (view!=null && view instanceof RadioButton){
+            mCheckResId = resId;
             ((RadioButton)view).setChecked(true);
         }
     }
 
     private void changeView(int checkedId) {
-
+        mCheckResId = checkedId;
         getSupportFragmentManager().beginTransaction().hide(mIndexFragment).hide(mUserFragment)
                 .hide(mShopCartFragment).hide(mClassifyFragment).commit();
 
@@ -138,6 +145,7 @@ public class MainActivity extends BaseActivity{
             case R.id.rbGoods:
                 if (Constants.currentShop==null){
                     ToastManager.sendToast(getString(R.string.choice_shop));
+                    rbIndex.setChecked(true);
                     return;
                 }
                 getSupportFragmentManager().beginTransaction().show(mClassifyFragment).commit();

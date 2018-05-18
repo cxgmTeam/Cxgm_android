@@ -9,8 +9,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
+import com.cxgm.app.data.io.common.VersionControlReq;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.utils.UserManager;
+import com.deanlib.ootb.data.io.Request;
+import com.deanlib.ootb.utils.VersionUtils;
+
+import org.xutils.common.Callback;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -55,6 +60,15 @@ public class SettingsActivity extends BaseActivity {
     private void init(){
         tvTitle.setText(R.string.settings);
         imgBack.setVisibility(View.VISIBLE);
+
+        if (UserManager.isUserLogin()){
+            tvLogout.setVisibility(View.VISIBLE);
+        }else {
+            tvLogout.setVisibility(View.GONE);
+        }
+
+        //Version
+        tvVersion.setText(VersionUtils.getAppVersionName());
     }
 
     @OnClick({R.id.imgBack, R.id.tvClearCache, R.id.layoutCheckVersion, R.id.tvAbout, R.id.tvLogout})
@@ -71,7 +85,35 @@ public class SettingsActivity extends BaseActivity {
                 break;
             case R.id.tvLogout:
                 UserManager.deleteUser();
+                init();
                 break;
         }
+    }
+
+    private void loadCheckVersion(){
+        new VersionControlReq(this,VersionUtils.getAppVersionCode()+"")
+                .execute(new Request.RequestCallback() {
+                    @Override
+                    public void onSuccess(Object o) {
+                        //TODO 判断
+//                        tvVersionTag.setText(R.string.last_version);
+//                        tvVersionTag.setText(R.string.new_version);
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(Callback.CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
     }
 }

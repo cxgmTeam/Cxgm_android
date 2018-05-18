@@ -69,14 +69,18 @@ public class CartGoodsAdapter extends BaseAdapter {
                 .apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
                 .into(holder.imgCover);
         holder.tvTitle.setText(mList.get(i).getGoodName());
-        //TODO 规格
-//        holder.tvSpecification.setText(viewGroup.getContext()
-//                .getString(R.string.specification_,mList.get(i).get));
+        //规格
+        holder.tvSpecification.setText(viewGroup.getContext()
+                .getString(R.string.specification_,mList.get(i).getSpecifications()));
         holder.tvPrice.setText(StringHelper.getRMBFormat(mList.get(i).getPrice()));
-        holder.tvNum.setText(mList.get(i).getGoodNum());
+        holder.tvNum.setText(mList.get(i).getGoodNum()+"");
         holder.tvSubtotal.setText(StringHelper.getRMBFormat(mList.get(i).getAmount()));
-        //TODO 满减
-//        holder.tvTag.setText(mList.get(i).get);
+        //满减
+        if (mList.get(i).getCoupon()!=null) {
+            holder.tvTag.setText(mList.get(i).getCoupon().getName());
+        }else {
+            holder.tvTag.setText("");
+        }
 
         holder.cbSelect.setChecked(mList.get(i).isChecked);
         holder.cbSelect.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -91,7 +95,7 @@ public class CartGoodsAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 mList.get(i).setGoodNum(mList.get(i).getGoodNum()+1);
-                holder.tvNum.setText(mList.get(i).getGoodNum());
+                holder.tvNum.setText(mList.get(i).getGoodNum()+"");
                 mList.get(i).setAmount(Helper.moneyMultiply(mList.get(i).getPrice(),mList.get(i).getGoodNum()));
                 holder.tvSubtotal.setText(StringHelper.getRMBFormat(mList.get(i).getAmount()));
                 if (mListener!=null)
@@ -110,7 +114,7 @@ public class CartGoodsAdapter extends BaseAdapter {
                     if (mListener!=null)
                         mListener.onDeleteGoods(mList.get(i).getId()+"");
                 }else {
-                    holder.tvNum.setText(mList.get(i).getGoodNum());
+                    holder.tvNum.setText(mList.get(i).getGoodNum()+"");
                     mList.get(i).setAmount(Helper.moneyMultiply(mList.get(i).getPrice(),mList.get(i).getGoodNum()));
                     holder.tvSubtotal.setText(StringHelper.getRMBFormat(mList.get(i).getAmount()));
                     if (mListener!=null)

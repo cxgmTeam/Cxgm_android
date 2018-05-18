@@ -79,6 +79,12 @@ public class UserFragment extends BaseFragment {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        init();
+    }
+
     private void init(){
         if (UserManager.isUserLogin()){
             tvUserName.setText(UserManager.user.getUserName());
@@ -86,6 +92,9 @@ public class UserFragment extends BaseFragment {
                     .apply(RequestOptions.circleCropTransform()
                     .placeholder(R.mipmap.default_head)
                     .error(R.mipmap.default_head)).into(imgUserCover);
+        }else {
+            tvUserName.setText(R.string.login_or_regist);
+            imgUserCover.setImageResource(R.mipmap.default_head);
         }
     }
 
