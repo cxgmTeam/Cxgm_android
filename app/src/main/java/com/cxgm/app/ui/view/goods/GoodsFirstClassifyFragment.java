@@ -71,6 +71,7 @@ public class GoodsFirstClassifyFragment extends BaseFragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden && Constants.currentShop != null){
+            mFCList.clear();
             loadData();
         }
     }

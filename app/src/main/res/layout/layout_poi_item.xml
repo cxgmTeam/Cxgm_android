@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:paddingTop="@dimen/margin_normal"
     android:paddingBottom="@dimen/margin_normal"
-    android:layout_height="66dp">
+    android:layout_height="wrap_content">
 
     <TextView
         android:id="@+id/tvName"
@@ -18,6 +18,8 @@
         android:layout_height="wrap_content" />
 
     <TextView
+        android:layout_marginTop="@dimen/margin_micro"
+        android:layout_below="@+id/tvName"
         android:id="@+id/tvAddr"
         android:layout_alignParentLeft="true"
         android:layout_toLeftOf="@+id/imgPosition"

@@ -65,6 +65,7 @@
                 android:textSize="@dimen/text_size_normal_x" />
 
             <EditText
+                android:inputType="phone"
                 android:id="@+id/etPhoneNumber"
                 style="@style/Edit"
                 android:layout_width="match_parent"
@@ -93,6 +94,8 @@
                 android:textSize="@dimen/text_size_normal_x" />
 
             <TextView
+                android:maxLines="1"
+                android:ellipsize="end"
                 android:layout_weight="1"
                 android:id="@+id/tvDistrict"
                 style="@style/Edit"

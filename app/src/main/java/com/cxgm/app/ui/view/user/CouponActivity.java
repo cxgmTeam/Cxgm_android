@@ -82,7 +82,8 @@ public class CouponActivity extends BaseActivity {
         public Fragment getItem(int position) {
             CouponFragment fragment = new CouponFragment();
             Bundle bundle = new Bundle();
-            //TODO 分别传参
+            //分别传参
+            bundle.putInt("state",position);
             fragment.setArguments(bundle);
             return fragment;
         }

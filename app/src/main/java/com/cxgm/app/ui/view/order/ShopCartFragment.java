@@ -161,9 +161,6 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
                             mCartList.addAll(shopCartPageInfo.getList());
                             mCartAdapter.notifyDataSetChanged();
                             loadBottomData();
-                        } else {
-                            layoutGoodsList.setVisibility(View.GONE);
-                            layoutEmptyShopCart.setVisibility(View.VISIBLE);
                         }
                     }
 
@@ -179,7 +176,12 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
 
                     @Override
                     public void onFinished() {
-
+                        srl.finishLoadMore();
+                        srl.finishRefresh();
+                        if (mCartList.size() == 0){
+                            layoutGoodsList.setVisibility(View.GONE);
+                            layoutEmptyShopCart.setVisibility(View.VISIBLE);
+                        }
                     }
                 });
     }
@@ -269,7 +271,7 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
             if (cart.getCoupon()!=null) {
                 //TODO cart.getAmount() 符合满减条件
                 //TODO 这里的优惠是指什么 折扣差还是满减
-                //TODO 位置点小 ，数值大的时候 就会换行
+                //TODO 位置太小 ，数值大的时候 就会换行
                 if (cart.getAmount()>100) {
                     float discountsAfterAmount = Helper.calculateDiscounted(cart.getAmount(),cart.getCoupon().getPriceExpression());
                     totalDiscounts += Helper.moneySubtract(cart.getAmount(),discountsAfterAmount);

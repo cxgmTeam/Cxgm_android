@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/layoutExchange"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:layout_marginLeft="@dimen/margin_giant"
+        android:layout_marginRight="@dimen/margin_giant"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/etExchangeCode"
+            android:textColor="@color/textBlack"
+            android:gravity="center_vertical"
+            android:paddingLeft="@dimen/margin_normal"
+            android:paddingRight="@dimen/margin_normal"
+            android:maxLines="1"
+            android:textSize="@dimen/text_size_normal_x"
+            android:textColorHint="@color/textGray"
+            android:hint="@string/exchange_code"
+            android:background="@drawable/shape_tc_gray_gray"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="34dp" />
+        <TextView
+            android:id="@+id/tvExchange"
+            android:gravity="center"
+            android:text="@string/exchange"
+            android:textColor="@color/textWhite"
+            android:textSize="@dimen/text_size_large_x"
+            android:background="@drawable/shape_tc_tran_green"
+            android:layout_marginLeft="@dimen/margin_small"
+            android:layout_width="70dp"
+            android:layout_height="34dp" />
+    </LinearLayout>
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/srl"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ListView
+            android:divider="@null"
+            android:dividerHeight="0dp"
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none" />
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</LinearLayout>

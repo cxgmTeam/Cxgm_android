@@ -80,11 +80,16 @@ public class MainActivity extends BaseActivity{
 
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-
         mCheckResId = getIntent().getIntExtra("resId",R.id.rbIndex);
-
         init();
 
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        mCheckResId = intent.getIntExtra("resId",R.id.rbIndex);
+        checkRadioBtn(mCheckResId);
     }
 
     private void init() {
@@ -104,7 +109,11 @@ public class MainActivity extends BaseActivity{
             }
         });
 
-        View view = findViewById(mCheckResId);
+        checkRadioBtn(mCheckResId);
+    }
+
+    private void checkRadioBtn(int resId){
+        View view = findViewById(resId);
         if (view!=null &&view instanceof RadioButton)
             ((RadioButton)view).setChecked(true);
     }
@@ -114,11 +123,8 @@ public class MainActivity extends BaseActivity{
     }
 
     public void publicChangeView(int resId){
-        View view = findViewById(resId);
-        if (view!=null && view instanceof RadioButton){
-            mCheckResId = resId;
-            ((RadioButton)view).setChecked(true);
-        }
+        mCheckResId = resId;
+        checkRadioBtn(resId);
     }
 
     private void changeView(int checkedId) {

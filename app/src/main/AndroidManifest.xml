@@ -39,6 +39,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".ui.view.common.MainActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             />
         <activity android:name=".ui.view.goods.SearchActivity"
@@ -94,6 +95,9 @@
             android:screenOrientation="portrait"
             />
         <activity android:name=".ui.view.common.SettingsActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".ui.view.order.CouponOptionActivity"
             android:screenOrientation="portrait"
             />
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"> </service>

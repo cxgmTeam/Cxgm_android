@@ -11,8 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
+import com.baidu.mapapi.search.core.PoiInfo;
 import com.cxgm.app.R;
 import com.cxgm.app.data.entity.UserAddress;
+import com.cxgm.app.data.entity.UserPoiInfo;
 import com.cxgm.app.data.io.order.AddAddressReq;
 import com.cxgm.app.data.io.order.UpdateAddressReq;
 import com.cxgm.app.ui.base.BaseActivity;
@@ -59,7 +61,7 @@ public class NewAddrActivity extends BaseActivity {
 
     UserAddress mAddress;
     boolean mIsEdit;
-    BDLocation mLocation;
+    PoiInfo mPoiInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -106,9 +108,9 @@ public class NewAddrActivity extends BaseActivity {
             switch (requestCode){
                 case ViewJump.CODE_MAP_LOCATION:
                     if (data!=null){
-                        mLocation = data.getParcelableExtra("location");
-                        if (mLocation!=null){
-                            tvDistrict.setText(mLocation.getAddrStr());
+                        mPoiInfo = data.getParcelableExtra("poiInfo");
+                        if (mPoiInfo!=null){
+                            tvDistrict.setText(mPoiInfo.address);
                         }
                     }
                     break;
@@ -144,9 +146,9 @@ public class NewAddrActivity extends BaseActivity {
         //A：area存成小区大厦 address存成门牌号  先不用管这个备注
         mAddress.setArea(district);
         mAddress.setAddress(number);
-        //TODO 经纬度信息
-        mAddress.setLongitude(mLocation.getLongitude()+"");
-        mAddress.setDimension(mLocation.getLatitude()+"");
+        //经纬度信息
+        mAddress.setLongitude(mPoiInfo.location.longitude+"");
+        mAddress.setDimension(mPoiInfo.location.latitude+"");
 
         if (mIsEdit){
             new UpdateAddressReq(this,mAddress).execute(callback);

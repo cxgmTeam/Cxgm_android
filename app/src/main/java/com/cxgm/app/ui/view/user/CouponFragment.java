@@ -6,7 +6,10 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.cxgm.app.R;
 import com.cxgm.app.data.entity.CouponDetail;
@@ -27,6 +30,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -46,11 +50,19 @@ public class CouponFragment extends BaseFragment {
     int pageNum = 1;
     List<CouponDetail> mCouponList;
     CouponAdapter mCouponAdapter;
+    @BindView(R.id.etExchangeCode)
+    EditText etExchangeCode;
+    @BindView(R.id.tvExchange)
+    TextView tvExchange;
+    @BindView(R.id.layoutExchange)
+    LinearLayout layoutExchange;
+
+    int mState;//0 可用，1 不可用
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.layout_refresh_listview, null);
+        View view = inflater.inflate(R.layout.fragment_coupon, null);
         unbinder = ButterKnife.bind(this, view);
         return view;
     }
@@ -58,11 +70,21 @@ public class CouponFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        if (getArguments()!=null){
+            mState = getArguments().getInt("state");
+        }
+
         init();
         loadData();
     }
 
-    private void init(){
+    private void init() {
+
+        if (mState == 0){
+            layoutExchange.setVisibility(View.VISIBLE);
+        }else {
+            layoutExchange.setVisibility(View.GONE);
+        }
 
         mCouponList = new ArrayList<>();
         mCouponAdapter = new CouponAdapter(mCouponList);
@@ -83,12 +105,13 @@ public class CouponFragment extends BaseFragment {
         });
     }
 
-    private void loadData(){
-        new FindCouponsReq(getActivity(),pageNum,10)
+    private void loadData() {
+        //TODO 可用不可用状态
+        new FindCouponsReq(getActivity(), pageNum, 10)
                 .execute(new Request.RequestCallback<PageInfo<CouponDetail>>() {
                     @Override
                     public void onSuccess(PageInfo<CouponDetail> couponDetailPageInfo) {
-                        if (couponDetailPageInfo!=null && couponDetailPageInfo.getList()!=null){
+                        if (couponDetailPageInfo != null && couponDetailPageInfo.getList() != null) {
                             mCouponList.addAll(couponDetailPageInfo.getList());
                             mCouponAdapter.notifyDataSetChanged();
                         }
@@ -116,5 +139,9 @@ public class CouponFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @OnClick(R.id.tvExchange)
+    public void onViewClicked() {
     }
 }

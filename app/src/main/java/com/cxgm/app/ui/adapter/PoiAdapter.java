@@ -6,8 +6,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.baidu.mapapi.search.core.PoiInfo;
 import com.baidu.mapapi.search.poi.PoiAddrInfo;
 import com.cxgm.app.R;
+import com.cxgm.app.data.entity.UserPoiInfo;
 
 import java.util.List;
 
@@ -22,8 +24,8 @@ import butterknife.ButterKnife;
  */
 public class PoiAdapter extends BaseAdapter {
 
-    List<PoiAddrInfo> mList;
-    public PoiAdapter(List<PoiAddrInfo> mList) {
+    List<UserPoiInfo> mList;
+    public PoiAdapter(List<UserPoiInfo> mList) {
         this.mList = mList;
     }
 
@@ -55,7 +57,7 @@ public class PoiAdapter extends BaseAdapter {
         }
         holder.tvName.setText(mList.get(i).name);
         holder.tvAddr.setText(mList.get(i).address);
-        if (i == 0)
+        if (mList.get(i).isChecked)
             holder.imgPosition.setVisibility(View.VISIBLE);
         else
             holder.imgPosition.setVisibility(View.INVISIBLE);

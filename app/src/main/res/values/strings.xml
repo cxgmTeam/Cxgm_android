@@ -182,5 +182,10 @@
     <string name="about_me">关于我们</string>
     <string name="logout">注销账号</string>
 
+    <string name="exchange">兑换</string>
+    <string name="exchange_code">请输入优惠券兑换码</string>
+    <string name="not_coupon">无优惠券可用</string>
+    <string name="enable_coupon">可用优惠券</string>
+
 
 </resources>

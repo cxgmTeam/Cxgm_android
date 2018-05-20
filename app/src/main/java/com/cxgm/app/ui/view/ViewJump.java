@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 
 import com.baidu.location.BDLocation;
+import com.cxgm.app.data.entity.CouponDetail;
 import com.cxgm.app.data.entity.OrderProduct;
 import com.cxgm.app.data.entity.ShopCategory;
 import com.cxgm.app.data.entity.UserAddress;
@@ -14,6 +15,7 @@ import com.cxgm.app.ui.view.goods.GoodsDetailActivity;
 import com.cxgm.app.ui.view.goods.GoodsSecondClassifyActivity;
 import com.cxgm.app.ui.view.order.AddrListActivity;
 import com.cxgm.app.ui.view.order.AddrOptionActivity;
+import com.cxgm.app.ui.view.order.CouponOptionActivity;
 import com.cxgm.app.ui.view.order.InvoiceActivity;
 import com.cxgm.app.ui.view.order.MapLocationActivity;
 import com.cxgm.app.ui.view.goods.SearchActivity;
@@ -41,6 +43,7 @@ public class ViewJump {
     public static final int CODE_NEW_ADDRESS = 2;
     public static final int CODE_ADDR_OPTION = 3;
     public static final int CODE_INVOICE = 4;
+    public static final int CODE_COUPON_OPTION = 5;
 
     public static void toMain(Activity activity){
         Intent intent = new Intent(activity, MainActivity.class);
@@ -49,6 +52,7 @@ public class ViewJump {
     public static void toMain(Activity activity,int resId){
         Intent intent = new Intent(activity, MainActivity.class);
         intent.putExtra("resId",resId);
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
         activity.startActivity(intent);
     }
 
@@ -139,6 +143,12 @@ public class ViewJump {
     public static void toSettings(Activity activity){
         Intent intent = new Intent(activity, SettingsActivity.class);
         activity.startActivity(intent);
+    }
+
+    public static void toCouponOption(Activity activity, ArrayList<CouponDetail> list){
+        Intent intent = new Intent(activity,CouponOptionActivity.class);
+        intent.putParcelableArrayListExtra("couponList",list);
+        activity.startActivityForResult(intent,CODE_COUPON_OPTION);
     }
 
 }

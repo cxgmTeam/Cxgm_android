@@ -1,6 +1,7 @@
 package com.cxgm.app.data.entity;
 
-import com.deanlib.ootb.entity.BaseEntity;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * 优惠劵
@@ -8,7 +9,7 @@ import com.deanlib.ootb.entity.BaseEntity;
  * @anthor Dean
  * @time 2018/5/12 0012 18:29
  */
-public class CouponDetail extends BaseEntity {
+public class CouponDetail implements Parcelable {
 
 
     /**
@@ -103,4 +104,50 @@ public class CouponDetail extends BaseEntity {
     public void setStatus(int status) {
         this.status = status;
     }
+
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.beginDate);
+        dest.writeInt(this.categoryId);
+        dest.writeInt(this.codeId);
+        dest.writeString(this.endDate);
+        dest.writeString(this.introduction);
+        dest.writeString(this.name);
+        dest.writeInt(this.productId);
+        dest.writeInt(this.status);
+        dest.writeString(this.priceExpression);
+    }
+
+    public CouponDetail() {
+    }
+
+    protected CouponDetail(Parcel in) {
+        this.beginDate = in.readString();
+        this.categoryId = in.readInt();
+        this.codeId = in.readInt();
+        this.endDate = in.readString();
+        this.introduction = in.readString();
+        this.name = in.readString();
+        this.productId = in.readInt();
+        this.status = in.readInt();
+        this.priceExpression = in.readString();
+    }
+
+    public static final Creator<CouponDetail> CREATOR = new Creator<CouponDetail>() {
+        @Override
+        public CouponDetail createFromParcel(Parcel source) {
+            return new CouponDetail(source);
+        }
+
+        @Override
+        public CouponDetail[] newArray(int size) {
+            return new CouponDetail[size];
+        }
+    };
 }

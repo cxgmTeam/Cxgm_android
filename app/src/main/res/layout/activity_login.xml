@@ -35,6 +35,7 @@
             android:layout_height="wrap_content" />
 
         <TextView
+            android:inputType="number"
             android:enabled="false"
             android:id="@+id/tvGetCheckCode"
             android:layout_alignParentRight="true"

@@ -33,6 +33,7 @@ import com.deanlib.ootb.utils.TextUtils;
 import org.xutils.common.Callback;
 import org.xutils.common.util.DensityUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -107,6 +108,7 @@ public class VerifyOrderActivity extends BaseActivity {
     List<OrderProduct> mOrderProductList;
     UserAddress mUserAddress;
     float mOrderAmount = 0f;//总价 不包括优惠券
+    List<CouponDetail> mCouponList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -174,8 +176,9 @@ public class VerifyOrderActivity extends BaseActivity {
         tvCoupon.setText(StringHelper.getRMBFormat(0));
         tvInvoice.setText(R.string.not_invoice);
 
-        //TODO 优惠价 + 邮费 + 优惠券
-        mOrderAmount = Helper.moneySubtract(goodsAmountTotal+10,0);
+        //优惠价 + 邮费
+        mOrderAmount = Helper.moneySubtract(goodsAmountTotal,10);
+        //这个时候 优惠券接口还没调用，先设置一个价格上去，稍候会更新
         tvPayment.setText(StringHelper.getRMBFormat(mOrderAmount));
 
     }
@@ -216,10 +219,9 @@ public class VerifyOrderActivity extends BaseActivity {
             @Override
             public void onSuccess(List<CouponDetail> couponDetails) {
                 if (couponDetails!=null && couponDetails.size()>0){
-                    //TODO 优惠券算法
-//                    couponDetails.get(0).get
-//                    mOrderAmount
-
+                    //优惠券 总价更新
+                    mCouponList = couponDetails;
+                    tvPayment.setText(StringHelper.getRMBFormat(Helper.calculateDiscounted(mOrderAmount,mCouponList.get(0).getPriceExpression())));
                 }
             }
 
@@ -258,8 +260,12 @@ public class VerifyOrderActivity extends BaseActivity {
                 //商品清单
                 break;
             case R.id.layoutCoupon:
-                //优惠券
-                //TODO 优惠券 满减
+                //优惠券 满减
+                if (mCouponList!=null && mCouponList.size()>0) {
+                    ViewJump.toCouponOption(this, (ArrayList<CouponDetail>) mCouponList);
+                }else {
+                    ToastManager.sendToast(getString(R.string.not_coupon));
+                }
                 break;
             case R.id.layoutInvoice:
                 //发票
@@ -317,6 +323,13 @@ public class VerifyOrderActivity extends BaseActivity {
                             mUserAddress = address;
                             initUserAddress();
                         }
+                    }
+                    break;
+                case ViewJump.CODE_COUPON_OPTION:
+                    if (data!=null){
+                        //更新总额
+                        CouponDetail couponDetail = data.getParcelableExtra("coupon");
+                        tvPayment.setText(StringHelper.getRMBFormat(Helper.calculateDiscounted(mOrderAmount,couponDetail.getPriceExpression())));
                     }
                     break;
             }

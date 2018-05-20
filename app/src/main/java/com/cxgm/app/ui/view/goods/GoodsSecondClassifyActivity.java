@@ -169,6 +169,9 @@ public class GoodsSecondClassifyActivity extends BaseActivity {
                             });
 
                             tabClassify.setTabSelected(0,true);
+                            //上边的 callListener 不管用，所以有了下面这两行代码
+                            tabClassify.getTabAt(0).setBackgroundColor(getResources().getColor(R.color.colorWhite));
+                            loadSubTabs(shopCategories.get(0).getId());
                         }
                     }
 

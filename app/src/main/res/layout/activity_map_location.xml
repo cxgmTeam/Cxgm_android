@@ -10,14 +10,10 @@
         android:layout_height="@dimen/appbar_height"
         layout="@layout/layout_back_input_appbar" />
 
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
         <LinearLayout
             android:background="@color/colorWhite"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
             <View
                 android:layout_width="match_parent"
@@ -29,7 +25,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/map_height" />
 
-            <com.deanlib.ootb.widget.ListViewForScrollView
+            <ListView
+                android:scrollbars="none"
                 android:id="@+id/lvAddr"
                 android:dividerHeight="@dimen/line"
                 android:divider="@color/colorLine"
@@ -49,5 +46,5 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
         </LinearLayout>
-    </ScrollView>
+
 </LinearLayout>
