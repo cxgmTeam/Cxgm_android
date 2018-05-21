@@ -264,26 +264,25 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
     private void loadBottomData() {
         float totalAmount = 0.00f;
         float totalDiscounts = 0.00f;
-        int totalNum = 0;
+//        int totalNum = 0;
         for (ShopCart cart : mCartList) {
             totalAmount = Helper.moneyAdd(totalAmount, cart.getAmount());
-            //满减
-            if (cart.getCoupon()!=null) {
-                //TODO cart.getAmount() 符合满减条件
-                //TODO 这里的优惠是指什么 折扣差还是满减
-                //TODO 位置太小 ，数值大的时候 就会换行
-                if (cart.getAmount()>100) {
-                    float discountsAfterAmount = Helper.calculateDiscounted(cart.getAmount(),cart.getCoupon().getPriceExpression());
-                    totalDiscounts += Helper.moneySubtract(cart.getAmount(),discountsAfterAmount);
+            /* 促销活动的不要了
+                //满减
+                if (cart.getCoupon()!=null) {
+                    if (cart.getAmount()>100) {
+                        float discountsAfterAmount = Helper.calculateDiscounted(cart.getAmount(),cart.getCoupon().getPriceExpression());
+                        totalDiscounts += Helper.moneySubtract(cart.getAmount(),discountsAfterAmount);
+                    }
                 }
-            }
-            totalNum += cart.getGoodNum();
+            */
+//            totalNum += cart.getGoodNum();
         }
 
         tvTotal.setText(getString(R.string.total_, StringHelper.getRMBFormat(Helper.moneySubtract(totalAmount, totalDiscounts))));
         tvSum.setText(getString(R.string.sum_, StringHelper.getRMBFormat(totalAmount)));
         tvDiscounts.setText(getString(R.string.discounts_, StringHelper.getRMBFormat(totalDiscounts)));
-        tvGoDuoShou.setText(getString(R.string.go_duoshou_, totalNum));
+        tvGoDuoShou.setText(getString(R.string.go_duoshou_, mCartList.size()));
     }
 
     @OnClick({R.id.tvGoDuoShou, R.id.tvGoShopping})

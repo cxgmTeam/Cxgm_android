@@ -12,4 +12,5 @@ public class StringHelper {
     public static String getRMBFormat(String money){
         return "¥ " + money;
     }
+
 }

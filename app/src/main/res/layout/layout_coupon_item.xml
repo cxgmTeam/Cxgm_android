@@ -58,6 +58,7 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/tvName"
                 android:textSize="@dimen/text_size_normal"
                 android:textColor="@color/textBlack"
                 android:layout_width="wrap_content"

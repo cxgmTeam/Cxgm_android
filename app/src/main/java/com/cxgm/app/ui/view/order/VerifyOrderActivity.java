@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.cxgm.app.R;
 import com.cxgm.app.data.entity.CouponDetail;
+import com.cxgm.app.data.entity.Invoice;
 import com.cxgm.app.data.entity.Order;
 import com.cxgm.app.data.entity.OrderProduct;
 import com.cxgm.app.data.entity.UserAddress;
@@ -109,6 +110,7 @@ public class VerifyOrderActivity extends BaseActivity {
     UserAddress mUserAddress;
     float mOrderAmount = 0f;//总价 不包括优惠券
     List<CouponDetail> mCouponList;
+    Order mOrder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +130,8 @@ public class VerifyOrderActivity extends BaseActivity {
     private void init() {
         tvTitle.setText(R.string.verify_order);
         imgBack.setVisibility(View.VISIBLE);
+
+        mOrder = new Order();
 
         //商品
         View itemView = View.inflate(this,R.layout.layout_3goods_1info,null);
@@ -181,6 +185,11 @@ public class VerifyOrderActivity extends BaseActivity {
         //这个时候 优惠券接口还没调用，先设置一个价格上去，稍候会更新
         tvPayment.setText(StringHelper.getRMBFormat(mOrderAmount));
 
+        mOrder.setProductList(mOrderProductList);
+        mOrder.setOrderAmount(mOrderAmount);
+        mOrder.setOrderNum(mOrderProductList.size()+"");
+
+
     }
 
     private void loadData(){
@@ -195,7 +204,6 @@ public class VerifyOrderActivity extends BaseActivity {
                             break;
                         }
                     }
-
                 }
             }
 
@@ -215,13 +223,15 @@ public class VerifyOrderActivity extends BaseActivity {
             }
         });
 
-        new CheckCouponReq(this,null).execute(new Request.RequestCallback<List<CouponDetail>>() {
+        //查可用优惠券
+        new CheckCouponReq(this,mOrder).execute(new Request.RequestCallback<List<CouponDetail>>() {
             @Override
             public void onSuccess(List<CouponDetail> couponDetails) {
                 if (couponDetails!=null && couponDetails.size()>0){
                     //优惠券 总价更新
                     mCouponList = couponDetails;
-                    tvPayment.setText(StringHelper.getRMBFormat(Helper.calculateDiscounted(mOrderAmount,mCouponList.get(0).getPriceExpression())));
+                    setCouponAndAmount(mCouponList.get(0));
+                    //tvPayment.setText(StringHelper.getRMBFormat(Helper.calculateDiscounted(mOrderAmount,mCouponList.get(0).getPriceExpression())));
                 }
             }
 
@@ -278,11 +288,7 @@ public class VerifyOrderActivity extends BaseActivity {
                 break;
             case R.id.tvCommitOrder:
                 //提交订单
-                Order order = new Order();
-                //TODO
-                order.setProductList(mOrderProductList);
-                order.setOrderAmount(mOrderAmount);
-                new AddOrderReq(this,null).execute(new Request.RequestCallback<Integer>() {
+                new AddOrderReq(this,mOrder).execute(new Request.RequestCallback<Integer>() {
                     @Override
                     public void onSuccess(Integer integer) {
                         //TODO
@@ -305,7 +311,7 @@ public class VerifyOrderActivity extends BaseActivity {
                 });
                 break;
             case R.id.layoutGooods:
-                //TODO 商品列表
+                //TODO 点击商品列表
                 break;
         }
     }
@@ -329,7 +335,23 @@ public class VerifyOrderActivity extends BaseActivity {
                     if (data!=null){
                         //更新总额
                         CouponDetail couponDetail = data.getParcelableExtra("coupon");
-                        tvPayment.setText(StringHelper.getRMBFormat(Helper.calculateDiscounted(mOrderAmount,couponDetail.getPriceExpression())));
+                        setCouponAndAmount(couponDetail);
+
+                    }
+                    break;
+                case ViewJump.CODE_INVOICE:
+                    if (data!=null){
+                        Invoice invoice = (Invoice) data.getSerializableExtra("invoice");
+                        if (invoice!=null){
+                            if (!android.text.TextUtils.isEmpty(invoice.getDutyParagraph())
+                                    && !android.text.TextUtils.isEmpty(invoice.getCompanyName())){
+                                tvInvoice.setText(R.string.company_invoice);
+                            }else {
+                                tvInvoice.setText(R.string.person_invoice);
+                            }
+                        }
+                        //发票信息
+                        mOrder.setReceipt(invoice);
                     }
                     break;
             }
@@ -341,6 +363,18 @@ public class VerifyOrderActivity extends BaseActivity {
             tvName.setText(mUserAddress.getRealName());
             tvAddr.setText(mUserAddress.getArea() + mUserAddress.getAddress());
             tvPhoneNumber.setText(TextUtils.hidePhoneNum(mUserAddress.getPhone()));
+            mOrder.setAddressId(mUserAddress.getId()+"");
+        }
+    }
+
+    private void setCouponAndAmount(CouponDetail couponDetail){
+        if (couponDetail!=null) {
+            //实付款
+//            mOrder.setOrderAmount(Helper.calculateDiscounted(mOrderAmount, couponDetail.getPriceExpression()));
+            mOrder.setOrderAmount(Helper.moneySubtract(mOrderAmount,Helper.str2Float(couponDetail.getPriceExpression())));
+            tvPayment.setText(StringHelper.getRMBFormat(mOrder.getOrderAmount()));
+            //优惠券ID
+            mOrder.setCouponCodeId(couponDetail.getCodeId());
         }
     }
 }

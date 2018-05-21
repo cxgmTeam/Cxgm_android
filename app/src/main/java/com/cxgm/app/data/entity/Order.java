@@ -31,8 +31,45 @@ public class Order extends BaseEntity {
     private String remarks;
     private String status;
     private int storeId;
-    private List<OrderProduct> productDetails;
-    private List<OrderProduct> productList;
+
+    private int couponCodeId;//优惠券ID
+    private String addressId;//地址ID
+    private String receiveTime;//送货时间
+    private Invoice receipt;//发票信息
+    private List<OrderProduct> productDetails;//查询用
+    private List<OrderProduct> productList;//提交用
+
+    public int getCouponCodeId() {
+        return couponCodeId;
+    }
+
+    public void setCouponCodeId(int couponCodeId) {
+        this.couponCodeId = couponCodeId;
+    }
+
+    public String getAddressId() {
+        return addressId;
+    }
+
+    public void setAddressId(String addressId) {
+        this.addressId = addressId;
+    }
+
+    public String getReceiveTime() {
+        return receiveTime;
+    }
+
+    public void setReceiveTime(String receiveTime) {
+        this.receiveTime = receiveTime;
+    }
+
+    public Invoice getReceipt() {
+        return receipt;
+    }
+
+    public void setReceipt(Invoice receipt) {
+        this.receipt = receipt;
+    }
 
     public float getOrderAmount() {
         return orderAmount;

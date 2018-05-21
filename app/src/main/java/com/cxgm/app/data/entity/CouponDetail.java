@@ -3,6 +3,8 @@ package com.cxgm.app.data.entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.math.BigDecimal;
+
 /**
  * 优惠劵
  *
@@ -31,7 +33,16 @@ public class CouponDetail implements Parcelable {
     private String name;
     private int productId;
     private int status;
-    private String priceExpression;//正则[+\-*\/]\d+
+    private String priceExpression;//减
+    private float maximumPrice;//满
+
+    public float getMaximumPrice() {
+        return maximumPrice;
+    }
+
+    public void setMaximumPrice(float maximumPrice) {
+        this.maximumPrice = maximumPrice;
+    }
 
     public String getPriceExpression() {
         return priceExpression;

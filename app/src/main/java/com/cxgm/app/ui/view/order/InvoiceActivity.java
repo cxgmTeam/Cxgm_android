@@ -1,5 +1,6 @@
 package com.cxgm.app.ui.view.order;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -11,8 +12,12 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
+import com.cxgm.app.data.entity.Invoice;
 import com.cxgm.app.data.entity.UserAddress;
 import com.cxgm.app.ui.base.BaseActivity;
+import com.cxgm.app.utils.ToastManager;
+import com.cxgm.app.utils.UserManager;
+import com.deanlib.ootb.utils.TextUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -62,6 +67,7 @@ public class InvoiceActivity extends BaseActivity {
     TextView tvSave;
 
     UserAddress mUserAddress;
+    Invoice mInvoice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,8 +86,57 @@ public class InvoiceActivity extends BaseActivity {
     private void init() {
         tvTitle.setText(R.string.invoice);
         imgBack.setVisibility(View.VISIBLE);
-        if (mUserAddress!=null){
-            //TODO
+        if (mUserAddress!=null) {
+            mInvoice = new Invoice();
+            //收票人信息
+            mInvoice.setPhone(mUserAddress.getPhone());
+            tvInvoiceReceiver.setText(TextUtils.hidePhoneNum(mUserAddress.getPhone()));
+
+            //发票类型
+            rgInvoiceType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    switch (checkedId) {
+                        case R.id.rbCommonInvoice:
+                            mInvoice.setType("0");
+                            break;
+                        case R.id.rbEInvoice:
+                            mInvoice.setType("1");
+                            break;
+                    }
+                }
+            });
+            rbEInvoice.setChecked(true);
+
+            //发票抬头
+            rgInvoiceHead.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    switch (checkedId) {
+                        case R.id.rbPerson:
+                            etInvoiceHead.setVisibility(View.GONE);
+                            etInvoiceNum.setVisibility(View.GONE);
+                            mInvoice.setCompanyName(null);
+                            mInvoice.setDutyParagraph(null);
+                            break;
+                        case R.id.rbCompany:
+                            etInvoiceHead.setVisibility(View.VISIBLE);
+                            etInvoiceNum.setVisibility(View.VISIBLE);
+                            break;
+                    }
+
+                }
+            });
+            rbPerson.setChecked(true);
+
+            //发票内容
+            rgInvoiceContent.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup group, int checkedId) {
+                    mInvoice.setContent(((RadioButton)group.findViewById(checkedId)).getText().toString());
+                }
+            });
+            rbGoodsDetail.setChecked(true);
         }
     }
 
@@ -92,7 +147,25 @@ public class InvoiceActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tvSave:
-                //TODO 实体传回
+                //实体传回
+                if (rbCommonInvoice.isChecked()){
+                    String invoiceHead = etInvoiceHead.getText().toString().trim();
+                    if (android.text.TextUtils.isEmpty(invoiceHead)){
+                        ToastManager.sendToast(getString(R.string.empty_invoice_head));
+                        return;
+                    }
+                    String invoiceNum = etInvoiceNum.getText().toString().trim();
+                    if (android.text.TextUtils.isEmpty(invoiceNum)){
+                        ToastManager.sendToast(getString(R.string.empty_invoice_num));
+                        return;
+                    }
+                    mInvoice.setCompanyName(invoiceHead);
+                    mInvoice.setDutyParagraph(invoiceNum);
+                }
+                Intent data = new Intent();
+                data.putExtra("invoice",mInvoice);
+                setResult(RESULT_OK,data);
+                finish();
                 break;
         }
     }

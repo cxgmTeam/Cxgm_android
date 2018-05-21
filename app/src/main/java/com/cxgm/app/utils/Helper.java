@@ -1,6 +1,8 @@
 package com.cxgm.app.utils;
 
 
+import android.text.TextUtils;
+
 import java.math.BigDecimal;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -51,5 +53,13 @@ public class Helper {
         }
 
         return amount;
+    }
+
+    public static float str2Float(String str){
+        if (Pattern.matches("\\d+\\.?\\d*",str)){
+            return Float.parseFloat(str);
+        }else {
+            return 0;
+        }
     }
 }

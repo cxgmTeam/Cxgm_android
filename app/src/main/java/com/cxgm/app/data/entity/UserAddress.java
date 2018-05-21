@@ -23,6 +23,7 @@ public class UserAddress extends BaseEntity{
      * realName : string
      */
 
+    private int id;
     private String address;
     private String area;
     private String dimension;
@@ -30,6 +31,14 @@ public class UserAddress extends BaseEntity{
     private String phone;
     private String realName;
     private int idDef;//是否为默认值
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getIdDef() {
         return idDef;

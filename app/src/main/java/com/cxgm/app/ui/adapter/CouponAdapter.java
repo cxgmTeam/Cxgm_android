@@ -1,5 +1,6 @@
 package com.cxgm.app.ui.adapter;
 
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -51,7 +52,25 @@ public class CouponAdapter extends BaseAdapter {
         }else {
             holder = (ViewHolder) view.getTag();
         }
-        //TODO
+
+        holder.tvValue.setText(mList.get(i).getPriceExpression());
+        holder.tvCondition.setText(viewGroup.getContext().getString(R.string._full_reduction,mList.get(i).getMaximumPrice()));
+        holder.tvName.setText(mList.get(i).getName());
+        holder.tvIndate.setText(mList.get(i).getBeginDate() + "-"+ mList.get(i).getEndDate());
+
+//        holder.tvUse.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
+
+        if (!TextUtils.isEmpty(mList.get(i).getIntroduction())){
+            holder.tvRulesContent.setVisibility(View.VISIBLE);
+            holder.tvRulesContent.setText(mList.get(i).getIntroduction());
+        }else {
+            holder.tvRulesContent.setVisibility(View.GONE);
+        }
 
         return view;
     }
@@ -63,6 +82,8 @@ public class CouponAdapter extends BaseAdapter {
         TextView tvValue;
         @BindView(R.id.tvCondition)
         TextView tvCondition;
+        @BindView(R.id.tvName)
+        TextView tvName;
         @BindView(R.id.tvIndate)
         TextView tvIndate;
         @BindView(R.id.tvUse)

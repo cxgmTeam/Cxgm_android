@@ -9,9 +9,10 @@ public class OrderProduct implements Parcelable {
     private int productId;
     private String productName;
     private int productNum;
+    private String goodCode;
     private String createTime;
     private String productUrl;
-    private String productCode;
+//    private String productCode;
     private float amount;
     private float price;
     private String unit;
@@ -19,6 +20,14 @@ public class OrderProduct implements Parcelable {
     private int id;
 
     private float originalPrice;
+
+    public String getGoodCode() {
+        return goodCode;
+    }
+
+    public void setGoodCode(String goodCode) {
+        this.goodCode = goodCode;
+    }
 
     public float getOriginalPrice() {
         return originalPrice;
@@ -76,14 +85,6 @@ public class OrderProduct implements Parcelable {
         this.productUrl = productUrl;
     }
 
-    public String getProductCode() {
-        return productCode;
-    }
-
-    public void setProductCode(String productCode) {
-        this.productCode = productCode;
-    }
-
     public float getAmount() {
         return amount;
     }
@@ -138,7 +139,7 @@ public class OrderProduct implements Parcelable {
         dest.writeInt(this.productNum);
         dest.writeString(this.createTime);
         dest.writeString(this.productUrl);
-        dest.writeString(this.productCode);
+        dest.writeString(this.goodCode);
         dest.writeFloat(this.amount);
         dest.writeFloat(this.price);
         dest.writeString(this.unit);
@@ -150,11 +151,11 @@ public class OrderProduct implements Parcelable {
     public OrderProduct() {
     }
 
-    public OrderProduct(String productName, int productNum, String productUrl, String productCode, float amount, float price,float originalPrice) {
+    public OrderProduct(String productName, int productNum, String productUrl, String goodCode, float amount, float price,float originalPrice) {
         this.productName = productName;
         this.productNum = productNum;
         this.productUrl = productUrl;
-        this.productCode = productCode;
+        this.goodCode = goodCode;
         this.amount = amount;
         this.price = price;
         this.originalPrice = originalPrice;
@@ -167,7 +168,7 @@ public class OrderProduct implements Parcelable {
         this.productNum = in.readInt();
         this.createTime = in.readString();
         this.productUrl = in.readString();
-        this.productCode = in.readString();
+        this.goodCode = in.readString();
         this.amount = in.readFloat();
         this.price = in.readFloat();
         this.unit = in.readString();

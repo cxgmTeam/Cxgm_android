@@ -186,6 +186,11 @@
     <string name="exchange_code">请输入优惠券兑换码</string>
     <string name="not_coupon">无优惠券可用</string>
     <string name="enable_coupon">可用优惠券</string>
+    <string name="empty_invoice_head">发票抬头不能为空</string>
+    <string name="empty_invoice_num">纳税人识别号不能为空</string>
+    <string name="person_invoice">个人发票</string>
+    <string name="company_invoice">公司发票</string>
+    <string name="_full_reduction">满%d元可用</string>
 
 
 </resources>
