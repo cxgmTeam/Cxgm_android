@@ -111,8 +111,10 @@ public class MapHelper extends BDAbstractLocationListener {
             mCallback.onReceiveLocation(bdLocation);
         }
 
-        mLocationClient.unRegisterLocationListener(this);
-        mLocationClient = null;
+        if (mLocationClient!=null) {
+            mLocationClient.unRegisterLocationListener(this);
+            mLocationClient = null;
+        }
 
     }
 

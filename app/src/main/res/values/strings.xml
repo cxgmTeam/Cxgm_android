@@ -191,6 +191,7 @@
     <string name="person_invoice">个人发票</string>
     <string name="company_invoice">公司发票</string>
     <string name="_full_reduction">满%d元可用</string>
+    <string name="addr_cannot_delivery">所选地址不在配送范围内</string>
 
 
 </resources>
