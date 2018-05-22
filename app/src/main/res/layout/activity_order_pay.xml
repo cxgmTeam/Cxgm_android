@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_back_title_action_appbar" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorLine" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="106dp"
+                android:background="@color/colorWhite"
+                android:elevation="@dimen/elevation"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tvPayCountDown"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/pay_count_down_"
+                    android:textColor="@color/textBlack"
+                    android:textSize="@dimen/text_size_giant_t" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/margin_micro"
+                    android:text="@string/pay_count_down_tag"
+                    android:textColor="@color/textBrickRed"
+                    android:textSize="@dimen/text_size_normal" />
+            </LinearLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:background="@color/colorWhite"
+                android:elevation="@dimen/elevation"
+                android:paddingLeft="@dimen/margin_giant"
+                android:paddingRight="@dimen/margin_giant">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="@string/amount_"
+                    android:textColor="@color/textBlack"
+                    android:textSize="@dimen/text_size_large" />
+
+                <TextView
+                    android:id="@+id/tvAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|center_vertical"
+                    android:textColor="@color/textGreen"
+                    android:textSize="@dimen/text_size_large" />
+            </FrameLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_giant"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:text="@string/choice_pay_mode"
+                android:textColor="@color/textBlackTint"
+                android:textSize="@dimen/text_size_normal_x" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:elevation="@dimen/elevation"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:id="@+id/layoutWeChatPay"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_height"
+                    android:background="@color/colorWhite"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/margin_giant"
+                    android:paddingRight="@dimen/margin_giant">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableLeft="@mipmap/wechat"
+                        android:drawablePadding="@dimen/margin_small"
+                        android:gravity="center_vertical"
+                        android:text="@string/wechat_pay"
+                        android:textColor="@color/textBlack"
+                        android:textSize="@dimen/text_size_normal_x" />
+
+                    <CheckBox
+                        android:id="@+id/cbWeChatPay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/item_height"
+                        android:button="@drawable/selector_check2"
+                        android:checked="true"
+                        android:gravity="center_vertical" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/line"
+                    android:background="@color/colorLine" />
+
+                <LinearLayout
+                    android:id="@+id/layoutAlipay"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/item_height"
+                    android:background="@color/colorWhite"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/margin_giant"
+                    android:paddingRight="@dimen/margin_giant">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:drawableLeft="@mipmap/alipay"
+                        android:drawablePadding="@dimen/margin_small"
+                        android:gravity="center_vertical"
+                        android:text="@string/wechat_pay"
+                        android:textColor="@color/textBlack"
+                        android:textSize="@dimen/text_size_normal_x" />
+
+                    <CheckBox
+                        android:id="@+id/cbAlipay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="@dimen/item_height"
+                        android:button="@drawable/selector_check2"
+                        android:gravity="center_vertical" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+    <TextView
+        android:id="@+id/tvPay"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height2"
+        android:background="@color/colorGreen"
+        android:gravity="center"
+        android:text="@string/verify_pay"
+        android:textColor="@color/textWhite"
+        android:textSize="@dimen/text_size_giant" />
+</LinearLayout>

@@ -193,5 +193,14 @@
     <string name="_full_reduction">满%d元可用</string>
     <string name="addr_cannot_delivery">所选地址不在配送范围内</string>
 
+    <string name="delete">删除</string>
+    <string name="pay_count_down_">支付剩余时间 %s</string>
+    <string name="pay_count_down_tag">请在规定的时间内完成支付，否则订单将会被自动取消！</string>
+    <string name="amount_">实付金额：</string>
+    <string name="choice_pay_mode">选择支付方式</string>
+    <string name="verify_pay">确认支付%s</string>
+    <string name="pay_order">支付订单</string>
+
+    <string name="empty_consignee">收货人信息不能为空</string>
 
 </resources>

@@ -132,7 +132,7 @@ public class ExpandableGoodsListAdapter extends BaseExpandableListAdapter {
                     ViewJump.toLogin(mActivity);
                     return;
                 }
-                ShopCart cart = new ShopCart(product.getGoodCode(),product.getName(),1,product.getPrice(), Constants.currentShop.getId());
+                ShopCart cart = new ShopCart(product.getId(),product.getGoodCode(),product.getName(),1,product.getPrice(), Constants.currentShop.getId());
                 new AddCartReq(viewGroup.getContext(),cart).execute(false,new Request.RequestCallback<Integer>() {
                     @Override
                     public void onSuccess(Integer integer) {

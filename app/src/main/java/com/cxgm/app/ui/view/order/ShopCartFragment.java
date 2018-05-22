@@ -292,7 +292,10 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
                 ArrayList<OrderProduct> products = new ArrayList<>();
                 for (ShopCart cart : mCartList){
                     if (cart.isChecked){
-                        products.add(new OrderProduct(cart.getGoodName(),cart.getGoodNum(),cart.getImageUrl(),cart.getGoodCode(),cart.getAmount(),cart.getPrice(),cart.getOriginalPrice()));
+                        products.add(new OrderProduct(cart.getProductId(),cart.getCategoryId(),cart.getGoodName()
+                                ,cart.getGoodNum(),cart.getImageUrl()
+                                ,cart.getGoodCode(),cart.getAmount()
+                                ,cart.getPrice(),cart.getOriginalPrice()));
                     }
                 }
                 if (products.size() > 0){

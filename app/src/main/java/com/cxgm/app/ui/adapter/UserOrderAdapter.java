@@ -70,7 +70,7 @@ public class UserOrderAdapter extends BaseAdapter {
             ImageView imgView2 = itemView.findViewById(R.id.imgView2);
             ImageView imgView3 = itemView.findViewById(R.id.imgView3);
             TextView tvView = itemView.findViewById(R.id.tvView);
-            int width = (DeviceUtils.getSreenWidth()-2* DensityUtil.dip2px(15) - 3*DensityUtil.dip2px(10))/3;
+            int width = (DeviceUtils.getSreenWidth()-2* DensityUtil.dip2px(15) - 3*DensityUtil.dip2px(10))/4;
             tvView.getLayoutParams().width = width;
             tvView.getLayoutParams().height = width;
             int number = mList.get(i).getProductDetails().size();

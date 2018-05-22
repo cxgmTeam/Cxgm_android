@@ -36,6 +36,15 @@ public class ShopCart extends BaseEntity {
     private CouponDetail coupon;
     private int couponId;
     private int categoryId;//二级分类ID
+    private int productId;
+
+    public int getProductId() {
+        return productId;
+    }
+
+    public void setProductId(int productId) {
+        this.productId = productId;
+    }
 
     public int getCategoryId() {
         return categoryId;
@@ -57,7 +66,8 @@ public class ShopCart extends BaseEntity {
 
     }
 
-    public ShopCart(String goodCode, String goodName, int goodNum,float amount, int shopId) {
+    public ShopCart(int productId,String goodCode, String goodName, int goodNum,float amount, int shopId) {
+        this.productId = productId;
         this.goodCode = goodCode;
         this.goodName = goodName;
         this.goodNum = goodNum;

@@ -13,6 +13,14 @@ public class CategoryAndAmount extends BaseEntity {
     private int categoryId;
     private float amount;
 
+    public CategoryAndAmount(int categoryId, float amount) {
+        this.categoryId = categoryId;
+        this.amount = amount;
+    }
+
+    public CategoryAndAmount() {
+    }
+
     public int getCategoryId() {
         return categoryId;
     }

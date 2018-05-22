@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.cxgm.app.R;
+import com.cxgm.app.data.entity.CategoryAndAmount;
 import com.cxgm.app.data.entity.CouponDetail;
 import com.cxgm.app.data.entity.Invoice;
 import com.cxgm.app.data.entity.Order;
@@ -83,14 +84,6 @@ public class VerifyOrderActivity extends BaseActivity {
     TextView tvInvoice;
     @BindView(R.id.layoutInvoice)
     LinearLayout layoutInvoice;
-    @BindView(R.id.cbWeChatPay)
-    CheckBox cbWeChatPay;
-    @BindView(R.id.layoutWeChatPay)
-    LinearLayout layoutWeChatPay;
-    @BindView(R.id.cbAlipay)
-    CheckBox cbAlipay;
-    @BindView(R.id.layoutAlipay)
-    LinearLayout layoutAlipay;
     @BindView(R.id.tvPayment)
     TextView tvPayment;
     @BindView(R.id.tvCommitOrder)
@@ -108,9 +101,10 @@ public class VerifyOrderActivity extends BaseActivity {
 
     List<OrderProduct> mOrderProductList;
     UserAddress mUserAddress;
-    float mOrderAmount = 0f;//总价 不包括优惠券
+    float mOrderAmount = 0f;//总价 不包括优惠券和邮费
     List<CouponDetail> mCouponList;
     Order mOrder;
+    int mCarriage = 10;//邮费
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,7 +134,7 @@ public class VerifyOrderActivity extends BaseActivity {
         ImageView imgView2 = itemView.findViewById(R.id.imgView2);
         ImageView imgView3 = itemView.findViewById(R.id.imgView3);
         TextView tvView = itemView.findViewById(R.id.tvView);
-        int width = (DeviceUtils.getSreenWidth()-2* DensityUtil.dip2px(15) - 3*DensityUtil.dip2px(10))/3;
+        int width = (DeviceUtils.getSreenWidth()-2* DensityUtil.dip2px(15) - 3*DensityUtil.dip2px(10))/4;
         tvView.getLayoutParams().width = width;
         tvView.getLayoutParams().height = width;
         int number = mOrderProductList.size();
@@ -163,32 +157,43 @@ public class VerifyOrderActivity extends BaseActivity {
                         .into(imgView1);
         }
 
-        float goodsAmountTotal = 0;
+        mOrderAmount = 0;
         float goodsOriginalTotal = 0;//原价
 
-        for (OrderProduct product:mOrderProductList){
-            goodsAmountTotal += product.getAmount();
+        List<CategoryAndAmount> caaList = new ArrayList<>();
 
+        for (OrderProduct product:mOrderProductList){
+            mOrderAmount += product.getAmount();
             //原价
             goodsOriginalTotal += Helper.moneyMultiply(product.getOriginalPrice(),product.getProductNum());
+
+            //统计类总额
+            for (CategoryAndAmount caa:caaList){
+                if (caa.getCategoryId() == product.getCategoryId()){
+                    caa.setAmount(caa.getAmount()+product.getAmount());
+                    break;
+                }
+                //没有找到的情况不会break 会继续执行下边代码
+                caaList.add(new CategoryAndAmount(product.getCategoryId(),product.getAmount()));
+                break;
+            }
         }
 
         tvGoodsTotal.setText(StringHelper.getRMBFormat(goodsOriginalTotal));
-        tvDiscounts.setText(StringHelper.getRMBFormat(Helper.moneySubtract(goodsOriginalTotal,goodsAmountTotal)));
+        tvDiscounts.setText(StringHelper.getRMBFormat(Helper.moneySubtract(goodsOriginalTotal,mOrderAmount)));
         //邮费固定值
-        tvCarriage.setText(StringHelper.getRMBFormat(10));
+        tvCarriage.setText(StringHelper.getRMBFormat(mCarriage));
         tvCoupon.setText(StringHelper.getRMBFormat(0));
         tvInvoice.setText(R.string.not_invoice);
 
-        //优惠价 + 邮费
-        mOrderAmount = Helper.moneySubtract(goodsAmountTotal,10);
-        //这个时候 优惠券接口还没调用，先设置一个价格上去，稍候会更新
-        tvPayment.setText(StringHelper.getRMBFormat(mOrderAmount));
-
-        mOrder.setProductList(mOrderProductList);
-        mOrder.setOrderAmount(mOrderAmount);
+        //这个时候 优惠券接口还没调用，先设置一个价格上去，稍候会更新  算上邮费
+        tvPayment.setText(StringHelper.getRMBFormat(Helper.moneySubtract(mOrderAmount,mCarriage)));
         mOrder.setOrderNum(mOrderProductList.size()+"");
 
+        //设置查询优惠券要用到的字段
+        mOrder.setProductList(mOrderProductList);
+        mOrder.setOrderAmount(mOrderAmount);
+        mOrder.setCategoryAndAmountList(caaList);
 
     }
 
@@ -231,7 +236,6 @@ public class VerifyOrderActivity extends BaseActivity {
                     //优惠券 总价更新
                     mCouponList = couponDetails;
                     setCouponAndAmount(mCouponList.get(0));
-                    //tvPayment.setText(StringHelper.getRMBFormat(Helper.calculateDiscounted(mOrderAmount,mCouponList.get(0).getPriceExpression())));
                 }
             }
 
@@ -287,6 +291,12 @@ public class VerifyOrderActivity extends BaseActivity {
 
                 break;
             case R.id.tvCommitOrder:
+                //地址验证
+                if (android.text.TextUtils.isEmpty(mOrder.getAddressId())){
+                    ToastManager.sendToast(getString(R.string.empty_consignee));
+                    return;
+                }
+
                 //提交订单
                 new AddOrderReq(this,mOrder).execute(new Request.RequestCallback<Integer>() {
                     @Override
@@ -370,8 +380,8 @@ public class VerifyOrderActivity extends BaseActivity {
     private void setCouponAndAmount(CouponDetail couponDetail){
         if (couponDetail!=null) {
             //实付款
-//            mOrder.setOrderAmount(Helper.calculateDiscounted(mOrderAmount, couponDetail.getPriceExpression()));
-            mOrder.setOrderAmount(Helper.moneySubtract(mOrderAmount,Helper.str2Float(couponDetail.getPriceExpression())));
+            float temp = Helper.moneySubtract(mOrderAmount,mCarriage);
+            mOrder.setOrderAmount(Helper.moneySubtract(temp,Helper.str2Float(couponDetail.getPriceExpression())));
             tvPayment.setText(StringHelper.getRMBFormat(mOrder.getOrderAmount()));
             //优惠券ID
             mOrder.setCouponCodeId(couponDetail.getCodeId());

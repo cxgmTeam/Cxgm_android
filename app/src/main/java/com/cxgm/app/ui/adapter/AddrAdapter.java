@@ -9,7 +9,12 @@ import android.widget.TextView;
 
 import com.cxgm.app.R;
 import com.cxgm.app.data.entity.UserAddress;
+import com.cxgm.app.data.io.order.DeleteAddressReq;
+import com.cxgm.app.utils.ToastManager;
+import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.utils.TextUtils;
+
+import org.xutils.common.Callback;
 
 import java.util.List;
 
@@ -46,7 +51,7 @@ public class AddrAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, final ViewGroup parent) {
 
         ViewHolder holder;
 
@@ -72,6 +77,37 @@ public class AddrAdapter extends BaseAdapter {
                 }
             }
         });
+        holder.tvDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DeleteAddressReq(parent.getContext(),mList.get(position).getId())
+                        .execute(new Request.RequestCallback<Integer>() {
+                            @Override
+                            public void onSuccess(Integer integer) {
+                                if (integer!=0) {
+                                    mList.remove(position);
+                                    notifyDataSetChanged();
+                                    ToastManager.sendToast(parent.getContext().getString(R.string.delete_successful));
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable ex, boolean isOnCallback) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(Callback.CancelledException cex) {
+
+                            }
+
+                            @Override
+                            public void onFinished() {
+
+                            }
+                        });
+            }
+        });
 
         return convertView;
     }
@@ -89,6 +125,8 @@ public class AddrAdapter extends BaseAdapter {
         CheckBox cbDefault;
         @BindView(R.id.tvEdit)
         TextView tvEdit;
+        @BindView(R.id.tvDelete)
+        TextView tvDelete;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

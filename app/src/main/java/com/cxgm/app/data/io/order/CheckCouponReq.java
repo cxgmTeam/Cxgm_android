@@ -21,7 +21,7 @@ import java.util.List;
  */
 public class CheckCouponReq extends Request {
 
-    Order order; //只设置其中的 productDetails 字段就可以
+    Order order; //设置其中的 productDetails ,orderAmount ,categoryAndAmountList字段就可以
     public CheckCouponReq(Context context,Order order) {
         super(context);
         this.order = order;

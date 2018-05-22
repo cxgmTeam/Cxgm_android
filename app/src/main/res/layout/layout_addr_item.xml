@@ -21,14 +21,16 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/line"/>
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_below="@id/line"
-        android:layout_marginLeft="@dimen/margin_large_x"
-        android:layout_marginRight="@dimen/margin_giant_x"
+        android:layout_marginLeft="@dimen/margin_giant"
+        android:layout_marginRight="@dimen/margin_giant"
         android:layout_width="match_parent"
         android:layout_height="40dp">
 
         <CheckBox
+            android:textSize="@dimen/text_size_normal"
+            android:textColor="@color/textBlackTint"
             android:button="@null"
             android:drawableLeft="@drawable/selector_check"
             android:drawablePadding="@dimen/margin_small"
@@ -39,6 +41,11 @@
             android:layout_height="40dp" />
 
         <TextView
+            android:layout_toLeftOf="@+id/tvDelete"
+            android:drawablePadding="@dimen/margin_micro"
+            android:drawableLeft="@mipmap/edit2"
+            android:textSize="@dimen/text_size_normal"
+            android:textColor="@color/textBlackTint"
             android:id="@+id/tvEdit"
             android:layout_gravity="right"
             android:gravity="center_vertical"
@@ -46,6 +53,20 @@
             android:layout_width="wrap_content"
             android:layout_height="40dp" />
 
-    </FrameLayout>
+        <TextView
+            android:layout_marginLeft="@dimen/margin_normal"
+            android:layout_alignParentRight="true"
+            android:drawablePadding="@dimen/margin_micro"
+            android:drawableLeft="@mipmap/delete"
+            android:textSize="@dimen/text_size_normal"
+            android:textColor="@color/textBlackTint"
+            android:id="@+id/tvDelete"
+            android:layout_gravity="right"
+            android:gravity="center_vertical"
+            android:text="@string/delete"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp" />
+
+    </RelativeLayout>
 
 </RelativeLayout>
