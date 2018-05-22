@@ -13,8 +13,10 @@ import android.widget.TextView;
 import com.baidu.location.BDLocation;
 import com.baidu.mapapi.search.core.PoiInfo;
 import com.cxgm.app.R;
+import com.cxgm.app.data.entity.Shop;
 import com.cxgm.app.data.entity.UserAddress;
 import com.cxgm.app.data.entity.UserPoiInfo;
+import com.cxgm.app.data.io.common.CheckAddressReq;
 import com.cxgm.app.data.io.order.AddAddressReq;
 import com.cxgm.app.data.io.order.UpdateAddressReq;
 import com.cxgm.app.ui.base.BaseActivity;
@@ -24,6 +26,8 @@ import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.utils.ValidateUtils;
 
 import org.xutils.common.Callback;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -150,11 +154,36 @@ public class NewAddrActivity extends BaseActivity {
         mAddress.setLongitude(mPoiInfo.location.longitude+"");
         mAddress.setDimension(mPoiInfo.location.latitude+"");
 
-        if (mIsEdit){
-            new UpdateAddressReq(this,mAddress).execute(callback);
-        }else {
-            new AddAddressReq(this,mAddress).execute(callback);
-        }
+        //检查范围
+        new CheckAddressReq(this,mPoiInfo.location.longitude+"",mPoiInfo.location.latitude+"").execute(new Request.RequestCallback<List<Shop>>() {
+            @Override
+            public void onSuccess(List<Shop> shops) {
+                if (shops!=null && shops.size()>0) {
+                    if (mIsEdit) {
+                        new UpdateAddressReq(NewAddrActivity.this, mAddress).execute(callback);
+                    } else {
+                        new AddAddressReq(NewAddrActivity.this, mAddress).execute(callback);
+                    }
+                }else {
+                    ToastManager.sendToast(getString(R.string.addr_cannot_delivery));
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+            }
+
+            @Override
+            public void onCancelled(Callback.CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
 
     }
 

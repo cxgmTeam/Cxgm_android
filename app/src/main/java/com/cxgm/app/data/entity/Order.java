@@ -24,7 +24,6 @@ public class Order extends BaseEntity {
      * storeId : 0
      */
 
-    private float orderAmount;
     private String orderNum;
     private String orderTime;
     private String payType;
@@ -32,12 +31,23 @@ public class Order extends BaseEntity {
     private String status;
     private int storeId;
 
+    private float orderAmount;//订单金额
     private int couponCodeId;//优惠券ID
     private String addressId;//地址ID
     private String receiveTime;//送货时间
     private Invoice receipt;//发票信息
     private List<OrderProduct> productDetails;//查询用
     private List<OrderProduct> productList;//提交用
+
+    private List<CategoryAndAmount> categoryAndAmountList;//二级分类下的总金额
+
+    public List<CategoryAndAmount> getCategoryAndAmountList() {
+        return categoryAndAmountList;
+    }
+
+    public void setCategoryAndAmountList(List<CategoryAndAmount> categoryAndAmountList) {
+        this.categoryAndAmountList = categoryAndAmountList;
+    }
 
     public int getCouponCodeId() {
         return couponCodeId;

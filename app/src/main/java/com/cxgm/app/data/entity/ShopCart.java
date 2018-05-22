@@ -35,6 +35,15 @@ public class ShopCart extends BaseEntity {
     private String specifications;
     private CouponDetail coupon;
     private int couponId;
+    private int categoryId;//二级分类ID
+
+    public int getCategoryId() {
+        return categoryId;
+    }
+
+    public void setCategoryId(int categoryId) {
+        this.categoryId = categoryId;
+    }
 
     public float getOriginalPrice() {
         return originalPrice;

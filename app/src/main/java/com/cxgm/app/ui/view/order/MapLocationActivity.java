@@ -434,40 +434,41 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
         }
     }
 
-    /**
-     * 检查点是否包含在配送区
-     * @param latitude
-     * @param longitude
-     * @return
-     */
-    private boolean checkPointEnable(double latitude,double longitude){
-        //TODO 不管用
-        boolean b = false;
-        latitude *=mPathBaseNum;
-        longitude *=mPathBaseNum;
-        for (Path path : mPathList){
-            RectF bounds = new RectF();
-            path.computeBounds(bounds,true);
-            Region region = new Region();
-            region.setPath(path,new Region((int)bounds.left,(int)bounds.top,(int)bounds.right,(int)bounds.bottom));
-            b = region.contains((int)latitude,(int)longitude);
-            if (b)
-                break;
-        }
-        return b;
-    }
+//    /**
+//     * 检查点是否包含在配送区
+//     * 该方法不管用，也不知道是哪里出了问题
+//     * 二了一个晚上，早上醒来才想起来，checkAddress接口不就是干这个的嘛
+//     * @param latitude
+//     * @param longitude
+//     * @return
+//     */
+//    private boolean checkPointEnable(double latitude,double longitude){
+//        boolean b = false;
+//        latitude *=mPathBaseNum;
+//        longitude *=mPathBaseNum;
+//        for (Path path : mPathList){
+//            RectF bounds = new RectF();
+//            path.computeBounds(bounds,true);
+//            Region region = new Region();
+//            region.setPath(path,new Region((int)bounds.left,(int)bounds.top,(int)bounds.right,(int)bounds.bottom));
+//            b = region.contains((int)latitude,(int)longitude);
+//            if (b)
+//                break;
+//        }
+//        return b;
+//    }
 
     @Override
     public void finish() {
         for (UserPoiInfo info : mPoiList) {
             if (info.isChecked) {
-                if (checkPointEnable(info.location.latitude,info.location.longitude)) {
+//                if (checkPointEnable(info.location.latitude,info.location.longitude)) {
                     Intent data = new Intent();
                     data.putExtra("poiInfo", info);
                     setResult(RESULT_OK, data);
-                }else {
-                    ToastManager.sendToast(getString(R.string.addr_cannot_delivery));
-                }
+//                }else {
+//                    ToastManager.sendToast(getString(R.string.addr_cannot_delivery));
+//                }
                 break;
             }
         }
