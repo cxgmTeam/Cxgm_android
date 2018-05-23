@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -98,6 +99,8 @@ public class VerifyOrderActivity extends BaseActivity {
     LinearLayout layoutHintPay;
     @BindView(R.id.layoutGooods)
     LinearLayout layoutGooods;
+    @BindView(R.id.etRemark)
+    EditText etRemark;
 
     List<OrderProduct> mOrderProductList;
     UserAddress mUserAddress;
@@ -296,6 +299,8 @@ public class VerifyOrderActivity extends BaseActivity {
                     ToastManager.sendToast(getString(R.string.empty_consignee));
                     return;
                 }
+
+                mOrder.setRemarks(etRemark.getText().toString().trim());
 
                 //提交订单
                 new AddOrderReq(this,mOrder).execute(new Request.RequestCallback<Integer>() {

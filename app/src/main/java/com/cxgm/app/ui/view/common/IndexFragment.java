@@ -12,17 +12,20 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
+import com.cxgm.app.data.entity.Advertisement;
 import com.cxgm.app.data.entity.ProductTransfer;
 import com.cxgm.app.data.entity.Shop;
 import com.cxgm.app.data.entity.ShopCategory;
 import com.cxgm.app.data.entity.base.PageInfo;
 import com.cxgm.app.data.io.common.CheckAddressReq;
+import com.cxgm.app.data.io.common.FindAdvertisementReq;
 import com.cxgm.app.data.io.common.ShopListReq;
 import com.cxgm.app.data.io.goods.FindFirstCategoryReq;
 import com.cxgm.app.data.io.goods.FindHotProductReq;
@@ -42,7 +45,6 @@ import com.deanlib.ootb.widget.ListViewForScrollView;
 import com.kevin.loopview.AdLoopView;
 import com.kevin.loopview.internal.BaseLoopAdapter;
 import com.kevin.loopview.internal.LoopData;
-import com.kevin.loopview.utils.JsonTool;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -52,13 +54,13 @@ import org.xutils.common.util.DensityUtil;
 import org.xutils.x;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
-import rx.Observable;
 
 /**
  * 首页
@@ -100,22 +102,24 @@ public class IndexFragment extends BaseFragment {
     @BindView(R.id.layoutGoodsShow)
     LinearLayout layoutGoodsShow;
 
-    @BindView(R.id.imgAd1)
-    ImageView imgAd1;
-    @BindView(R.id.hlvAdGoods1)
-    HorizontalListView hlvAdGoods1;
-    @BindView(R.id.imgAd2)
-    ImageView imgAd2;
-    @BindView(R.id.hlvAdGoods2)
-    HorizontalListView hlvAdGoods2;
     @BindView(R.id.imgAd3)
     ImageView imgAd3;
-    @BindView(R.id.hlvAdGoods3)
-    HorizontalListView hlvAdGoods3;
+    @BindView(R.id.hlvAd3Goods)
+    HorizontalListView hlvAd3Goods;
+    @BindView(R.id.imgAd4)
+    ImageView imgAd4;
+    @BindView(R.id.hlvAd4Goods)
+    HorizontalListView hlvAd4Goods;
+    @BindView(R.id.imgAd5)
+    ImageView imgAd5;
+    @BindView(R.id.hlvAd5Goods)
+    HorizontalListView hlvAd5Goods;
     @BindView(R.id.gvGoods)
     GridViewForScrollView gvGoods;
     @BindView(R.id.srl)
     SmartRefreshLayout srl;
+    @BindView(R.id.layoutAD2Small)
+    LinearLayout layoutAD2Small;
 
     Unbinder unbinder;
 
@@ -134,6 +138,14 @@ public class IndexFragment extends BaseFragment {
     int mShopListPageNum = 1;
     List<Shop> mShopList;
     ShopAdapter mShopAdapter;
+    @BindView(R.id.imgAD21)
+    ImageView imgAD21;
+    @BindView(R.id.imgAD22)
+    ImageView imgAD22;
+    @BindView(R.id.imgAD23)
+    ImageView imgAD23;
+    @BindView(R.id.layoutAD2)
+    LinearLayout layoutAD2;
 
     @Nullable
     @Override
@@ -155,7 +167,7 @@ public class IndexFragment extends BaseFragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (hidden && popupWindow!=null && popupWindow.isShowing())
+        if (hidden && popupWindow != null && popupWindow.isShowing())
             popupWindow.dismiss();
     }
 
@@ -172,12 +184,12 @@ public class IndexFragment extends BaseFragment {
         });
 
         //地址提示
-        if (Constants.checkAddress && Constants.currentLocation!=null) {
+        if (Constants.checkAddress && Constants.currentLocation != null) {
             showPopLocationInfo(getString(R.string.destination_,
                     Constants.currentLocation.getDistrict()
                             + Constants.currentLocation.getStreet()
                             + Constants.currentLocation.getLocationDescribe()));
-        }else {
+        } else {
             showPopLocationInfo(getString(R.string.out_of_distribution));
         }
 
@@ -192,12 +204,13 @@ public class IndexFragment extends BaseFragment {
             lvShop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Constants.currentShop = mShopList.get((int)id);
+                    Constants.currentShop = mShopList.get((int) id);
                     init();
                     loadData();
                 }
             });
-
+            srl.setEnableRefresh(true);
+            srl.setEnableLoadMore(true);
             srl.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
                 @Override
                 public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -217,6 +230,8 @@ public class IndexFragment extends BaseFragment {
             layoutShopShow.setVisibility(View.GONE);
             layoutGoodsShow.setVisibility(View.VISIBLE);
 
+            srl.setEnableRefresh(false);
+            srl.setEnableLoadMore(false);
             //First Category
             mFCList = new ArrayList<>();
             mFCAdapter = new FirstCategoryAdapter(mFCList);
@@ -238,20 +253,18 @@ public class IndexFragment extends BaseFragment {
     }
 
     private void loadData() {
-//        LoopData loopData = JsonTool.toBean("", LoopData.class);
-//        loopBanner.refreshData(loopData);
-//        loopBanner.startAutoLoop();
+
 
         if (Constants.currentShop == null) {
             //商铺列表
-            new ShopListReq(getActivity(),mShopListPageNum,10)
+            new ShopListReq(getActivity(), mShopListPageNum, 10)
                     .execute(new Request.RequestCallback<PageInfo<Shop>>() {
                         @Override
                         public void onSuccess(PageInfo<Shop> shopPageInfo) {
-                            if (shopPageInfo!=null && shopPageInfo.getList()!=null){
+                            if (shopPageInfo != null && shopPageInfo.getList() != null) {
                                 mShopList.addAll(shopPageInfo.getList());
                                 mShopAdapter.notifyDataSetChanged();
-                            }else {
+                            } else {
 //                                if (srl.getState().isFooter)
 //                                    srl.finishLoadMoreWithNoMoreData();
                             }
@@ -377,6 +390,68 @@ public class IndexFragment extends BaseFragment {
 
                 }
             });
+
+            //轮播广告
+            new FindAdvertisementReq(getActivity(), Constants.currentShop.getId()).execute(new Request.RequestCallback<List<Advertisement>>() {
+                @Override
+                public void onSuccess(List<Advertisement> advertisements) {
+                    //广告分组
+                    List<Advertisement>[] ads = convertAdvertisements(advertisements);
+                    if (ads != null) {
+                        //banner
+                        if (ads[0].size() > 0) {
+                            LoopData loopData = new LoopData();
+                            loopData.items = new ArrayList<>();
+                            for (Advertisement ad : ads[0]) {
+                                loopData.items.add(loopData.new ItemData(ad.getId() + "", ad.getImageUrl(), "", "", ""));
+                            }
+//                            LoopData loopData = JsonTool.toBean("", LoopData.class);
+                            loopBanner.refreshData(loopData);
+                            loopBanner.startAutoLoop();
+                            loopBanner.setVisibility(View.VISIBLE);
+                        } else {
+                            loopBanner.setVisibility(View.GONE);
+                        }
+
+                        layoutAD2Small.setVisibility(View.VISIBLE);
+                        imgAD22.setVisibility(View.VISIBLE);
+                        imgAD23.setVisibility(View.VISIBLE);
+                        switch (ads[1].size()) {
+                            case 3:
+                                Glide.with(getActivity()).load(ads[1].get(2).getImageUrl()).apply(new RequestOptions()
+                                        .placeholder(R.mipmap.default_img).error(R.mipmap.default_img)).into(imgAD23);
+                            case 2:
+                                imgAD23.setVisibility(View.GONE);
+                                Glide.with(getActivity()).load(ads[1].get(1).getImageUrl()).apply(new RequestOptions()
+                                        .placeholder(R.mipmap.default_img).error(R.mipmap.default_img)).into(imgAD22);
+                            case 1:
+                                layoutAD2Small.setVisibility(View.GONE);
+                                Glide.with(getActivity()).load(ads[1].get(0).getImageUrl()).apply(new RequestOptions()
+                                        .placeholder(R.mipmap.default_img).error(R.mipmap.default_img)).into(imgAD21);
+                                break;
+                            case 0:
+                                //TODO 没有广告时
+
+                        }
+
+                    }
+                }
+
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+
+                }
+
+                @Override
+                public void onCancelled(Callback.CancelledException cex) {
+
+                }
+
+                @Override
+                public void onFinished() {
+
+                }
+            });
         }
     }
 
@@ -409,7 +484,7 @@ public class IndexFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgLocation:
-                ViewJump.toAddrList(getActivity(),this);
+                ViewJump.toAddrList(getActivity(), this);
                 break;
             case R.id.etSearchWord:
                 ViewJump.toSearch(getActivity());
@@ -424,11 +499,11 @@ public class IndexFragment extends BaseFragment {
             switch (requestCode) {
                 case ViewJump.CODE_ADDR_LIST:
                     //更新位置以及对应商铺以及对应的商品
-                    new CheckAddressReq(getActivity(),Constants.currentLocation.getLongitude()+"",Constants.currentLocation.getLatitude()+"")
+                    new CheckAddressReq(getActivity(), Constants.currentLocation.getLongitude() + "", Constants.currentLocation.getLatitude() + "")
                             .execute(new Request.RequestCallback<List<Shop>>() {
                                 @Override
                                 public void onSuccess(List<Shop> shops) {
-                                    if (shops!=null && shops.size()>0){
+                                    if (shops != null && shops.size() > 0) {
                                         Constants.checkAddress = true;
                                         //todo 不能更新currentShop，用户可以只点了重新定位，而没有在地图上选择
                                         //返回得到的定位信息内仍然可能没有商铺
@@ -455,5 +530,29 @@ public class IndexFragment extends BaseFragment {
                     break;
             }
         }
+    }
+
+    private List<Advertisement>[] convertAdvertisements(List<Advertisement> list) {
+
+        if (list != null) {
+            List<Advertisement> adList1 = new ArrayList<>();//banner
+            List<Advertisement> adList2 = new ArrayList<>();
+            List<Advertisement>[] arr = new List[]{adList1, adList2};
+            for (Advertisement ad : list) {
+                switch (ad.getPosition()) {
+                    case "1":
+                        adList1.add(ad);
+                        break;
+                    case "2":
+                        adList2.add(ad);
+                        break;
+                }
+            }
+
+            Collections.sort(adList1);
+            Collections.sort(adList2);
+            return arr;
+        }
+        return null;
     }
 }

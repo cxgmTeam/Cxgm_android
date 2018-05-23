@@ -1,5 +1,6 @@
 package com.cxgm.app.ui.adapter;
 
+import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 import com.cxgm.app.R;
 import com.cxgm.app.data.entity.UserAddress;
 import com.cxgm.app.data.io.order.DeleteAddressReq;
+import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.utils.ToastManager;
 import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.utils.TextUtils;
@@ -31,8 +33,10 @@ import butterknife.ButterKnife;
 public class AddrAdapter extends BaseAdapter {
 
     List<UserAddress> mList;
-    public AddrAdapter(List<UserAddress> mList) {
+    Activity activity;
+    public AddrAdapter(Activity activity,List<UserAddress> mList) {
         this.mList = mList;
+        this.activity = activity;
     }
 
     @Override
@@ -65,8 +69,8 @@ public class AddrAdapter extends BaseAdapter {
 
         holder.tvName.setText(mList.get(position).getRealName());
         holder.tvPhoneNumber.setText(TextUtils.hidePhoneNum(mList.get(position).getPhone()));
-        holder.tvAddr.setText(mList.get(position).getAddress());
-        //编辑，设为默认
+        holder.tvAddr.setText(mList.get(position).getArea() + mList.get(position).getAddress());
+        //设为默认
         holder.cbDefault.setChecked(mList.get(position).getIdDef() == 1);
         holder.cbDefault.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -75,6 +79,12 @@ public class AddrAdapter extends BaseAdapter {
                 for (int i = 0;i<mList.size() ;i++){
                     mList.get(i).setIdDef(i == position?1:0);
                 }
+            }
+        });
+        holder.tvEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewJump.toNewOrUpdateAddr(activity,mList.get(position));
             }
         });
         holder.tvDelete.setOnClickListener(new View.OnClickListener() {

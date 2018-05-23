@@ -16,6 +16,7 @@ import com.cxgm.app.data.io.order.AddressListReq;
 import com.cxgm.app.ui.adapter.AddrAdapter;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
+import com.cxgm.app.utils.UserManager;
 import com.deanlib.ootb.data.io.Request;
 
 import org.xutils.common.Callback;
@@ -72,7 +73,7 @@ public class AddrOptionActivity extends BaseActivity {
 
 
         mAddrList = new ArrayList<>();
-        mAddrAdapter = new AddrAdapter(mAddrList);
+        mAddrAdapter = new AddrAdapter(this,mAddrList);
         lvAddr.setAdapter(mAddrAdapter);
 
         lvAddr.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -122,6 +123,10 @@ public class AddrOptionActivity extends BaseActivity {
 
     @OnClick(R.id.tvNewAddr)
     public void onClickNewAddr() {
+        if (!UserManager.isUserLogin()){
+            ViewJump.toLogin(this);
+            return;
+        }
         ViewJump.toNewAddr(this);
     }
 
@@ -131,6 +136,7 @@ public class AddrOptionActivity extends BaseActivity {
         if (resultCode == RESULT_OK){
             switch (requestCode){
                 case ViewJump.CODE_NEW_ADDRESS:
+                    mAddrList.clear();
                     loadData();
                     break;
             }

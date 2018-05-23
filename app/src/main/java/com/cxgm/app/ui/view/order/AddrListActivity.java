@@ -92,40 +92,42 @@ public class AddrListActivity extends BaseActivity implements MapHelper.Location
         }
 
         mAddrList = new ArrayList<>();
-        mAddrAdapter = new AddrAdapter(mAddrList);
+        mAddrAdapter = new AddrAdapter(this,mAddrList);
         lvAddr.setAdapter(mAddrAdapter);
     }
 
     private void loadData(){
-        new AddressListReq(this)
-                .execute(new Request.RequestCallback<List<UserAddress>>() {
-                    @Override
-                    public void onSuccess(List<UserAddress> userAddresses) {
-                        if (userAddresses!=null){
-                            mAddrList.addAll(userAddresses);
-                            mAddrAdapter.notifyDataSetChanged();
+        if (UserManager.isUserLogin()) {
+            new AddressListReq(this)
+                    .execute(new Request.RequestCallback<List<UserAddress>>() {
+                        @Override
+                        public void onSuccess(List<UserAddress> userAddresses) {
+                            if (userAddresses != null) {
+                                mAddrList.addAll(userAddresses);
+                                mAddrAdapter.notifyDataSetChanged();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onError(Throwable ex, boolean isOnCallback) {
+                        @Override
+                        public void onError(Throwable ex, boolean isOnCallback) {
 
-                    }
-
-                    @Override
-                    public void onCancelled(Callback.CancelledException cex) {
-
-                    }
-
-                    @Override
-                    public void onFinished() {
-                        if (mAddrList.size()==0){
-                            tvNoAddr.setVisibility(View.VISIBLE);
-                        }else {
-                            tvNoAddr.setVisibility(View.GONE);
                         }
-                    }
-                });
+
+                        @Override
+                        public void onCancelled(Callback.CancelledException cex) {
+
+                        }
+
+                        @Override
+                        public void onFinished() {
+                            if (mAddrList.size() == 0) {
+                                tvNoAddr.setVisibility(View.VISIBLE);
+                            } else {
+                                tvNoAddr.setVisibility(View.GONE);
+                            }
+                        }
+                    });
+        }
     }
 
     @OnClick({R.id.imgBack, R.id.layoutSurrounding, R.id.tvNewAddr,R.id.tvRelocation})
@@ -138,6 +140,10 @@ public class AddrListActivity extends BaseActivity implements MapHelper.Location
                 ViewJump.toMapLocation(this);
                 break;
             case R.id.tvNewAddr:
+                if (!UserManager.isUserLogin()){
+                    ViewJump.toLogin(this);
+                    return;
+                }
                 ViewJump.toNewAddr(this);
                 break;
             case R.id.tvRelocation:
@@ -157,6 +163,19 @@ public class AddrListActivity extends BaseActivity implements MapHelper.Location
         if (bdLocation!=null) {
             Constants.currentLocation = bdLocation;
             tvCurrentAddr.setText(Constants.currentLocation.getDistrict() + Constants.currentLocation.getStreet() + Constants.currentLocation.getLocationDescribe());
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK){
+            switch (requestCode){
+                case ViewJump.CODE_NEW_ADDRESS:
+                    mAddrList.clear();
+                    loadData();
+                    break;
+            }
         }
     }
 

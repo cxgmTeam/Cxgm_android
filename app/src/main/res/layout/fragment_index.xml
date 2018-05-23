@@ -177,6 +177,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/layoutAD2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_normal"
@@ -185,23 +186,30 @@
                         android:padding="@dimen/margin_normal">
 
                         <ImageView
+                            android:scaleType="fitXY"
+                            android:id="@+id/imgAD21"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="176dp"
                             android:layout_weight="1" />
 
                         <LinearLayout
+                            android:id="@+id/layoutAD2Small"
                             android:layout_width="0dp"
-                            android:layout_height="wrap_content"
+                            android:layout_height="176dp"
                             android:layout_marginLeft="@dimen/margin_micro"
                             android:layout_weight="1"
                             android:orientation="vertical">
 
                             <ImageView
+                                android:scaleType="fitXY"
+                                android:id="@+id/imgAD22"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_weight="1" />
 
                             <ImageView
+                                android:scaleType="fitXY"
+                                android:id="@+id/imgAD23"
                                 android:layout_width="match_parent"
                                 android:layout_height="0dp"
                                 android:layout_marginTop="@dimen/margin_micro"
@@ -298,66 +306,6 @@
 
                         <ImageView
                             android:scaleType="fitXY"
-                            android:id="@+id/imgAd1"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/ad_height"
-                            android:paddingLeft="@dimen/margin_normal"
-                            android:paddingRight="@dimen/margin_normal"
-                            android:src="@mipmap/default_img" />
-
-                        <com.deanlib.ootb.widget.HorizontalListView
-                            android:id="@+id/hlvAdGoods1"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_giant"
-                            android:paddingLeft="@dimen/margin_normal"
-                            android:paddingRight="@dimen/margin_normal"
-                            android:scrollbars="none" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:paddingTop="@dimen/margin_normal"
-                        android:paddingBottom="@dimen/margin_giant_xx"
-                        android:layout_marginTop="@dimen/margin_normal"
-                        android:orientation="vertical"
-                        android:background="@color/colorWhite"
-                        android:elevation="@dimen/elevation"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:scaleType="fitXY"
-                            android:id="@+id/imgAd2"
-                            android:layout_width="match_parent"
-                            android:layout_height="@dimen/ad_height"
-                            android:paddingLeft="@dimen/margin_normal"
-                            android:paddingRight="@dimen/margin_normal"
-                            android:src="@mipmap/default_img" />
-
-                        <com.deanlib.ootb.widget.HorizontalListView
-                            android:id="@+id/hlvAdGoods2"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/margin_giant"
-                            android:paddingLeft="@dimen/margin_normal"
-                            android:paddingRight="@dimen/margin_normal"
-                            android:scrollbars="none" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:paddingTop="@dimen/margin_normal"
-                        android:paddingBottom="@dimen/margin_giant_xx"
-                        android:layout_marginTop="@dimen/margin_normal"
-                        android:orientation="vertical"
-                        android:background="@color/colorWhite"
-                        android:elevation="@dimen/elevation"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <ImageView
-                            android:scaleType="fitXY"
                             android:id="@+id/imgAd3"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/ad_height"
@@ -366,7 +314,67 @@
                             android:src="@mipmap/default_img" />
 
                         <com.deanlib.ootb.widget.HorizontalListView
-                            android:id="@+id/hlvAdGoods3"
+                            android:id="@+id/hlvAd3Goods"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_giant"
+                            android:paddingLeft="@dimen/margin_normal"
+                            android:paddingRight="@dimen/margin_normal"
+                            android:scrollbars="none" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:paddingTop="@dimen/margin_normal"
+                        android:paddingBottom="@dimen/margin_giant_xx"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:orientation="vertical"
+                        android:background="@color/colorWhite"
+                        android:elevation="@dimen/elevation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:scaleType="fitXY"
+                            android:id="@+id/imgAd4"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/ad_height"
+                            android:paddingLeft="@dimen/margin_normal"
+                            android:paddingRight="@dimen/margin_normal"
+                            android:src="@mipmap/default_img" />
+
+                        <com.deanlib.ootb.widget.HorizontalListView
+                            android:id="@+id/hlvAd4Goods"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/margin_giant"
+                            android:paddingLeft="@dimen/margin_normal"
+                            android:paddingRight="@dimen/margin_normal"
+                            android:scrollbars="none" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:paddingTop="@dimen/margin_normal"
+                        android:paddingBottom="@dimen/margin_giant_xx"
+                        android:layout_marginTop="@dimen/margin_normal"
+                        android:orientation="vertical"
+                        android:background="@color/colorWhite"
+                        android:elevation="@dimen/elevation"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <ImageView
+                            android:scaleType="fitXY"
+                            android:id="@+id/imgAd5"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/ad_height"
+                            android:paddingLeft="@dimen/margin_normal"
+                            android:paddingRight="@dimen/margin_normal"
+                            android:src="@mipmap/default_img" />
+
+                        <com.deanlib.ootb.widget.HorizontalListView
+                            android:id="@+id/hlvAd5Goods"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/margin_giant"

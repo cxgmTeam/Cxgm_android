@@ -85,6 +85,11 @@ public class NewAddrActivity extends BaseActivity {
     private void init() {
         if (mIsEdit){
             tvTitle.setText(R.string.edit_addr);
+            etConsignee.setText(mAddress.getRealName());
+            etPhoneNumber.setText(mAddress.getPhone());
+            tvDistrict.setText(mAddress.getArea());
+            etNumber.setText(mAddress.getAddress());
+            //todo remark
         }else
             tvTitle.setText(R.string.new_addr);
         imgBack.setVisibility(View.VISIBLE);
@@ -129,7 +134,7 @@ public class NewAddrActivity extends BaseActivity {
             return;
         }
         String phoneNum = etPhoneNumber.getText().toString().trim();
-        if (ValidateUtils.isMobileNum(phoneNum)){
+        if (!ValidateUtils.isMobileNum(phoneNum)){
             ToastManager.sendToast(getString(R.string.invaild_phone_num));
             return;
         }
@@ -153,6 +158,7 @@ public class NewAddrActivity extends BaseActivity {
         //经纬度信息
         mAddress.setLongitude(mPoiInfo.location.longitude+"");
         mAddress.setDimension(mPoiInfo.location.latitude+"");
+        //todo remark
 
         //检查范围
         new CheckAddressReq(this,mPoiInfo.location.longitude+"",mPoiInfo.location.latitude+"").execute(new Request.RequestCallback<List<Shop>>() {
