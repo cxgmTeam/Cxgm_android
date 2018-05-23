@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:paddingTop="@dimen/margin_normal"
+    android:paddingBottom="@dimen/margin_giant_xx"
+    android:orientation="vertical"
+    android:background="@color/colorWhite"
+    android:elevation="@dimen/elevation"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:scaleType="fitXY"
+        android:id="@+id/imgAd"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/ad_height"
+        android:paddingLeft="@dimen/margin_normal"
+        android:paddingRight="@dimen/margin_normal"
+        android:src="@mipmap/default_img" />
+
+    <com.deanlib.ootb.widget.HorizontalListView
+        android:id="@+id/hlvAdGoods"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_giant"
+        android:paddingLeft="@dimen/margin_normal"
+        android:paddingRight="@dimen/margin_normal"
+        android:scrollbars="none" />
+
+</LinearLayout>

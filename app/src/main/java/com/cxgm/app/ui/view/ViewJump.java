@@ -20,6 +20,7 @@ import com.cxgm.app.ui.view.order.InvoiceActivity;
 import com.cxgm.app.ui.view.order.MapLocationActivity;
 import com.cxgm.app.ui.view.goods.SearchActivity;
 import com.cxgm.app.ui.view.order.NewAddrActivity;
+import com.cxgm.app.ui.view.order.OrderPayActivity;
 import com.cxgm.app.ui.view.order.UserOrderActivity;
 import com.cxgm.app.ui.view.order.VerifyOrderActivity;
 import com.cxgm.app.ui.view.user.CouponActivity;
@@ -149,6 +150,11 @@ public class ViewJump {
         Intent intent = new Intent(activity,CouponOptionActivity.class);
         intent.putParcelableArrayListExtra("couponList",list);
         activity.startActivityForResult(intent,CODE_COUPON_OPTION);
+    }
+
+    public static void toOrderPay(Activity activity){
+        Intent intent = new Intent(activity,OrderPayActivity.class);
+        activity.startActivity(intent);
     }
 
 }

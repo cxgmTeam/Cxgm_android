@@ -13,6 +13,8 @@ import java.math.BigDecimal;
  */
 public class CouponDetail implements Parcelable {
 
+    public static final int STATUS_ENABLE = 0;//可用
+    public static final int STATUS_DISABLE = 1;//不可用
 
     /**
      * beginDate : 2018-05-12T01:54:52.634Z

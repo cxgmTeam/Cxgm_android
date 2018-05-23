@@ -20,6 +20,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.entity.Advertisement;
+import com.cxgm.app.data.entity.Motion;
 import com.cxgm.app.data.entity.ProductTransfer;
 import com.cxgm.app.data.entity.Shop;
 import com.cxgm.app.data.entity.ShopCategory;
@@ -29,11 +30,13 @@ import com.cxgm.app.data.io.common.FindAdvertisementReq;
 import com.cxgm.app.data.io.common.ShopListReq;
 import com.cxgm.app.data.io.goods.FindFirstCategoryReq;
 import com.cxgm.app.data.io.goods.FindHotProductReq;
+import com.cxgm.app.data.io.goods.FindMotionReq;
 import com.cxgm.app.data.io.goods.FindNewProductReq;
 import com.cxgm.app.data.io.goods.FindTopProductReq;
 import com.cxgm.app.ui.adapter.FirstCategoryAdapter;
 import com.cxgm.app.ui.adapter.GoodsAdapter;
 import com.cxgm.app.ui.adapter.GoodsHorizontalAdapter;
+import com.cxgm.app.ui.adapter.MotionAdapter;
 import com.cxgm.app.ui.adapter.ShopAdapter;
 import com.cxgm.app.ui.base.BaseFragment;
 import com.cxgm.app.ui.view.ViewJump;
@@ -101,19 +104,8 @@ public class IndexFragment extends BaseFragment {
     HorizontalListView hlvNewGoods;
     @BindView(R.id.layoutGoodsShow)
     LinearLayout layoutGoodsShow;
-
-    @BindView(R.id.imgAd3)
-    ImageView imgAd3;
-    @BindView(R.id.hlvAd3Goods)
-    HorizontalListView hlvAd3Goods;
-    @BindView(R.id.imgAd4)
-    ImageView imgAd4;
-    @BindView(R.id.hlvAd4Goods)
-    HorizontalListView hlvAd4Goods;
-    @BindView(R.id.imgAd5)
-    ImageView imgAd5;
-    @BindView(R.id.hlvAd5Goods)
-    HorizontalListView hlvAd5Goods;
+    @BindView(R.id.lvMotions)
+    ListViewForScrollView lvMotions;
     @BindView(R.id.gvGoods)
     GridViewForScrollView gvGoods;
     @BindView(R.id.srl)
@@ -134,6 +126,8 @@ public class IndexFragment extends BaseFragment {
     List<ProductTransfer> mNewProductList;
     GoodsAdapter mHotProductAdapter;
     List<ProductTransfer> mHotProductList;
+    MotionAdapter mMotionAdapter;
+    List<Motion> mMotionList;
 
     int mShopListPageNum = 1;
     List<Shop> mShopList;
@@ -175,13 +169,6 @@ public class IndexFragment extends BaseFragment {
 
         etSearchWord.setFocusable(false);
         etSearchWord.setKeyListener(null);
-
-        loopBanner.setOnClickListener(new BaseLoopAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(PagerAdapter parent, View view, int position, int realPosition) {
-                loopBanner.getLoopData();
-            }
-        });
 
         //地址提示
         if (Constants.checkAddress && Constants.currentLocation != null) {
@@ -227,6 +214,13 @@ public class IndexFragment extends BaseFragment {
             });
 
         } else {
+            loopBanner.setOnClickListener(new BaseLoopAdapter.OnItemClickListener() {
+                @Override
+                public void onItemClick(PagerAdapter parent, View view, int position, int realPosition) {
+                    loopBanner.getLoopData();
+                }
+            });
+
             layoutShopShow.setVisibility(View.GONE);
             layoutGoodsShow.setVisibility(View.VISIBLE);
 
@@ -248,6 +242,10 @@ public class IndexFragment extends BaseFragment {
             mHotProductList = new ArrayList<>();
             mHotProductAdapter = new GoodsAdapter(mHotProductList, 2, 30);
             gvGoods.setAdapter(mHotProductAdapter);
+            //运营
+            mMotionList = new ArrayList<>();
+            mMotionAdapter = new MotionAdapter(mMotionList);
+            lvMotions.setAdapter(mMotionAdapter);
         }
 
     }
@@ -413,6 +411,7 @@ public class IndexFragment extends BaseFragment {
                             loopBanner.setVisibility(View.GONE);
                         }
 
+                        layoutAD2.setVisibility(View.VISIBLE);
                         layoutAD2Small.setVisibility(View.VISIBLE);
                         imgAD22.setVisibility(View.VISIBLE);
                         imgAD23.setVisibility(View.VISIBLE);
@@ -430,7 +429,8 @@ public class IndexFragment extends BaseFragment {
                                         .placeholder(R.mipmap.default_img).error(R.mipmap.default_img)).into(imgAD21);
                                 break;
                             case 0:
-                                //TODO 没有广告时
+                                //没有广告时
+                                layoutAD2.setVisibility(View.GONE);
 
                         }
 
@@ -450,6 +450,36 @@ public class IndexFragment extends BaseFragment {
                 @Override
                 public void onFinished() {
 
+                }
+            });
+
+            //运营数据
+            new FindMotionReq(getActivity(),Constants.currentShop.getId()).execute(new Request.RequestCallback<List<Motion>>() {
+                @Override
+                public void onSuccess(List<Motion> motions) {
+                    if (motions!=null && motions.size()>0){
+                        mMotionList.addAll(motions);
+                        mMotionAdapter.notifyDataSetChanged();
+                    }
+                }
+
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+
+                }
+
+                @Override
+                public void onCancelled(Callback.CancelledException cex) {
+
+                }
+
+                @Override
+                public void onFinished() {
+                    if (mMotionList.size()>0){
+                        lvMotions.setVisibility(View.VISIBLE);
+                    }else {
+                        lvMotions.setVisibility(View.GONE);
+                    }
                 }
             });
         }

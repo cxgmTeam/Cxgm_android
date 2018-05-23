@@ -118,6 +118,15 @@ public class ProductTransfer extends BaseEntity {
     private List<ProductImage> productImageList;
     private String goodCode;
     private float originalPrice;
+    private List<Promotion> promotionList;
+
+    public List<Promotion> getPromotionList() {
+        return promotionList;
+    }
+
+    public void setPromotionList(List<Promotion> promotionList) {
+        this.promotionList = promotionList;
+    }
 
     public float getOriginalPrice() {
         return originalPrice;

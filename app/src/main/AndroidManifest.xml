@@ -100,6 +100,9 @@
         <activity android:name=".ui.view.order.CouponOptionActivity"
             android:screenOrientation="portrait"
             />
+        <activity android:name=".ui.view.order.OrderPayActivity"
+            android:screenOrientation="portrait"
+            />
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"> </service>
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"

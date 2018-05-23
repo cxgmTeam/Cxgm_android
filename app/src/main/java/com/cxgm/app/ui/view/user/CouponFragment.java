@@ -80,7 +80,7 @@ public class CouponFragment extends BaseFragment {
 
     private void init() {
 
-        if (mState == 0){
+        if (mState == CouponDetail.STATUS_ENABLE){
             layoutExchange.setVisibility(View.VISIBLE);
         }else {
             layoutExchange.setVisibility(View.GONE);
@@ -106,8 +106,7 @@ public class CouponFragment extends BaseFragment {
     }
 
     private void loadData() {
-        //TODO 可用不可用状态
-        new FindCouponsReq(getActivity(), pageNum, 10)
+        new FindCouponsReq(getActivity(),mState, pageNum, 10)
                 .execute(new Request.RequestCallback<PageInfo<CouponDetail>>() {
                     @Override
                     public void onSuccess(PageInfo<CouponDetail> couponDetailPageInfo) {

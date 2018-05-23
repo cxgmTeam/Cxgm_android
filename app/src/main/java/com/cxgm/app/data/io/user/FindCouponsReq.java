@@ -20,8 +20,10 @@ import org.xutils.http.RequestParams;
  */
 public class FindCouponsReq extends Request {
     int pageNum,pageSize;
-    public FindCouponsReq(Context context,int pageNum,int pageSize) {
+    int status;//0可用，1不可用
+    public FindCouponsReq(Context context,int status,int pageNum,int pageSize) {
         super(context);
+        this.status = status;
         this.pageNum = pageNum;
         this.pageSize = pageSize;
     }
@@ -36,6 +38,7 @@ public class FindCouponsReq extends Request {
 
         RequestParams params = new RequestParams(SERVER + Constants.PORT2 + "/coupon/findCoupons");
         params.setMethod(HttpMethod.GET);
+        params.addQueryStringParameter("status",status+"");
         params.addQueryStringParameter("pageNum",pageNum+"");
         params.addQueryStringParameter("pageSize",pageSize+"");
         return params;
