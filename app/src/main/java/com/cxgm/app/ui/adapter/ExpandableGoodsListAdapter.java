@@ -22,6 +22,7 @@ import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.utils.StringHelper;
 import com.cxgm.app.utils.ToastManager;
 import com.cxgm.app.utils.UserManager;
+import com.cxgm.app.utils.ViewHelper;
 import com.deanlib.ootb.data.io.Request;
 
 import org.xutils.common.Callback;
@@ -53,6 +54,10 @@ public class ExpandableGoodsListAdapter extends BaseExpandableListAdapter {
         for (Map.Entry<String,List<ProductTransfer>> entry : entries){
             mKeyList.add(entry.getKey());
         }
+    }
+
+    public List<String> getKeyList(){
+        return mKeyList;
     }
 
     @Override
@@ -128,32 +133,8 @@ public class ExpandableGoodsListAdapter extends BaseExpandableListAdapter {
         holder.imgAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!UserManager.isUserLogin()){
-                    ViewJump.toLogin(mActivity);
-                    return;
-                }
-                ShopCart cart = new ShopCart(product.getId(),product.getGoodCode(),product.getName(),1,product.getPrice(), Constants.currentShop.getId());
-                new AddCartReq(viewGroup.getContext(),cart).execute(false,new Request.RequestCallback<Integer>() {
-                    @Override
-                    public void onSuccess(Integer integer) {
-                        ToastManager.sendToast(viewGroup.getContext().getString(R.string.added_shop_cart));
-                    }
-
-                    @Override
-                    public void onError(Throwable ex, boolean isOnCallback) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(Callback.CancelledException cex) {
-
-                    }
-
-                    @Override
-                    public void onFinished() {
-
-                    }
-                });
+                ViewHelper.addOrUpdateShopCart(mActivity,product);
+                //TODO 展示可调节
             }
         });
 

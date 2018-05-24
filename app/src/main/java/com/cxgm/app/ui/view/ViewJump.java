@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import com.baidu.location.BDLocation;
 import com.cxgm.app.data.entity.CouponDetail;
 import com.cxgm.app.data.entity.OrderProduct;
+import com.cxgm.app.data.entity.ProductTransfer;
 import com.cxgm.app.data.entity.ShopCategory;
 import com.cxgm.app.data.entity.UserAddress;
 import com.cxgm.app.ui.view.common.MainActivity;
@@ -104,8 +105,9 @@ public class ViewJump {
         activity.startActivity(intent);
     }
 
-    public static void toGoodsDetail(Activity activity){
+    public static void toGoodsDetail(Activity activity, int pid){
         Intent intent = new Intent(activity, GoodsDetailActivity.class);
+        intent.putExtra("pid",pid);
         activity.startActivity(intent);
     }
 

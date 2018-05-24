@@ -68,7 +68,7 @@ public class AddrOptionActivity extends BaseActivity {
     }
 
     private void init() {
-        tvTitle.setText(R.string.goods_order_list);
+        tvTitle.setText(R.string.chioce_address);
         imgBack.setVisibility(View.VISIBLE);
 
 

@@ -263,10 +263,11 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
 
     private void loadBottomData() {
         float totalAmount = 0.00f;
-        float totalDiscounts = 0.00f;
+        float totalOriginal = 0.00f;
 //        int totalNum = 0;
         for (ShopCart cart : mCartList) {
             totalAmount = Helper.moneyAdd(totalAmount, cart.getAmount());
+            totalOriginal =Helper.moneyAdd(Helper.moneyMultiply(cart.getOriginalPrice(),cart.getGoodNum()),totalOriginal);
             /* 促销活动的不要了
                 //满减
                 if (cart.getCoupon()!=null) {
@@ -279,9 +280,9 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
 //            totalNum += cart.getGoodNum();
         }
 
-        tvTotal.setText(getString(R.string.total_, StringHelper.getRMBFormat(Helper.moneySubtract(totalAmount, totalDiscounts))));
-        tvSum.setText(getString(R.string.sum_, StringHelper.getRMBFormat(totalAmount)));
-        tvDiscounts.setText(getString(R.string.discounts_, StringHelper.getRMBFormat(totalDiscounts)));
+        tvTotal.setText(getString(R.string.total_, StringHelper.getRMBFormat(totalAmount)));
+        tvSum.setText(getString(R.string.sum_, StringHelper.getRMBFormat(totalOriginal)));
+        tvDiscounts.setText(getString(R.string.discounts_, StringHelper.getRMBFormat(Helper.moneySubtract(totalOriginal,totalAmount))));
         tvGoDuoShou.setText(getString(R.string.go_duoshou_, mCartList.size()));
     }
 

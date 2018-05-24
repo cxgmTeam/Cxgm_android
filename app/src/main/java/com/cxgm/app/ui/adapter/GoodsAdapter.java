@@ -1,5 +1,6 @@
 package com.cxgm.app.ui.adapter;
 
+import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -10,8 +11,18 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.cxgm.app.R;
 import com.cxgm.app.data.entity.ProductTransfer;
+import com.cxgm.app.data.entity.ShopCart;
+import com.cxgm.app.data.io.order.AddCartReq;
+import com.cxgm.app.data.io.order.UpdateCartReq;
+import com.cxgm.app.ui.view.ViewJump;
+import com.cxgm.app.utils.StringHelper;
+import com.cxgm.app.utils.ToastManager;
+import com.cxgm.app.utils.UserManager;
+import com.cxgm.app.utils.ViewHelper;
+import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.utils.DeviceUtils;
 
+import org.xutils.common.Callback;
 import org.xutils.common.util.DensityUtil;
 
 import java.util.List;
@@ -31,8 +42,10 @@ public class GoodsAdapter extends BaseAdapter {
     int mItemWidth;
     int mItemHeight;
     List<ProductTransfer> mList;
+    Activity activity;
 
-    public GoodsAdapter( List<ProductTransfer> mList,int numColumn,float margeDip){
+    public GoodsAdapter(Activity activity, List<ProductTransfer> mList, int numColumn, float margeDip){
+        this.activity = activity;
         this.mList = mList;
         mItemHeight = mItemWidth = (int) (DensityUtil.px2dip(DeviceUtils.getSreenWidth())/numColumn - margeDip);
     }
@@ -53,9 +66,9 @@ public class GoodsAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
 
-        ViewHolder holder;
+        final ViewHolder holder;
 
         if (view == null) {
             view = View.inflate(viewGroup.getContext(), R.layout.layout_goods_item_1, null);
@@ -69,6 +82,15 @@ public class GoodsAdapter extends BaseAdapter {
                 .apply(new RequestOptions().override(mItemWidth,mItemHeight)
                         .apply(RequestOptions.bitmapTransform(new RoundedCornersTransformation(10,0))))
                 .into(holder.imgCover);
+        holder.tvTitle.setText(mList.get(i).getName());
+        holder.tvMoney.setText(StringHelper.getRMBFormat(mList.get(i).getPrice()));
+
+        holder.imgAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewHelper.addOrUpdateShopCart(activity,mList.get(i));
+            }
+        });
 
         return view;
     }
@@ -87,4 +109,5 @@ public class GoodsAdapter extends BaseAdapter {
             ButterKnife.bind(this, view);
         }
     }
+
 }

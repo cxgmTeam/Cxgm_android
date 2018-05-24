@@ -3,6 +3,7 @@ package com.cxgm.app.ui.view.order;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
@@ -159,27 +160,32 @@ public class VerifyOrderActivity extends BaseActivity {
                                 .override(width,width))
                         .into(imgView1);
         }
+        tvView.setText(getString(R.string._count,mOrderProductList.size()));
 
         mOrderAmount = 0;
         float goodsOriginalTotal = 0;//原价
 
+        SparseArray<CategoryAndAmount> caaArray = new SparseArray<>();
         List<CategoryAndAmount> caaList = new ArrayList<>();
 
         for (OrderProduct product:mOrderProductList){
-            mOrderAmount += product.getAmount();
+            mOrderAmount = Helper.moneyAdd(product.getAmount(),mOrderAmount);
             //原价
-            goodsOriginalTotal += Helper.moneyMultiply(product.getOriginalPrice(),product.getProductNum());
+            goodsOriginalTotal = Helper.moneyAdd(Helper.moneyMultiply(product.getOriginalPrice(),product.getProductNum()),goodsOriginalTotal);
 
             //统计类总额
-            for (CategoryAndAmount caa:caaList){
-                if (caa.getCategoryId() == product.getCategoryId()){
-                    caa.setAmount(caa.getAmount()+product.getAmount());
-                    break;
-                }
-                //没有找到的情况不会break 会继续执行下边代码
-                caaList.add(new CategoryAndAmount(product.getCategoryId(),product.getAmount()));
-                break;
+            CategoryAndAmount caa = caaArray.get(product.getCategoryId());
+            if (caa!=null){
+                caa.setAmount(Helper.moneyAdd(caa.getAmount(),product.getAmount()));
+            }else {
+                caa = new CategoryAndAmount(product.getCategoryId(),product.getAmount());
+                caaArray.put(caa.getCategoryId(),caa);
             }
+
+        }
+
+        for (int i = 0;i<caaArray.size();i++){
+            caaList.add(caaArray.valueAt(i));
         }
 
         tvGoodsTotal.setText(StringHelper.getRMBFormat(goodsOriginalTotal));
@@ -191,7 +197,6 @@ public class VerifyOrderActivity extends BaseActivity {
 
         //这个时候 优惠券接口还没调用，先设置一个价格上去，稍候会更新  算上邮费
         tvPayment.setText(StringHelper.getRMBFormat(Helper.moneySubtract(mOrderAmount,mCarriage)));
-        mOrder.setOrderNum(mOrderProductList.size()+"");
 
         //设置查询优惠券要用到的字段
         mOrder.setProductList(mOrderProductList);
@@ -338,7 +343,7 @@ public class VerifyOrderActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == RESULT_OK){
+        if (resultCode == RESULT_OK){
             switch (requestCode){
                 case ViewJump.CODE_ADDR_OPTION:
                     if (data!=null){

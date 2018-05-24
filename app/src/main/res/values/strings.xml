@@ -202,5 +202,6 @@
     <string name="pay_order">支付订单</string>
 
     <string name="empty_consignee">收货人信息不能为空</string>
+    <string name="chioce_address">选择地址</string>
 
 </resources>

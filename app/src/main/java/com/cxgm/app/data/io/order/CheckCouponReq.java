@@ -35,7 +35,7 @@ public class CheckCouponReq extends Request {
     @Override
     public RequestParams params() {
 
-        RequestParams params = new RequestParams(SERVER + Constants.PORT7 + "/order/checkCoupon");
+        RequestParams params = new RequestParams(SERVER + Constants.PORT3 + "/order/checkCoupon");
         params.setBodyContent(JSON.toJSONString(order,false));
         return params;
     }

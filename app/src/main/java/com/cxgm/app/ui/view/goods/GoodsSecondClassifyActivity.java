@@ -108,7 +108,7 @@ public class GoodsSecondClassifyActivity extends BaseActivity {
         lvGoods.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                ViewJump.toGoodsDetail(GoodsSecondClassifyActivity.this);
+                ViewJump.toGoodsDetail(GoodsSecondClassifyActivity.this,mProductMap.get(mEGLAdapter.getKeyList().get(groupPosition)).get(childPosition).getId());
                 return true;
             }
         });

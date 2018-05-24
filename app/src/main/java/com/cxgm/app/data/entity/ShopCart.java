@@ -1,5 +1,6 @@
 package com.cxgm.app.data.entity;
 
+import com.cxgm.app.app.Constants;
 import com.deanlib.ootb.entity.BaseEntity;
 
 public class ShopCart extends BaseEntity {
@@ -73,6 +74,10 @@ public class ShopCart extends BaseEntity {
         this.goodNum = goodNum;
         this.shopId = shopId;
         this.amount = amount;
+    }
+
+    public static ShopCart getShopCart(ProductTransfer product){
+        return new ShopCart(product.getId(),product.getGoodCode(),product.getName(),1,product.getPrice(), Constants.currentShop.getId());
     }
 
     public String getSpecifications() {

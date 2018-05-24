@@ -1,5 +1,6 @@
 package com.cxgm.app.ui.adapter;
 
+import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -10,7 +11,13 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.cxgm.app.R;
 import com.cxgm.app.data.entity.ProductTransfer;
+import com.cxgm.app.data.entity.ShopCart;
+import com.cxgm.app.data.io.order.AddCartReq;
+import com.cxgm.app.data.io.order.UpdateCartReq;
+import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.utils.StringHelper;
+import com.cxgm.app.utils.UserManager;
+import com.cxgm.app.utils.ViewHelper;
 
 import java.util.List;
 
@@ -28,9 +35,10 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 public class GoodsHorizontalAdapter extends BaseAdapter {
 
     List<ProductTransfer> mList;
-
-    public GoodsHorizontalAdapter(List<ProductTransfer> mList) {
+    Activity activity;
+    public GoodsHorizontalAdapter(Activity activity,List<ProductTransfer> mList) {
         this.mList = mList;
+        this.activity = activity;
     }
 
     @Override
@@ -49,7 +57,7 @@ public class GoodsHorizontalAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         ViewHolder holder;
         if (convertView == null) {
             convertView = View.inflate(parent.getContext(), R.layout.layout_goods_item_1, null);
@@ -64,6 +72,13 @@ public class GoodsHorizontalAdapter extends BaseAdapter {
                 .into(holder.imgCover);
         holder.tvTitle.setText(mList.get(position).getName());
         holder.tvMoney.setText(StringHelper.getRMBFormat(mList.get(position).getPrice()));
+
+        holder.imgAdd.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewHelper.addOrUpdateShopCart(activity,mList.get(position));
+            }
+        });
 
         return convertView;
     }

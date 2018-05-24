@@ -84,6 +84,7 @@ public class GoodsDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_goods_detail);
         ButterKnife.bind(this);
         init();
+        loadData();
     }
 
     private void init(){
@@ -92,6 +93,10 @@ public class GoodsDetailActivity extends BaseActivity {
         imgAction1.setVisibility(View.VISIBLE);
 
 //        gvGoods.setAdapter(new GoodsAdapter(2,30));
+    }
+
+    private void loadData(){
+        //TODO
     }
 
     @OnClick({R.id.imgBack, R.id.imgAction1})

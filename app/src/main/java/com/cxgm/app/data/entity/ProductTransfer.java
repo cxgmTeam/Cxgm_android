@@ -119,6 +119,15 @@ public class ProductTransfer extends BaseEntity {
     private String goodCode;
     private float originalPrice;
     private List<Promotion> promotionList;
+    private int shopCartNum;//当前购物车数量
+
+    public int getShopCartNum() {
+        return shopCartNum;
+    }
+
+    public void setShopCartNum(int shopCartNum) {
+        this.shopCartNum = shopCartNum;
+    }
 
     public List<Promotion> getPromotionList() {
         return promotionList;
