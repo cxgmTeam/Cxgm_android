@@ -1,5 +1,10 @@
 package com.cxgm.app.utils;
 
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.SpannableStringBuilder;
+import android.text.style.StrikethroughSpan;
+
 import java.math.BigDecimal;
 
 public class StringHelper {
@@ -13,4 +18,9 @@ public class StringHelper {
         return "¥ " + money;
     }
 
+    public static SpannableString getStrikeFormat(String str){
+        SpannableString ss = new SpannableString(str);
+        ss.setSpan(new StrikethroughSpan(),0,str.length(),Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+        return ss;
+    }
 }

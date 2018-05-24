@@ -10,11 +10,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
+import com.cxgm.app.data.entity.ProductTransfer;
+import com.cxgm.app.data.io.goods.FindProductDetailReq;
 import com.cxgm.app.ui.adapter.GoodsAdapter;
 import com.cxgm.app.ui.base.BaseActivity;
+import com.cxgm.app.ui.view.ViewJump;
+import com.cxgm.app.utils.StringHelper;
 import com.cxgm.app.utils.UserManager;
+import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.widget.GridViewForScrollView;
 import com.kevin.loopview.AdLoopView;
+
+import org.xutils.common.Callback;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -75,6 +82,8 @@ public class GoodsDetailActivity extends BaseActivity {
     @BindView(R.id.gvGoods)
     GridViewForScrollView gvGoods;
 
+    int mProductId;
+    ProductTransfer mProduct;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,6 +92,7 @@ public class GoodsDetailActivity extends BaseActivity {
         }
         setContentView(R.layout.activity_goods_detail);
         ButterKnife.bind(this);
+        mProductId = getIntent().getIntExtra("productId",0);
         init();
         loadData();
     }
@@ -96,7 +106,58 @@ public class GoodsDetailActivity extends BaseActivity {
     }
 
     private void loadData(){
-        //TODO
+        if (mProductId>0){
+            new FindProductDetailReq(this,mProductId).execute(new Request.RequestCallback<ProductTransfer>() {
+                @Override
+                public void onSuccess(ProductTransfer product) {
+                    if (product!=null){
+                        mProduct = product;
+                        tvGoodsTitle.setText(mProduct.getName());
+                        tvGoodsSubTitle.setText(mProduct.getIntroduction());
+                        tvPrice.setText(StringHelper.getRMBFormat(mProduct.getPrice()));
+                        tvUnit.setText("/"+mProduct.getUnit());
+                        tvOriginal.setText(StringHelper.getStrikeFormat(StringHelper.getRMBFormat(mProduct.getOriginalPrice())));
+
+                        //TODO 限时特惠的标记 原价与现价的不同？
+
+                        //规格
+                        layoutSpecification.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                //TODO 规格
+                            }
+                        });
+
+                        tvTrademark.setText(mProduct.getBrandName());
+                        tvOriginPlace.setText(mProduct.getOriginPlace());
+                        tvProducedDate.setText(mProduct.getCreationDate());
+                        //todo 保质期
+//                        tvShelflife.setText(mProduct.get);
+                        tvStorageCondition.setText(mProduct.getStorageCondition());
+
+                        //todo 有两个地方需要显示图片 productImageList 只有一个
+
+                    }
+                }
+
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+
+                }
+
+                @Override
+                public void onCancelled(Callback.CancelledException cex) {
+
+                }
+
+                @Override
+                public void onFinished() {
+
+                }
+            });
+
+            //TODO 猜你喜欢
+        }
     }
 
     @OnClick({R.id.imgBack, R.id.imgAction1})
@@ -106,6 +167,7 @@ public class GoodsDetailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.imgAction1:
+                ViewJump.toMain(this,R.id.rbShopCart);
                 break;
         }
     }

@@ -105,9 +105,9 @@ public class ViewJump {
         activity.startActivity(intent);
     }
 
-    public static void toGoodsDetail(Activity activity, int pid){
+    public static void toGoodsDetail(Activity activity, int productId){
         Intent intent = new Intent(activity, GoodsDetailActivity.class);
-        intent.putExtra("pid",pid);
+        intent.putExtra("productId",productId);
         activity.startActivity(intent);
     }
 
