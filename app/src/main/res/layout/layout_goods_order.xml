@@ -56,39 +56,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
-    <LinearLayout
-        android:visibility="gone"
+    <include
         android:id="@+id/layoutEditNum"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:background="@drawable/shape_tc_gray_tran"
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="20dp">
-        <TextView
-            android:id="@+id/tvMinus"
-            android:textColor="@color/textBlack"
-            android:gravity="center"
-            android:textSize="@dimen/text_size_normal_x"
-            android:text="-"
-            android:layout_width="20dp"
-            android:layout_height="20dp" />
-        <TextView
-            android:id="@+id/tvNum"
-            android:textColor="@color/textBlack"
-            android:background="@drawable/shape_t_gray_tran"
-            android:gravity="center"
-            android:textSize="@dimen/text_size_normal_x"
-            android:layout_width="32dp"
-            android:layout_height="20dp" />
-        <TextView
-            android:id="@+id/tvPlus"
-            android:textColor="@color/textBlack"
-            android:gravity="center"
-            android:textSize="@dimen/text_size_normal_x"
-            android:text="+"
-            android:layout_width="20dp"
-            android:layout_height="20dp" />
-    </LinearLayout>
+        layout="@layout/layout_action_num"
+        android:visibility="gone"
+        />
 
 </RelativeLayout>

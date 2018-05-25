@@ -3,6 +3,7 @@ package com.cxgm.app.ui.view.goods;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageView;
@@ -10,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
+import com.cxgm.app.data.entity.Advertisement;
+import com.cxgm.app.data.entity.ProductImage;
 import com.cxgm.app.data.entity.ProductTransfer;
 import com.cxgm.app.data.io.goods.FindProductDetailReq;
 import com.cxgm.app.ui.adapter.GoodsAdapter;
@@ -20,8 +23,12 @@ import com.cxgm.app.utils.UserManager;
 import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.widget.GridViewForScrollView;
 import com.kevin.loopview.AdLoopView;
+import com.kevin.loopview.internal.BaseLoopAdapter;
+import com.kevin.loopview.internal.LoopData;
 
 import org.xutils.common.Callback;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -118,7 +125,12 @@ public class GoodsDetailActivity extends BaseActivity {
                         tvUnit.setText("/"+mProduct.getUnit());
                         tvOriginal.setText(StringHelper.getStrikeFormat(StringHelper.getRMBFormat(mProduct.getOriginalPrice())));
 
-                        //TODO 限时特惠的标记 原价与现价的不同？
+                        // 限时特惠的标记 原价与现价的不同
+                        if (mProduct.getPrice()<mProduct.getOriginalPrice()){
+                            imgDiscounts.setVisibility(View.VISIBLE);
+                        }else {
+                            imgDiscounts.setVisibility(View.GONE);
+                        }
 
                         //规格
                         layoutSpecification.setOnClickListener(new View.OnClickListener() {
@@ -135,7 +147,26 @@ public class GoodsDetailActivity extends BaseActivity {
 //                        tvShelflife.setText(mProduct.get);
                         tvStorageCondition.setText(mProduct.getStorageCondition());
 
-                        //todo 有两个地方需要显示图片 productImageList 只有一个
+                        //商品轮播图
+                        LoopData loopData = new LoopData();
+                        loopData.items = new ArrayList<>();
+                        if (mProduct.getProductImageList()!=null) {
+                            for (ProductImage image : mProduct.getProductImageList()) {
+                                loopData.items.add(loopData.new ItemData("", image.getUrl(), "", "", ""));
+                            }
+                        }else {
+                            loopData.items.add(loopData.new ItemData("", mProduct.getImage(), "", "", ""));
+                        }
+                        loopBanner.refreshData(loopData);
+                        loopBanner.startAutoLoop();
+                        loopBanner.setOnClickListener(new BaseLoopAdapter.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(PagerAdapter parent, View view, int position, int realPosition) {
+                                loopBanner.getLoopData();
+                            }
+                        });
+
+                        //todo 商品介绍图
 
                     }
                 }

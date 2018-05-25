@@ -232,19 +232,19 @@ public class IndexFragment extends BaseFragment {
             gvFirstCategory.setAdapter(mFCAdapter);
             //精品推荐
             mTopProductList = new ArrayList<>();
-            mTopProductAdapter = new GoodsHorizontalAdapter(mTopProductList);
+            mTopProductAdapter = new GoodsHorizontalAdapter(getActivity(),mTopProductList);
             hlvRecommend.setAdapter(mTopProductAdapter);
             //新品上市
             mNewProductList = new ArrayList<>();
-            mNewProductAdapter = new GoodsHorizontalAdapter(mNewProductList);
+            mNewProductAdapter = new GoodsHorizontalAdapter(getActivity(),mNewProductList);
             hlvNewGoods.setAdapter(mNewProductAdapter);
             //热销推荐
             mHotProductList = new ArrayList<>();
-            mHotProductAdapter = new GoodsAdapter(mHotProductList, 2, 30);
+            mHotProductAdapter = new GoodsAdapter(getActivity(),mHotProductList, 2, 30);
             gvGoods.setAdapter(mHotProductAdapter);
             //运营
             mMotionList = new ArrayList<>();
-            mMotionAdapter = new MotionAdapter(mMotionList);
+            mMotionAdapter = new MotionAdapter(getActivity(),mMotionList);
             lvMotions.setAdapter(mMotionAdapter);
         }
 

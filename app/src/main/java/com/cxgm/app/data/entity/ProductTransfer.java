@@ -120,6 +120,8 @@ public class ProductTransfer extends BaseEntity {
     private float originalPrice;
     private List<Promotion> promotionList;
     private int shopCartNum;//当前购物车数量
+    private String detailImage;//商品介绍图片
+    private String warrantyPeriod;//保质期
 
     public int getShopCartNum() {
         return shopCartNum;

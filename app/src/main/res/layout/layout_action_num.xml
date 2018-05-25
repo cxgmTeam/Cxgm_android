@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_alignParentBottom="true"
+    android:layout_alignParentRight="true"
+    android:background="@drawable/shape_tc_gray_tran"
+    android:orientation="horizontal"
+    android:layout_width="wrap_content"
+    android:layout_height="20dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:id="@+id/tvMinus"
+        android:textColor="@color/textBlack"
+        android:gravity="center"
+        android:textSize="@dimen/text_size_normal_x"
+        android:text="-"
+        android:layout_width="20dp"
+        android:layout_height="20dp" />
+    <TextView
+        android:id="@+id/tvNum"
+        android:textColor="@color/textBlack"
+        android:background="@drawable/shape_t_gray_tran"
+        android:gravity="center"
+        android:textSize="@dimen/text_size_normal_x"
+        android:layout_width="32dp"
+        android:layout_height="20dp" />
+    <TextView
+        android:id="@+id/tvPlus"
+        android:textColor="@color/textBlack"
+        android:gravity="center"
+        android:textSize="@dimen/text_size_normal_x"
+        android:text="+"
+        android:layout_width="20dp"
+        android:layout_height="20dp" />
+</LinearLayout>

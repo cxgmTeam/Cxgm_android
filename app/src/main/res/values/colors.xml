@@ -25,6 +25,7 @@
     <color name="colorBlack">#000000</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorGray">#F2F3F4</color>
+    <color name="colorGray2">#EFEFEF</color>
     <color name="colorGrayDark">#999999</color>
     <color name="colorGreen">#00A862</color>
     <color name="colorGreenDark">#30A862</color>

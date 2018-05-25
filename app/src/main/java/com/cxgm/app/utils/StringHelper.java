@@ -23,4 +23,9 @@ public class StringHelper {
         ss.setSpan(new StrikethroughSpan(),0,str.length(),Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
         return ss;
     }
+
+    public static String getWeight(float weight){
+        //TODO 按g换算
+        return "g";
+    }
 }

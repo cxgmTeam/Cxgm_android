@@ -1,5 +1,6 @@
 package com.cxgm.app.ui.adapter;
 
+import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -24,9 +25,10 @@ import butterknife.ButterKnife;
  */
 public class MotionAdapter extends BaseAdapter {
     List<Motion> mList;
-
-    public MotionAdapter(List<Motion> mList) {
+    Activity activity;
+    public MotionAdapter(Activity activity,List<Motion> mList) {
         this.mList = mList;
+        this.activity = activity;
     }
 
     @Override
@@ -57,7 +59,7 @@ public class MotionAdapter extends BaseAdapter {
         Glide.with(convertView).load(mList.get(position).getImageUrl())
                 .apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
                 .into(holder.imgAd);
-        holder.hlvAdGoods.setAdapter(new GoodsHorizontalAdapter(mList.get(position).getProductList()));
+        holder.hlvAdGoods.setAdapter(new GoodsHorizontalAdapter(activity,mList.get(position).getProductList()));
         return convertView;
     }
 
