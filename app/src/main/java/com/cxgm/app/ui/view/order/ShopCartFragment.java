@@ -286,17 +286,15 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
         tvGoDuoShou.setText(getString(R.string.go_duoshou_, mCartList.size()));
     }
 
-    @OnClick({R.id.tvGoDuoShou, R.id.tvGoShopping})
+    @OnClick({R.id.tvGoDuoShou, R.id.tvGoShopping,R.id.tvAction1})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tvGoDuoShou:
                 ArrayList<OrderProduct> products = new ArrayList<>();
                 for (ShopCart cart : mCartList){
                     if (cart.isChecked){
-                        products.add(new OrderProduct(cart.getProductId(),cart.getCategoryId(),cart.getGoodName()
-                                ,cart.getGoodNum(),cart.getImageUrl()
-                                ,cart.getGoodCode(),cart.getAmount()
-                                ,cart.getPrice(),cart.getOriginalPrice()));
+                        //TODO shopcart需要有规格信息，包括weight 和 unit
+                        products.add(new OrderProduct(cart));
                     }
                 }
                 if (products.size() > 0){
@@ -308,6 +306,9 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
                 break;
             case R.id.tvGoShopping:
                 ((MainActivity)getActivity()).publicChangeView(R.id.rbGoods);
+                break;
+            case R.id.tvAction1:
+                //TODO 右上角的编辑干什么用
                 break;
         }
     }

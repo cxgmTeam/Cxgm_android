@@ -113,6 +113,7 @@ public class CouponFragment extends BaseFragment {
                         if (couponDetailPageInfo != null && couponDetailPageInfo.getList() != null) {
                             mCouponList.addAll(couponDetailPageInfo.getList());
                             mCouponAdapter.notifyDataSetChanged();
+                            ((CouponActivity)getActivity()).updateTitleNum(mState,couponDetailPageInfo.getTotal());
                         }
                     }
 

@@ -103,7 +103,7 @@ public class VerifyOrderActivity extends BaseActivity {
     @BindView(R.id.etRemark)
     EditText etRemark;
 
-    List<OrderProduct> mOrderProductList;
+    ArrayList<OrderProduct> mOrderProductList;
     UserAddress mUserAddress;
     float mOrderAmount = 0f;//总价 不包括优惠券和邮费
     List<CouponDetail> mCouponList;
@@ -138,6 +138,7 @@ public class VerifyOrderActivity extends BaseActivity {
         ImageView imgView2 = itemView.findViewById(R.id.imgView2);
         ImageView imgView3 = itemView.findViewById(R.id.imgView3);
         TextView tvView = itemView.findViewById(R.id.tvView);
+        //TODO 布局大小有问题
         int width = (DeviceUtils.getSreenWidth()-2* DensityUtil.dip2px(15) - 3*DensityUtil.dip2px(10))/4;
         tvView.getLayoutParams().width = width;
         tvView.getLayoutParams().height = width;
@@ -265,7 +266,7 @@ public class VerifyOrderActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.layoutGooods,R.id.imgBack, R.id.layoutAddr, R.id.layoutReceiveTime, R.id.tvGoodsTotal, R.id.layoutCoupon, R.id.layoutInvoice, R.id.tvCommitOrder})
+    @OnClick({R.id.layoutGooods,R.id.imgBack, R.id.layoutAddr, R.id.layoutReceiveTime, R.id.layoutCoupon, R.id.layoutInvoice, R.id.tvCommitOrder})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgBack:
@@ -276,10 +277,7 @@ public class VerifyOrderActivity extends BaseActivity {
                 ViewJump.toAddrOption(this);
                 break;
             case R.id.layoutReceiveTime:
-                //选择送货时间
-                break;
-            case R.id.tvGoodsTotal:
-                //商品清单
+                //TODO 选择送货时间
                 break;
             case R.id.layoutCoupon:
                 //优惠券 满减
@@ -335,7 +333,8 @@ public class VerifyOrderActivity extends BaseActivity {
                 });
                 break;
             case R.id.layoutGooods:
-                //TODO 点击商品列表
+                //商品清单
+                ViewJump.toGoodsList(this,mOrderProductList);
                 break;
         }
     }

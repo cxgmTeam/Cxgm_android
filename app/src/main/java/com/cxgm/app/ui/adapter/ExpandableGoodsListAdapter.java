@@ -130,11 +130,27 @@ public class ExpandableGoodsListAdapter extends BaseExpandableListAdapter {
                 .into(holder.imgCover);
         holder.tvTitle.setText(product.getName());
         holder.tvPrice.setText(StringHelper.getRMBFormat(product.getPrice()));
+        updateActionView(holder,product);
         holder.imgAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ViewHelper.addOrUpdateShopCart(mActivity,product);
-                //TODO 展示可调节
+                ViewHelper.addOrUpdateShopCart(mActivity,product,1,new ViewHelper.OnActionListener() {
+                    @Override
+                    public void onSuccess() {
+                        updateActionView(holder,product);
+                    }
+                });
+            }
+        });
+        holder.imgMinus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewHelper.addOrUpdateShopCart(mActivity,product,-1,new ViewHelper.OnActionListener() {
+                    @Override
+                    public void onSuccess() {
+                        updateActionView(holder,product);
+                    }
+                });
             }
         });
 
@@ -159,10 +175,28 @@ public class ExpandableGoodsListAdapter extends BaseExpandableListAdapter {
         TextView tvOriginal;
         @BindView(R.id.imgAdd)
         ImageView imgAdd;
+        @BindView(R.id.imgMinus)
+        ImageView imgMinus;
+        @BindView(R.id.tvNum)
+        TextView tvNum;
 
         SubViewHolder(View view) {
             ButterKnife.bind(this, view);
             tvOriginal.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG|Paint.ANTI_ALIAS_FLAG);
+        }
+    }
+
+    private void updateActionView(SubViewHolder holder,ProductTransfer product){
+        //TODO 添加后，退出再加载，shopcartnum 数据有问题
+        holder.tvNum.setText(product.getShopCartNum()+"");
+        if (product.getShopCartNum()>0){
+            //展示可调节
+            //TODO 没有减法图标
+            holder.imgMinus.setVisibility(View.VISIBLE);
+            holder.tvNum.setVisibility(View.VISIBLE);
+        }else {
+            holder.imgMinus.setVisibility(View.GONE);
+            holder.tvNum.setVisibility(View.GONE);
         }
     }
 }

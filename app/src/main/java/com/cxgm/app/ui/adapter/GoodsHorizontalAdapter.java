@@ -76,7 +76,7 @@ public class GoodsHorizontalAdapter extends BaseAdapter {
         holder.imgAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ViewHelper.addOrUpdateShopCart(activity,mList.get(position));
+                ViewHelper.addOrUpdateShopCart(activity,mList.get(position),1);
             }
         });
 

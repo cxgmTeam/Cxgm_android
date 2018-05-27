@@ -11,6 +11,7 @@ import com.alibaba.fastjson.JSON;
 import com.cxgm.app.R;
 import com.cxgm.app.utils.UserManager;
 import com.deanlib.ootb.OotbConfig;
+import com.deanlib.ootb.data.PersistenceUtils;
 import com.deanlib.ootb.data.db.DB;
 import com.deanlib.ootb.data.io.DefaultLoadingDialog;
 import com.deanlib.ootb.utils.DLogUtils;
@@ -65,10 +66,13 @@ public class App extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
 
-
         OotbConfig.init(this,Constants.DEBUG);
 
         OotbConfig.setRequestServer(Constants.SERVICE_URL,new UserParam(),new UserResult(),new DefaultLoadingDialog());
+        //通知
+        PersistenceUtils persistenceUtils = new PersistenceUtils();
+        String notity = persistenceUtils.getCache("notity");
+        Constants.notify = "on".equals(notity);
 
         /*
         //TODO 友盟统计

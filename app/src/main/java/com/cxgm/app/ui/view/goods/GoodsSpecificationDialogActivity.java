@@ -3,6 +3,7 @@ package com.cxgm.app.ui.view.goods;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -14,11 +15,19 @@ import com.cxgm.app.R;
 import com.cxgm.app.data.entity.ProductTransfer;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.utils.StringHelper;
+import com.cxgm.app.utils.ToastManager;
+import com.cxgm.app.utils.ViewHelper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
+/**
+ * 规格选择
+ *
+ * @anthor Dean
+ * @time 2018/5/25 0025 22:10
+ */
 public class GoodsSpecificationDialogActivity extends BaseActivity {
 
     @BindView(R.id.imgCover)
@@ -66,9 +75,14 @@ public class GoodsSpecificationDialogActivity extends BaseActivity {
                 .into(imgCover);
         tvPrice.setText(StringHelper.getRMBFormat(mProduct.getPrice()));
         tvUnit.setText("/"+mProduct.getUnit());
-        tvOriginPlace.setText(StringHelper.getStrikeFormat(StringHelper.getRMBFormat(mProduct.getOriginalPrice())));
+        if (mProduct.getPrice()!= mProduct.getOriginalPrice()) {
+            tvOriginPlace.setText(StringHelper.getStrikeFormat(StringHelper.getRMBFormat(mProduct.getOriginalPrice())));
+            tvOriginPlace.setVisibility(View.VISIBLE);
+        }else tvOriginPlace.setVisibility(View.GONE);
+
         tvSelectNum.setText(getString(R.string.select_,mNum+mProduct.getUnit()));//数量要实时更新
-        tvSpecification.setText(getString(R.string.specification_,StringHelper.getWeight(mProduct.getWeight())+"/"+mProduct.getUnit()));
+        tvSpecification.setText(getString(R.string.specification_,
+                StringHelper.getSpecification(mProduct.getWeight(),mProduct.getUnit())));
         tvNumUnitTag.setText(getString(R.string.buy_num,mProduct.getUnit()));
 
     }
@@ -82,16 +96,21 @@ public class GoodsSpecificationDialogActivity extends BaseActivity {
             case R.id.tvMinus:
                 if (mNum>1){
                     mNum--;
+                    tvSelectNum.setText(getString(R.string.select_,mNum+mProduct.getUnit()));
                 }
                 break;
             case R.id.tvPlus:
-                //TODO 最大数量
-                mNum++;
+                //最大数量
+                if (mNum < mProduct.getMaximumQuantity()) {
+                    mNum++;
+                    tvSelectNum.setText(getString(R.string.select_,mNum+mProduct.getUnit()));
+                }else {
+                    ToastManager.sendToast(getString(R.string.max_quantity));
+                }
                 break;
             case R.id.tvAddShopCart:
-                //TODO
-
-                finish();
+                ViewHelper.addOrUpdateShopCart(this,mProduct,mNum);
+                //finish();
                 break;
         }
     }

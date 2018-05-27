@@ -56,10 +56,11 @@ public class Helper {
     }
 
     public static float str2Float(String str){
-        if (Pattern.matches("\\d+\\.?\\d*",str)){
-            return Float.parseFloat(str);
-        }else {
-            return 0;
+        if (str!=null) {
+            if (Pattern.matches("\\d+\\.?\\d*", str)) {
+                return Float.parseFloat(str);
+            }
         }
+        return 0;
     }
 }

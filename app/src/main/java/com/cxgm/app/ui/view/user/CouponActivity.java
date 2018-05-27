@@ -47,6 +47,8 @@ public class CouponActivity extends BaseActivity {
     ViewPager vpContainer;
 
     int[] titles = {R.string.available,R.string.disabled};
+    int[] titleNums = {0,0};
+    CouponViewPagerAdapter mViewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +64,8 @@ public class CouponActivity extends BaseActivity {
     private void init() {
         tvTitle.setText(R.string.coupon);
         imgBack.setVisibility(View.VISIBLE);
-
-        vpContainer.setAdapter(new CouponViewPager(getSupportFragmentManager()));
+        mViewPagerAdapter = new CouponViewPagerAdapter(getSupportFragmentManager());
+        vpContainer.setAdapter(mViewPagerAdapter);
         tabAble.setupWithViewPager(vpContainer);
     }
 
@@ -72,9 +74,19 @@ public class CouponActivity extends BaseActivity {
         finish();
     }
 
-    class CouponViewPager extends FragmentPagerAdapter{
+    /**
+     * 更新tab标题上的数量
+     * @param state
+     * @param num
+     */
+    public void updateTitleNum(int state,int num){
+        titleNums[state] = num;
+        mViewPagerAdapter.notifyDataSetChanged();
+    }
 
-        public CouponViewPager(FragmentManager fm) {
+    class CouponViewPagerAdapter extends FragmentPagerAdapter{
+
+        public CouponViewPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
@@ -96,8 +108,7 @@ public class CouponActivity extends BaseActivity {
         @Nullable
         @Override
         public CharSequence getPageTitle(int position) {
-            //TODO 可用不可用 数量
-            return getString(titles[position],0);
+            return getString(titles[position],titleNums[position]);
         }
     }
 

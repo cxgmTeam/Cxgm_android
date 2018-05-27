@@ -76,8 +76,8 @@ public class ShopCart extends BaseEntity {
         this.amount = amount;
     }
 
-    public static ShopCart getShopCart(ProductTransfer product){
-        return new ShopCart(product.getId(),product.getGoodCode(),product.getName(),1,product.getPrice(), Constants.currentShop.getId());
+    public static ShopCart getShopCart(ProductTransfer product,int goodsNum){
+        return new ShopCart(product.getId(),product.getGoodCode(),product.getName(),goodsNum,product.getPrice(), Constants.currentShop.getId());
     }
 
     public String getSpecifications() {

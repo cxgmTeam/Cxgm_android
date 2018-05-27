@@ -4,14 +4,18 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
+import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.io.common.VersionControlReq;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.utils.UserManager;
+import com.deanlib.ootb.data.PersistenceUtils;
 import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.utils.VersionUtils;
 
@@ -45,6 +49,8 @@ public class SettingsActivity extends BaseActivity {
     TextView tvAbout;
     @BindView(R.id.tvLogout)
     TextView tvLogout;
+    @BindView(R.id.cbNotifySwitch)
+    CheckBox cbNotifySwitch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,6 +75,15 @@ public class SettingsActivity extends BaseActivity {
 
         //Version
         tvVersion.setText(VersionUtils.getAppVersionName());
+        cbNotifySwitch.setChecked(Constants.notify);
+        cbNotifySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                PersistenceUtils persistenceUtils = new PersistenceUtils();
+                persistenceUtils.setCache("notify",isChecked==true?"on":"off");
+                Constants.notify = isChecked;
+            }
+        });
     }
 
     @OnClick({R.id.imgBack, R.id.tvClearCache, R.id.layoutCheckVersion, R.id.tvAbout, R.id.tvLogout})

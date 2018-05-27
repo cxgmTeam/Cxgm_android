@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.support.v4.app.Fragment;
 
 import com.baidu.location.BDLocation;
+import com.cxgm.app.R;
 import com.cxgm.app.data.entity.CouponDetail;
 import com.cxgm.app.data.entity.OrderProduct;
 import com.cxgm.app.data.entity.ProductTransfer;
@@ -14,9 +15,11 @@ import com.cxgm.app.ui.view.common.MainActivity;
 import com.cxgm.app.ui.view.common.SettingsActivity;
 import com.cxgm.app.ui.view.goods.GoodsDetailActivity;
 import com.cxgm.app.ui.view.goods.GoodsSecondClassifyActivity;
+import com.cxgm.app.ui.view.goods.GoodsSpecificationDialogActivity;
 import com.cxgm.app.ui.view.order.AddrListActivity;
 import com.cxgm.app.ui.view.order.AddrOptionActivity;
 import com.cxgm.app.ui.view.order.CouponOptionActivity;
+import com.cxgm.app.ui.view.order.GoodsListActivity;
 import com.cxgm.app.ui.view.order.InvoiceActivity;
 import com.cxgm.app.ui.view.order.MapLocationActivity;
 import com.cxgm.app.ui.view.goods.SearchActivity;
@@ -156,6 +159,19 @@ public class ViewJump {
 
     public static void toOrderPay(Activity activity){
         Intent intent = new Intent(activity,OrderPayActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public static void toGoodsSpecificationDialog(Activity activity,ProductTransfer product){
+        Intent intent = new Intent(activity,GoodsSpecificationDialogActivity.class);
+        intent.putExtra("product",product);
+        activity.startActivity(intent);
+        activity.overridePendingTransition(R.anim.anim_down_up,0);
+    }
+
+    public static void toGoodsList(Activity activity,ArrayList<OrderProduct> products){
+        Intent intent = new Intent(activity, GoodsListActivity.class);
+        intent.putParcelableArrayListExtra("products",products);
         activity.startActivity(intent);
     }
 

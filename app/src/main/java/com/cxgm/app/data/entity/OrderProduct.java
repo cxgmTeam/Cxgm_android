@@ -161,16 +161,16 @@ public class OrderProduct implements Parcelable {
     public OrderProduct() {
     }
 
-    public OrderProduct(int productId,int categoryId,String productName, int productNum, String productUrl, String goodCode, float amount, float price,float originalPrice) {
-        this.productId = productId;
-        this.productName = productName;
-        this.productNum = productNum;
-        this.productUrl = productUrl;
-        this.goodCode = goodCode;
-        this.amount = amount;
-        this.price = price;
-        this.originalPrice = originalPrice;
-        this.categoryId = categoryId;
+    public OrderProduct(ShopCart cart) {
+        this.productId = cart.getProductId();
+        this.productName = cart.getGoodName();
+        this.productNum = cart.getGoodNum();
+        this.productUrl = cart.getImageUrl();
+        this.goodCode = cart.getGoodCode();
+        this.amount = cart.getAmount();
+        this.price = cart.getPrice();
+        this.originalPrice = cart.getPrice();
+        this.categoryId = cart.getCategoryId();
     }
 
     protected OrderProduct(Parcel in) {

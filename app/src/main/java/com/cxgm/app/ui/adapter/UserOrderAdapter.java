@@ -12,6 +12,7 @@ import com.bumptech.glide.request.RequestOptions;
 import com.cxgm.app.R;
 import com.cxgm.app.data.entity.Order;
 import com.cxgm.app.data.entity.OrderProduct;
+import com.cxgm.app.utils.Helper;
 import com.cxgm.app.utils.StringHelper;
 import com.deanlib.ootb.utils.DeviceUtils;
 
@@ -107,7 +108,8 @@ public class UserOrderAdapter extends BaseAdapter {
                     .into(imgCover);
             tvCount.setText("x"+product.getProductNum());
             tvTitle.setText(product.getProductName());
-            tvSpecification.setText(viewGroup.getContext().getString(R.string.specification_,product.getWeight()+product.getUnit()));
+            tvSpecification.setText(viewGroup.getContext().getString(R.string.specification_,
+                    StringHelper.getSpecification(Helper.str2Float(product.getWeight()),product.getUnit())));
             tvPrice.setText(StringHelper.getRMBFormat(product.getPrice()));
 
         }

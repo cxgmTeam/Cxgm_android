@@ -11,7 +11,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
-import com.cxgm.app.ui.adapter.GoodsOrderListAdatpter;
+import com.cxgm.app.ui.adapter.OrderGoodsListAdatpter;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.deanlib.ootb.widget.ListViewForScrollView;
 
@@ -95,7 +95,7 @@ public class OrderDetailActivity extends BaseActivity {
         tvTitle.setText(R.string.order_detail);
         imgBack.setVisibility(View.VISIBLE);
 
-        lvGoods.setAdapter(new GoodsOrderListAdatpter());
+        //lvGoods.setAdapter(new OrderGoodsListAdatpter());
     }
 
     @OnClick(R.id.imgBack)

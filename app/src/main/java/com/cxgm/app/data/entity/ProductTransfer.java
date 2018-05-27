@@ -75,7 +75,7 @@ public class ProductTransfer extends BaseEntity {
     private int hits;
     private int id;
     private String image;
-    private String introduction;
+    private String introduction;//商品介绍图片
     private boolean isGift;
     private int isHot;
     private boolean isList;
@@ -114,14 +114,57 @@ public class ProductTransfer extends BaseEntity {
     private String weekHitsDate;
     private int weekSales;
     private String weekSalesDate;
-    private int weight;
+    private float weight;
     private List<ProductImage> productImageList;
     private String goodCode;
     private float originalPrice;
     private List<Promotion> promotionList;
     private int shopCartNum;//当前购物车数量
-    private String detailImage;//商品介绍图片
     private String warrantyPeriod;//保质期
+    private int maximumQuantity;
+    private int minimumQuantity;
+    private int maximumPrice;
+    private int minimumPrice;
+
+    public int getMaximumQuantity() {
+        return maximumQuantity;
+    }
+
+    public void setMaximumQuantity(int maximumQuantity) {
+        this.maximumQuantity = maximumQuantity;
+    }
+
+    public int getMinimumQuantity() {
+        return minimumQuantity;
+    }
+
+    public void setMinimumQuantity(int minimumQuantity) {
+        this.minimumQuantity = minimumQuantity;
+    }
+
+    public int getMaximumPrice() {
+        return maximumPrice;
+    }
+
+    public void setMaximumPrice(int maximumPrice) {
+        this.maximumPrice = maximumPrice;
+    }
+
+    public int getMinimumPrice() {
+        return minimumPrice;
+    }
+
+    public void setMinimumPrice(int minimumPrice) {
+        this.minimumPrice = minimumPrice;
+    }
+
+    public String getWarrantyPeriod() {
+        return warrantyPeriod;
+    }
+
+    public void setWarrantyPeriod(String warrantyPeriod) {
+        this.warrantyPeriod = warrantyPeriod;
+    }
 
     public int getShopCartNum() {
         return shopCartNum;
@@ -563,11 +606,11 @@ public class ProductTransfer extends BaseEntity {
         this.weekSalesDate = weekSalesDate;
     }
 
-    public int getWeight() {
+    public float getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(float weight) {
         this.weight = weight;
     }
 

@@ -58,6 +58,23 @@
         android:layout_height="wrap_content" />
 
     <ImageView
+        android:visibility="gone"
+        android:src="@mipmap/add"
+        android:id="@+id/imgMinus"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/tvNum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+    <TextView
+        android:visibility="gone"
+        android:layout_marginLeft="@dimen/margin_normal"
+        android:id="@+id/tvNum"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@id/imgAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <ImageView
+        android:layout_marginLeft="@dimen/margin_normal"
         android:src="@mipmap/add"
         android:id="@+id/imgAdd"
         android:layout_alignParentBottom="true"

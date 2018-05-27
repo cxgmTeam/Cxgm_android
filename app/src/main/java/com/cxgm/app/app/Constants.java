@@ -39,4 +39,6 @@ public class Constants {
     public static Shop currentShop;//当前商铺
     public static boolean checkAddress = false;//当前地址可配送
 
+    public static boolean notify = true;//是否接收通知
+
 }

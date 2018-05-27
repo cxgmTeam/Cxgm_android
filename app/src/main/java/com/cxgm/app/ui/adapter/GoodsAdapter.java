@@ -79,7 +79,7 @@ public class GoodsAdapter extends BaseAdapter {
         }
 
         Glide.with(view).load(mList.get(i).getImage())
-                .apply(new RequestOptions().override(mItemWidth,mItemHeight)
+                .apply(new RequestOptions().override(mItemWidth,mItemHeight).placeholder(R.mipmap.default_img).error(R.mipmap.default_img)
                         .apply(RequestOptions.bitmapTransform(new RoundedCornersTransformation(10,0))))
                 .into(holder.imgCover);
         holder.tvTitle.setText(mList.get(i).getName());
@@ -88,7 +88,7 @@ public class GoodsAdapter extends BaseAdapter {
         holder.imgAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ViewHelper.addOrUpdateShopCart(activity,mList.get(i));
+                ViewHelper.addOrUpdateShopCart(activity,mList.get(i),1);
             }
         });
 

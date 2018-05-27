@@ -25,7 +25,16 @@ public class StringHelper {
     }
 
     public static String getWeight(float weight){
-        //TODO 按g换算
-        return "g";
+        //按g换算
+        if (weight >= 1000) {
+            return (weight/1000)+"kg";
+        }else {
+            return weight+"g";
+        }
     }
+
+    public static String getSpecification(float weight,String unit){
+        return StringHelper.getWeight(weight)+"/"+unit;
+    }
+    
 }

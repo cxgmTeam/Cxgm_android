@@ -170,6 +170,7 @@
     <string name="invaild_phone_num">无效的手机号</string>
     <string name="delivery_address_empty">收货地址不能为空</string>
     <string name="added_shop_cart">已添加到购物车</string>
+    <string name="update_shop_cart">已更新购物车</string>
     <string name="do_not_have_selected_goods">没有选中的商品</string>
     <string name="increase_receiving_information">请增加一个收货信息</string>
     <string name="choice_shop">请选择一家店铺</string>
@@ -206,5 +207,10 @@
     <string name="add_shopcart">加入购物车</string>
     <string name="buy_num">购买数量(%s)</string>
     <string name="select_">已选：%s</string>
+
+    <string name="goods">商品</string>
+    <string name="detail">详情</string>
+    <string name="recommend2">推荐</string>
+    <string name="max_quantity">已达到最大数量</string>
 
 </resources>

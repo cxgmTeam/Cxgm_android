@@ -19,9 +19,11 @@ import org.xutils.http.RequestParams;
  */
 public class FindProductDetailReq extends Request {
     int productId;
-    public FindProductDetailReq(Context context,int productId) {
+    int shopId;
+    public FindProductDetailReq(Context context,int productId,int shopId) {
         super(context);
         this.productId = productId;
+        this.shopId = shopId;
     }
 
     @Override
@@ -35,6 +37,7 @@ public class FindProductDetailReq extends Request {
         RequestParams params = new RequestParams(SERVER + Constants.PORT2 + "/homePage/findProductDetail");
         params.setMethod(HttpMethod.GET);
         params.addQueryStringParameter("productId",productId+"");
+        params.addQueryStringParameter("shopId",shopId+"");
         return params;
     }
 

@@ -18,9 +18,24 @@
         app:tabIndicatorColor="@color/colorGreen"
         app:tabIndicatorHeight="2dp"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"/>
+        android:layout_height="@dimen/item_height">
 
-    <ScrollView
+        <android.support.design.widget.TabItem
+            android:text="@string/goods"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <android.support.design.widget.TabItem
+            android:text="@string/detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <android.support.design.widget.TabItem
+            android:text="@string/recommend2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </android.support.design.widget.TabLayout>
+
+    <com.cxgm.app.ui.widget.CustomScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -41,6 +56,7 @@
                     android:layout_height="@dimen/goods_cover_height">
 
                     <com.kevin.loopview.AdLoopView
+                        app:loop_defaultImg="@mipmap/default_img"
                         android:id="@+id/loopBanner"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/goods_cover_height" />
@@ -77,7 +93,7 @@
 
                     <TextView
                         android:layout_marginTop="@dimen/margin_micro"
-                        android:layout_below="@+id/tvTitle"
+                        android:layout_below="@+id/tvGoodsTitle"
                         android:textColor="@color/textGray"
                         android:textSize="@dimen/text_size_normal"
                         android:id="@+id/tvGoodsSubTitle"
@@ -86,7 +102,7 @@
 
                     <TextView
                         android:id="@+id/tvPrice"
-                        android:layout_below="@+id/tvSubTitle"
+                        android:layout_below="@+id/tvGoodsSubTitle"
                         android:layout_marginTop="@dimen/margin_micro"
                         android:textSize="@dimen/text_size_giant_xx"
                         android:textColor="@color/textGreen"
@@ -155,6 +171,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/layoutGoods"
                 android:elevation="@dimen/elevation"
                 android:layout_marginTop="@dimen/margin_normal"
                 android:background="@color/colorWhite"
@@ -325,9 +342,16 @@
                 android:id="@+id/layoutGoodsDetailPic"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
+
+                <ImageView
+                    android:scaleType="fitXY"
+                    android:id="@+id/imgGoodsDetailPic"
+                    android:layout_width="match_parent"
+                    android:layout_height="2000dp" />
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tvGuessLike"
                 android:layout_marginTop="@dimen/margin_normal"
                 android:gravity="center"
                 android:background="@color/colorWhite"
@@ -348,6 +372,6 @@
                 android:verticalSpacing="@dimen/margin_giant" />
 
         </LinearLayout>
-    </ScrollView>
+    </com.cxgm.app.ui.widget.CustomScrollView>
 
 </LinearLayout>

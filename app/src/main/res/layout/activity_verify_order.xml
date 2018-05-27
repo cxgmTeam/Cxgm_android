@@ -220,6 +220,7 @@
                     android:textSize="@dimen/text_size_normal_x" />
 
                 <EditText
+                    android:focusable="false"
                     android:id="@+id/etRemark"
                     style="@style/Edit"
                     android:layout_width="match_parent"

@@ -1,5 +1,6 @@
 package com.cxgm.app.app;
 
+import com.cxgm.app.utils.UserManager;
 import com.deanlib.ootb.data.io.Request;
 
 /**
@@ -27,5 +28,14 @@ public class UserResult<T> extends Request.Result {
     @Override
     public String getResultMsg() {
         return msg;
+    }
+
+    @Override
+    public boolean onResultParse(String code) {
+        if ("403".equals(code)){
+            //token失效请重新登录！
+            UserManager.deleteUser();
+        }
+        return super.onResultParse(code);
     }
 }

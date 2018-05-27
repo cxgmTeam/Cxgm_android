@@ -290,7 +290,10 @@ public class IndexFragment extends BaseFragment {
                 @Override
                 public void onSuccess(List<ShopCategory> list) {
                     if (list != null) {
-                        mFCList.addAll(list);
+                        if (list.size()>4){
+                            mFCList.addAll(list.subList(0,4));
+                        }else mFCList.addAll(list);
+
                         mFCAdapter.notifyDataSetChanged();
                     }
                 }

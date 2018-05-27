@@ -13,19 +13,25 @@ import com.deanlib.ootb.data.io.Request;
 import org.xutils.common.Callback;
 
 public class ViewHelper {
-
-    public static void addOrUpdateShopCart(final Activity activity, ProductTransfer product){
+    public static void addOrUpdateShopCart(Activity activity, ProductTransfer product, int actionNum){
+        addOrUpdateShopCart(activity,product,actionNum,null);
+    }
+    public static void addOrUpdateShopCart(final Activity activity, final ProductTransfer product, int actionNum, final OnActionListener listener){
         if (!UserManager.isUserLogin()){
             ViewJump.toLogin(activity);
             return;
         }
-        ShopCart cart = ShopCart.getShopCart(product);
+        final int goodsNum = product.getShopCartNum()+actionNum;
+        ShopCart cart = ShopCart.getShopCart(product,goodsNum);
         if (product.getShopCartNum()>0){
             //UPDATE
             new UpdateCartReq(activity,cart).execute(new Request.RequestCallback<Integer>() {
                 @Override
                 public void onSuccess(Integer integer) {
-                    ToastManager.sendToast(activity.getString(R.string.added_shop_cart));
+                    product.setShopCartNum(goodsNum);
+                    ToastManager.sendToast(activity.getString(R.string.update_shop_cart));
+                    if (listener!=null)
+                        listener.onSuccess();
                 }
 
                 @Override
@@ -47,7 +53,10 @@ public class ViewHelper {
             new AddCartReq(activity,cart).execute(new Request.RequestCallback<Integer>() {
                 @Override
                 public void onSuccess(Integer integer) {
+                    product.setShopCartNum(goodsNum);
                     ToastManager.sendToast(activity.getString(R.string.added_shop_cart));
+                    if (listener!=null)
+                        listener.onSuccess();
                 }
 
                 @Override
@@ -66,6 +75,10 @@ public class ViewHelper {
                 }
             });
         }
+    }
+
+    public interface OnActionListener{
+        void onSuccess();
     }
 
 }

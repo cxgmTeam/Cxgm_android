@@ -89,7 +89,7 @@ public class NewAddrActivity extends BaseActivity {
             etPhoneNumber.setText(mAddress.getPhone());
             tvDistrict.setText(mAddress.getArea());
             etNumber.setText(mAddress.getAddress());
-            //todo remark
+            etRemark.setText(mAddress.getRemarks());
         }else
             tvTitle.setText(R.string.new_addr);
         imgBack.setVisibility(View.VISIBLE);
@@ -158,7 +158,7 @@ public class NewAddrActivity extends BaseActivity {
         //经纬度信息
         mAddress.setLongitude(mPoiInfo.location.longitude+"");
         mAddress.setDimension(mPoiInfo.location.latitude+"");
-        //todo remark
+        mAddress.setRemarks(remark);
 
         //检查范围
         new CheckAddressReq(this,mPoiInfo.location.longitude+"",mPoiInfo.location.latitude+"").execute(new Request.RequestCallback<List<Shop>>() {

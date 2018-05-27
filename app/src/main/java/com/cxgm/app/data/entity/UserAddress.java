@@ -31,6 +31,15 @@ public class UserAddress extends BaseEntity{
     private String phone;
     private String realName;
     private int idDef;//是否为默认值
+    private String remarks;
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
 
     public int getId() {
         return id;
