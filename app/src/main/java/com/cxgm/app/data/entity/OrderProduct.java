@@ -27,23 +27,23 @@ public class OrderProduct implements Parcelable {
         this.specifications = specifications;
     }
 
-    //    private String unit;
-//    private String weight;
-//    public String getUnit() {
-//        return unit;
-//    }
-//
-//    public void setUnit(String unit) {
-//        this.unit = unit;
-//    }
-//
-//    public String getWeight() {
-//        return weight;
-//    }
-//
-//    public void setWeight(String weight) {
-//        this.weight = weight;
-//    }
+        private String unit;
+    private String weight;
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
+    }
+
+    public String getWeight() {
+        return weight;
+    }
+
+    public void setWeight(String weight) {
+        this.weight = weight;
+    }
 
     public int getCategoryId() {
         return categoryId;

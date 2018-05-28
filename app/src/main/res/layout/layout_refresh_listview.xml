@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:divider="@null"
-        android:dividerHeight="0dp"
+        android:dividerHeight="@dimen/margin_normal"
         android:scrollbars="none" />
 
 </com.scwang.smartrefresh.layout.SmartRefreshLayout>

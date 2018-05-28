@@ -62,9 +62,11 @@ public class UserOrderAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
 
+        //TODO orderNum null
         holder.tvOrderNum.setText(mList.get(i).getOrderNum());
         holder.layoutContainer.removeAllViews();
         if (mList.get(i).getProductDetails().size()>1){
+            //TODO 布局有出入 UI是四个图片
             View itemView = View.inflate(viewGroup.getContext(),R.layout.layout_3goods_1info,null);
             holder.layoutContainer.addView(itemView);
             ImageView imgView1 = itemView.findViewById(R.id.imgView1);
@@ -72,7 +74,10 @@ public class UserOrderAdapter extends BaseAdapter {
             ImageView imgView3 = itemView.findViewById(R.id.imgView3);
             TextView tvView = itemView.findViewById(R.id.tvView);
             int width = (DeviceUtils.getSreenWidth()-2* DensityUtil.dip2px(15) - 3*DensityUtil.dip2px(10))/4;
-            tvView.getLayoutParams().width = width;
+//            tvView.getLayoutParams().width = width;
+            imgView1.getLayoutParams().height = width;
+            imgView2.getLayoutParams().height = width;
+            imgView3.getLayoutParams().height = width;
             tvView.getLayoutParams().height = width;
             int number = mList.get(i).getProductDetails().size();
             number = number>3?3:number;
@@ -80,16 +85,16 @@ public class UserOrderAdapter extends BaseAdapter {
                 case 3:
                     Glide.with(view).load(mList.get(i).getProductDetails().get(2).getProductUrl())
                             .apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img)
-                            .override(width,width))
+                            )
                             .into(imgView3);
                 case 2:
                     Glide.with(view).load(mList.get(i).getProductDetails().get(1).getProductUrl())
                         .apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img)
-                                .override(width,width))
+                                )
                         .into(imgView2);
                     Glide.with(view).load(mList.get(i).getProductDetails().get(0).getProductUrl())
                             .apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img)
-                                    .override(width,width))
+                                    )
                             .into(imgView1);
             }
 
@@ -106,17 +111,55 @@ public class UserOrderAdapter extends BaseAdapter {
             Glide.with(view).load(product.getProductUrl())
                     .apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
                     .into(imgCover);
+            //TODO 布局有出入
             tvCount.setText("x"+product.getProductNum());
             tvTitle.setText(product.getProductName());
-//            tvSpecification.setText(viewGroup.getContext().getString(R.string.specification_,
-//                    StringHelper.getSpecification(Helper.str2Float(product.getWeight()),product.getUnit())));
-            tvSpecification.setText(product.getSpecifications());
+            tvSpecification.setText(viewGroup.getContext().getString(R.string.specification_,
+                    StringHelper.getSpecification(Helper.str2Float(product.getWeight()),product.getUnit())));
             tvPrice.setText(StringHelper.getRMBFormat(product.getPrice()));
 
         }
 
-        holder.tvCount.setText(viewGroup.getContext().getString(R.string._count,mList.get(i).getProductDetails().size()));
+        holder.tvCountNum.setText(viewGroup.getContext().getString(R.string._count,mList.get(i).getProductDetails().size()));
         holder.tvTotal.setText(StringHelper.getRMBFormat(mList.get(i).getOrderAmount()));
+        switch (mList.get(i).getStatus()){
+            case Order.STATUS_TO_BE_PAID:
+                //待付款
+                holder.tvOrderState.setText(R.string.unpaid);
+                holder.tvOrderAction.setText(R.string.to_pay);
+                holder.tvOrderAction.setVisibility(View.VISIBLE);
+                break;
+            case Order.STATUS_DISTRIBUTION:
+                //待配送
+                holder.tvOrderState.setText(R.string.distribution);
+                holder.tvOrderState.setText(R.string.apply_for_returning);
+                holder.tvOrderAction.setVisibility(View.VISIBLE);
+                break;
+            case Order.STATUS_DISTRIBUTING:
+                //配送中
+                holder.tvOrderState.setText(R.string.distributing);
+                holder.tvOrderAction.setText(R.string.apply_for_returning);
+                holder.tvOrderAction.setVisibility(View.VISIBLE);
+                break;
+            case Order.STATUS_COMPLETE:
+                //已完成
+                //TODO 怎么区分超时取消
+                holder.tvOrderState.setText(R.string.complete);
+                holder.tvOrderAction.setText(R.string.buy_again);
+                holder.tvOrderAction.setVisibility(View.VISIBLE);
+                break;
+            case Order.STATUS_REFUND:
+                //退款
+                //TODO 怎么区分退款中和已退款
+                holder.tvOrderState.setText(R.string.refunded);
+                holder.tvOrderAction.setVisibility(View.GONE);
+                break;
+            default:
+                holder.tvOrderState.setText("");
+                holder.tvOrderAction.setVisibility(View.GONE);
+                break;
+        }
+
         holder.tvOrderAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -134,8 +177,8 @@ public class UserOrderAdapter extends BaseAdapter {
         TextView tvOrderState;
         @BindView(R.id.layoutContainer)
         LinearLayout layoutContainer;
-        @BindView(R.id.tvCount)
-        TextView tvCount;
+        @BindView(R.id.tvCountNum)
+        TextView tvCountNum;
         @BindView(R.id.tvTotal)
         TextView tvTotal;
         @BindView(R.id.tvOrderAction)

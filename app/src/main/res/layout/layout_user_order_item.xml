@@ -37,10 +37,6 @@
 
     <LinearLayout
         android:id="@+id/layoutContainer"
-        android:paddingLeft="@dimen/margin_giant"
-        android:paddingRight="@dimen/margin_giant"
-        android:paddingTop="@dimen/margin_large_t"
-        android:paddingBottom="@dimen/margin_large_t"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="104dp">
@@ -54,7 +50,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:id="@+id/tvCount"
+            android:id="@+id/tvCountNum"
             android:layout_weight="1"
             android:textColor="@color/textBlackTint"
             android:textSize="@dimen/text_size_normal_x"

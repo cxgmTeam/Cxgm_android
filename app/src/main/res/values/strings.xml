@@ -217,4 +217,9 @@
     <string name="tomorrow">明天</string>
     <string name="nothing_selected">没有选中项</string>
 
+    <string name="to_pay">去支付</string>
+    <string name="refunded">已退款</string>
+    <string name="buy_again">再次购买</string>
+    <string name="apply_for_returning">申请退货</string>
+
 </resources>
