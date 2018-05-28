@@ -141,7 +141,7 @@
                         android:drawableLeft="@mipmap/alipay"
                         android:drawablePadding="@dimen/margin_small"
                         android:gravity="center_vertical"
-                        android:text="@string/wechat_pay"
+                        android:text="@string/alipay"
                         android:textColor="@color/textBlack"
                         android:textSize="@dimen/text_size_normal_x" />
 

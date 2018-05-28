@@ -115,7 +115,7 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
 
     private void init() {
         tvTitle.setText(R.string.shop_cart);
-        tvAction1.setText(R.string.edit);
+        tvAction1.setText(R.string.delete);
         tvAction1.setVisibility(View.VISIBLE);
 
         mCartList = new ArrayList<>();
@@ -194,64 +194,73 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
     }
 
     @Override
-    public void onDeleteGoods(String ids) {
-        new DeleteCartReq(getActivity(), ids).execute(false, new Request.RequestCallback<Integer>() {
-            @Override
-            public void onSuccess(Integer integer) {
-                loadBottomData();
-            }
+    public void onUpdateGoods(final ShopCart cartGoods,int actionNum) {
+        if ((cartGoods.getGoodNum() + actionNum)>0) {
+            final ShopCart cart = cartGoods.clone();
+            cart.setGoodNum(cart.getGoodNum() + 1);
+            cart.setAmount(Helper.moneyMultiply(cart.getPrice(), cart.getGoodNum()));
+            new UpdateCartReq(getActivity(), cart).execute(false, new Request.RequestCallback<Integer>() {
+                @Override
+                public void onSuccess(Integer integer) {
+                    cartGoods.setGoodNum(cart.getGoodNum());
+                    cartGoods.setAmount(cart.getAmount());
+                    mCartAdapter.notifyDataSetChanged();
+                    loadBottomData();
+                }
 
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
 
-            }
+                }
 
-            @Override
-            public void onCancelled(Callback.CancelledException cex) {
+                @Override
+                public void onCancelled(Callback.CancelledException cex) {
 
-            }
+                }
 
-            @Override
-            public void onFinished() {
+                @Override
+                public void onFinished() {
 
-            }
-        });
-    }
+                }
+            });
+        }else {
+            //删除
+            new DeleteCartReq(getActivity(), cartGoods.getId()+"").execute(false, new Request.RequestCallback<Integer>() {
+                @Override
+                public void onSuccess(Integer integer) {
+                    mCartList.remove(cartGoods);
+                    mCartAdapter.notifyDataSetChanged();
+                    loadBottomData();
+                }
 
-    @Override
-    public void onUpdateGoods(ShopCart cartGoods) {
-        new UpdateCartReq(getActivity(), cartGoods).execute(false, new Request.RequestCallback<Integer>() {
-            @Override
-            public void onSuccess(Integer integer) {
-                loadBottomData();
-            }
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
 
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
+                }
 
-            }
+                @Override
+                public void onCancelled(Callback.CancelledException cex) {
 
-            @Override
-            public void onCancelled(Callback.CancelledException cex) {
+                }
 
-            }
+                @Override
+                public void onFinished() {
 
-            @Override
-            public void onFinished() {
-
-            }
-        });
+                }
+            });
+        }
     }
 
     @Override
     public void onChangeCheck(int postion, boolean isChecked) {
+        mCartList.get(postion).isChecked = isChecked;
         mInterceptChecked = true;
         if (cbCheckAll.isChecked() || !isChecked) {
             cbCheckAll.setChecked(isChecked);
         } else {
             boolean isCheckedAll = isChecked;
-            for (ShopCart cart : mCartList) {
-                if (cart.isChecked != isChecked) {
+            for (int i =0;i<mCartList.size();i++) {
+                if (i != postion && mCartList.get(i).isChecked != isChecked) {
                     isCheckedAll = false;
                     break;
                 }
@@ -293,7 +302,6 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
                 ArrayList<OrderProduct> products = new ArrayList<>();
                 for (ShopCart cart : mCartList){
                     if (cart.isChecked){
-                        //TODO shopcart需要有规格信息，包括weight 和 unit
                         products.add(new OrderProduct(cart));
                     }
                 }
@@ -308,7 +316,45 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
                 ((MainActivity)getActivity()).publicChangeView(R.id.rbGoods);
                 break;
             case R.id.tvAction1:
-                //TODO 右上角的编辑干什么用
+                //删除
+                StringBuilder builder = new StringBuilder();
+                for (ShopCart cart : mCartList){
+                    if (cart.isChecked)
+                        builder.append(cart.getId()+",");
+                }
+                if (builder.length()>0) {
+                    String ids = builder.deleteCharAt(builder.length() - 1).toString();
+                    new DeleteCartReq(getActivity(), ids).execute(new Request.RequestCallback<Integer>() {
+                        @Override
+                        public void onSuccess(Integer integer) {
+                            for (int i = mCartList.size()-1;i>=0;i--){
+                                if (mCartList.get(i).isChecked){
+                                    mCartList.remove(i);
+
+                                }
+                            }
+                            mCartAdapter.notifyDataSetChanged();
+                            loadBottomData();
+                        }
+
+                        @Override
+                        public void onError(Throwable ex, boolean isOnCallback) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(Callback.CancelledException cex) {
+
+                        }
+
+                        @Override
+                        public void onFinished() {
+
+                        }
+                    });
+                }else {
+                    ToastManager.sendToast(getString(R.string.nothing_selected));
+                }
                 break;
         }
     }

@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.cxgm.app.R;
+import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.entity.CategoryAndAmount;
 import com.cxgm.app.data.entity.CouponDetail;
 import com.cxgm.app.data.entity.Invoice;
@@ -109,6 +110,7 @@ public class VerifyOrderActivity extends BaseActivity {
     List<CouponDetail> mCouponList;
     Order mOrder;
     int mCarriage = 10;//邮费
+    int mDeliveryTimePosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +132,9 @@ public class VerifyOrderActivity extends BaseActivity {
         imgBack.setVisibility(View.VISIBLE);
 
         mOrder = new Order();
+        mOrder.setStoreId(Constants.currentShop.getId());
+
+        tvReceiveTime.setText(DeliveryTimeDialogActivity.TIMES[mDeliveryTimePosition]);
 
         //商品
         View itemView = View.inflate(this,R.layout.layout_3goods_1info,null);
@@ -138,9 +143,12 @@ public class VerifyOrderActivity extends BaseActivity {
         ImageView imgView2 = itemView.findViewById(R.id.imgView2);
         ImageView imgView3 = itemView.findViewById(R.id.imgView3);
         TextView tvView = itemView.findViewById(R.id.tvView);
-        //TODO 布局大小有问题
+        //布局
         int width = (DeviceUtils.getSreenWidth()-2* DensityUtil.dip2px(15) - 3*DensityUtil.dip2px(10))/4;
-        tvView.getLayoutParams().width = width;
+//        tvView.getLayoutParams().width = width;
+        imgView1.getLayoutParams().height = width;
+        imgView2.getLayoutParams().height = width;
+        imgView3.getLayoutParams().height = width;
         tvView.getLayoutParams().height = width;
         int number = mOrderProductList.size();
         number = number>3?3:number;
@@ -148,17 +156,17 @@ public class VerifyOrderActivity extends BaseActivity {
             case 3:
                 Glide.with(this).load(mOrderProductList.get(2).getProductUrl())
                         .apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img)
-                                .override(width,width))
+                                )
                         .into(imgView3);
             case 2:
                 Glide.with(this).load(mOrderProductList.get(1).getProductUrl())
                         .apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img)
-                                .override(width,width))
+                                )
                         .into(imgView2);
             case 1:
                 Glide.with(this).load(mOrderProductList.get(0).getProductUrl())
                         .apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img)
-                                .override(width,width))
+                                )
                         .into(imgView1);
         }
         tvView.setText(getString(R.string._count,mOrderProductList.size()));
@@ -217,6 +225,11 @@ public class VerifyOrderActivity extends BaseActivity {
                             initUserAddress();
                             break;
                         }
+                    }
+                    //如果没有设置默认
+                    if (mUserAddress==null){
+                        mUserAddress = userAddresses.get(0);
+                        initUserAddress();
                     }
                 }
             }
@@ -277,7 +290,8 @@ public class VerifyOrderActivity extends BaseActivity {
                 ViewJump.toAddrOption(this);
                 break;
             case R.id.layoutReceiveTime:
-                //TODO 选择送货时间
+                //选择送货时间
+                ViewJump.toDeliveryTimeDialog(this,mDeliveryTimePosition);
                 break;
             case R.id.layoutCoupon:
                 //优惠券 满减
@@ -375,6 +389,12 @@ public class VerifyOrderActivity extends BaseActivity {
                         }
                         //发票信息
                         mOrder.setReceipt(invoice);
+                    }
+                    break;
+                case ViewJump.CODE_DELIVERY_TIME_DIALOG:
+                    if (data!=null){
+                        mDeliveryTimePosition = data.getIntExtra("position",mDeliveryTimePosition);
+                        tvReceiveTime.setText(DeliveryTimeDialogActivity.TIMES[mDeliveryTimePosition]);
                     }
                     break;
             }

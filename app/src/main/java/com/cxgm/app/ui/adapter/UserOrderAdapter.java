@@ -108,8 +108,9 @@ public class UserOrderAdapter extends BaseAdapter {
                     .into(imgCover);
             tvCount.setText("x"+product.getProductNum());
             tvTitle.setText(product.getProductName());
-            tvSpecification.setText(viewGroup.getContext().getString(R.string.specification_,
-                    StringHelper.getSpecification(Helper.str2Float(product.getWeight()),product.getUnit())));
+//            tvSpecification.setText(viewGroup.getContext().getString(R.string.specification_,
+//                    StringHelper.getSpecification(Helper.str2Float(product.getWeight()),product.getUnit())));
+            tvSpecification.setText(product.getSpecifications());
             tvPrice.setText(StringHelper.getRMBFormat(product.getPrice()));
 
         }

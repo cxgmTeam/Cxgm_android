@@ -3,7 +3,7 @@ package com.cxgm.app.data.entity;
 import com.cxgm.app.app.Constants;
 import com.deanlib.ootb.entity.BaseEntity;
 
-public class ShopCart extends BaseEntity {
+public class ShopCart extends BaseEntity implements Cloneable{
 
     /**
       {
@@ -67,7 +67,8 @@ public class ShopCart extends BaseEntity {
 
     }
 
-    public ShopCart(int productId,String goodCode, String goodName, int goodNum,float amount, int shopId) {
+    public ShopCart(int id,int productId,String goodCode, String goodName, int goodNum,float amount, int shopId) {
+        this.id = id;
         this.productId = productId;
         this.goodCode = goodCode;
         this.goodName = goodName;
@@ -77,7 +78,7 @@ public class ShopCart extends BaseEntity {
     }
 
     public static ShopCart getShopCart(ProductTransfer product,int goodsNum){
-        return new ShopCart(product.getId(),product.getGoodCode(),product.getName(),goodsNum,product.getPrice(), Constants.currentShop.getId());
+        return new ShopCart(product.getShopCartId(),product.getId(),product.getGoodCode(),product.getName(),goodsNum,product.getPrice(), Constants.currentShop.getId());
     }
 
     public String getSpecifications() {
@@ -176,5 +177,16 @@ public class ShopCart extends BaseEntity {
 
     public void setUserId(int userId) {
         this.userId = userId;
+    }
+
+    @Override
+    public ShopCart clone() {
+        ShopCart o = null;
+        try{
+            o = (ShopCart)super.clone();
+        }catch(CloneNotSupportedException e){
+            e.printStackTrace();
+        }
+        return o;
     }
 }

@@ -41,6 +41,7 @@ import com.cxgm.app.ui.adapter.ShopAdapter;
 import com.cxgm.app.ui.base.BaseFragment;
 import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.utils.Helper;
+import com.cxgm.app.utils.ToastManager;
 import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.widget.GridViewForScrollView;
 import com.deanlib.ootb.widget.HorizontalListView;
@@ -520,7 +521,11 @@ public class IndexFragment extends BaseFragment {
                 ViewJump.toAddrList(getActivity(), this);
                 break;
             case R.id.etSearchWord:
-                ViewJump.toSearch(getActivity());
+                if (Constants.currentShop!=null) {
+                    ViewJump.toSearch(getActivity());
+                }else {
+                    ToastManager.sendToast(getString(R.string.choice_shop));
+                }
                 break;
         }
     }

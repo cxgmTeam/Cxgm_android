@@ -187,7 +187,6 @@ public class ExpandableGoodsListAdapter extends BaseExpandableListAdapter {
     }
 
     private void updateActionView(SubViewHolder holder,ProductTransfer product){
-        //TODO 添加后，退出再加载，shopcartnum 数据有问题
         holder.tvNum.setText(product.getShopCartNum()+"");
         if (product.getShopCartNum()>0){
             //展示可调节

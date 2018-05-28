@@ -8,6 +8,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -95,12 +96,10 @@ public class GoodsDetailActivity extends BaseActivity {
     TextView tvShelflife;
     @BindView(R.id.tvStorageCondition)
     TextView tvStorageCondition;
-    @BindView(R.id.layoutGoodsDetailPic)
-    LinearLayout layoutGoodsDetailPic;
+    @BindView(R.id.wvIntroduction)
+    WebView wvIntroduction;
     @BindView(R.id.gvGoods)
     GridViewForScrollView gvGoods;
-    @BindView(R.id.imgGoodsDetailPic)
-    ImageView imgGoodsDetailPic;
     @BindView(R.id.scrollView)
     CustomScrollView scrollView;
     @BindView(R.id.layoutGoods)
@@ -154,7 +153,7 @@ public class GoodsDetailActivity extends BaseActivity {
                     int position = 0;
                     if (t > tvGuessLike.getTop()) {
                         position = 2;
-                    } else if (t > layoutGoodsDetailPic.getTop()) {
+                    } else if (t > wvIntroduction.getTop()) {
                         position = 1;
                     } else if (t > layoutGoods.getTop()) {
                         position = 0;
@@ -176,7 +175,7 @@ public class GoodsDetailActivity extends BaseActivity {
                             scrollY = layoutGoods.getTop();
                             break;
                         case 1://详情
-                            scrollY = layoutGoodsDetailPic.getTop();
+                            scrollY = wvIntroduction.getTop();
                             break;
                         case 2://推荐
                             scrollY = tvGuessLike.getTop();
@@ -289,8 +288,10 @@ public class GoodsDetailActivity extends BaseActivity {
 
 
                         //商品介绍图
-                        Glide.with(GoodsDetailActivity.this).load(mProduct.getIntroduction()).apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
-                                .into(imgGoodsDetailPic);
+//                        Glide.with(GoodsDetailActivity.this).load(mProduct.getIntroduction()).apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
+//                                .into(imgGoodsDetailPic);
+                        wvIntroduction.loadData(mProduct.getIntroduction(),"text/html; charset=UTF-8",null);
+
 
                         //猜你喜欢
                         new PushProductsReq(GoodsDetailActivity.this, Constants.currentShop.getId(),mProduct.getProductCategoryTwoId(),mProduct.getProductCategoryThirdId())

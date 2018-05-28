@@ -19,6 +19,7 @@ import com.cxgm.app.ui.view.goods.GoodsSpecificationDialogActivity;
 import com.cxgm.app.ui.view.order.AddrListActivity;
 import com.cxgm.app.ui.view.order.AddrOptionActivity;
 import com.cxgm.app.ui.view.order.CouponOptionActivity;
+import com.cxgm.app.ui.view.order.DeliveryTimeDialogActivity;
 import com.cxgm.app.ui.view.order.GoodsListActivity;
 import com.cxgm.app.ui.view.order.InvoiceActivity;
 import com.cxgm.app.ui.view.order.MapLocationActivity;
@@ -49,6 +50,7 @@ public class ViewJump {
     public static final int CODE_ADDR_OPTION = 3;
     public static final int CODE_INVOICE = 4;
     public static final int CODE_COUPON_OPTION = 5;
+    public static final int CODE_DELIVERY_TIME_DIALOG = 6;
 
     public static void toMain(Activity activity){
         Intent intent = new Intent(activity, MainActivity.class);
@@ -136,7 +138,12 @@ public class ViewJump {
         activity.startActivityForResult(intent,CODE_ADDR_OPTION);
     }
     public static void toUserOrder(Activity activity){
+        toUserOrder(activity,null);
+    }
+    public static void toUserOrder(Activity activity,String status){
         Intent intent = new Intent(activity,UserOrderActivity.class);
+        if (status != null)
+            intent.putExtra("status",status);
         activity.startActivity(intent);
     }
 
@@ -173,6 +180,12 @@ public class ViewJump {
         Intent intent = new Intent(activity, GoodsListActivity.class);
         intent.putParcelableArrayListExtra("products",products);
         activity.startActivity(intent);
+    }
+
+    public static void toDeliveryTimeDialog(Activity activity,int position){
+        Intent intent = new Intent(activity, DeliveryTimeDialogActivity.class);
+        intent.putExtra("position",position);
+        activity.startActivityForResult(intent,CODE_DELIVERY_TIME_DIALOG);
     }
 
 }

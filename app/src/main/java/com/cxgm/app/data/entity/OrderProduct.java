@@ -15,10 +15,35 @@ public class OrderProduct implements Parcelable {
 //    private String productCode;
     private float amount;
     private float price;
-    private String unit;
-    private String weight;
     private int id;
     private int categoryId;//二级分类ID
+    private String specifications;
+
+    public String getSpecifications() {
+        return specifications;
+    }
+
+    public void setSpecifications(String specifications) {
+        this.specifications = specifications;
+    }
+
+    //    private String unit;
+//    private String weight;
+//    public String getUnit() {
+//        return unit;
+//    }
+//
+//    public void setUnit(String unit) {
+//        this.unit = unit;
+//    }
+//
+//    public String getWeight() {
+//        return weight;
+//    }
+//
+//    public void setWeight(String weight) {
+//        this.weight = weight;
+//    }
 
     public int getCategoryId() {
         return categoryId;
@@ -110,21 +135,7 @@ public class OrderProduct implements Parcelable {
         this.price = price;
     }
 
-    public String getUnit() {
-        return unit;
-    }
 
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
-    public String getWeight() {
-        return weight;
-    }
-
-    public void setWeight(String weight) {
-        this.weight = weight;
-    }
 
     public int getId() {
         return id;
@@ -151,8 +162,8 @@ public class OrderProduct implements Parcelable {
         dest.writeString(this.goodCode);
         dest.writeFloat(this.amount);
         dest.writeFloat(this.price);
-        dest.writeString(this.unit);
-        dest.writeString(this.weight);
+//        dest.writeString(this.unit);
+//        dest.writeString(this.weight);
         dest.writeInt(this.id);
         dest.writeFloat(this.originalPrice);
         dest.writeInt(this.categoryId);
@@ -171,6 +182,7 @@ public class OrderProduct implements Parcelable {
         this.price = cart.getPrice();
         this.originalPrice = cart.getPrice();
         this.categoryId = cart.getCategoryId();
+        this.specifications = cart.getSpecifications();
     }
 
     protected OrderProduct(Parcel in) {
@@ -183,8 +195,8 @@ public class OrderProduct implements Parcelable {
         this.goodCode = in.readString();
         this.amount = in.readFloat();
         this.price = in.readFloat();
-        this.unit = in.readString();
-        this.weight = in.readString();
+//        this.unit = in.readString();
+//        this.weight = in.readString();
         this.id = in.readInt();
         this.originalPrice = in.readFloat();
         this.categoryId = in.readInt();

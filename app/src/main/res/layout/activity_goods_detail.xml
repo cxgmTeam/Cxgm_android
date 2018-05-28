@@ -337,18 +337,10 @@
 
             </LinearLayout>
 
-            <LinearLayout
-                android:orientation="vertical"
-                android:id="@+id/layoutGoodsDetailPic"
+            <WebView
+                android:id="@+id/wvIntroduction"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <ImageView
-                    android:scaleType="fitXY"
-                    android:id="@+id/imgGoodsDetailPic"
-                    android:layout_width="match_parent"
-                    android:layout_height="2000dp" />
-            </LinearLayout>
+                android:layout_height="wrap_content"/>
 
             <TextView
                 android:id="@+id/tvGuessLike"

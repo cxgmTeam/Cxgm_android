@@ -94,31 +94,16 @@ public class CartGoodsAdapter extends BaseAdapter {
         holder.tvPlus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mList.get(i).setGoodNum(mList.get(i).getGoodNum()+1);
-                holder.tvNum.setText(mList.get(i).getGoodNum()+"");
-                mList.get(i).setAmount(Helper.moneyMultiply(mList.get(i).getPrice(),mList.get(i).getGoodNum()));
-                holder.tvSubtotal.setText(StringHelper.getRMBFormat(mList.get(i).getAmount()));
                 if (mListener!=null)
-                    mListener.onUpdateGoods(mList.get(i));
+                    mListener.onUpdateGoods(mList.get(i),1);
             }
         });
 
         holder.tvMinus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mList.get(i).setGoodNum(Helper.getPositiveMinusNum(mList.get(i).getGoodNum()));
-                if (mList.get(i).getGoodNum()== 0){
-                    //删除
-                    mList.remove(i);
-                    notifyDataSetChanged();
-                    if (mListener!=null)
-                        mListener.onDeleteGoods(mList.get(i).getId()+"");
-                }else {
-                    holder.tvNum.setText(mList.get(i).getGoodNum()+"");
-                    mList.get(i).setAmount(Helper.moneyMultiply(mList.get(i).getPrice(),mList.get(i).getGoodNum()));
-                    holder.tvSubtotal.setText(StringHelper.getRMBFormat(mList.get(i).getAmount()));
-                    if (mListener!=null)
-                        mListener.onUpdateGoods(mList.get(i));
+                if (mListener!=null) {
+                    mListener.onUpdateGoods(mList.get(i),-1);
                 }
             }
         });
@@ -160,8 +145,7 @@ public class CartGoodsAdapter extends BaseAdapter {
     }
 
     public interface OnShopCartActionListener{
-        void onDeleteGoods(String ids);
-        void onUpdateGoods(ShopCart cartGoods);
+        void onUpdateGoods(ShopCart cartGoods,int actionNum);
         void onChangeCheck(int postion,boolean isChecked);
     }
 }

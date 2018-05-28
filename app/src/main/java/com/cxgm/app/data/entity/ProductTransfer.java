@@ -75,7 +75,7 @@ public class ProductTransfer extends BaseEntity {
     private int hits;
     private int id;
     private String image;
-    private String introduction;//商品介绍图片
+    private String introduction;//商品介绍HTML
     private boolean isGift;
     private int isHot;
     private boolean isList;
@@ -125,6 +125,15 @@ public class ProductTransfer extends BaseEntity {
     private int minimumQuantity;
     private int maximumPrice;
     private int minimumPrice;
+    private int shopCartId;//如果购物车中有 ，当前购物车对应ID
+
+    public int getShopCartId() {
+        return shopCartId;
+    }
+
+    public void setShopCartId(int shopCartId) {
+        this.shopCartId = shopCartId;
+    }
 
     public int getMaximumQuantity() {
         return maximumQuantity;

@@ -213,4 +213,8 @@
     <string name="recommend2">推荐</string>
     <string name="max_quantity">已达到最大数量</string>
 
+    <string name="chioce_delivery_time">选择送达时间</string>
+    <string name="tomorrow">明天</string>
+    <string name="nothing_selected">没有选中项</string>
+
 </resources>

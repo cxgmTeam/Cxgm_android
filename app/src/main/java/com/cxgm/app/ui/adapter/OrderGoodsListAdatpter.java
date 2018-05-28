@@ -63,8 +63,9 @@ public class OrderGoodsListAdatpter extends BaseAdapter {
                 .apply(new RequestOptions().placeholder(R.mipmap.default_img)
                 .error(R.mipmap.default_img)).into(holder.imgCover);
         holder.tvTitle.setText(mList.get(i).getProductName());
-        holder.tvSpecification.setText(viewGroup.getContext().getString(R.string.specification_
-                ,StringHelper.getSpecification(Helper.str2Float(mList.get(i).getWeight()),mList.get(i).getUnit())));
+//        holder.tvSpecification.setText(viewGroup.getContext().getString(R.string.specification_
+//                ,StringHelper.getSpecification(Helper.str2Float(mList.get(i).getWeight()),mList.get(i).getUnit())));
+        holder.tvSpecification.setText(mList.get(i).getSpecifications());
         holder.tvPrice.setText(StringHelper.getRMBFormat(mList.get(i).getPrice()));
 
         if (mList.get(i).getPrice()!= mList.get(i).getOriginalPrice()) {
