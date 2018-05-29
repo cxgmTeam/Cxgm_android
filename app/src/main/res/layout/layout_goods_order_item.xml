@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:background="@color/colorWhite"
     android:paddingLeft="@dimen/margin_giant"
     android:paddingRight="@dimen/margin_giant"
@@ -8,13 +8,15 @@
     android:layout_height="@dimen/goods_order_item_height">
 
     <include
+        android:layout_toLeftOf="@+id/tvCount"
         android:layout_weight="1"
         android:layout_width="match_parent"
         android:layout_height="@dimen/goods_order_item_height"
         layout="@layout/layout_goods_order"/>
 
     <TextView
-        android:text="1111"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
         android:id="@+id/tvCount"
         android:layout_marginBottom="@dimen/margin_normal"
         android:layout_gravity="bottom"
@@ -24,4 +26,4 @@
         android:layout_width="40dp"
         android:layout_height="wrap_content" />
 
-</LinearLayout>
+</RelativeLayout>

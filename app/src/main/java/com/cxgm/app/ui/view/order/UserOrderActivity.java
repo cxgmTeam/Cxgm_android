@@ -45,6 +45,7 @@ public class UserOrderActivity extends BaseActivity {
     ViewPager vpContainer;
 
     int[] titles = {R.string.all,R.string.to_be_paid,R.string.distribution,R.string.distributing,R.string.complete,R.string.refund2};
+    String mStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +55,7 @@ public class UserOrderActivity extends BaseActivity {
         }
         setContentView(R.layout.activity_user_order);
         ButterKnife.bind(this);
-
+        mStatus = getIntent().getStringExtra("status");
         init();
     }
 
@@ -65,6 +66,27 @@ public class UserOrderActivity extends BaseActivity {
 
         vpContainer.setAdapter(new ViewPagerAdapter(getSupportFragmentManager()));
         tabOrderState.setupWithViewPager(vpContainer);
+
+        if (mStatus!=null) {
+            switch (mStatus) {
+                case Order.STATUS_TO_BE_PAID:
+                    vpContainer.setCurrentItem(1);
+                    break;
+                case Order.STATUS_DISTRIBUTION:
+                    vpContainer.setCurrentItem(2);
+                    break;
+                case Order.STATUS_DISTRIBUTING:
+                    vpContainer.setCurrentItem(3);
+                    break;
+                case Order.STATUS_COMPLETE:
+                    vpContainer.setCurrentItem(4);
+                    break;
+                case Order.STATUS_REFUND:
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     @OnClick(R.id.imgBack)

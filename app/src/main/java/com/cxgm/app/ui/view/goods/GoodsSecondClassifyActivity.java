@@ -116,7 +116,7 @@ public class GoodsSecondClassifyActivity extends BaseActivity {
 
     private void loadData() {
 
-        //二级分类
+        //二级分类 TODO 数据有问题
         new FindSecondCategoryReq(this, Constants.currentShop.getId(), mFirstCategory.getId())
                 .execute(new Request.RequestCallback<List<ShopCategory>>() {
                     @Override

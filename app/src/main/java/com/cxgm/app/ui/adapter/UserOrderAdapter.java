@@ -72,7 +72,7 @@ public class UserOrderAdapter extends BaseAdapter {
         holder.tvOrderNum.setText(mList.get(i).getOrderNum());
         holder.layoutContainer.removeAllViews();
         if (mList.get(i).getProductDetails().size()>1){
-            //TODO 布局有出入 UI是四个图片
+            //布局有出入 UI是四个图片
             View itemView = View.inflate(viewGroup.getContext(),R.layout.layout_3goods_1info,null);
             holder.layoutContainer.addView(itemView);
             ImageView imgView1 = itemView.findViewById(R.id.imgView1);
@@ -120,7 +120,6 @@ public class UserOrderAdapter extends BaseAdapter {
             Glide.with(view).load(product.getProductUrl())
                     .apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
                     .into(imgCover);
-            //TODO 布局有出入
             tvCount.setText("x"+product.getProductNum());
             tvTitle.setText(product.getProductName());
             tvSpecification.setText(viewGroup.getContext().getString(R.string.specification_,

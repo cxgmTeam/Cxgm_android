@@ -119,6 +119,7 @@
                         android:layout_height="wrap_content"
                         android:background="@color/colorWhite"
                         android:elevation="@dimen/elevation"
+                        android:verticalSpacing="@dimen/margin_micro"
                         android:numColumns="4"
                         android:paddingBottom="@dimen/margin_giant_xxx"
                         android:paddingTop="@dimen/margin_giant_xxx"/>

@@ -221,6 +221,7 @@ public class IndexFragment extends BaseFragment {
                 @Override
                 public void onItemClick(PagerAdapter parent, View view, int position, int realPosition) {
                     loopBanner.getLoopData();
+                    //TODO 点击事件
                 }
             });
 
@@ -229,6 +230,7 @@ public class IndexFragment extends BaseFragment {
 
             srl.setEnableRefresh(false);
             srl.setEnableLoadMore(false);
+            //TODO 以下都没有点击事件
             //First Category
             mFCList = new ArrayList<>();
             mFCAdapter = new FirstCategoryAdapter(mFCList);
@@ -288,8 +290,17 @@ public class IndexFragment extends BaseFragment {
                         }
                     });
         } else {
-            //TODO 首页分类
-            mFCList.add(new ShopCategory(0,getString(R.string.first_category_1),""));
+            //首页分类
+            mFCList.add(new ShopCategory(0,getString(R.string.first_category_1),"file:///android_asset/category/c1.png"));
+            mFCList.add(new ShopCategory(0,getString(R.string.first_category_2),"file:///android_asset/category/c2.png"));
+            mFCList.add(new ShopCategory(0,getString(R.string.first_category_3),"file:///android_asset/category/c3.png"));
+            mFCList.add(new ShopCategory(0,getString(R.string.first_category_4),"file:///android_asset/category/c4.png"));
+            mFCList.add(new ShopCategory(0,getString(R.string.first_category_5),"file:///android_asset/category/c5.png"));
+            mFCList.add(new ShopCategory(0,getString(R.string.first_category_6),"file:///android_asset/category/c6.png"));
+            mFCList.add(new ShopCategory(0,getString(R.string.first_category_7),"file:///android_asset/category/c7.png"));
+            mFCList.add(new ShopCategory(0,getString(R.string.first_category_8),"file:///android_asset/category/c8.png"));
+
+            mFCAdapter.notifyDataSetChanged();
 
 //            new FindFirstCategoryReq(getActivity(), Constants.currentShop.getId()).execute(new Request.RequestCallback<List<ShopCategory>>() {
 //                @Override

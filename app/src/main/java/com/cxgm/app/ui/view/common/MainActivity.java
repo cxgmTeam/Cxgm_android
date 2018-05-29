@@ -146,6 +146,11 @@ public class MainActivity extends BaseActivity{
                     rbIndex.setChecked(true);
                     return;
                 }
+                if (Constants.currentShop==null){
+                    ToastManager.sendToast(getString(R.string.choice_shop));
+                    rbIndex.setChecked(true);
+                    return;
+                }
                 getSupportFragmentManager().beginTransaction().show(mShopCartFragment).commit();
                 break;
             case R.id.rbGoods:

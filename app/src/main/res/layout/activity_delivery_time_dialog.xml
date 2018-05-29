@@ -68,60 +68,66 @@
             android:paddingLeft="@dimen/margin_large_t"
             android:paddingRight="@dimen/margin_giant">
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/layoutTime1"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/item_height"
                 android:background="@color/colorWhite"
-                android:gravity="center_vertical">
+                >
 
                 <TextView
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/cbTime1"
                     android:id="@+id/tvTime1"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:gravity="center_vertical"
                     android:textColor="@color/textBlack"
                     android:textSize="@dimen/text_size_large" />
 
                 <CheckBox
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
                     android:id="@+id/cbTime1"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/item_height"
                     android:button="@drawable/selector_check2"
                     android:gravity="center_vertical" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/line"
                 android:background="@color/colorLine" />
 
-            <LinearLayout
+            <RelativeLayout
                 android:id="@+id/layoutTime2"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/item_height"
                 android:background="@color/colorWhite"
-                android:gravity="center_vertical">
+                >
 
                 <TextView
+                    android:layout_toLeftOf="@id/tvTime2"
                     android:id="@+id/tvTime2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
+                    android:layout_centerVertical="true"
                     android:gravity="center_vertical"
                     android:textColor="@color/textBlack"
                     android:textSize="@dimen/text_size_large" />
 
                 <CheckBox
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
                     android:id="@+id/cbTiem2"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/item_height"
                     android:button="@drawable/selector_check2"
                     android:gravity="center_vertical" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
             <View
                 android:layout_width="match_parent"

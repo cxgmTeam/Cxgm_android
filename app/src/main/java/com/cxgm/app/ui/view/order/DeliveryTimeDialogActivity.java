@@ -8,6 +8,7 @@ import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
@@ -33,13 +34,13 @@ public class DeliveryTimeDialogActivity extends BaseActivity {
     @BindView(R.id.cbTime1)
     CheckBox cbTime1;
     @BindView(R.id.layoutTime1)
-    LinearLayout layoutTime1;
+    RelativeLayout layoutTime1;
     @BindView(R.id.tvTime2)
     TextView tvTime2;
     @BindView(R.id.cbTiem2)
     CheckBox cbTiem2;
     @BindView(R.id.layoutTime2)
-    LinearLayout layoutTime2;
+    RelativeLayout layoutTime2;
 
     public static final String[] TIMES = {"09:00-18:00","18:00-22:00"};
 

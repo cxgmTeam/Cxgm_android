@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.cxgm.app.R;
 import com.cxgm.app.data.entity.ShopCategory;
 
@@ -55,7 +56,9 @@ public class FirstCategoryAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-//        Glide.with(convertView).load(mList.get(position).)
+        Glide.with(convertView).load(mList.get(position).getImage())
+                .apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
+                .into(holder.imgCover);
         holder.tvName.setText(mList.get(position).getName());
 
         return convertView;

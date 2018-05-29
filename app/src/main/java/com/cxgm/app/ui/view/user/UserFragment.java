@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.cxgm.app.R;
+import com.cxgm.app.data.entity.Order;
 import com.cxgm.app.ui.base.BaseFragment;
 import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.utils.UserManager;
@@ -122,12 +123,32 @@ public class UserFragment extends BaseFragment {
                 ViewJump.toUserOrder(getActivity());
                 break;
             case R.id.tvUnpaid:
+                if (!UserManager.isUserLogin()){
+                    ViewJump.toLogin(getActivity());
+                    return;
+                }
+                ViewJump.toUserOrder(getActivity(), Order.STATUS_TO_BE_PAID);
                 break;
             case R.id.tvDistribution:
+                if (!UserManager.isUserLogin()){
+                    ViewJump.toLogin(getActivity());
+                    return;
+                }
+                ViewJump.toUserOrder(getActivity(), Order.STATUS_DISTRIBUTION);
                 break;
             case R.id.tvReceive:
+                if (!UserManager.isUserLogin()){
+                    ViewJump.toLogin(getActivity());
+                    return;
+                }
+                ViewJump.toUserOrder(getActivity(), Order.STATUS_DISTRIBUTING);
                 break;
             case R.id.tvRefund:
+                if (!UserManager.isUserLogin()){
+                    ViewJump.toLogin(getActivity());
+                    return;
+                }
+                ViewJump.toUserOrder(getActivity(), Order.STATUS_COMPLETE);
                 break;
             case R.id.layoutInvite:
                 //邀请有礼

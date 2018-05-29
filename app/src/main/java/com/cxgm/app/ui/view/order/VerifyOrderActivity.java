@@ -121,6 +121,13 @@ public class VerifyOrderActivity extends BaseActivity {
         setContentView(R.layout.activity_verify_order);
         ButterKnife.bind(this);
 
+        if (Constants.currentShop==null){
+            ToastManager.sendToast(getString(R.string.choice_shop));
+            ViewJump.toMain(this,R.id.rbIndex);
+            finish();
+            return;
+        }
+
         mOrderProductList = getIntent().getParcelableArrayListExtra("products");
 
         init();

@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
+import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.entity.OrderProduct;
 import com.cxgm.app.data.entity.ShopCart;
 import com.cxgm.app.data.entity.base.PageInfo;
