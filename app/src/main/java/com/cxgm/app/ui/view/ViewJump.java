@@ -16,6 +16,7 @@ import com.cxgm.app.ui.view.common.SettingsActivity;
 import com.cxgm.app.ui.view.goods.GoodsDetailActivity;
 import com.cxgm.app.ui.view.goods.GoodsSecondClassifyActivity;
 import com.cxgm.app.ui.view.goods.GoodsSpecificationDialogActivity;
+import com.cxgm.app.ui.view.goods.SearchResultActivity;
 import com.cxgm.app.ui.view.order.AddrListActivity;
 import com.cxgm.app.ui.view.order.AddrOptionActivity;
 import com.cxgm.app.ui.view.order.CouponOptionActivity;
@@ -164,8 +165,10 @@ public class ViewJump {
         activity.startActivityForResult(intent,CODE_COUPON_OPTION);
     }
 
-    public static void toOrderPay(Activity activity){
+    public static void toOrderPay(Activity activity,int orderId,float amount){
         Intent intent = new Intent(activity,OrderPayActivity.class);
+        intent.putExtra("orderId",orderId);
+        intent.putExtra("amount",amount);
         activity.startActivity(intent);
     }
 
@@ -186,6 +189,12 @@ public class ViewJump {
         Intent intent = new Intent(activity, DeliveryTimeDialogActivity.class);
         intent.putExtra("position",position);
         activity.startActivityForResult(intent,CODE_DELIVERY_TIME_DIALOG);
+    }
+
+    public static void toSearchResult(Activity activity,String keyword){
+        Intent intent = new Intent(activity,SearchResultActivity.class);
+        intent.putExtra("keyword",keyword);
+        activity.startActivity(intent);
     }
 
 }

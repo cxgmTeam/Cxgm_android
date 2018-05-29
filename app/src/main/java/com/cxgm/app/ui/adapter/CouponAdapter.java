@@ -9,7 +9,9 @@ import android.widget.TextView;
 
 import com.cxgm.app.R;
 import com.cxgm.app.data.entity.CouponDetail;
+import com.cxgm.app.utils.Helper;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import butterknife.BindView;
@@ -54,9 +56,9 @@ public class CouponAdapter extends BaseAdapter {
         }
 
         holder.tvValue.setText(mList.get(i).getPriceExpression());
-        holder.tvCondition.setText(viewGroup.getContext().getString(R.string._full_reduction,mList.get(i).getMaximumPrice()));
+        holder.tvCondition.setText(viewGroup.getContext().getString(R.string._full_reduction,new BigDecimal(mList.get(i).getMaximumPrice()).setScale(2,BigDecimal.ROUND_DOWN).toString()));
         holder.tvName.setText(mList.get(i).getName());
-        holder.tvIndate.setText(mList.get(i).getBeginDate() + "-"+ mList.get(i).getEndDate());
+        holder.tvIndate.setText(Helper.longData2shortData(mList.get(i).getBeginDate()) + "-"+ Helper.longData2shortData(mList.get(i).getEndDate()));
 
 //        holder.tvUse.setOnClickListener(new View.OnClickListener() {
 //            @Override

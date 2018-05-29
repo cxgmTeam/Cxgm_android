@@ -16,7 +16,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_micro"
         android:gravity="center"
-        android:text="@string/fresh"
         android:textColor="@color/textBlack"
         android:textSize="@dimen/text_size_normal" />
 

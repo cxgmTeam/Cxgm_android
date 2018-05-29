@@ -171,14 +171,16 @@ public class IndexFragment extends BaseFragment {
         etSearchWord.setFocusable(false);
         etSearchWord.setKeyListener(null);
 
-        //地址提示
-        if (Constants.checkAddress && Constants.currentLocation != null) {
-            showPopLocationInfo(getString(R.string.destination_,
-                    Constants.currentLocation.getDistrict()
-                            + Constants.currentLocation.getStreet()
-                            + Constants.currentLocation.getLocationDescribe()));
-        } else {
-            showPopLocationInfo(getString(R.string.out_of_distribution));
+        if (!isHidden()) {
+            //地址提示
+            if (Constants.checkAddress && Constants.currentLocation != null) {
+                showPopLocationInfo(getString(R.string.destination_,
+                        Constants.currentLocation.getDistrict()
+                                + Constants.currentLocation.getStreet()
+                                + Constants.currentLocation.getLocationDescribe()));
+            } else {
+                showPopLocationInfo(getString(R.string.out_of_distribution));
+            }
         }
 
         if (Constants.currentShop == null) {
@@ -286,34 +288,36 @@ public class IndexFragment extends BaseFragment {
                         }
                     });
         } else {
-            //TODO 第一分类 接口错误，待修改
-            new FindFirstCategoryReq(getActivity(), Constants.currentShop.getId()).execute(new Request.RequestCallback<List<ShopCategory>>() {
-                @Override
-                public void onSuccess(List<ShopCategory> list) {
-                    if (list != null) {
-                        if (list.size()>4){
-                            mFCList.addAll(list.subList(0,4));
-                        }else mFCList.addAll(list);
+            //TODO 首页分类
+            mFCList.add(new ShopCategory(0,getString(R.string.first_category_1),""));
 
-                        mFCAdapter.notifyDataSetChanged();
-                    }
-                }
-
-                @Override
-                public void onError(Throwable ex, boolean isOnCallback) {
-
-                }
-
-                @Override
-                public void onCancelled(Callback.CancelledException cex) {
-
-                }
-
-                @Override
-                public void onFinished() {
-
-                }
-            });
+//            new FindFirstCategoryReq(getActivity(), Constants.currentShop.getId()).execute(new Request.RequestCallback<List<ShopCategory>>() {
+//                @Override
+//                public void onSuccess(List<ShopCategory> list) {
+//                    if (list != null) {
+//                        if (list.size()>4){
+//                            mFCList.addAll(list.subList(0,4));
+//                        }else mFCList.addAll(list);
+//
+//                        mFCAdapter.notifyDataSetChanged();
+//                    }
+//                }
+//
+//                @Override
+//                public void onError(Throwable ex, boolean isOnCallback) {
+//
+//                }
+//
+//                @Override
+//                public void onCancelled(Callback.CancelledException cex) {
+//
+//                }
+//
+//                @Override
+//                public void onFinished() {
+//
+//                }
+//            });
 
             //精品推荐
             new FindTopProductReq(getActivity(), Constants.currentShop.getId(), 1, 10).execute(new Request.RequestCallback<PageInfo<ProductTransfer>>() {

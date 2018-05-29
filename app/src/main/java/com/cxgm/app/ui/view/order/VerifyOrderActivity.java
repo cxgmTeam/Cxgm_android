@@ -323,9 +323,8 @@ public class VerifyOrderActivity extends BaseActivity {
                 new AddOrderReq(this,mOrder).execute(new Request.RequestCallback<Integer>() {
                     @Override
                     public void onSuccess(Integer integer) {
-                        //todo 数据返回的有问题，需要拿到唯一标识order id
                         if (integer>0){
-                            ViewJump.toOrderPay(VerifyOrderActivity.this);
+                            ViewJump.toOrderPay(VerifyOrderActivity.this,integer,mOrder.getOrderAmount());
                             finish();
                         }
                     }

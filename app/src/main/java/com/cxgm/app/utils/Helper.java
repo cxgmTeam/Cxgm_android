@@ -63,4 +63,14 @@ public class Helper {
         }
         return 0;
     }
+
+    public static String longData2shortData(String data){
+        if (TextUtils.isEmpty(data)){
+            return "";
+        }
+        if (data.length()<10){
+            return data;
+        }
+        return data.substring(0,10);
+    }
 }

@@ -18,19 +18,25 @@
 
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <GridView
-            android:id="@+id/gvGoods"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/srl"
+            android:visibility="gone"
             android:background="@color/colorWhite"
-            android:horizontalSpacing="@dimen/margin_normal"
-            android:numColumns="2"
-            android:padding="@dimen/margin_large_t"
-            android:scrollbars="none"
-            android:verticalSpacing="@dimen/margin_giant" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <GridView
+                android:id="@+id/gvGoods"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:horizontalSpacing="@dimen/margin_normal"
+                android:numColumns="2"
+                android:padding="@dimen/margin_large_t"
+                android:scrollbars="none"
+                android:verticalSpacing="@dimen/margin_giant" />
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
         <ImageView
             android:id="@+id/imgShopCar"

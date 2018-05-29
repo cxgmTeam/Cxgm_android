@@ -2,8 +2,11 @@ package com.cxgm.app.ui.view.goods;
 
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -14,6 +17,8 @@ import com.cxgm.app.data.entity.ProductTransfer;
 import com.cxgm.app.data.entity.base.PageInfo;
 import com.cxgm.app.data.io.goods.FindHotProductReq;
 import com.cxgm.app.ui.base.BaseActivity;
+import com.cxgm.app.ui.view.ViewJump;
+import com.cxgm.app.utils.ToastManager;
 import com.deanlib.ootb.data.io.Request;
 import com.zhy.view.flowlayout.FlowLayout;
 import com.zhy.view.flowlayout.TagAdapter;
@@ -59,7 +64,15 @@ public class SearchActivity extends BaseActivity {
     }
 
     private void init(){
-
+        etSearchWord.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH){
+                    doSearch(etSearchWord.getText().toString());
+                }
+                return true;
+            }
+        });
     }
 
     private void loadData(){
@@ -114,6 +127,12 @@ public class SearchActivity extends BaseActivity {
     }
 
     private void doSearch(String keyword){
-        //TODO 搜索
+        //搜索
+        keyword = keyword.trim();
+        if (TextUtils.isEmpty(keyword)){
+            ToastManager.sendToast(getString(R.string.keyword_is_empty));
+        }else {
+            ViewJump.toSearchResult(this,keyword);
+        }
     }
 }

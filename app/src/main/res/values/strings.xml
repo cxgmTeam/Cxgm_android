@@ -6,11 +6,6 @@
     <string name="shop_cart">购物车</string>
     <string name="my">我的</string>
 
-    <string name="fresh">美味生鲜</string>
-    <string name="garden_stuff">新鲜果蔬</string>
-    <string name="snacks">休闲零食</string>
-    <string name="grain_oil">粮油调味</string>
-
     <string name="orders">全部订单</string>
     <string name="unpaid">待付款</string>
     <string name="distribution">待配送</string>
@@ -76,8 +71,11 @@
     <string name="option_specification">请选择 规格</string>
 
     <string name="pay_successful">支付成功</string>
+    <string name="pay_fail">支付失败</string>
     <string name="wechat_pay_">微信支付：%s</string>
     <string name="alipay_">支付宝支付：%s</string>
+    <string name="pay_fail_tag">支付异常，该订单已为您保留到“待支付”订单中，请尝试重新支付</string>
+    <string name="pay_again">重新支付</string>
     <string name="check_order">查看订单</string>
     <string name="return_index">返回首页</string>
     <string name="invoice_type">发票类型</string>
@@ -191,11 +189,11 @@
     <string name="empty_invoice_num">纳税人识别号不能为空</string>
     <string name="person_invoice">个人发票</string>
     <string name="company_invoice">公司发票</string>
-    <string name="_full_reduction">满%d元可用</string>
+    <string name="_full_reduction">满%s元可用</string>
     <string name="addr_cannot_delivery">所选地址不在配送范围内</string>
 
     <string name="delete">删除</string>
-    <string name="pay_count_down_">支付剩余时间 %s</string>
+    <string name="pay_count_down_">支付剩余时间 %d</string>
     <string name="pay_count_down_tag">请在规定的时间内完成支付，否则订单将会被自动取消！</string>
     <string name="amount_">实付金额：</string>
     <string name="choice_pay_mode">选择支付方式</string>
@@ -221,5 +219,18 @@
     <string name="refunded">已退款</string>
     <string name="buy_again">再次购买</string>
     <string name="apply_for_returning">申请退货</string>
+    <string name="keyword_is_empty">请输入搜索关键字</string>
+    <string name="click_open">点击查看</string>
+
+    <string name="order_pay_outtime">付款超时，请重新购买</string>
+
+    <string name="first_category_1">新鲜水果</string>
+    <string name="first_category_2">放心蔬菜</string>
+    <string name="first_category_3">鲜肉蛋品</string>
+    <string name="first_category_4">水产海鲜</string>
+    <string name="first_category_5">粮油副食</string>
+    <string name="first_category_6">休闲零食</string>
+    <string name="first_category_7">中外名酒</string>
+    <string name="first_category_8">美妆百货</string>
 
 </resources>

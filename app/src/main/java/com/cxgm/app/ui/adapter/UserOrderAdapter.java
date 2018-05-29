@@ -1,5 +1,6 @@
 package com.cxgm.app.ui.adapter;
 
+import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -12,13 +13,17 @@ import com.bumptech.glide.request.RequestOptions;
 import com.cxgm.app.R;
 import com.cxgm.app.data.entity.Order;
 import com.cxgm.app.data.entity.OrderProduct;
+import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.utils.Helper;
 import com.cxgm.app.utils.StringHelper;
 import com.deanlib.ootb.utils.DeviceUtils;
+import com.jakewharton.rxbinding2.view.RxView;
 
 import org.xutils.common.util.DensityUtil;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,8 +36,10 @@ import butterknife.ButterKnife;
  */
 public class UserOrderAdapter extends BaseAdapter {
 
+    Activity mActivity;
     List<Order> mList;
-    public UserOrderAdapter(List<Order> mList){
+    public UserOrderAdapter(Activity mActivity,List<Order> mList){
+        this.mActivity = mActivity;
         this.mList = mList;
     }
     @Override
@@ -62,7 +69,6 @@ public class UserOrderAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
 
-        //TODO orderNum null
         holder.tvOrderNum.setText(mList.get(i).getOrderNum());
         holder.layoutContainer.removeAllViews();
         if (mList.get(i).getProductDetails().size()>1){
@@ -79,6 +85,9 @@ public class UserOrderAdapter extends BaseAdapter {
             imgView2.getLayoutParams().height = width;
             imgView3.getLayoutParams().height = width;
             tvView.getLayoutParams().height = width;
+            tvView.setText(R.string.click_open);
+            RxView.clicks(tvView).throttleFirst(2, TimeUnit.SECONDS).subscribe(o->{
+                ViewJump.toGoodsList(mActivity, (ArrayList<OrderProduct>) mList.get(i).getProductDetails());});
             int number = mList.get(i).getProductDetails().size();
             number = number>3?3:number;
             switch (number){

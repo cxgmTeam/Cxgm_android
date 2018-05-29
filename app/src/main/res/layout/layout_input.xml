@@ -17,6 +17,8 @@
         android:src="@mipmap/search" />
 
     <EditText
+        android:maxLines="1"
+        android:singleLine="true"
         android:imeOptions="actionSearch"
         android:id="@+id/etSearchWord"
         android:layout_width="match_parent"

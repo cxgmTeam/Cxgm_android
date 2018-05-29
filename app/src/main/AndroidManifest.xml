@@ -82,7 +82,7 @@
         <activity android:name=".ui.view.order.OrderDetailActivity"
             android:screenOrientation="portrait"
             />
-        <activity android:name=".ui.view.order.PaySuccessfulActivity"
+        <activity android:name=".ui.view.order.PayResultActivity"
             android:screenOrientation="portrait"
             />
         <activity android:name=".ui.view.order.InvoiceActivity"
@@ -104,6 +104,9 @@
             android:screenOrientation="portrait"
             />
         <activity android:name=".ui.view.goods.GoodsSpecificationDialogActivity"
+            android:theme="@style/OotbAppTheme.NoActionBar.TranslateBg"
+            />
+        <activity android:name=".ui.view.order.DeliveryTimeDialogActivity"
             android:theme="@style/OotbAppTheme.NoActionBar.TranslateBg"
             />
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"> </service>

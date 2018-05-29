@@ -70,7 +70,7 @@ public class UserOrderFragment extends BaseFragment {
 
     private void init(){
         mOrderList = new ArrayList<>();
-        mOrderAdapter = new UserOrderAdapter(mOrderList);
+        mOrderAdapter = new UserOrderAdapter(getActivity(),mOrderList);
         listView.setAdapter(mOrderAdapter);
         srl.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
@@ -94,7 +94,6 @@ public class UserOrderFragment extends BaseFragment {
             @Override
             public void onSuccess(PageInfo<Order> orderPageInfo) {
                 if (orderPageInfo!=null && orderPageInfo.getList()!=null){
-                    //todo 提交一个订单多个商品，查询得到的多个订单，每个商品一个订单
                     mOrderList.addAll(orderPageInfo.getList());
                     mOrderAdapter.notifyDataSetChanged();
                 }
