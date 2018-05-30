@@ -1,6 +1,8 @@
 package com.cxgm.app.ui.adapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -13,12 +15,16 @@ import com.bumptech.glide.request.RequestOptions;
 import com.cxgm.app.R;
 import com.cxgm.app.data.entity.Order;
 import com.cxgm.app.data.entity.OrderProduct;
+import com.cxgm.app.data.io.order.ReturnMoneyReq;
 import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.utils.Helper;
 import com.cxgm.app.utils.StringHelper;
+import com.cxgm.app.utils.ToastManager;
+import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.utils.DeviceUtils;
 import com.jakewharton.rxbinding2.view.RxView;
 
+import org.xutils.common.Callback;
 import org.xutils.common.util.DensityUtil;
 
 import java.util.ArrayList;
@@ -176,16 +182,60 @@ public class UserOrderAdapter extends BaseAdapter {
         holder.tvOrderAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO 去干啥
+                //去干啥
                 switch (mList.get(i).getStatus()){
-                    case Order.STATUS_REFUND:
-                        //退款
-                        //TODO 怎么区分退款中和已退款
+                    case Order.STATUS_TO_BE_PAID:
+                        //待付款 去支付
+                        ViewJump.toOrderPay(mActivity,mList.get(i).getId(),mList.get(i).getOrderAmount());
+                        break;
+                    case Order.STATUS_DISTRIBUTION:
+                        //待配送 申请退货
+                    case Order.STATUS_DISTRIBUTING:
+                        //配送中 申请退货
+                        //提示框
+                        new AlertDialog.Builder(mActivity).setTitle(R.string.hint)
+                                .setMessage(R.string.refund_tag2).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                new ReturnMoneyReq(mActivity,mList.get(i).getId())
+                                        .execute(new Request.RequestCallback<Integer>() {
+                                            @Override
+                                            public void onSuccess(Integer integer) {
+                                                ToastManager.sendToast(mActivity.getString(R.string.refund_tag));
+                                                mList.get(i).setStatus(Order.STATUS_REFUND);//TODO 需要区分退款中和已退款
+                                                notifyDataSetChanged();
+                                            }
+
+                                            @Override
+                                            public void onError(Throwable ex, boolean isOnCallback) {
+
+                                            }
+
+                                            @Override
+                                            public void onCancelled(Callback.CancelledException cex) {
+
+                                            }
+
+                                            @Override
+                                            public void onFinished() {
+
+                                            }
+                                        });
+                            }
+                        }).setNegativeButton(R.string.cancel,null).show();
 
                         break;
+                    case Order.STATUS_COMPLETE:
+                        //已完成 再次购买
+                    case Order.STATUS_CANCEL:
+                        //已取消 再次购买
+                        ViewJump.toVerifyOrder(mActivity, (ArrayList<OrderProduct>) mList.get(i).getProductDetails());
+                        break;
+                    case Order.STATUS_REFUND:
+                        //退款 没有按钮
+                        break;
                     default:
-                        //待付款 已完成 配送中 待配送 去查看订单
-                        ViewJump.toOrderDetail(mActivity,mList.get(i).getId());
+
                         break;
                 }
             }

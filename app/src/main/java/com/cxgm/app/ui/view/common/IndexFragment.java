@@ -221,7 +221,7 @@ public class IndexFragment extends BaseFragment {
                 @Override
                 public void onItemClick(PagerAdapter parent, View view, int position, int realPosition) {
                     loopBanner.getLoopData();
-                    //TODO 点击事件
+                    //TODO 广告点击事件
                 }
             });
 
@@ -238,7 +238,7 @@ public class IndexFragment extends BaseFragment {
             gvFirstCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    //TODO 点击事件
+                    //TODO 分类点击事件
                 }
             });
             //精品推荐
@@ -553,7 +553,7 @@ public class IndexFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.imgLocation, R.id.etSearchWord})
+    @OnClick({R.id.imgLocation, R.id.etSearchWord,R.id.layoutMessage})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgLocation:
@@ -565,6 +565,9 @@ public class IndexFragment extends BaseFragment {
                 }else {
                     ToastManager.sendToast(getString(R.string.choice_shop));
                 }
+                break;
+            case R.id.layoutMessage:
+                ViewJump.toMessageList(getActivity());
                 break;
         }
     }

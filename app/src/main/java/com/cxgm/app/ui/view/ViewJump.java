@@ -16,6 +16,7 @@ import com.cxgm.app.ui.view.goods.GoodsDetailActivity;
 import com.cxgm.app.ui.view.goods.GoodsSecondClassifyActivity;
 import com.cxgm.app.ui.view.goods.GoodsSpecificationDialogActivity;
 import com.cxgm.app.ui.view.goods.SearchResultActivity;
+import com.cxgm.app.ui.view.news.MessageListActivity;
 import com.cxgm.app.ui.view.order.AddrListActivity;
 import com.cxgm.app.ui.view.order.AddrOptionActivity;
 import com.cxgm.app.ui.view.order.CouponOptionActivity;
@@ -200,6 +201,11 @@ public class ViewJump {
     public static void toOrderDetail(Activity activity, int orderId){
         Intent intent = new Intent(activity,OrderDetailActivity.class);
         intent.putExtra("orderId", orderId);
+        activity.startActivity(intent);
+    }
+
+    public static void toMessageList(Activity activity){
+        Intent intent = new Intent(activity,MessageListActivity.class);
         activity.startActivity(intent);
     }
 

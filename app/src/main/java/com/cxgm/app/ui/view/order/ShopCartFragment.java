@@ -1,5 +1,7 @@
 package com.cxgm.app.ui.view.order;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -318,44 +320,52 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
                 break;
             case R.id.tvAction1:
                 //删除
-                StringBuilder builder = new StringBuilder();
-                for (ShopCart cart : mCartList){
-                    if (cart.isChecked)
-                        builder.append(cart.getId()+",");
-                }
-                if (builder.length()>0) {
-                    String ids = builder.deleteCharAt(builder.length() - 1).toString();
-                    new DeleteCartReq(getActivity(), ids).execute(new Request.RequestCallback<Integer>() {
-                        @Override
-                        public void onSuccess(Integer integer) {
-                            for (int i = mCartList.size()-1;i>=0;i--){
-                                if (mCartList.get(i).isChecked){
-                                    mCartList.remove(i);
+                //提示框
+                new AlertDialog.Builder(getActivity()).setTitle(R.string.hint)
+                        .setMessage(R.string.delete_tag).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        StringBuilder builder = new StringBuilder();
+                        for (ShopCart cart : mCartList){
+                            if (cart.isChecked)
+                                builder.append(cart.getId()+",");
+                        }
+                        if (builder.length()>0) {
+                            String ids = builder.deleteCharAt(builder.length() - 1).toString();
+                            new DeleteCartReq(getActivity(), ids).execute(new Request.RequestCallback<Integer>() {
+                                @Override
+                                public void onSuccess(Integer integer) {
+                                    for (int i = mCartList.size()-1;i>=0;i--){
+                                        if (mCartList.get(i).isChecked){
+                                            mCartList.remove(i);
+
+                                        }
+                                    }
+                                    mCartAdapter.notifyDataSetChanged();
+                                    loadBottomData();
+                                }
+
+                                @Override
+                                public void onError(Throwable ex, boolean isOnCallback) {
 
                                 }
-                            }
-                            mCartAdapter.notifyDataSetChanged();
-                            loadBottomData();
+
+                                @Override
+                                public void onCancelled(Callback.CancelledException cex) {
+
+                                }
+
+                                @Override
+                                public void onFinished() {
+
+                                }
+                            });
+                        }else {
+                            ToastManager.sendToast(getString(R.string.nothing_selected));
                         }
+                    }
+                }).setNegativeButton(R.string.cancel,null).show();
 
-                        @Override
-                        public void onError(Throwable ex, boolean isOnCallback) {
-
-                        }
-
-                        @Override
-                        public void onCancelled(Callback.CancelledException cex) {
-
-                        }
-
-                        @Override
-                        public void onFinished() {
-
-                        }
-                    });
-                }else {
-                    ToastManager.sendToast(getString(R.string.nothing_selected));
-                }
                 break;
         }
     }

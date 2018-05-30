@@ -109,6 +109,9 @@
         <activity android:name=".ui.view.order.DeliveryTimeDialogActivity"
             android:theme="@style/OotbAppTheme.NoActionBar.TranslateBg"
             />
+        <activity android:name=".ui.view.news.MessageListActivity"
+            android:theme="@style/OotbAppTheme.NoActionBar.TranslateBg"
+            />
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"> </service>
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"

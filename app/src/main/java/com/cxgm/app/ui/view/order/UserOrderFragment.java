@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.cxgm.app.R;
@@ -14,6 +15,7 @@ import com.cxgm.app.data.entity.base.PageInfo;
 import com.cxgm.app.data.io.order.OrderListReq;
 import com.cxgm.app.ui.adapter.UserOrderAdapter;
 import com.cxgm.app.ui.base.BaseFragment;
+import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.utils.Helper;
 import com.deanlib.ootb.data.io.Request;
 import com.github.mikephil.charting.formatter.IFillFormatter;
@@ -72,6 +74,12 @@ public class UserOrderFragment extends BaseFragment {
         mOrderList = new ArrayList<>();
         mOrderAdapter = new UserOrderAdapter(getActivity(),mOrderList);
         listView.setAdapter(mOrderAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ViewJump.toOrderDetail(getActivity(),mOrderList.get((int)id).getId());
+            }
+        });
         srl.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {

@@ -47,7 +47,7 @@ public class GoodsAdapter extends BaseAdapter {
     public GoodsAdapter(Activity activity, List<ProductTransfer> mList, int numColumn, float margeDip){
         this.activity = activity;
         this.mList = mList;
-        mItemHeight = mItemWidth = (int) (DensityUtil.px2dip(DeviceUtils.getSreenWidth())/numColumn - margeDip);
+        mItemHeight = mItemWidth = DeviceUtils.getSreenWidth()/numColumn - DensityUtil.dip2px(margeDip);
     }
 
     @Override
@@ -77,9 +77,10 @@ public class GoodsAdapter extends BaseAdapter {
         } else {
             holder = (ViewHolder) view.getTag();
         }
-
+        holder.imgCover.getLayoutParams().width = mItemWidth;
+        holder.imgCover.getLayoutParams().height = mItemHeight;
         Glide.with(view).load(mList.get(i).getImage())
-                .apply(new RequestOptions().override(mItemWidth,mItemHeight).placeholder(R.mipmap.default_img).error(R.mipmap.default_img)
+                .apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img)
                         .apply(RequestOptions.bitmapTransform(new RoundedCornersTransformation(10,0))))
                 .into(holder.imgCover);
         holder.tvTitle.setText(mList.get(i).getName());

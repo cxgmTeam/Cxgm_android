@@ -15,11 +15,14 @@ import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.entity.Invoice;
 import com.cxgm.app.data.entity.Order;
+import com.cxgm.app.data.io.order.DeleteOrderReq;
 import com.cxgm.app.data.io.order.OrderDetailReq;
 import com.cxgm.app.data.io.order.SurplusTimeReq;
 import com.cxgm.app.ui.adapter.OrderGoodsListAdatpter;
 import com.cxgm.app.ui.base.BaseActivity;
+import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.utils.StringHelper;
+import com.cxgm.app.utils.ToastManager;
 import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.utils.FormatUtils;
 import com.deanlib.ootb.utils.TextUtils;
@@ -307,10 +310,39 @@ public class OrderDetailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tvCancelOrder:
-                //TODO 取消订单
+                //取消订单
+                if (mOrder!=null) {
+                    new DeleteOrderReq(this, mOrder.getId())
+                            .execute(new Request.RequestCallback<Integer>() {
+                                @Override
+                                public void onSuccess(Integer integer) {
+                                    ToastManager.sendToast(getString(R.string.canceled));
+                                    mOrder.setStatus(Order.STATUS_CANCEL);
+                                    setStateView(mOrder);
+                                }
+
+                                @Override
+                                public void onError(Throwable ex, boolean isOnCallback) {
+
+                                }
+
+                                @Override
+                                public void onCancelled(Callback.CancelledException cex) {
+
+                                }
+
+                                @Override
+                                public void onFinished() {
+
+                                }
+                            });
+                }
                 break;
             case R.id.tvPayNow:
-                //TODO 支付
+                //支付
+                if (mOrder!=null) {
+                    ViewJump.toOrderPay(this, mOrder.getId(), mOrder.getOrderAmount());
+                }
                 break;
         }
     }

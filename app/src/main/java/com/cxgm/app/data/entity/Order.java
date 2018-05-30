@@ -12,7 +12,7 @@ public class Order extends BaseEntity {
     public static final String STATUS_DISTRIBUTING = "2";
     public static final String STATUS_COMPLETE = "3";
     public static final String STATUS_REFUND = "4";
-    public static final String STATUS_CANCEL = "5";//todo
+    public static final String STATUS_CANCEL = "5";
     /**
      * orderAmount : 0
      * orderNum : string

@@ -114,6 +114,7 @@ public class GoodsDetailActivity extends BaseActivity {
 
     boolean isScrollLock = false;
 //    boolean isSelectLock = false;
+    int mBannerPosition = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -268,16 +269,17 @@ public class GoodsDetailActivity extends BaseActivity {
                                 loopBanner.getLoopData();
                             }
                         });
-                        tvPicNum.setText("1/"+loopBanner.getLoopData().items.size());
+                        tvPicNum.setText(mBannerPosition+"/"+loopBanner.getLoopData().items.size());
                         loopBanner.getViewPager().addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                             @Override
                             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-                                tvPicNum.setText((position+1)+"/"+loopBanner.getLoopData().items.size());
+
                             }
 
                             @Override
                             public void onPageSelected(int position) {
 
+                                tvPicNum.setText((mBannerPosition = getBannerPosition(mBannerPosition,loopBanner.getLoopData().items.size()))+"/"+loopBanner.getLoopData().items.size());
                             }
 
                             @Override
@@ -352,5 +354,18 @@ public class GoodsDetailActivity extends BaseActivity {
                 ViewJump.toMain(this,R.id.rbShopCart);
                 break;
         }
+    }
+
+    /**
+     * 自加程序
+     * @param position
+     * @param maxPosition
+     * @return
+     */
+    private int getBannerPosition(int position,int maxPosition){
+        if (position >= maxPosition){
+            return position = 1;
+        }
+        return ++position;
     }
 }

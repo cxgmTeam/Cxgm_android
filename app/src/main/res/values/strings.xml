@@ -243,5 +243,10 @@
 
     <string name="cancel_order">取消订单</string>
     <string name="pay_now">立即支付</string>
+    <string name="refund_tag">已受理退款申请</string>
+    <string name="hint">提示</string>
+    <string name="refund_tag2">确定要申请退款吗？</string>
+    <string name="ok">确定</string>
+    <string name="delete_tag">确定要删除吗</string>
 
 </resources>
