@@ -107,9 +107,9 @@ public class VerifyOrderActivity extends BaseActivity {
     ArrayList<OrderProduct> mOrderProductList;
     UserAddress mUserAddress;
     float mOrderAmount = 0f;//总价 不包括优惠券和邮费
+    float mDiscounts = 0f;//限时优惠 不包括优惠券
     List<CouponDetail> mCouponList;
     Order mOrder;
-    int mCarriage = 10;//邮费
     int mDeliveryTimePosition = 0;
 
     @Override
@@ -205,19 +205,18 @@ public class VerifyOrderActivity extends BaseActivity {
         }
 
         tvGoodsTotal.setText(StringHelper.getRMBFormat(goodsOriginalTotal));
-        tvDiscounts.setText(StringHelper.getRMBFormat(Helper.moneySubtract(goodsOriginalTotal,mOrderAmount)));
+        mDiscounts = Helper.moneySubtract(goodsOriginalTotal,mOrderAmount);
+        tvDiscounts.setText(StringHelper.getRMBFormat(mDiscounts));
         //邮费固定值
-        tvCarriage.setText(StringHelper.getRMBFormat(mCarriage));
+        tvCarriage.setText(StringHelper.getRMBFormat(Constants.postage));
         tvCoupon.setText(StringHelper.getRMBFormat(0));
         tvInvoice.setText(R.string.not_invoice);
 
-        //这个时候 优惠券接口还没调用，先设置一个价格上去，稍候会更新  算上邮费
-        tvPayment.setText(StringHelper.getRMBFormat(Helper.moneySubtract(mOrderAmount,mCarriage)));
-
         //设置查询优惠券要用到的字段
         mOrder.setProductList(mOrderProductList);
-        mOrder.setOrderAmount(mOrderAmount);
         mOrder.setCategoryAndAmountList(caaList);
+        mOrder.setTotalAmount(goodsOriginalTotal);
+        setCouponAndAmount(null);
 
     }
 
@@ -417,13 +416,18 @@ public class VerifyOrderActivity extends BaseActivity {
     }
 
     private void setCouponAndAmount(CouponDetail couponDetail){
+        //实付款
+        float temp = Helper.moneySubtract(mOrderAmount,Constants.postage);
+        float preferential = mDiscounts;
         if (couponDetail!=null) {
-            //实付款
-            float temp = Helper.moneySubtract(mOrderAmount,mCarriage);
-            mOrder.setOrderAmount(Helper.moneySubtract(temp,Helper.str2Float(couponDetail.getPriceExpression())));
-            tvPayment.setText(StringHelper.getRMBFormat(mOrder.getOrderAmount()));
             //优惠券ID
             mOrder.setCouponCodeId(couponDetail.getCodeId());
+            float exp = Helper.str2Float(couponDetail.getPriceExpression());
+            temp = Helper.moneySubtract(temp,exp);
+            preferential = Helper.moneyAdd(preferential,exp);
         }
+        mOrder.setPreferential(preferential);
+        mOrder.setOrderAmount(temp);
+        tvPayment.setText(StringHelper.getRMBFormat(mOrder.getOrderAmount()));
     }
 }

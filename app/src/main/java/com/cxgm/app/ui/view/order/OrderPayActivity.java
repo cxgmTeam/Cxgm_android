@@ -16,6 +16,7 @@ import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.utils.StringHelper;
 import com.cxgm.app.utils.ToastManager;
 import com.deanlib.ootb.data.io.Request;
+import com.deanlib.ootb.utils.FormatUtils;
 
 import org.xutils.common.Callback;
 
@@ -94,7 +95,7 @@ public class OrderPayActivity extends BaseActivity {
                         @Override
                         public void onTick(long millisUntilFinished) {
                             mSurplusTime = millisUntilFinished;
-                            tvPayCountDown.setText(getString(R.string.pay_count_down_,millisUntilFinished/1000));
+                            tvPayCountDown.setText(getString(R.string.pay_count_down_, FormatUtils.convertDateTimestampToString(millisUntilFinished,"mm:ss")));
                         }
 
                         @Override

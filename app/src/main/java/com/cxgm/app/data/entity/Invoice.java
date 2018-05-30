@@ -4,7 +4,8 @@ import com.deanlib.ootb.entity.BaseEntity;
 
 public class Invoice extends BaseEntity {
 
-
+    public static final String TYPE_PERSON = "0";//个人
+    public static final String TYPE_COMPANY = "1";//公司
     /**
      * companyName : string
      * content : string

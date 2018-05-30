@@ -79,7 +79,8 @@ public class PayResultActivity extends BaseActivity {
                 break;
             case R.id.tvPayAction1:
                 if (isPaySuccess){
-                    //TODO 查看订单
+                    //TODO 查看订单 传ID
+                    ViewJump.toOrderDetail(this,0);
                 }else {
                     //TODO 重新支付
                 }

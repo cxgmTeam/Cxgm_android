@@ -151,7 +151,6 @@ public class UserOrderAdapter extends BaseAdapter {
                 break;
             case Order.STATUS_COMPLETE:
                 //已完成
-                //TODO 怎么区分超时取消
                 holder.tvOrderState.setText(R.string.complete);
                 holder.tvOrderAction.setText(R.string.buy_again);
                 holder.tvOrderAction.setVisibility(View.VISIBLE);
@@ -161,6 +160,12 @@ public class UserOrderAdapter extends BaseAdapter {
                 //TODO 怎么区分退款中和已退款
                 holder.tvOrderState.setText(R.string.refunded);
                 holder.tvOrderAction.setVisibility(View.GONE);
+                break;
+            case Order.STATUS_CANCEL:
+                //已取消
+                holder.tvOrderState.setText(R.string.canceled);
+                holder.tvOrderAction.setText(R.string.buy_again);
+                holder.tvOrderAction.setVisibility(View.VISIBLE);
                 break;
             default:
                 holder.tvOrderState.setText("");
@@ -172,6 +177,17 @@ public class UserOrderAdapter extends BaseAdapter {
             @Override
             public void onClick(View v) {
                 //TODO 去干啥
+                switch (mList.get(i).getStatus()){
+                    case Order.STATUS_REFUND:
+                        //退款
+                        //TODO 怎么区分退款中和已退款
+
+                        break;
+                    default:
+                        //待付款 已完成 配送中 待配送 去查看订单
+                        ViewJump.toOrderDetail(mActivity,mList.get(i).getId());
+                        break;
+                }
             }
         });
 

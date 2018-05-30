@@ -94,7 +94,7 @@
                 android:textSize="@dimen/text_size_normal_x" />
 
             <TextView
-                android:maxLines="1"
+                android:singleLine="true"
                 android:ellipsize="end"
                 android:layout_weight="1"
                 android:id="@+id/tvDistrict"

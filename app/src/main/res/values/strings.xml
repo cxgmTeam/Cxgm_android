@@ -193,7 +193,7 @@
     <string name="addr_cannot_delivery">所选地址不在配送范围内</string>
 
     <string name="delete">删除</string>
-    <string name="pay_count_down_">支付剩余时间 %d</string>
+    <string name="pay_count_down_">支付剩余时间 %s</string>
     <string name="pay_count_down_tag">请在规定的时间内完成支付，否则订单将会被自动取消！</string>
     <string name="amount_">实付金额：</string>
     <string name="choice_pay_mode">选择支付方式</string>
@@ -232,5 +232,16 @@
     <string name="first_category_6">休闲零食</string>
     <string name="first_category_7">中外名酒</string>
     <string name="first_category_8">美妆百货</string>
+
+    <string name="message">消息</string>
+    <string name="remaining_">剩余 %s</string>
+    <string name="canceled">已取消</string>
+    <string name="canceled_tag">订单取消成功(订单超市未支付，系统取消订单)</string>
+    <string name="unpaid_tag">请在订单提交后，尽快支付，超时将取消订单</string>
+    <string name="distributing_tag">订单已经确认，配送小哥正在飞奔配送，请注意查收～</string>
+    <string name="complete_tag">订单已经完成，欢迎下次惠顾～</string>
+
+    <string name="cancel_order">取消订单</string>
+    <string name="pay_now">立即支付</string>
 
 </resources>

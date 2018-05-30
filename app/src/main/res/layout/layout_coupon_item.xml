@@ -12,6 +12,7 @@
         android:layout_height="100dp">
 
         <RelativeLayout
+            android:id="@+id/layoutBg"
             android:paddingLeft="@dimen/margin_giant_xx"
             android:paddingRight="@dimen/margin_giant_xx"
             android:background="@mipmap/coupon_bg"

@@ -33,4 +33,8 @@
     <color name="colorRedTint">#FE7777</color>
     <color name="colorKhaki">#FFEED0</color>
 
+    <color name="colorOrange">#FA8E2E</color>
+    <color name="colorGrayDark2">#ADADAD</color>
+    <color name="colorBlue">#249EE2</color>
+
 </resources>

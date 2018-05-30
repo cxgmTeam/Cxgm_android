@@ -98,10 +98,10 @@ public class InvoiceActivity extends BaseActivity {
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
                     switch (checkedId) {
                         case R.id.rbCommonInvoice:
-                            mInvoice.setType("0");
+                            mInvoice.setType(Invoice.TYPE_PERSON);
                             break;
                         case R.id.rbEInvoice:
-                            mInvoice.setType("1");
+                            mInvoice.setType(Invoice.TYPE_COMPANY);
                             break;
                     }
                 }

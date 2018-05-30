@@ -11,7 +11,7 @@
 
     <ImageView
         android:scaleType="fitXY"
-        android:id="@+id/imgAd"
+        android:id="@+id/imgBanner"
         android:layout_width="match_parent"
         android:layout_height="@dimen/ad_height"
         android:paddingLeft="@dimen/margin_normal"

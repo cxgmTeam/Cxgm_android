@@ -40,5 +40,6 @@ public class Constants {
     public static boolean checkAddress = false;//当前地址可配送
 
     public static boolean notify = true;//是否接收通知
+    public static float postage = 10f;//邮费
 
 }

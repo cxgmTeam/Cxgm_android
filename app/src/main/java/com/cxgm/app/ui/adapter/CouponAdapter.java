@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
@@ -55,6 +56,11 @@ public class CouponAdapter extends BaseAdapter {
             holder = (ViewHolder) view.getTag();
         }
 
+        if (CouponDetail.STATUS_ENABLE == mList.get(i).getStatus()){
+            holder.layoutBg.setBackgroundResource(R.mipmap.coupon_bg);
+        }else {
+            holder.layoutBg.setBackgroundResource(R.mipmap.coupon_bg2);
+        }
         holder.tvValue.setText(mList.get(i).getPriceExpression());
         holder.tvCondition.setText(viewGroup.getContext().getString(R.string._full_reduction,new BigDecimal(mList.get(i).getMaximumPrice()).setScale(2,BigDecimal.ROUND_DOWN).toString()));
         holder.tvName.setText(mList.get(i).getName());
@@ -98,6 +104,8 @@ public class CouponAdapter extends BaseAdapter {
         ImageView imgShowRules;
         @BindView(R.id.tvRulesContent)
         TextView tvRulesContent;
+        @BindView(R.id.layoutBg)
+        RelativeLayout layoutBg;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

@@ -86,7 +86,6 @@ public class DeliveryTimeDialogActivity extends BaseActivity {
                 tvTime1.setTextColor(getResources().getColor(R.color.textBlack));
                 cbTime1.setChecked(false);
                 tvTime2.setTextColor(getResources().getColor(R.color.textGreen));
-                //TODO 勾没有显示出来
                 cbTiem2.setChecked(true);
                 mPosition = 1;
                 break;

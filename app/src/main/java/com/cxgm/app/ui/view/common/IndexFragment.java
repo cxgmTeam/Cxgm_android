@@ -230,23 +230,47 @@ public class IndexFragment extends BaseFragment {
 
             srl.setEnableRefresh(false);
             srl.setEnableLoadMore(false);
-            //TODO 以下都没有点击事件
+
             //First Category
             mFCList = new ArrayList<>();
             mFCAdapter = new FirstCategoryAdapter(mFCList);
             gvFirstCategory.setAdapter(mFCAdapter);
+            gvFirstCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    //TODO 点击事件
+                }
+            });
             //精品推荐
             mTopProductList = new ArrayList<>();
             mTopProductAdapter = new GoodsHorizontalAdapter(getActivity(),mTopProductList);
             hlvRecommend.setAdapter(mTopProductAdapter);
+            hlvRecommend.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    ViewJump.toGoodsDetail(getActivity(),mTopProductList.get((int)id).getId());
+                }
+            });
             //新品上市
             mNewProductList = new ArrayList<>();
             mNewProductAdapter = new GoodsHorizontalAdapter(getActivity(),mNewProductList);
             hlvNewGoods.setAdapter(mNewProductAdapter);
+            hlvNewGoods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    ViewJump.toGoodsDetail(getActivity(),mNewProductList.get((int)id).getId());
+                }
+            });
             //热销推荐
             mHotProductList = new ArrayList<>();
             mHotProductAdapter = new GoodsAdapter(getActivity(),mHotProductList, 2, 30);
             gvGoods.setAdapter(mHotProductAdapter);
+            gvGoods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    ViewJump.toGoodsDetail(getActivity(),mHotProductList.get((int)id).getId());
+                }
+            });
             //运营
             mMotionList = new ArrayList<>();
             mMotionAdapter = new MotionAdapter(getActivity(),mMotionList);

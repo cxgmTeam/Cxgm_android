@@ -18,7 +18,7 @@
             android:gravity="center_vertical"
             android:paddingLeft="@dimen/margin_normal"
             android:paddingRight="@dimen/margin_normal"
-            android:maxLines="1"
+            android:singleLine="true"
             android:textSize="@dimen/text_size_normal_x"
             android:textColorHint="@color/textGray"
             android:hint="@string/exchange_code"

@@ -6,12 +6,13 @@ import java.util.List;
 
 public class Order extends BaseEntity {
 
-    //订单状态0待支付，1待配送（已支付），2配送中，3已完成，4退货
+    //订单状态0待支付，1待配送（已支付），2配送中，3已完成，4退货，5已取消
     public static final String STATUS_TO_BE_PAID = "0";
     public static final String STATUS_DISTRIBUTION = "1";
     public static final String STATUS_DISTRIBUTING = "2";
     public static final String STATUS_COMPLETE = "3";
     public static final String STATUS_REFUND = "4";
+    public static final String STATUS_CANCEL = "5";//todo
     /**
      * orderAmount : 0
      * orderNum : string
@@ -24,12 +25,17 @@ public class Order extends BaseEntity {
      * storeId : 0
      */
 
+    private int id;
+    private int userId;
     private String orderNum;
     private String orderTime;
     private String payType;
     private String remarks;
     private String status;
     private int storeId;
+
+    private String shopName;
+    private String shopAddress;
 
     private float orderAmount;//订单金额
     private int couponCodeId;//优惠券ID
@@ -38,8 +44,67 @@ public class Order extends BaseEntity {
     private Invoice receipt;//发票信息
     private List<OrderProduct> productDetails;//查询用
     private List<OrderProduct> productList;//提交用
-
     private List<CategoryAndAmount> categoryAndAmountList;//二级分类下的总金额
+    private UserAddress address;//收货地址信息
+
+    private float totalAmount;//商品总额，没有优惠前
+    private float preferential;//优惠总额
+
+    public float getTotalAmount() {
+        return totalAmount;
+    }
+
+    public void setTotalAmount(float totalAmount) {
+        this.totalAmount = totalAmount;
+    }
+
+    public float getPreferential() {
+        return preferential;
+    }
+
+    public void setPreferential(float preferential) {
+        this.preferential = preferential;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
+    }
+
+    public String getShopAddress() {
+        return shopAddress;
+    }
+
+    public void setShopAddress(String shopAddress) {
+        this.shopAddress = shopAddress;
+    }
+
+    public UserAddress getAddress() {
+        return address;
+    }
+
+    public void setAddress(UserAddress address) {
+        this.address = address;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
     public List<CategoryAndAmount> getCategoryAndAmountList() {
         return categoryAndAmountList;

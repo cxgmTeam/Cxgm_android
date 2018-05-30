@@ -22,7 +22,7 @@ public class ShopCategory extends BaseEntity {
     private int id;
     private String name;
     private List<ShopCategory> shopCategoryList;
-    private String image;//TODO 需要增加图片
+    private String image;//TODO 需要增加图片字段
 
     public ShopCategory() {
     }

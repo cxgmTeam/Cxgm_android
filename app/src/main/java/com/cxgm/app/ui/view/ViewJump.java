@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.support.v4.app.Fragment;
 
-import com.baidu.location.BDLocation;
 import com.cxgm.app.R;
 import com.cxgm.app.data.entity.CouponDetail;
 import com.cxgm.app.data.entity.OrderProduct;
@@ -26,6 +25,7 @@ import com.cxgm.app.ui.view.order.InvoiceActivity;
 import com.cxgm.app.ui.view.order.MapLocationActivity;
 import com.cxgm.app.ui.view.goods.SearchActivity;
 import com.cxgm.app.ui.view.order.NewAddrActivity;
+import com.cxgm.app.ui.view.order.OrderDetailActivity;
 import com.cxgm.app.ui.view.order.OrderPayActivity;
 import com.cxgm.app.ui.view.order.UserOrderActivity;
 import com.cxgm.app.ui.view.order.VerifyOrderActivity;
@@ -194,6 +194,12 @@ public class ViewJump {
     public static void toSearchResult(Activity activity,String keyword){
         Intent intent = new Intent(activity,SearchResultActivity.class);
         intent.putExtra("keyword",keyword);
+        activity.startActivity(intent);
+    }
+
+    public static void toOrderDetail(Activity activity, int orderId){
+        Intent intent = new Intent(activity,OrderDetailActivity.class);
+        intent.putExtra("orderId", orderId);
         activity.startActivity(intent);
     }
 

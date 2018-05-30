@@ -32,6 +32,7 @@
             android:textSize="@dimen/text_size_large_x" />
 
         <TextView
+            android:id="@+id/tvTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/tvOrderState"
@@ -41,7 +42,7 @@
             android:textSize="@dimen/text_size_normal" />
 
         <TextView
-            android:id="@+id/OrderTag"
+            android:id="@+id/tvOrderTag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/tvOrderState"
@@ -60,12 +61,14 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="50dp">
 
             <include
                 layout="@layout/layout_addr_and_receive_time"
@@ -232,6 +235,35 @@
 
             </RelativeLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:background="@color/colorWhite"
+                android:elevation="@dimen/elevation"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/margin_giant"
+                android:paddingRight="@dimen/margin_giant">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/view2"
+                    android:text="@string/remark_"
+                    android:textColor="@color/textBlackTint"
+                    android:textSize="@dimen/text_size_normal_x" />
+
+                <TextView
+                    android:id="@+id/tvRemark"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/textView4"
+                    android:layout_marginRight="@dimen/margin_giant"
+                    android:layout_toRightOf="@+id/textView4"
+                    android:textColor="@color/textBlack"
+                    android:textSize="@dimen/text_size_normal_x" />
+            </LinearLayout>
+
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -335,4 +367,33 @@
             </RelativeLayout>
         </LinearLayout>
     </ScrollView>
+
+    <LinearLayout
+        android:visibility="gone"
+        android:id="@+id/layoutBottomAction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tvCancelOrder"
+            android:background="@color/colorWhite"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height2"
+            android:layout_weight="1"
+            android:text="@string/cancel_order"
+            android:textColor="@color/textBlack"
+            android:textSize="@dimen/text_size_large_x" />
+
+        <TextView
+            android:id="@+id/tvPayNow"
+            android:background="@color/colorGreen"
+            android:gravity="center"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/button_height2"
+            android:layout_weight="1"
+            android:text="@string/pay_now"
+            android:textColor="@color/textWhite"
+            android:textSize="@dimen/text_size_large_x" />
+    </LinearLayout>
 </LinearLayout>
