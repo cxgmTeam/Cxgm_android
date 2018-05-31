@@ -46,9 +46,11 @@ public class ExpandableGoodsListAdapter extends BaseExpandableListAdapter {
     List<String> mKeyList;
     Map<String,List<ProductTransfer>> mProductMap;
     Activity mActivity;
-    public ExpandableGoodsListAdapter(Activity activity,Map<String, List<ProductTransfer>> mProductMap){
+    OnShopCartActionListener mListener;
+    public ExpandableGoodsListAdapter(Activity activity,Map<String, List<ProductTransfer>> mProductMap,OnShopCartActionListener listener){
         this.mProductMap = mProductMap;
         mActivity = activity;
+        this.mListener = listener;
         mKeyList = new ArrayList<>();
         Set<Map.Entry<String, List<ProductTransfer>>> entries = mProductMap.entrySet();
         for (Map.Entry<String,List<ProductTransfer>> entry : entries){
@@ -138,6 +140,8 @@ public class ExpandableGoodsListAdapter extends BaseExpandableListAdapter {
                     @Override
                     public void onSuccess() {
                         updateActionView(holder,product);
+                        if (mListener!=null)
+                            mListener.onNumChange(1);
                     }
                 });
             }
@@ -149,6 +153,8 @@ public class ExpandableGoodsListAdapter extends BaseExpandableListAdapter {
                     @Override
                     public void onSuccess() {
                         updateActionView(holder,product);
+                        if (mListener!=null)
+                            mListener.onNumChange(-1);
                     }
                 });
             }
@@ -197,5 +203,9 @@ public class ExpandableGoodsListAdapter extends BaseExpandableListAdapter {
             holder.imgMinus.setVisibility(View.GONE);
             holder.tvNum.setVisibility(View.GONE);
         }
+    }
+
+    public interface OnShopCartActionListener{
+        void onNumChange(int num);
     }
 }

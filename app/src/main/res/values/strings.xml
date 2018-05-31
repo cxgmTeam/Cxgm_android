@@ -247,6 +247,8 @@
     <string name="hint">提示</string>
     <string name="refund_tag2">确定要申请退款吗？</string>
     <string name="ok">确定</string>
-    <string name="delete_tag">确定要删除吗</string>
+    <string name="delete_tag">确定要删除吗？</string>
+    <string name="coupon_code_invalid">兑换码无效</string>
+    <string name="exchange_success">兑换成功</string>
 
 </resources>

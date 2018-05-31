@@ -3,6 +3,7 @@ package com.cxgm.app.ui.view.user;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,10 +15,12 @@ import android.widget.TextView;
 import com.cxgm.app.R;
 import com.cxgm.app.data.entity.CouponDetail;
 import com.cxgm.app.data.entity.base.PageInfo;
+import com.cxgm.app.data.io.user.ExchangeCouponsReq;
 import com.cxgm.app.data.io.user.FindCouponsReq;
 import com.cxgm.app.ui.adapter.CouponAdapter;
 import com.cxgm.app.ui.base.BaseFragment;
 import com.cxgm.app.utils.Helper;
+import com.cxgm.app.utils.ToastManager;
 import com.deanlib.ootb.data.io.Request;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -75,7 +78,14 @@ public class CouponFragment extends BaseFragment {
         }
 
         init();
-        loadData();
+    }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if (!hidden){
+            loadData();
+        }
     }
 
     private void init() {
@@ -143,6 +153,39 @@ public class CouponFragment extends BaseFragment {
 
     @OnClick(R.id.tvExchange)
     public void onViewClicked() {
-        //todo 兑换
+        //兑换
+        String code = etExchangeCode.getText().toString().trim();
+        if (TextUtils.isEmpty(code)){
+            ToastManager.sendToast(getString(R.string.coupon_code_invalid));
+            return;
+        }
+        new ExchangeCouponsReq(getActivity(),code)
+                .execute(new Request.RequestCallback<CouponDetail>() {
+                    @Override
+                    public void onSuccess(CouponDetail couponDetail) {
+                        if (couponDetail!=null){
+                            ToastManager.sendToast(getString(R.string.exchange_success));
+                            if (couponDetail.getStatus() == CouponDetail.STATUS_ENABLE){
+                                mCouponList.add(0,couponDetail);
+                                mCouponAdapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(Callback.CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
     }
 }

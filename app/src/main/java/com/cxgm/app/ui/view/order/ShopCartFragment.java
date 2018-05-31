@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ImageView;
@@ -93,7 +94,7 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
     @BindView(R.id.layoutEmptyShopCart)
     LinearLayout layoutEmptyShopCart;
 
-    //todo 购物车与商品列表数量不同步的问题
+    //todo 购物车与商品列表数量不同步的问题 接口问题
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -127,6 +128,12 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
         mCartList = new ArrayList<>();
         mCartAdapter = new CartGoodsAdapter(mCartList, this);
         lvGoods.setAdapter(mCartAdapter);
+        lvGoods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ViewJump.toGoodsDetail(getActivity(),mCartList.get((int)id).getProductId());
+            }
+        });
         srl.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {

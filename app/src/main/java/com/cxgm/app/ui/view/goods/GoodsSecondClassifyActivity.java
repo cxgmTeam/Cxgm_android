@@ -14,16 +14,19 @@ import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.entity.ProductTransfer;
 import com.cxgm.app.data.entity.Shop;
+import com.cxgm.app.data.entity.ShopCart;
 import com.cxgm.app.data.entity.ShopCategory;
 import com.cxgm.app.data.entity.base.PageInfo;
 import com.cxgm.app.data.io.goods.FindProductByCategoryReq;
 import com.cxgm.app.data.io.goods.FindSecondCategoryReq;
 import com.cxgm.app.data.io.goods.FindThirdCategoryReq;
+import com.cxgm.app.data.io.order.ShopCartListReq;
 import com.cxgm.app.ui.adapter.ExpandableGoodsListAdapter;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.ui.view.common.MainActivity;
 import com.deanlib.ootb.data.io.Request;
+import com.jakewharton.rxbinding.view.RxView;
 
 import org.xutils.common.Callback;
 
@@ -32,10 +35,13 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import q.rorbin.badgeview.Badge;
+import q.rorbin.badgeview.QBadgeView;
 import q.rorbin.verticaltablayout.VerticalTabLayout;
 import q.rorbin.verticaltablayout.adapter.TabAdapter;
 import q.rorbin.verticaltablayout.widget.ITabView;
@@ -47,7 +53,7 @@ import q.rorbin.verticaltablayout.widget.TabView;
  * @anthor Dean
  * @time 2018/4/22 0022 16:13
  */
-public class GoodsSecondClassifyActivity extends BaseActivity {
+public class GoodsSecondClassifyActivity extends BaseActivity implements ExpandableGoodsListAdapter.OnShopCartActionListener{
 
     @BindView(R.id.imgBack)
     ImageView imgBack;
@@ -72,7 +78,8 @@ public class GoodsSecondClassifyActivity extends BaseActivity {
     Map<String,List<ProductTransfer>> mProductMap;
 
     ExpandableGoodsListAdapter mEGLAdapter;
-
+    Badge mShopCartBadge;
+    int mShopCartNum = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,7 +109,7 @@ public class GoodsSecondClassifyActivity extends BaseActivity {
         mTCList = new ArrayList<>();
         //商品列表
         mProductMap = new LinkedHashMap<>();
-        mEGLAdapter = new ExpandableGoodsListAdapter(this,mProductMap);
+        mEGLAdapter = new ExpandableGoodsListAdapter(this,mProductMap,this);
         lvGoods.setAdapter(mEGLAdapter);
 
         lvGoods.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
@@ -172,6 +179,33 @@ public class GoodsSecondClassifyActivity extends BaseActivity {
                             //上边的 callListener 不管用，所以有了下面这两行代码
                             tabClassify.getTabAt(0).setBackgroundColor(getResources().getColor(R.color.colorWhite));
                             loadSubTabs(shopCategories.get(0).getId());
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(Callback.CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
+
+        //查询购物车
+        new ShopCartListReq(this,1,1)
+                .execute(new Request.RequestCallback<PageInfo<ShopCart>>() {
+                    @Override
+                    public void onSuccess(PageInfo<ShopCart> shopCartPageInfo) {
+                        if (shopCartPageInfo!=null){
+                            mShopCartNum = shopCartPageInfo.getTotal();
+                            updateShopCartNum(mShopCartNum);
                         }
                     }
 
@@ -331,11 +365,30 @@ public class GoodsSecondClassifyActivity extends BaseActivity {
                 ViewJump.toSearch(this);
                 break;
             case R.id.imgAction2:
-                //TODO 加实时数量
-                //购物车
+                //购物车 由于使用 qbadgeview 这里的点击事件无效了
                 ViewJump.toMain(this,R.id.rbShopCart);
                 break;
         }
     }
 
+    private void updateShopCartNum(int num){
+        //TODO 接口与要实现的数目，两者统计不致，接口是商品种类，不是商品数量
+        if (mShopCartBadge == null) {
+            mShopCartBadge = new QBadgeView(GoodsSecondClassifyActivity.this)
+                    .bindTarget(imgAction2).setBadgeTextSize(8, true);
+            RxView.clicks(imgAction2).throttleFirst(2, TimeUnit.SECONDS)
+                    .subscribe(o->{ViewJump.toMain(this,R.id.rbShopCart);});
+        }
+        if (num>0)
+            mShopCartBadge.setBadgeNumber(num);
+        else mShopCartBadge.hide(true);
+    }
+
+    @Override
+    public void onNumChange(int num) {
+        mShopCartNum += num;
+        if (mShopCartNum<0)
+            mShopCartNum = 0;
+        updateShopCartNum(mShopCartNum);
+    }
 }
