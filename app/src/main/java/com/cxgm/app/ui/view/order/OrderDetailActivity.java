@@ -15,7 +15,7 @@ import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.entity.Invoice;
 import com.cxgm.app.data.entity.Order;
-import com.cxgm.app.data.io.order.DeleteOrderReq;
+import com.cxgm.app.data.io.order.CancelOrderReq;
 import com.cxgm.app.data.io.order.OrderDetailReq;
 import com.cxgm.app.data.io.order.SurplusTimeReq;
 import com.cxgm.app.ui.adapter.OrderGoodsListAdatpter;
@@ -312,7 +312,7 @@ public class OrderDetailActivity extends BaseActivity {
             case R.id.tvCancelOrder:
                 //取消订单
                 if (mOrder!=null) {
-                    new DeleteOrderReq(this, mOrder.getId())
+                    new CancelOrderReq(this, mOrder.getId())
                             .execute(new Request.RequestCallback<Integer>() {
                                 @Override
                                 public void onSuccess(Integer integer) {

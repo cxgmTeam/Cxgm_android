@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/line"/>
     <GridView
+        android:listSelector="@color/translate"
         android:id="@+id/gvClassify"
         android:numColumns="3"
         android:verticalSpacing="@dimen/margin_small"

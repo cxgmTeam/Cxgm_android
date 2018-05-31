@@ -162,16 +162,7 @@ public class IndexFragment extends BaseFragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (hidden && popupWindow != null && popupWindow.isShowing())
-            popupWindow.dismiss();
-    }
-
-    private void init() {
-
-        etSearchWord.setFocusable(false);
-        etSearchWord.setKeyListener(null);
-
-        if (!isHidden()) {
+        if (!hidden){
             //地址提示
             if (Constants.checkAddress && Constants.currentLocation != null) {
                 showPopLocationInfo(getString(R.string.destination_,
@@ -181,7 +172,14 @@ public class IndexFragment extends BaseFragment {
             } else {
                 showPopLocationInfo(getString(R.string.out_of_distribution));
             }
-        }
+        }else if (popupWindow != null && popupWindow.isShowing())
+            popupWindow.dismiss();
+    }
+
+    private void init() {
+
+        etSearchWord.setFocusable(false);
+        etSearchWord.setKeyListener(null);
 
         if (Constants.currentShop == null) {
             //无可配送商铺
@@ -532,17 +530,18 @@ public class IndexFragment extends BaseFragment {
         x.task().postDelayed(new Runnable() {
             @Override
             public void run() {
-
-                if (popupWindow == null) {
-                    popupWindow = new PopupWindow();
-                    popupWindow.setContentView(View.inflate(getActivity(), R.layout.layout_location_info, null));
-                    popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
-                    popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+                if (!isHidden()) {
+                    if (popupWindow == null) {
+                        popupWindow = new PopupWindow();
+                        popupWindow.setContentView(View.inflate(getActivity(), R.layout.layout_location_info, null));
+                        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+                        popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+                    }
+                    TextView tvContent = popupWindow.getContentView().findViewById(R.id.tvContent);
+                    tvContent.setText(message);
+                    if (!popupWindow.isShowing())
+                        popupWindow.showAsDropDown(imgLocation, DensityUtil.dip2px(6), DensityUtil.dip2px(-6));
                 }
-                TextView tvContent = popupWindow.getContentView().findViewById(R.id.tvContent);
-                tvContent.setText(message);
-                if (!popupWindow.isShowing())
-                    popupWindow.showAsDropDown(imgLocation, DensityUtil.dip2px(6), DensityUtil.dip2px(-6));
             }
         }, 1000);
     }

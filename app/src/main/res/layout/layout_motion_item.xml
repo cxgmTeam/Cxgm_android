@@ -19,6 +19,7 @@
         android:src="@mipmap/default_img" />
 
     <com.deanlib.ootb.widget.HorizontalListView
+        android:listSelector="@color/translate"
         android:id="@+id/hlvAdGoods"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -56,6 +56,7 @@
                 android:background="@color/colorLine" />
 
             <ExpandableListView
+                android:listSelector="@color/translate"
                 android:paddingLeft="@dimen/margin_normal"
                 android:id="@+id/lvGoods"
                 android:groupIndicator="@null"

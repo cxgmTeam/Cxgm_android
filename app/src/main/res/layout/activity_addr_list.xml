@@ -121,6 +121,7 @@
 
             <com.deanlib.ootb.widget.ListViewForScrollView
                 android:id="@+id/lvAddr"
+                android:listSelector="@color/translate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_large_t"

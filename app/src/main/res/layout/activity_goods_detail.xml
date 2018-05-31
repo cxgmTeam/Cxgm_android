@@ -352,6 +352,7 @@
                 android:layout_height="@dimen/item_height" />
 
             <com.deanlib.ootb.widget.GridViewForScrollView
+                android:listSelector="@color/translate"
                 android:id="@+id/gvGoods"
                 android:layout_marginTop="@dimen/margin_normal"
                 android:layout_width="match_parent"

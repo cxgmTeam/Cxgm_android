@@ -112,6 +112,8 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
         super.onHiddenChanged(hidden);
         if (!hidden){
             init();
+            mPageNum = 1;
+            mCartList.clear();
             loadData();
         }
     }

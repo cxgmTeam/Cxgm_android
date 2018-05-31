@@ -15,6 +15,7 @@
         android:layout_height="@dimen/line"/>
 
     <ListView
+        android:listSelector="@color/translate"
         android:layout_weight="1"
         android:id="@+id/lvAddr"
         android:layout_width="match_parent"

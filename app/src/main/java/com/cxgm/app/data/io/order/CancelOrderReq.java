@@ -15,9 +15,9 @@ import org.xutils.http.RequestParams;
  * @anthor Dean
  * @time 2018/5/30 0030 22:37
  */
-public class DeleteOrderReq extends Request {
+public class CancelOrderReq extends Request {
     int orderId;
-    public DeleteOrderReq(Context context,int orderId) {
+    public CancelOrderReq(Context context, int orderId) {
         super(context);
         this.orderId = orderId;
     }
@@ -30,7 +30,7 @@ public class DeleteOrderReq extends Request {
     @Override
     public RequestParams params() {
 
-        RequestParams params = new RequestParams(SERVER + Constants.PORT3 + "/order/deleteOrder");
+        RequestParams params = new RequestParams(SERVER + Constants.PORT3 + "/order/cancelOrder");
         params.addQueryStringParameter("orderId",orderId+"");
         return params;
     }

@@ -146,6 +146,7 @@
                         android:background="@drawable/shape_dashed_line_brown" />
 
                     <com.deanlib.ootb.widget.ListViewForScrollView
+                        android:listSelector="@color/translate"
                         android:id="@+id/lvInvite"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"

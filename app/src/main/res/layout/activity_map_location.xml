@@ -26,6 +26,7 @@
                 android:layout_height="@dimen/map_height" />
 
             <ListView
+                android:listSelector="@color/translate"
                 android:scrollbars="none"
                 android:id="@+id/lvAddr"
                 android:dividerHeight="@dimen/line"

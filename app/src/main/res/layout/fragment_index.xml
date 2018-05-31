@@ -26,12 +26,6 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <com.kevin.loopview.AdLoopView
-                    android:id="@+id/loopBanner"
-                    android:layout_width="match_parent"
-                    android:layout_height="@dimen/banner_height"
-                    android:elevation="@dimen/elevation" />
-
                 <LinearLayout
                     android:id="@+id/layoutShopShow"
                     android:layout_width="match_parent"
@@ -40,6 +34,7 @@
                     android:visibility="gone">
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="41dp"
                         android:background="@color/colorWhite"
@@ -97,6 +92,7 @@
                     </LinearLayout>
 
                     <com.deanlib.ootb.widget.ListViewForScrollView
+                        android:listSelector="@color/translate"
                         android:layout_marginTop="@dimen/margin_large_t"
                         android:id="@+id/lvShop"
                         android:layout_width="match_parent"
@@ -112,8 +108,14 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
+                    <com.kevin.loopview.AdLoopView
+                        android:id="@+id/loopBanner"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/banner_height"
+                        android:elevation="@dimen/elevation" />
 
                     <com.deanlib.ootb.widget.GridViewForScrollView
+                        android:listSelector="@color/translate"
                         android:id="@+id/gvFirstCategory"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -248,6 +250,7 @@
                             android:textSize="@dimen/text_size_small" />
 
                         <com.deanlib.ootb.widget.HorizontalListView
+                            android:listSelector="@color/translate"
                             android:id="@+id/hlvRecommend"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -286,6 +289,7 @@
                             android:textSize="@dimen/text_size_small" />
 
                         <com.deanlib.ootb.widget.HorizontalListView
+                            android:listSelector="@color/translate"
                             android:id="@+id/hlvNewGoods"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -296,6 +300,7 @@
                     </LinearLayout>
 
                     <com.deanlib.ootb.widget.ListViewForScrollView
+                        android:listSelector="@color/translate"
                         android:id="@+id/lvMotions"
                         android:layout_marginTop="@dimen/margin_normal"
                         android:dividerHeight="@dimen/margin_normal"
@@ -332,6 +337,7 @@
                             android:textSize="@dimen/text_size_small" />
 
                         <com.deanlib.ootb.widget.GridViewForScrollView
+                            android:listSelector="@color/translate"
                             android:id="@+id/gvGoods"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
