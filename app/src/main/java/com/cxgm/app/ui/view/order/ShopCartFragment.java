@@ -93,6 +93,7 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
     @BindView(R.id.layoutEmptyShopCart)
     LinearLayout layoutEmptyShopCart;
 
+    //todo 购物车与商品列表数量不同步的问题
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -200,9 +201,10 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
 
     @Override
     public void onUpdateGoods(final ShopCart cartGoods,int actionNum) {
+
         if ((cartGoods.getGoodNum() + actionNum)>0) {
             final ShopCart cart = cartGoods.clone();
-            cart.setGoodNum(cart.getGoodNum() + 1);
+            cart.setGoodNum(cart.getGoodNum() + actionNum);
             cart.setAmount(Helper.moneyMultiply(cart.getPrice(), cart.getGoodNum()));
             new UpdateCartReq(getActivity(), cart).execute(false, new Request.RequestCallback<Integer>() {
                 @Override

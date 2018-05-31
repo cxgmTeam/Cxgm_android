@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
+import com.baidu.mapapi.search.core.PoiInfo;
 import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.entity.UserAddress;
@@ -174,6 +175,14 @@ public class AddrListActivity extends BaseActivity implements MapHelper.Location
                 case ViewJump.CODE_NEW_ADDRESS:
                     mAddrList.clear();
                     loadData();
+                    break;
+                case ViewJump.CODE_MAP_LOCATION:
+                    if (data!=null){
+                        PoiInfo mPoiInfo = data.getParcelableExtra("poiInfo");
+                        if (mPoiInfo!=null){
+                            tvCurrentAddr.setText(mPoiInfo.address);
+                        }
+                    }
                     break;
             }
         }

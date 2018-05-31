@@ -143,5 +143,6 @@ public class CouponFragment extends BaseFragment {
 
     @OnClick(R.id.tvExchange)
     public void onViewClicked() {
+        //todo 兑换
     }
 }

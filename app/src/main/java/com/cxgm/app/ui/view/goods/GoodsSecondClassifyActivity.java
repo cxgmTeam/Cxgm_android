@@ -278,13 +278,14 @@ public class GoodsSecondClassifyActivity extends BaseActivity {
                                 }
                             }
 
-//                            List<ProductTransfer> otherList = new ArrayList<>();
-//                            for (ProductTransfer product : productTransferPageInfo){
-//                                if (product.getProductCategoryThirdId()==0){
-//                                    otherList.add(product);
-//                                }
-//                            }
-//                            mProductMap.put("其他",otherList);
+                            //其他
+                            List<ProductTransfer> otherList = new ArrayList<>();
+                            for (ProductTransfer product : productTransferPageInfo){
+                                if (product.getProductCategoryThirdId()==0){
+                                    otherList.add(product);
+                                }
+                            }
+                            mProductMap.put("",otherList);
 
                             mEGLAdapter.notifyDataSetChanged();
 
@@ -330,6 +331,7 @@ public class GoodsSecondClassifyActivity extends BaseActivity {
                 ViewJump.toSearch(this);
                 break;
             case R.id.imgAction2:
+                //TODO 加实时数量
                 //购物车
                 ViewJump.toMain(this,R.id.rbShopCart);
                 break;

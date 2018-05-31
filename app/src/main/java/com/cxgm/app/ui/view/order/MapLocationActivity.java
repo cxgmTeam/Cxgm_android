@@ -220,6 +220,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
         lvAddr.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //todo 点击列表 跳来跳去
                 for (int i = 0; i < mPoiList.size(); i++) {
                     mPoiList.get(i).isChecked = i == id;
                     mPoiAdapter.notifyDataSetChanged();
