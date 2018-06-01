@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorAppBackground"
     android:orientation="vertical">
 
     <include
@@ -11,31 +12,31 @@
         android:layout_marginTop="@dimen/status_bar_height" />
 
     <LinearLayout
-        android:visibility="gone"
         android:id="@+id/layoutGoodsList"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <com.scwang.smartrefresh.layout.SmartRefreshLayout
             android:id="@+id/srl"
-            android:layout_weight="1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
             <ListView
-                android:listSelector="@color/translate"
                 android:id="@+id/lvGoods"
-                android:divider="@null"
-                android:dividerHeight="@dimen/margin_normal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_normal"
-                 />
+                android:divider="@null"
+                android:dividerHeight="@dimen/margin_normal"
+                android:listSelector="@color/translate" />
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/button_height2"
+            android:layout_height="wrap_content"
             android:background="@color/colorWhite"
             android:orientation="horizontal">
 
@@ -67,26 +68,32 @@
                     android:textSize="@dimen/text_size_large_x"
                     android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/tvSum"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:id="@+id/layoutSumDiscounts"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tvTotal"
-                    android:layout_marginTop="1dp"
-                    android:text="@string/sum_"
-                    android:textColor="@color/textBlackTint"
-                    android:textSize="@dimen/text_size_small" />
+                    android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/tvDiscounts"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignBaseline="@id/tvSum"
-                    android:layout_marginLeft="@dimen/margin_normal"
-                    android:layout_toRightOf="@id/tvSum"
-                    android:text="@string/discounts_"
-                    android:textColor="@color/textBlackTint"
-                    android:textSize="@dimen/text_size_small" />
+                    <TextView
+                        android:id="@+id/tvSum"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="1dp"
+                        android:text="@string/sum_"
+                        android:layout_marginRight="@dimen/margin_normal"
+                        android:textColor="@color/textBlackTint"
+                        android:textSize="@dimen/text_size_small" />
+
+                    <TextView
+                        android:id="@+id/tvDiscounts"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/discounts_"
+                        android:layout_marginRight="@dimen/margin_normal"
+                        android:textColor="@color/textBlackTint"
+                        android:textSize="@dimen/text_size_small" />
+                </LinearLayout>
 
             </RelativeLayout>
 

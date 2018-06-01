@@ -21,6 +21,7 @@
         android:textSize="@dimen/text_size_normal" />
 
     <LinearLayout
+        android:layout_marginTop="@dimen/margin_small"
         android:gravity="center_vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,9 +29,9 @@
 
         <TextView
             android:id="@+id/tvMoney"
+            android:text="1111"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_small"
             android:layout_weight="1"
             android:textColor="@color/textGreen"
             android:textSize="@dimen/text_size_large" />

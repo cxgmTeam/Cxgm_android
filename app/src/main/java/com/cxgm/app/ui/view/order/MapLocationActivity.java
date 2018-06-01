@@ -220,15 +220,14 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
         lvAddr.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                //todo 点击列表 跳来跳去
                 for (int i = 0; i < mPoiList.size(); i++) {
                     mPoiList.get(i).isChecked = i == id;
                     mPoiAdapter.notifyDataSetChanged();
                     if (i == id) {
                         //标记定位点
                         drawLocationPoint(mPoiList.get((int) id).location.latitude, mPoiList.get((int) id).location.longitude);
-                        //反向编码，以得到城市名，也可以得到POI信息
-                        mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(mPoiList.get((int) id).location.latitude, mPoiList.get((int) id).location.longitude)));
+                        //反向编码，以得到城市名，也可以得到POI信息 开启后，得到新的结果会重置这个list,看上去就是跳来跳去
+                        //mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(mPoiList.get((int) id).location.latitude, mPoiList.get((int) id).location.longitude)));
                     }
                 }
             }

@@ -79,7 +79,7 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
 
     ExpandableGoodsListAdapter mEGLAdapter;
     Badge mShopCartBadge;
-    int mShopCartNum = 0;
+    int mShopCartNum = 0; //种类数
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -372,7 +372,7 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
     }
 
     private void updateShopCartNum(int num){
-        //TODO 接口与要实现的数目，两者统计不致，接口是商品种类，不是商品数量
+        //商品种类，不是商品数量
         if (mShopCartBadge == null) {
             mShopCartBadge = new QBadgeView(GoodsSecondClassifyActivity.this)
                     .bindTarget(imgAction2).setBadgeTextSize(8, true);
@@ -384,11 +384,25 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
         else mShopCartBadge.hide(true);
     }
 
+
     @Override
-    public void onNumChange(int num) {
-        mShopCartNum += num;
-        if (mShopCartNum<0)
-            mShopCartNum = 0;
-        updateShopCartNum(mShopCartNum);
+    public void onAddGoods(ProductTransfer product) {
+        if (product!=null && product.getShopCartNum() == 1){
+            //从无到有
+            mShopCartNum ++;
+            updateShopCartNum(mShopCartNum);
+        }
+
+    }
+
+    @Override
+    public void onMinusGoods(ProductTransfer product) {
+        if (product!=null && product.getShopCartNum() == 0){
+            //从无到有
+            mShopCartNum --;
+            if (mShopCartNum<0)
+                mShopCartNum = 0;
+            updateShopCartNum(mShopCartNum);
+        }
     }
 }

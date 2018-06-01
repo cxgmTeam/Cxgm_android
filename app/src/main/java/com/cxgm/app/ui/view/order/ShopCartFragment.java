@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -81,6 +82,8 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
     TextView tvGoShopping;
     @BindView(R.id.srl)
     SmartRefreshLayout srl;
+    @BindView(R.id.layoutSumDiscounts)
+    LinearLayout layoutSumDiscounts;
 
     int mPageNum = 1;
     List<ShopCart> mCartList;
@@ -94,7 +97,8 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
     @BindView(R.id.layoutEmptyShopCart)
     LinearLayout layoutEmptyShopCart;
 
-    //todo 购物车与商品列表数量不同步的问题 接口问题
+    int mTextViewWidth;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -209,6 +213,12 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
     @Override
     public void onUpdateGoods(final ShopCart cartGoods,int actionNum) {
 
+        //限制最小为1
+        if (cartGoods.getGoodNum() + actionNum <= 0){
+            ToastManager.sendToast(getString(R.string.num_not_0));
+            return;
+        }
+
         if ((cartGoods.getGoodNum() + actionNum)>0) {
             final ShopCart cart = cartGoods.clone();
             cart.setGoodNum(cart.getGoodNum() + actionNum);
@@ -238,12 +248,16 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
                 }
             });
         }else {
-            //删除
+            //如果限制最小为1 的话，删除 逻辑就走不到了
             new DeleteCartReq(getActivity(), cartGoods.getId()+"").execute(false, new Request.RequestCallback<Integer>() {
                 @Override
                 public void onSuccess(Integer integer) {
                     mCartList.remove(cartGoods);
                     mCartAdapter.notifyDataSetChanged();
+                    if (mCartList.size() == 0){
+                        layoutGoodsList.setVisibility(View.GONE);
+                        layoutEmptyShopCart.setVisibility(View.VISIBLE);
+                    }
                     loadBottomData();
                 }
 
@@ -282,15 +296,17 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
             cbCheckAll.setChecked(isCheckedAll);
         }
         mInterceptChecked = false;
+        loadBottomData();
     }
 
     private void loadBottomData() {
         float totalAmount = 0.00f;
         float totalOriginal = 0.00f;
-//        int totalNum = 0;
+        int totalNum = 0;
         for (ShopCart cart : mCartList) {
-            totalAmount = Helper.moneyAdd(totalAmount, cart.getAmount());
-            totalOriginal =Helper.moneyAdd(Helper.moneyMultiply(cart.getOriginalPrice(),cart.getGoodNum()),totalOriginal);
+            if (cart.isChecked) {
+                totalAmount = Helper.moneyAdd(totalAmount, cart.getAmount());
+                totalOriginal = Helper.moneyAdd(Helper.moneyMultiply(cart.getOriginalPrice(), cart.getGoodNum()), totalOriginal);
             /* 促销活动的不要了
                 //满减
                 if (cart.getCoupon()!=null) {
@@ -300,13 +316,37 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
                     }
                 }
             */
-//            totalNum += cart.getGoodNum();
+                totalNum ++;
+            }
         }
 
         tvTotal.setText(getString(R.string.total_, StringHelper.getRMBFormat(totalAmount)));
         tvSum.setText(getString(R.string.sum_, StringHelper.getRMBFormat(totalOriginal)));
         tvDiscounts.setText(getString(R.string.discounts_, StringHelper.getRMBFormat(Helper.moneySubtract(totalOriginal,totalAmount))));
-        tvGoDuoShou.setText(getString(R.string.go_duoshou_, mCartList.size()));
+        tvDiscounts.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                tvDiscounts.getViewTreeObserver().removeGlobalOnLayoutListener(this);
+                float textWidth = tvDiscounts.getPaint().measureText(tvDiscounts.getText().toString());
+                if (mTextViewWidth == 0) {
+                    int textViewWidth = tvDiscounts.getWidth();
+                    if (textViewWidth < textWidth) {
+                        mTextViewWidth = textViewWidth;
+                        layoutSumDiscounts.setOrientation(LinearLayout.VERTICAL);
+                    }
+                }else {
+                    if (mTextViewWidth < textWidth) {
+                        layoutSumDiscounts.setOrientation(LinearLayout.VERTICAL);
+                    }else {
+                        layoutSumDiscounts.setOrientation(LinearLayout.HORIZONTAL);
+                    }
+                }
+            }
+        });
+        if (totalNum>0)
+            tvGoDuoShou.setText(getString(R.string.go_duoshou_, totalNum));
+        else
+            tvGoDuoShou.setText(R.string.go_duoshou);
     }
 
     @OnClick({R.id.tvGoDuoShou, R.id.tvGoShopping,R.id.tvAction1})

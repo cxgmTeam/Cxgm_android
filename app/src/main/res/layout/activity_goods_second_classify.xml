@@ -46,6 +46,7 @@
                 app:tabTextColor="@color/textBlackTint"
                 app:tabSelectedTextColor="@color/textGreen"
                 android:id="@+id/tabSubClassify"
+                app:tabMode="scrollable"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/tab_item_height"
                 android:background="@color/colorWhite" />
@@ -56,6 +57,7 @@
                 android:background="@color/colorLine" />
 
             <ExpandableListView
+                android:childDivider="@color/translate"
                 android:listSelector="@color/translate"
                 android:paddingLeft="@dimen/margin_normal"
                 android:id="@+id/lvGoods"

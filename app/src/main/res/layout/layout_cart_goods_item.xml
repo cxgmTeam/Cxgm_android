@@ -4,22 +4,30 @@
     android:layout_height="wrap_content"
     android:background="@color/colorWhite"
     android:elevation="@dimen/elevation"
+    android:descendantFocusability="blocksDescendants"
     android:orientation="vertical">
 
     <LinearLayout
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/margin_large"
         android:paddingRight="@dimen/margin_giant"
         android:layout_width="match_parent"
         android:layout_height="110dp">
 
-        <CheckBox
-            android:layout_marginRight="@dimen/margin_large"
-            android:id="@+id/cbSelect"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:button="@drawable/selector_check" />
+        <LinearLayout
+            android:id="@+id/layoutCheck"
+            android:gravity="center"
+            android:layout_width="46dp"
+            android:layout_height="110dp">
+
+            <ImageView
+                android:id="@+id/imgSelect"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/check" />
+        </LinearLayout>
+
+
 
         <include layout="@layout/layout_goods_order"/>
 

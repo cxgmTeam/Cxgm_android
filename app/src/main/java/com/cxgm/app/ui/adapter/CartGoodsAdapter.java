@@ -82,12 +82,14 @@ public class CartGoodsAdapter extends BaseAdapter {
             holder.tvTag.setText("");
         }
 
-        holder.cbSelect.setChecked(mList.get(i).isChecked);
-        holder.cbSelect.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        holder.imgSelect.setImageResource(mList.get(i).isChecked?R.mipmap.checked:R.mipmap.check);
+        holder.layoutCheck.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            public void onClick(View v) {
+                mList.get(i).isChecked = !mList.get(i).isChecked;
+                holder.imgSelect.setImageResource(mList.get(i).isChecked?R.mipmap.checked:R.mipmap.check);
                 if (mListener!=null)
-                    mListener.onChangeCheck(i,isChecked);
+                    mListener.onChangeCheck(i,mList.get(i).isChecked);
             }
         });
 
@@ -113,8 +115,8 @@ public class CartGoodsAdapter extends BaseAdapter {
 
 
     static class ViewHolder {
-        @BindView(R.id.cbSelect)
-        CheckBox cbSelect;
+        @BindView(R.id.imgSelect)
+        ImageView imgSelect;
         @BindView(R.id.imgCover)
         ImageView imgCover;
         @BindView(R.id.tvTitle)
@@ -137,6 +139,8 @@ public class CartGoodsAdapter extends BaseAdapter {
         TextView tvTag;
         @BindView(R.id.tvSubtotal)
         TextView tvSubtotal;
+        @BindView(R.id.layoutCheck)
+        LinearLayout layoutCheck;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

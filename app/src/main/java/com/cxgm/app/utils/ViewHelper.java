@@ -53,6 +53,7 @@ public class ViewHelper {
             new AddCartReq(activity,cart).execute(new Request.RequestCallback<Integer>() {
                 @Override
                 public void onSuccess(Integer integer) {
+                    product.setShopCartId(integer);
                     product.setShopCartNum(goodsNum);
                     ToastManager.sendToast(activity.getString(R.string.added_shop_cart));
                     if (listener!=null)

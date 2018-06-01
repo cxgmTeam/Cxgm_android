@@ -110,9 +110,10 @@ public class ExpandableGoodsListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int i, boolean b, View view, ViewGroup viewGroup) {
-        TextView view1 = new TextView(viewGroup.getContext());
-        view1.setText(mKeyList.get(i));
-        return view1;
+        view = View.inflate(viewGroup.getContext(),R.layout.layout_third_title_item,null);
+        TextView tvTitle = view.findViewById(R.id.tvTitle);
+        tvTitle.setText(mKeyList.get(i));
+        return view;
     }
 
     @Override
@@ -141,7 +142,7 @@ public class ExpandableGoodsListAdapter extends BaseExpandableListAdapter {
                     public void onSuccess() {
                         updateActionView(holder,product);
                         if (mListener!=null)
-                            mListener.onNumChange(1);
+                            mListener.onAddGoods(product);
                     }
                 });
             }
@@ -154,7 +155,7 @@ public class ExpandableGoodsListAdapter extends BaseExpandableListAdapter {
                     public void onSuccess() {
                         updateActionView(holder,product);
                         if (mListener!=null)
-                            mListener.onNumChange(-1);
+                            mListener.onMinusGoods(product);
                     }
                 });
             }
@@ -206,6 +207,7 @@ public class ExpandableGoodsListAdapter extends BaseExpandableListAdapter {
     }
 
     public interface OnShopCartActionListener{
-        void onNumChange(int num);
+        void onAddGoods(ProductTransfer product);
+        void onMinusGoods(ProductTransfer product);
     }
 }

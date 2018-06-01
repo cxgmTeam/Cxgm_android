@@ -39,6 +39,7 @@
 
     <string name="go_shopping">去逛逛</string>
     <string name="go_duoshou_">去结算(%d)</string>
+    <string name="go_duoshou">去结算</string>
     <string name="total_">合计：%s</string>
     <string name="sum_">总额：%s</string>
     <string name="discounts_">优惠：%s</string>
@@ -250,5 +251,6 @@
     <string name="delete_tag">确定要删除吗？</string>
     <string name="coupon_code_invalid">兑换码无效</string>
     <string name="exchange_success">兑换成功</string>
+    <string name="num_not_0">购买数量不能小于1</string>
 
 </resources>
