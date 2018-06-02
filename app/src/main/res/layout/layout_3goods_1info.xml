@@ -11,7 +11,6 @@
 
     <ImageView
         android:id="@+id/imgView1"
-        android:src="@mipmap/default_img"
         android:layout_width="0dp"
         android:layout_weight="1"
         android:scaleType="fitXY"
@@ -22,7 +21,6 @@
         android:scaleType="fitXY"
         android:layout_weight="1"
         android:id="@+id/imgView2"
-        android:src="@mipmap/default_img"
         android:layout_width="0dp"
         android:layout_height="wrap_content" />
 
@@ -31,7 +29,6 @@
         android:scaleType="fitXY"
         android:layout_weight="1"
         android:id="@+id/imgView3"
-        android:src="@mipmap/default_img"
         android:layout_width="0dp"
         android:layout_height="wrap_content" />
 
@@ -44,7 +41,6 @@
         android:drawablePadding="@dimen/margin_small"
         android:drawableRight="@mipmap/right"
         android:gravity="right|center_vertical"
-        android:text="@string/_count"
         android:textColor="@color/textBlack"
         android:textSize="@dimen/text_size_normal_x" />
 

@@ -195,7 +195,7 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
                     public void onFinished() {
                         srl.finishLoadMore();
                         srl.finishRefresh();
-                        if (mCartList.size() == 0){
+                        if (mCartList.size() <= 0){
                             layoutGoodsList.setVisibility(View.GONE);
                             layoutEmptyShopCart.setVisibility(View.VISIBLE);
                         }
@@ -259,6 +259,10 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
                         layoutEmptyShopCart.setVisibility(View.VISIBLE);
                     }
                     loadBottomData();
+                    if (mCartList.size() <= 0){
+                        layoutGoodsList.setVisibility(View.GONE);
+                        layoutEmptyShopCart.setVisibility(View.VISIBLE);
+                    }
                 }
 
                 @Override
@@ -323,6 +327,7 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
         tvTotal.setText(getString(R.string.total_, StringHelper.getRMBFormat(totalAmount)));
         tvSum.setText(getString(R.string.sum_, StringHelper.getRMBFormat(totalOriginal)));
         tvDiscounts.setText(getString(R.string.discounts_, StringHelper.getRMBFormat(Helper.moneySubtract(totalOriginal,totalAmount))));
+        //更新布局
         tvDiscounts.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {
@@ -394,6 +399,11 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
                                     }
                                     mCartAdapter.notifyDataSetChanged();
                                     loadBottomData();
+
+                                    if (mCartList.size() <= 0){
+                                        layoutGoodsList.setVisibility(View.GONE);
+                                        layoutEmptyShopCart.setVisibility(View.VISIBLE);
+                                    }
                                 }
 
                                 @Override

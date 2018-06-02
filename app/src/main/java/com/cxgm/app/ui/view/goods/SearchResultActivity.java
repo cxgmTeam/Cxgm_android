@@ -145,7 +145,7 @@ public class SearchResultActivity extends BaseActivity {
                         if (mProductList.size() > 0) {
                             srl.setVisibility(View.VISIBLE);
                         } else {
-                            //TODO 没有搜索到结果
+                            //TODO 没有搜索到结果提示图
                             srl.setVisibility(View.GONE);
                         }
                     }

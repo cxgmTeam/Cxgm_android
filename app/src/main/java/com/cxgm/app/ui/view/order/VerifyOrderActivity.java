@@ -153,9 +153,13 @@ public class VerifyOrderActivity extends BaseActivity {
         //布局
         int width = (DeviceUtils.getSreenWidth()-2* DensityUtil.dip2px(15) - 3*DensityUtil.dip2px(10))/4;
 //        tvView.getLayoutParams().width = width;
+        imgView1.getLayoutParams().width = width;
         imgView1.getLayoutParams().height = width;
+        imgView2.getLayoutParams().width = width;
         imgView2.getLayoutParams().height = width;
+        imgView3.getLayoutParams().width = width;
         imgView3.getLayoutParams().height = width;
+        tvView.getLayoutParams().width = width;
         tvView.getLayoutParams().height = width;
         int number = mOrderProductList.size();
         number = number>3?3:number;

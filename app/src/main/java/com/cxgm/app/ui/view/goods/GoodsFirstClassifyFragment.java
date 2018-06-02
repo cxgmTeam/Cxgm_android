@@ -15,7 +15,6 @@ import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.entity.ShopCategory;
 import com.cxgm.app.data.io.goods.FindFirstCategoryReq;
-import com.cxgm.app.ui.adapter.FirstCategoryAdapter;
 import com.cxgm.app.ui.adapter.GoodsFirstClassifyAdapter;
 import com.cxgm.app.ui.base.BaseFragment;
 import com.cxgm.app.ui.view.ViewJump;
@@ -28,6 +27,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 
 /**
@@ -70,13 +70,13 @@ public class GoodsFirstClassifyFragment extends BaseFragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (!hidden && Constants.currentShop != null){
+        if (!hidden && Constants.currentShop != null) {
             mFCList.clear();
             loadData();
         }
     }
 
-    private void init(){
+    private void init() {
         tvTitle.setText(R.string.classify);
         imgAction1.setImageResource(R.mipmap.search3);
         imgAction1.setVisibility(View.VISIBLE);
@@ -88,37 +88,37 @@ public class GoodsFirstClassifyFragment extends BaseFragment {
         gvClassify.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ViewJump.toGoodsSecondClassify(getActivity(),mFCList.get((int)id));
+                ViewJump.toGoodsSecondClassify(getActivity(), mFCList.get((int) id));
             }
         });
     }
 
-    private void loadData(){
+    private void loadData() {
 
-            new FindFirstCategoryReq(getActivity(), Constants.currentShop.getId()).execute(new Request.RequestCallback<List<ShopCategory>>() {
-                @Override
-                public void onSuccess(List<ShopCategory> list) {
-                    if (list != null) {
-                        mFCList.addAll(list);
-                        mFCAdapter.notifyDataSetChanged();
-                    }
+        new FindFirstCategoryReq(getActivity(), Constants.currentShop.getId()).execute(new Request.RequestCallback<List<ShopCategory>>() {
+            @Override
+            public void onSuccess(List<ShopCategory> list) {
+                if (list != null) {
+                    mFCList.addAll(list);
+                    mFCAdapter.notifyDataSetChanged();
                 }
+            }
 
-                @Override
-                public void onError(Throwable ex, boolean isOnCallback) {
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
 
-                }
+            }
 
-                @Override
-                public void onCancelled(Callback.CancelledException cex) {
+            @Override
+            public void onCancelled(Callback.CancelledException cex) {
 
-                }
+            }
 
-                @Override
-                public void onFinished() {
+            @Override
+            public void onFinished() {
 
-                }
-            });
+            }
+        });
 
     }
 
@@ -126,5 +126,10 @@ public class GoodsFirstClassifyFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @OnClick(R.id.imgAction1)
+    public void onViewClicked() {
+        ViewJump.toSearch(getActivity());
     }
 }

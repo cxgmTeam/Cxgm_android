@@ -1,6 +1,7 @@
 package com.cxgm.app.data.entity;
 
 import com.cxgm.app.app.Constants;
+import com.cxgm.app.utils.Helper;
 import com.deanlib.ootb.entity.BaseEntity;
 
 public class ShopCart extends BaseEntity implements Cloneable{
@@ -78,7 +79,7 @@ public class ShopCart extends BaseEntity implements Cloneable{
     }
 
     public static ShopCart getShopCart(ProductTransfer product,int goodsNum){
-        return new ShopCart(product.getShopCartId(),product.getId(),product.getGoodCode(),product.getName(),goodsNum,product.getPrice(), Constants.currentShop.getId());
+        return new ShopCart(product.getShopCartId(),product.getId(),product.getGoodCode(),product.getName(),goodsNum, Helper.moneyMultiply(product.getPrice(),goodsNum), Constants.currentShop.getId());
     }
 
     public String getSpecifications() {

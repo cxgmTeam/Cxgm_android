@@ -221,7 +221,7 @@
     <string name="buy_again">再次购买</string>
     <string name="apply_for_returning">申请退货</string>
     <string name="keyword_is_empty">请输入搜索关键字</string>
-    <string name="click_open">点击查看</string>
+    <string name="click_open">查看</string>
 
     <string name="order_pay_outtime">付款超时，请重新购买</string>
 
