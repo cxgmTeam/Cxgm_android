@@ -168,39 +168,41 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
     }
 
     private void loadData() {
-        new ShopCartListReq(getActivity(), mPageNum, 10)
-                .execute(new Request.RequestCallback<PageInfo<ShopCart>>() {
-                    @Override
-                    public void onSuccess(PageInfo<ShopCart> shopCartPageInfo) {
-                        if (shopCartPageInfo != null && shopCartPageInfo.getList() != null && shopCartPageInfo.getList().size()>0) {
-                            layoutGoodsList.setVisibility(View.VISIBLE);
-                            layoutEmptyShopCart.setVisibility(View.GONE);
-                            mCartList.addAll(shopCartPageInfo.getList());
-                            mCartAdapter.notifyDataSetChanged();
-                            loadBottomData();
+        if (Constants.currentShop!=null) {
+            new ShopCartListReq(getActivity(), Constants.currentShop.getId(), mPageNum, 10)
+                    .execute(new Request.RequestCallback<PageInfo<ShopCart>>() {
+                        @Override
+                        public void onSuccess(PageInfo<ShopCart> shopCartPageInfo) {
+                            if (shopCartPageInfo != null && shopCartPageInfo.getList() != null && shopCartPageInfo.getList().size() > 0) {
+                                layoutGoodsList.setVisibility(View.VISIBLE);
+                                layoutEmptyShopCart.setVisibility(View.GONE);
+                                mCartList.addAll(shopCartPageInfo.getList());
+                                mCartAdapter.notifyDataSetChanged();
+                                loadBottomData();
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onError(Throwable ex, boolean isOnCallback) {
+                        @Override
+                        public void onError(Throwable ex, boolean isOnCallback) {
 
-                    }
-
-                    @Override
-                    public void onCancelled(Callback.CancelledException cex) {
-
-                    }
-
-                    @Override
-                    public void onFinished() {
-                        srl.finishLoadMore();
-                        srl.finishRefresh();
-                        if (mCartList.size() <= 0){
-                            layoutGoodsList.setVisibility(View.GONE);
-                            layoutEmptyShopCart.setVisibility(View.VISIBLE);
                         }
-                    }
-                });
+
+                        @Override
+                        public void onCancelled(Callback.CancelledException cex) {
+
+                        }
+
+                        @Override
+                        public void onFinished() {
+                            srl.finishLoadMore();
+                            srl.finishRefresh();
+                            if (mCartList.size() <= 0) {
+                                layoutGoodsList.setVisibility(View.GONE);
+                                layoutEmptyShopCart.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    });
+        }
     }
 
 
@@ -375,6 +377,10 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
                 ((MainActivity)getActivity()).publicChangeView(R.id.rbGoods);
                 break;
             case R.id.tvAction1:
+                if (!UserManager.isUserLogin()){
+                    ViewJump.toLogin(getActivity());
+                    return;
+                }
                 //删除
                 //提示框
                 new AlertDialog.Builder(getActivity()).setTitle(R.string.hint)

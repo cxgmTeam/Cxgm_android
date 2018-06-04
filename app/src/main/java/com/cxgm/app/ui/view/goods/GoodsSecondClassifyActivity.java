@@ -198,32 +198,34 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
                     }
                 });
 
-        //查询购物车
-        new ShopCartListReq(this,1,1)
-                .execute(new Request.RequestCallback<PageInfo<ShopCart>>() {
-                    @Override
-                    public void onSuccess(PageInfo<ShopCart> shopCartPageInfo) {
-                        if (shopCartPageInfo!=null){
-                            mShopCartNum = shopCartPageInfo.getTotal();
-                            updateShopCartNum(mShopCartNum);
+        if (Constants.currentShop!=null) {
+            //查询购物车
+            new ShopCartListReq(this, Constants.currentShop.getId(), 1, 1)
+                    .execute(new Request.RequestCallback<PageInfo<ShopCart>>() {
+                        @Override
+                        public void onSuccess(PageInfo<ShopCart> shopCartPageInfo) {
+                            if (shopCartPageInfo != null) {
+                                mShopCartNum = shopCartPageInfo.getTotal();
+                                updateShopCartNum(mShopCartNum);
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onError(Throwable ex, boolean isOnCallback) {
+                        @Override
+                        public void onError(Throwable ex, boolean isOnCallback) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onCancelled(Callback.CancelledException cex) {
+                        @Override
+                        public void onCancelled(Callback.CancelledException cex) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onFinished() {
+                        @Override
+                        public void onFinished() {
 
-                    }
-                });
+                        }
+                    });
+        }
 
     }
 

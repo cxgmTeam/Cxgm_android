@@ -20,8 +20,10 @@ import org.xutils.http.RequestParams;
  */
 public class ShopCartListReq extends Request {
     int pageNum,pageSize;
-    public ShopCartListReq(Context context,int pageNum,int pageSize) {
+    int shopId;
+    public ShopCartListReq(Context context,int shopId,int pageNum,int pageSize) {
         super(context);
+        this.shopId = shopId;
         this.pageNum = pageNum;
         this.pageSize = pageSize;
     }
@@ -36,6 +38,7 @@ public class ShopCartListReq extends Request {
 
         RequestParams params = new RequestParams(SERVER + Constants.PORT3 + "/shopCart/list");
         params.setMethod(HttpMethod.GET);
+        params.addQueryStringParameter("shopId",shopId+"");
         params.addQueryStringParameter("pageNum",pageNum+"");
         params.addQueryStringParameter("pageSize",pageSize+"");
         return params;
