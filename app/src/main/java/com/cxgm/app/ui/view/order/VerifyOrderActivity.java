@@ -330,7 +330,7 @@ public class VerifyOrderActivity extends BaseActivity {
                 mOrder.setRemarks(etRemark.getText().toString().trim());
 
                 //提交订单
-                new AddOrderReq(this,mOrder).execute(new Request.RequestCallback<Integer>() {
+                new AddOrderReq(this,mOrder).execute(false,new Request.RequestCallback<Integer>() {
                     @Override
                     public void onSuccess(Integer integer) {
                         if (integer>0){
@@ -421,7 +421,7 @@ public class VerifyOrderActivity extends BaseActivity {
 
     private void setCouponAndAmount(CouponDetail couponDetail){
         //实付款
-        float temp = Helper.moneySubtract(mOrderAmount,Constants.postage);
+        float temp = Helper.moneyAdd(mOrderAmount,Constants.postage);
         float preferential = mDiscounts;
         if (couponDetail!=null) {
             //优惠券ID
@@ -431,7 +431,7 @@ public class VerifyOrderActivity extends BaseActivity {
             preferential = Helper.moneyAdd(preferential,exp);
         }
         mOrder.setPreferential(preferential);
-        mOrder.setOrderAmount(temp);
+        mOrder.setOrderAmount(Helper.moneySubtract(temp,preferential));
         tvPayment.setText(StringHelper.getRMBFormat(mOrder.getOrderAmount()));
     }
 }

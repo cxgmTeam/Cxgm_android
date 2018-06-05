@@ -160,6 +160,7 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
                     for (ShopCart cart : mCartList) {
                         cart.isChecked = isChecked;
                     }
+                    loadBottomData();
                     mCartAdapter.notifyDataSetChanged();
                 }
             }
