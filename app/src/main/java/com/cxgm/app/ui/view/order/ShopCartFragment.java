@@ -99,6 +99,8 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
 
     int mTextViewWidth;
 
+    boolean isLoadData = false;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -111,26 +113,31 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        init();
     }
 
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden){
-            init();
-            mPageNum = 1;
-            mCartList.clear();
-            loadData();
+            reset();
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        init();
-        mPageNum = 1;
-        mCartList.clear();
-        loadData();
+        reset();
+    }
+
+    private void reset(){
+        if (!isLoadData) {
+            isLoadData = true;
+            mPageNum = 1;
+            mCartList.clear();
+            loadData();
+            cbCheckAll.setChecked(false);
+        }
     }
 
     private void init() {
@@ -161,7 +168,7 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
                 loadData();
             }
         });
-        cbCheckAll.setChecked(false);
+
         cbCheckAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -204,6 +211,7 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
 
                         @Override
                         public void onFinished() {
+                            isLoadData = false;
                             srl.finishLoadMore();
                             srl.finishRefresh();
                             if (mCartList.size() <= 0) {
@@ -212,7 +220,8 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
                             }
                         }
                     });
-        }
+        }else
+            isLoadData = false;
     }
 
 
