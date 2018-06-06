@@ -6,20 +6,15 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
 import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
-import com.cxgm.app.data.entity.Advertisement;
 import com.cxgm.app.data.entity.ProductImage;
 import com.cxgm.app.data.entity.ProductTransfer;
 import com.cxgm.app.data.io.goods.FindProductDetailReq;
@@ -29,8 +24,7 @@ import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.ui.widget.CustomScrollView;
 import com.cxgm.app.utils.StringHelper;
-import com.cxgm.app.utils.ToastManager;
-import com.cxgm.app.utils.UserManager;
+import com.cxgm.app.utils.ViewHelper;
 import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.widget.GridViewForScrollView;
 import com.kevin.loopview.AdLoopView;
@@ -106,6 +100,10 @@ public class GoodsDetailActivity extends BaseActivity {
     LinearLayout layoutGoods;
     @BindView(R.id.tvGuessLike)
     TextView tvGuessLike;
+    @BindView(R.id.imgToTop)
+    ImageView imgToTop;
+    @BindView(R.id.tvAddShopCart)
+    TextView tvAddShopCart;
 
     int mProductId;
     ProductTransfer mProduct;
@@ -113,8 +111,9 @@ public class GoodsDetailActivity extends BaseActivity {
     GoodsAdapter mGuessLikeAdapter;
 
     boolean isScrollLock = false;
-//    boolean isSelectLock = false;
+    //    boolean isSelectLock = false;
     int mBannerPosition = 1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,12 +123,12 @@ public class GoodsDetailActivity extends BaseActivity {
         }
         setContentView(R.layout.activity_goods_detail);
         ButterKnife.bind(this);
-        mProductId = getIntent().getIntExtra("productId",0);
+        mProductId = getIntent().getIntExtra("productId", 0);
         init();
         loadData();
     }
 
-    private void init(){
+    private void init() {
         tvTitle.setAlpha(0);
         imgBack.setVisibility(View.VISIBLE);
         imgAction1.setImageResource(R.mipmap.shop_cart3);
@@ -139,15 +138,19 @@ public class GoodsDetailActivity extends BaseActivity {
             @Override
             public void onScrollChanged(CustomScrollView scrollView, int l, int t, int oldl, int oldt) {
                 float height = layoutGoods.getTop() - 500f;
-                if (t>height){
+                if (t > height) {
                     if (tabNavigation.getVisibility() == View.GONE)
                         tabNavigation.setVisibility(View.VISIBLE);
                     if (t < layoutGoods.getTop())
-                        tabNavigation.setAlpha(((float)t - height)/500f);
-                }else {
+                        tabNavigation.setAlpha(((float) t - height) / 500f);
+                    if (imgToTop.getVisibility() == View.GONE)
+                        imgToTop.setVisibility(View.VISIBLE);
+                } else {
                     if (tabNavigation.getVisibility() == View.VISIBLE)
                         tabNavigation.setVisibility(View.GONE);
-                    tvTitle.setAlpha(((float) t)/height);
+                    if (imgToTop.getVisibility() == View.VISIBLE)
+                        imgToTop.setVisibility(View.GONE);
+                    tvTitle.setAlpha(((float) t) / height);
                 }
                 if (!isScrollLock) {
 //                    isSelectLock = true;
@@ -169,21 +172,21 @@ public class GoodsDetailActivity extends BaseActivity {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
 //                if (!isSelectLock) {
-                    isScrollLock = true;
-                    int scrollY = 0;
-                    switch (tab.getPosition()) {
-                        case 0://商品
-                            scrollY = layoutGoods.getTop();
-                            break;
-                        case 1://详情
-                            scrollY = wvIntroduction.getTop();
-                            break;
-                        case 2://推荐
-                            scrollY = tvGuessLike.getTop();
-                            break;
-                    }
-                    scrollView.smoothScrollTo(0, scrollY+5);
-                    isScrollLock = false;
+                isScrollLock = true;
+                int scrollY = 0;
+                switch (tab.getPosition()) {
+                    case 0://商品
+                        scrollY = layoutGoods.getTop();
+                        break;
+                    case 1://详情
+                        scrollY = wvIntroduction.getTop();
+                        break;
+                    case 2://推荐
+                        scrollY = tvGuessLike.getTop();
+                        break;
+                }
+                scrollView.smoothScrollTo(0, scrollY + 5);
+                isScrollLock = false;
 //                }
             }
 
@@ -199,38 +202,38 @@ public class GoodsDetailActivity extends BaseActivity {
         });
         //猜你喜欢
         mGuessLikeList = new ArrayList<>();
-        mGuessLikeAdapter = new GoodsAdapter(this,mGuessLikeList,2,30);
+        mGuessLikeAdapter = new GoodsAdapter(this, mGuessLikeList, 2, 30);
         gvGoods.setFocusable(false);
         gvGoods.setAdapter(mGuessLikeAdapter);
         gvGoods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ViewJump.toGoodsDetail(GoodsDetailActivity.this,mGuessLikeList.get((int)id).getId());
+                ViewJump.toGoodsDetail(GoodsDetailActivity.this, mGuessLikeList.get((int) id).getId());
             }
         });
     }
 
-    private void loadData(){
-        if (Constants.currentShop!=null && mProductId>0){
-            new FindProductDetailReq(this,mProductId,Constants.currentShop.getId()).execute(new Request.RequestCallback<ProductTransfer>() {
+    private void loadData() {
+        if (Constants.currentShop != null && mProductId > 0) {
+            new FindProductDetailReq(this, mProductId, Constants.currentShop.getId()).execute(new Request.RequestCallback<ProductTransfer>() {
                 @Override
                 public void onSuccess(ProductTransfer product) {
-                    if (product!=null){
+                    if (product != null) {
                         mProduct = product;
                         tvTitle.setText(mProduct.getName());
                         tvGoodsTitle.setText(mProduct.getName());
                         tvGoodsSubTitle.setText(mProduct.getFullName());
                         tvPrice.setText(StringHelper.getRMBFormat(mProduct.getPrice()));
-                        tvUnit.setText("/"+mProduct.getUnit());
-                        if (mProduct.getPrice()!= mProduct.getOriginalPrice()) {
+                        tvUnit.setText("/" + mProduct.getUnit());
+                        if (mProduct.getPrice() != mProduct.getOriginalPrice()) {
                             tvOriginal.setText(StringHelper.getStrikeFormat(StringHelper.getRMBFormat(mProduct.getOriginalPrice())));
                             tvOriginal.setVisibility(View.VISIBLE);
-                        }else tvOriginal.setVisibility(View.GONE);
+                        } else tvOriginal.setVisibility(View.GONE);
 
                         // 限时特惠的标记 原价与现价的不同
-                        if (mProduct.getPrice()<mProduct.getOriginalPrice()){
+                        if (mProduct.getPrice() < mProduct.getOriginalPrice()) {
                             imgDiscounts.setVisibility(View.VISIBLE);
-                        }else {
+                        } else {
                             imgDiscounts.setVisibility(View.GONE);
                         }
 
@@ -238,7 +241,7 @@ public class GoodsDetailActivity extends BaseActivity {
                         layoutSpecification.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                ViewJump.toGoodsSpecificationDialog(GoodsDetailActivity.this,mProduct);
+                                ViewJump.toGoodsSpecificationDialog(GoodsDetailActivity.this, mProduct);
                             }
                         });
 
@@ -252,11 +255,11 @@ public class GoodsDetailActivity extends BaseActivity {
                         //商品轮播图
                         LoopData loopData = new LoopData();
                         loopData.items = new ArrayList<>();
-                        if (mProduct.getProductImageList()!=null) {
+                        if (mProduct.getProductImageList() != null) {
                             for (ProductImage image : mProduct.getProductImageList()) {
                                 loopData.items.add(loopData.new ItemData("", image.getUrl(), "", "", ""));
                             }
-                        }else {
+                        } else {
                             loopData.items.add(loopData.new ItemData("", mProduct.getImage(), "", "", ""));
                         }
 
@@ -269,7 +272,7 @@ public class GoodsDetailActivity extends BaseActivity {
                                 loopBanner.getLoopData();
                             }
                         });
-                        tvPicNum.setText(mBannerPosition+"/"+loopBanner.getLoopData().items.size());
+                        tvPicNum.setText(mBannerPosition + "/" + loopBanner.getLoopData().items.size());
                         loopBanner.getViewPager().addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                             @Override
                             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -279,7 +282,7 @@ public class GoodsDetailActivity extends BaseActivity {
                             @Override
                             public void onPageSelected(int position) {
 
-                                tvPicNum.setText((mBannerPosition = getBannerPosition(mBannerPosition,loopBanner.getLoopData().items.size()))+"/"+loopBanner.getLoopData().items.size());
+                                tvPicNum.setText((mBannerPosition = getBannerPosition(mBannerPosition, loopBanner.getLoopData().items.size())) + "/" + loopBanner.getLoopData().items.size());
                             }
 
                             @Override
@@ -292,15 +295,15 @@ public class GoodsDetailActivity extends BaseActivity {
                         //商品介绍图
 //                        Glide.with(GoodsDetailActivity.this).load(mProduct.getIntroduction()).apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
 //                                .into(imgGoodsDetailPic);
-                        wvIntroduction.loadData(mProduct.getIntroduction(),"text/html; charset=UTF-8",null);
+                        wvIntroduction.loadData(mProduct.getIntroduction(), "text/html; charset=UTF-8", null);
 
 
                         //猜你喜欢
-                        new PushProductsReq(GoodsDetailActivity.this, Constants.currentShop.getId(),mProduct.getProductCategoryTwoId(),mProduct.getProductCategoryThirdId())
+                        new PushProductsReq(GoodsDetailActivity.this, Constants.currentShop.getId(), mProduct.getProductCategoryTwoId(), mProduct.getProductCategoryThirdId())
                                 .execute(new Request.RequestCallback<List<ProductTransfer>>() {
                                     @Override
                                     public void onSuccess(List<ProductTransfer> productTransfers) {
-                                        if (productTransfers!=null){
+                                        if (productTransfers != null) {
                                             mGuessLikeList.addAll(productTransfers);
                                             mGuessLikeAdapter.notifyDataSetChanged();
                                         }
@@ -344,26 +347,36 @@ public class GoodsDetailActivity extends BaseActivity {
         }
     }
 
-    @OnClick({R.id.imgBack, R.id.imgAction1})
+    @OnClick({R.id.imgBack, R.id.imgAction1,R.id.imgToTop,R.id.tvAddShopCart})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgBack:
                 finish();
                 break;
             case R.id.imgAction1:
-                ViewJump.toMain(this,R.id.rbShopCart);
+                ViewJump.toMain(this, R.id.rbShopCart);
+                break;
+            case R.id.imgToTop:
+                isScrollLock = true;
+                scrollView.smoothScrollTo(0, loopBanner.getTop());
+                isScrollLock = false;
+                break;
+            case R.id.tvAddShopCart:
+                if (mProduct!=null)
+                    ViewHelper.addOrUpdateShopCart(this,mProduct,1);
                 break;
         }
     }
 
     /**
      * 自加程序
+     *
      * @param position
      * @param maxPosition
      * @return
      */
-    private int getBannerPosition(int position,int maxPosition){
-        if (position >= maxPosition){
+    private int getBannerPosition(int position, int maxPosition) {
+        if (position >= maxPosition) {
             return position = 1;
         }
         return ++position;
