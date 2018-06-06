@@ -27,11 +27,11 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 /**
  * 横向 商品列表
- *
+ * @see GoodsRecyclerViewAdapter
  * @author dean
  * @time 2018/5/11 上午11:21
  */
-
+@Deprecated
 public class GoodsHorizontalAdapter extends BaseAdapter {
 
     List<ProductTransfer> mList;

@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,11 +37,12 @@ import com.cxgm.app.data.io.goods.FindNewProductReq;
 import com.cxgm.app.data.io.goods.FindTopProductReq;
 import com.cxgm.app.ui.adapter.FirstCategoryAdapter;
 import com.cxgm.app.ui.adapter.GoodsAdapter;
-import com.cxgm.app.ui.adapter.GoodsHorizontalAdapter;
+import com.cxgm.app.ui.adapter.GoodsRecyclerViewAdapter;
 import com.cxgm.app.ui.adapter.MotionAdapter;
 import com.cxgm.app.ui.adapter.ShopAdapter;
 import com.cxgm.app.ui.base.BaseFragment;
 import com.cxgm.app.ui.view.ViewJump;
+import com.cxgm.app.ui.widget.SpaceItemDecoration;
 import com.cxgm.app.utils.Helper;
 import com.cxgm.app.utils.ToastManager;
 import com.deanlib.ootb.data.io.Request;
@@ -100,9 +103,9 @@ public class IndexFragment extends BaseFragment {
     @BindView(R.id.tvNewsContent)
     TextView tvNewsContent;
     @BindView(R.id.hlvRecommend)
-    HorizontalListView hlvRecommend;
+    RecyclerView hlvRecommend;
     @BindView(R.id.hlvNewGoods)
-    HorizontalListView hlvNewGoods;
+    RecyclerView hlvNewGoods;
     @BindView(R.id.layoutGoodsShow)
     LinearLayout layoutGoodsShow;
     @BindView(R.id.lvMotions)
@@ -121,9 +124,9 @@ public class IndexFragment extends BaseFragment {
     FirstCategoryAdapter mFCAdapter;
     List<ShopCategory> mFCList;
 
-    GoodsHorizontalAdapter mTopProductAdapter;
+    GoodsRecyclerViewAdapter mTopProductAdapter;
     List<ProductTransfer> mTopProductList;
-    GoodsHorizontalAdapter mNewProductAdapter;
+    GoodsRecyclerViewAdapter mNewProductAdapter;
     List<ProductTransfer> mNewProductList;
     GoodsAdapter mHotProductAdapter;
     List<ProductTransfer> mHotProductList;
@@ -153,7 +156,6 @@ public class IndexFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
         init();
         loadData();
 
@@ -241,22 +243,30 @@ public class IndexFragment extends BaseFragment {
             });
             //精品推荐
             mTopProductList = new ArrayList<>();
-            mTopProductAdapter = new GoodsHorizontalAdapter(getActivity(),mTopProductList);
+            mTopProductAdapter = new GoodsRecyclerViewAdapter(getActivity(),mTopProductList);
+            LinearLayoutManager recommendLayoutManager = new LinearLayoutManager(getActivity());
+            recommendLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+            hlvRecommend.setLayoutManager(recommendLayoutManager);
+            hlvRecommend.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(5)));
             hlvRecommend.setAdapter(mTopProductAdapter);
-            hlvRecommend.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            mTopProductAdapter.setOnItemClickListener(new GoodsRecyclerViewAdapter.OnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    ViewJump.toGoodsDetail(getActivity(),mTopProductList.get((int)id).getId());
+                public void onItemClick(View view, int position) {
+                    ViewJump.toGoodsDetail(getActivity(),mTopProductList.get(position).getId());
                 }
             });
             //新品上市
             mNewProductList = new ArrayList<>();
-            mNewProductAdapter = new GoodsHorizontalAdapter(getActivity(),mNewProductList);
+            mNewProductAdapter = new GoodsRecyclerViewAdapter(getActivity(),mNewProductList);
+            LinearLayoutManager newGoodsLayoutManager = new LinearLayoutManager(getActivity());
+            newGoodsLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+            hlvNewGoods.setLayoutManager(newGoodsLayoutManager);
+            hlvNewGoods.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(5)));
             hlvNewGoods.setAdapter(mNewProductAdapter);
-            hlvNewGoods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            mNewProductAdapter.setOnItemClickListener(new GoodsRecyclerViewAdapter.OnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    ViewJump.toGoodsDetail(getActivity(),mNewProductList.get((int)id).getId());
+                public void onItemClick(View view, int position) {
+                    ViewJump.toGoodsDetail(getActivity(),mNewProductList.get(position).getId());
                 }
             });
             //热销推荐

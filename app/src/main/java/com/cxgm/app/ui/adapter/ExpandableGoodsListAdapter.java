@@ -197,7 +197,6 @@ public class ExpandableGoodsListAdapter extends BaseExpandableListAdapter {
         holder.tvNum.setText(product.getShopCartNum()+"");
         if (product.getShopCartNum()>0){
             //展示可调节
-            //TODO 没有减法图标
             holder.imgMinus.setVisibility(View.VISIBLE);
             holder.tvNum.setVisibility(View.VISIBLE);
         }else {

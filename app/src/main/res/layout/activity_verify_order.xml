@@ -202,6 +202,8 @@
             </LinearLayout>
 
             <LinearLayout
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:layout_marginBottom="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/item_height"
@@ -220,7 +222,7 @@
                     android:textSize="@dimen/text_size_normal_x" />
 
                 <EditText
-                    android:focusable="false"
+                    android:hint="@string/remark_tag"
                     android:id="@+id/etRemark"
                     style="@style/Edit"
                     android:layout_width="match_parent"

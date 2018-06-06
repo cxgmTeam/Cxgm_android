@@ -38,6 +38,7 @@
                 android:textSize="@dimen/text_size_giant" />
 
             <ImageView
+                android:visibility="gone"
                 android:id="@+id/tvEdit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

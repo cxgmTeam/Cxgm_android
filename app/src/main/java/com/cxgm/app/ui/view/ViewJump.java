@@ -28,6 +28,7 @@ import com.cxgm.app.ui.view.goods.SearchActivity;
 import com.cxgm.app.ui.view.order.NewAddrActivity;
 import com.cxgm.app.ui.view.order.OrderDetailActivity;
 import com.cxgm.app.ui.view.order.OrderPayActivity;
+import com.cxgm.app.ui.view.order.PayResultActivity;
 import com.cxgm.app.ui.view.order.UserOrderActivity;
 import com.cxgm.app.ui.view.order.VerifyOrderActivity;
 import com.cxgm.app.ui.view.user.CouponActivity;
@@ -206,6 +207,15 @@ public class ViewJump {
 
     public static void toMessageList(Activity activity){
         Intent intent = new Intent(activity,MessageListActivity.class);
+        activity.startActivity(intent);
+    }
+
+    public static void toPayResult(Activity activity,int orderId,int status,String payType,float amount){
+        Intent intent = new Intent(activity,PayResultActivity.class);
+        intent.putExtra("orderId",orderId);
+        intent.putExtra("status",status);
+        intent.putExtra("payType",payType);
+        intent.putExtra("amount",amount);
         activity.startActivity(intent);
     }
 

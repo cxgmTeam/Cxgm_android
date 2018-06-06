@@ -250,7 +250,7 @@
                             android:textColor="@color/textGray"
                             android:textSize="@dimen/text_size_small" />
 
-                        <com.deanlib.ootb.widget.HorizontalListView
+                        <android.support.v7.widget.RecyclerView
                             android:listSelector="@color/translate"
                             android:id="@+id/hlvRecommend"
                             android:layout_width="match_parent"
@@ -289,7 +289,7 @@
                             android:textColor="@color/textGray"
                             android:textSize="@dimen/text_size_small" />
 
-                        <com.deanlib.ootb.widget.HorizontalListView
+                        <android.support.v7.widget.RecyclerView
                             android:listSelector="@color/translate"
                             android:id="@+id/hlvNewGoods"
                             android:layout_width="match_parent"

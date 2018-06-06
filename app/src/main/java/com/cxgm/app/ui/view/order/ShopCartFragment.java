@@ -124,6 +124,15 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        init();
+        mPageNum = 1;
+        mCartList.clear();
+        loadData();
+    }
+
     private void init() {
         tvTitle.setText(R.string.shop_cart);
         tvAction1.setText(R.string.delete);
@@ -152,7 +161,7 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
                 loadData();
             }
         });
-
+        cbCheckAll.setChecked(false);
         cbCheckAll.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

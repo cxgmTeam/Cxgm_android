@@ -32,8 +32,8 @@ public class Constants {
     public static String versionName;
     public static String deviceToken;
 
-//    public static String WECHAT_APP_ID = "wx614763e83a977f41";
-//    public static String BAIDU_AK = "Kuu8NxsbIOHBtkgTYXX8vfNqqsBuPZ9U";
+    public static final String WECHAT_APP_ID = "wxd2f7d73babd9de68";
+    public static final String BAIDU_AK = "KevuKZ68Ny3gszdU1h4Y7Rc2ytTY9BPq";
 
     public static BDLocation currentLocation;//当前定位
     public static Shop currentShop;//当前商铺

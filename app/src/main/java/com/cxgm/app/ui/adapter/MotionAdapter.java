@@ -1,6 +1,8 @@
 package com.cxgm.app.ui.adapter;
 
 import android.app.Activity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -12,7 +14,10 @@ import com.bumptech.glide.request.RequestOptions;
 import com.cxgm.app.R;
 import com.cxgm.app.data.entity.Motion;
 import com.cxgm.app.ui.view.ViewJump;
+import com.cxgm.app.ui.widget.SpaceItemDecoration;
 import com.deanlib.ootb.widget.HorizontalListView;
+
+import org.xutils.common.util.DensityUtil;
 
 import java.util.List;
 
@@ -61,19 +66,24 @@ public class MotionAdapter extends BaseAdapter {
         Glide.with(convertView).load(mList.get(position).getImageUrl())
                 .apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
                 .into(holder.imgBanner);
-        holder.imgBanner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //TODO 有没有运营专题页 待商讨
-            }
-        });
+//        holder.imgBanner.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
         if (mList.get(position).getProductList() != null) {
 
-            holder.hlvAdGoods.setAdapter(new GoodsHorizontalAdapter(activity,mList.get(position).getProductList()));
-            holder.hlvAdGoods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            GoodsRecyclerViewAdapter adapter = new GoodsRecyclerViewAdapter(activity,mList.get(position).getProductList());
+            holder.hlvAdGoods.setAdapter(adapter);
+            LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
+            layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+            holder.hlvAdGoods.setLayoutManager(layoutManager);
+            holder.hlvAdGoods.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(1.5f)));
+            adapter.setOnItemClickListener(new GoodsRecyclerViewAdapter.OnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    ViewJump.toGoodsDetail(activity,mList.get(position).getProductList().get((int)id).getId());
+                public void onItemClick(View view, int position) {
+                    ViewJump.toGoodsDetail(activity,mList.get(position).getProductList().get(position).getId());
                 }
             });
 
@@ -85,7 +95,7 @@ public class MotionAdapter extends BaseAdapter {
         @BindView(R.id.imgBanner)
         ImageView imgBanner;
         @BindView(R.id.hlvAdGoods)
-        HorizontalListView hlvAdGoods;
+        RecyclerView hlvAdGoods;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
