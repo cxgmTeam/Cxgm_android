@@ -122,7 +122,7 @@ public class LoginActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable editable) {
-                enabledBtn(tvLogin,ValidateUtils.isMobileNum(etPhoneNum.getText().toString()) && !TextUtils.isEmpty(editable) && editable.length() >=5);
+                enabledBtn(tvLogin,ValidateUtils.isMobileNum(etPhoneNum.getText().toString()) && !TextUtils.isEmpty(editable) && editable.length() >0);
             }
         });
     }

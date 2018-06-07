@@ -11,7 +11,7 @@ import com.deanlib.ootb.entity.BaseEntity;
  * @anthor Dean
  * @time 2018/5/12 0012 22:49
  */
-public class UserAddress extends BaseEntity{
+public class UserAddress extends BaseEntity implements Cloneable{
 
 
     /**
@@ -30,7 +30,7 @@ public class UserAddress extends BaseEntity{
     private String longitude;
     private String phone;
     private String realName;
-    private int idDef;//是否为默认值
+    private int isDef;//是否为默认值
     private String remarks;
 
     public String getRemarks() {
@@ -49,12 +49,12 @@ public class UserAddress extends BaseEntity{
         this.id = id;
     }
 
-    public int getIdDef() {
-        return idDef;
+    public int getIsDef() {
+        return isDef;
     }
 
-    public void setIdDef(int idDef) {
-        this.idDef = idDef;
+    public void setIsDef(int isDef) {
+        this.isDef = isDef;
     }
 
     public String getAddress() {
@@ -105,4 +105,15 @@ public class UserAddress extends BaseEntity{
         this.realName = realName;
     }
 
+    @Override
+    public UserAddress clone() {
+        UserAddress o = null;
+        try {
+            o = (UserAddress) super.clone();
+        }catch (CloneNotSupportedException e){
+            e.printStackTrace();
+        }
+
+        return o;
+    }
 }

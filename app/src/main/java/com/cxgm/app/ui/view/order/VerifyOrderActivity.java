@@ -230,7 +230,7 @@ public class VerifyOrderActivity extends BaseActivity {
             public void onSuccess(List<UserAddress> userAddresses) {
                 if (userAddresses!=null && userAddresses.size()>0){
                     for (UserAddress address : userAddresses){
-                        if (address.getIdDef() == 1){
+                        if (address.getIsDef() == 1){
                             mUserAddress = address;
                             initUserAddress();
                             break;

@@ -150,7 +150,7 @@ public class UserOrderAdapter extends BaseAdapter {
             case Order.STATUS_DISTRIBUTION:
                 //待配送
                 holder.tvOrderState.setText(R.string.distribution);
-                holder.tvOrderState.setText(R.string.apply_for_returning);
+                holder.tvOrderAction.setText(R.string.apply_for_returning);
                 holder.tvOrderAction.setVisibility(View.VISIBLE);
                 break;
             case Order.STATUS_DISTRIBUTING:

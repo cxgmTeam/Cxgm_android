@@ -31,6 +31,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ui.view.common.LaunchActivity"
             android:screenOrientation="portrait"
+            android:theme="@style/LaunchTheme"
             >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -114,6 +115,7 @@
             />
         <activity
             android:name=".wxapi.WXPayEntryActivity"
+            android:theme="@style/OotbAppTheme.NoActionBar.TranslateBg"
             android:exported="true"
             android:launchMode="singleTop"/>
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"> </service>

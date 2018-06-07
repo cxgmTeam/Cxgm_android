@@ -6,11 +6,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
 import com.cxgm.app.data.entity.UserAddress;
 import com.cxgm.app.data.io.order.DeleteAddressReq;
+import com.cxgm.app.data.io.order.UpdateAddressReq;
 import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.utils.ToastManager;
 import com.deanlib.ootb.data.io.Request;
@@ -71,13 +74,38 @@ public class AddrAdapter extends BaseAdapter {
         holder.tvPhoneNumber.setText(TextUtils.hidePhoneNum(mList.get(position).getPhone()));
         holder.tvAddr.setText(mList.get(position).getArea() + mList.get(position).getAddress());
         //设为默认
-        holder.cbDefault.setChecked(mList.get(position).getIdDef() == 1);
-        holder.cbDefault.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        holder.imgDefaultCheck.setImageResource(mList.get(position).getIsDef() == 1?R.mipmap.checked:R.mipmap.check);
+        holder.layoutDefaultCheck.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            public void onClick(View v) {
+                if (mList.get(position).getIsDef()!=1) {
+                    UserAddress address = mList.get(position).clone();
+                    address.setIsDef(1);
+                    new UpdateAddressReq(activity,address).execute(new Request.RequestCallback<Integer>() {
+                        @Override
+                        public void onSuccess(Integer integer) {
+                            for (int i = 0; i < mList.size(); i++) {
+                                mList.get(i).setIsDef(i == position ? 1 : 0);
+                            }
+                            notifyDataSetChanged();
+                        }
 
-                for (int i = 0;i<mList.size() ;i++){
-                    mList.get(i).setIdDef(i == position?1:0);
+                        @Override
+                        public void onError(Throwable ex, boolean isOnCallback) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(Callback.CancelledException cex) {
+
+                        }
+
+                        @Override
+                        public void onFinished() {
+
+                        }
+                    });
+
                 }
             }
         });
@@ -131,8 +159,12 @@ public class AddrAdapter extends BaseAdapter {
         TextView tvAddr;
         @BindView(R.id.line)
         View line;
-        @BindView(R.id.cbDefault)
-        CheckBox cbDefault;
+        @BindView(R.id.tvDefaultCheck)
+        TextView tvDefaultCheck;
+        @BindView(R.id.layoutDefaultCheck)
+        LinearLayout layoutDefaultCheck;
+        @BindView(R.id.imgDefaultCheck)
+        ImageView imgDefaultCheck;
         @BindView(R.id.tvEdit)
         TextView tvEdit;
         @BindView(R.id.tvDelete)

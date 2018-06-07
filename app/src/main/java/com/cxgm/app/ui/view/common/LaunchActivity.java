@@ -36,8 +36,6 @@ import rx.functions.Action1;
 
 public class LaunchActivity extends BaseActivity implements MapHelper.LocationCallback {
 
-    @BindView(R.id.textView)
-    TextView textView;
 
     String[] mPermissions = {
             Manifest.permission.WRITE_EXTERNAL_STORAGE,

@@ -29,17 +29,29 @@
         android:layout_width="match_parent"
         android:layout_height="40dp">
 
-        <CheckBox
-            android:textSize="@dimen/text_size_normal"
-            android:textColor="@color/textBlackTint"
-            android:button="@null"
-            android:drawableLeft="@drawable/selector_check"
-            android:drawablePadding="@dimen/margin_small"
-            android:id="@+id/cbDefault"
-            android:text="@string/set_default"
+        <LinearLayout
+            android:id="@+id/layoutDefaultCheck"
             android:gravity="center_vertical"
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="40dp" />
+            android:layout_height="40dp">
+
+            <ImageView
+                android:id="@+id/imgDefaultCheck"
+                android:src="@mipmap/check"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_marginLeft="@dimen/margin_small"
+                android:textSize="@dimen/text_size_normal"
+                android:textColor="@color/textBlackTint"
+                android:id="@+id/tvDefaultCheck"
+                android:text="@string/set_default"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
 
         <TextView
             android:layout_toLeftOf="@+id/tvDelete"

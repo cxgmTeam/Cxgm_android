@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,6 +16,7 @@ import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.entity.Invoice;
 import com.cxgm.app.data.entity.Order;
+import com.cxgm.app.data.event.PayEvent;
 import com.cxgm.app.data.io.order.CancelOrderReq;
 import com.cxgm.app.data.io.order.OrderDetailReq;
 import com.cxgm.app.data.io.order.SurplusTimeReq;
@@ -125,7 +127,7 @@ public class OrderDetailActivity extends BaseActivity {
     private void init() {
         tvTitle.setText(R.string.order_detail);
         imgBack.setVisibility(View.VISIBLE);
-
+        lvGoods.setFocusable(false);
     }
 
     private void loadData() {
@@ -135,7 +137,7 @@ public class OrderDetailActivity extends BaseActivity {
                 public void onSuccess(Order order) {
                     if (order != null) {
                         mOrder = order;
-                        countDownTime(order.getId());
+                        countDownTime();
                         //状态
                         setStateView(order);
                         //收货地址
@@ -152,12 +154,18 @@ public class OrderDetailActivity extends BaseActivity {
                         //商品
                         if (order.getProductDetails() != null) {
                             lvGoods.setAdapter(new OrderGoodsListAdatpter(order.getProductDetails()));
+                            lvGoods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                                    ViewJump.toGoodsDetail(OrderDetailActivity.this,order.getProductDetails().get((int)id).getProductId());
+                                }
+                            });
                         }
                         //订单信息
                         tvOrderNum.setText(order.getOrderNum());
                         tvOrderTime.setText(order.getOrderTime());
                         //支付方式
-                        tvPayWay.setText(order.getPayType());
+                        tvPayWay.setText(PayEvent.PAY_WAY_CODE_WECHAT.equals(order.getPayType())?R.string.wechat_pay:R.string.alipay);
                         //发票
                         if (order.getReceipt() != null) {
                             tvInvoiceType.setText(Invoice.TYPE_PERSON.equals(order.getReceipt().getType()) ? R.string.person : R.string.company);
@@ -196,9 +204,8 @@ public class OrderDetailActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        if (mOrder != null && Order.STATUS_TO_BE_PAID.equals(mOrder.getStatus())) {
-            countDownTime(mOrder.getId());
-        }
+        countDownTime();
+
     }
 
 
@@ -253,46 +260,48 @@ public class OrderDetailActivity extends BaseActivity {
         }
     }
 
-    private void countDownTime(int orderId) {
-        new SurplusTimeReq(this, orderId).execute(new Request.RequestCallback<Long>() {
-            @Override
-            public void onSuccess(Long aLong) {
-                if (aLong > 0) {
-                    //倒计时
-                    mTimer = new CountDownTimer(aLong, 1000) {
-                        @Override
-                        public void onTick(long millisUntilFinished) {
-                            tvTime.setText(getString(R.string.remaining_, FormatUtils.convertDateTimestampToString(millisUntilFinished, "mm:ss")));
-                        }
-
-                        @Override
-                        public void onFinish() {
-                            if (mOrder != null) {
-                                mOrder.setStatus(Order.STATUS_CANCEL);
-                                setStateView(mOrder);
+    private void countDownTime() {
+        if (mOrder != null && Order.STATUS_TO_BE_PAID.equals(mOrder.getStatus())) {
+            new SurplusTimeReq(this, mOrder.getId()).execute(new Request.RequestCallback<Long>() {
+                @Override
+                public void onSuccess(Long aLong) {
+                    if (aLong > 0) {
+                        //倒计时
+                        mTimer = new CountDownTimer(aLong, 1000) {
+                            @Override
+                            public void onTick(long millisUntilFinished) {
+                                tvTime.setText(getString(R.string.remaining_, FormatUtils.convertDateTimestampToString(millisUntilFinished, "mm:ss")));
                             }
 
-                        }
-                    };
-                    mTimer.start();
+                            @Override
+                            public void onFinish() {
+                                if (mOrder != null) {
+                                    mOrder.setStatus(Order.STATUS_CANCEL);
+                                    setStateView(mOrder);
+                                }
+
+                            }
+                        };
+                        mTimer.start();
+                    }
                 }
-            }
 
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
 
-            }
+                }
 
-            @Override
-            public void onCancelled(Callback.CancelledException cex) {
+                @Override
+                public void onCancelled(Callback.CancelledException cex) {
 
-            }
+                }
 
-            @Override
-            public void onFinished() {
+                @Override
+                public void onFinished() {
 
-            }
-        });
+                }
+            });
+        }
 
     }
 

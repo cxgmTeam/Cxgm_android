@@ -54,6 +54,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     public void onResp(BaseResp resp) {
 
         LogUtil.d(TAG+ "onResp type:"+resp.getType()+" errcode:"+resp.errCode+" errstr:"+resp.errStr);
+        //Toast.makeText(this, TAG+ "onResp type:"+resp.getType()+" errcode:"+resp.errCode+" errstr:"+resp.errStr, Toast.LENGTH_LONG).show();
 
         if (resp.getType() == ConstantsAPI.COMMAND_PAY_BY_WX){
 

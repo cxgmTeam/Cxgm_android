@@ -9,10 +9,13 @@ import android.widget.TextView;
 
 import com.cxgm.app.R;
 import com.cxgm.app.data.event.PayEvent;
+import com.cxgm.app.data.io.order.UpdateStatusReq;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.utils.StringHelper;
+import com.deanlib.ootb.data.io.Request;
 
+import org.xutils.common.Callback;
 import org.xutils.common.util.DensityUtil;
 
 import butterknife.BindView;
@@ -70,6 +73,7 @@ public class PayResultActivity extends BaseActivity {
         isPaySuccess = mStatus == PayEvent.STATUS_SUCCESS;
 
         init();
+        loadData();
     }
 
     private void init() {
@@ -84,6 +88,33 @@ public class PayResultActivity extends BaseActivity {
         tvPayAction1.setText(isPaySuccess?R.string.check_order:R.string.pay_again);
         tvPayAction2.setText(isPaySuccess?R.string.return_index:R.string.check_order);
 
+    }
+
+    private void loadData(){
+        if (isPaySuccess && mOrderId>0) {
+            //通知服务器支付成功
+            new UpdateStatusReq(this, mOrderId,mPayType).execute(new Request.RequestCallback<String>() {
+                @Override
+                public void onSuccess(String o) {
+
+                }
+
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+
+                }
+
+                @Override
+                public void onCancelled(Callback.CancelledException cex) {
+
+                }
+
+                @Override
+                public void onFinished() {
+
+                }
+            },false);
+        }
     }
 
     @OnClick({R.id.imgBack, R.id.tvPayAction1,R.id.tvPayAction2})

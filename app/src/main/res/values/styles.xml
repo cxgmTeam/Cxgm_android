@@ -8,6 +8,9 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:windowBackground">@color/colorAppBackground</item>
     </style>
+    <style name="LaunchTheme" parent="AppTheme">
+        <item name="android:windowBackground">@drawable/launch</item>
+    </style>
 
     <style name="MenuButton">
         <item name="android:button">@null</item>

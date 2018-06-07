@@ -29,7 +29,8 @@
 
 
 
-        <include layout="@layout/layout_goods_order"/>
+        <include
+            layout="@layout/layout_goods_order"/>
 
     </LinearLayout>
 

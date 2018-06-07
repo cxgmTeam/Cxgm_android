@@ -65,6 +65,7 @@
         android:layout_weight="1">
 
         <LinearLayout
+            android:paddingTop="@dimen/margin_normal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -74,9 +75,10 @@
                 layout="@layout/layout_addr_and_receive_time"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin_normal" />
+                />
 
             <LinearLayout
+                android:layout_marginTop="@dimen/margin_normal"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/colorWhite"
@@ -86,7 +88,6 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/margin_normal"
                     android:padding="@dimen/margin_giant">
 
                     <ImageView
@@ -356,8 +357,9 @@
                     android:textSize="@dimen/text_size_normal_x" />
 
                 <TextView
+                    android:layout_alignParentRight="true"
                     android:id="@+id/tvPayment"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignBaseline="@+id/text4"
                     android:layout_marginRight="@dimen/margin_giant"

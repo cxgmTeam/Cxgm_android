@@ -7,8 +7,8 @@ public class PayEvent {
         this.status = status;
     }
 
-    public static final String PAY_WAY_CODE_ALIPAY = "zhifubao";
-    public static final String PAY_WAY_CODE_WECHAT = "weixin";
+    public static final String PAY_WAY_CODE_ALIPAY = "zfb";
+    public static final String PAY_WAY_CODE_WECHAT = "wx";
     public static final int STATUS_SUCCESS = 0;
     public static final int STATUS_FAIL = 1;
 

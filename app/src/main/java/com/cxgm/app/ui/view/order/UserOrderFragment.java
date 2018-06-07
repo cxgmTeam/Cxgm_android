@@ -71,6 +71,7 @@ public class UserOrderFragment extends BaseFragment {
     }
 
     private void init(){
+        mPageNum = 1;
         mOrderList = new ArrayList<>();
         mOrderAdapter = new UserOrderAdapter(getActivity(),mOrderList);
         listView.setAdapter(mOrderAdapter);

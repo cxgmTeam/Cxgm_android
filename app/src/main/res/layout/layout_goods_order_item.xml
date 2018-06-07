@@ -11,15 +11,15 @@
         android:layout_toLeftOf="@+id/tvCount"
         android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/goods_order_item_height"
+        android:layout_height="wrap_content"
         layout="@layout/layout_goods_order"/>
 
     <TextView
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:id="@+id/tvCount"
-        android:layout_marginBottom="@dimen/margin_normal"
         android:layout_gravity="bottom"
+        android:paddingBottom="@dimen/margin_normal"
         android:gravity="right"
         android:textSize="@dimen/text_size_normal_x"
         android:textColor="@color/textBlackTint"
