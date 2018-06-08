@@ -5,12 +5,17 @@ import android.content.Context;
 import android.view.View;
 
 import com.cxgm.app.R;
+import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.entity.ProductTransfer;
+import com.cxgm.app.data.entity.Shop;
 import com.cxgm.app.data.entity.ShopCart;
+import com.cxgm.app.data.entity.UserAddress;
+import com.cxgm.app.data.io.common.CheckAddressReq;
 import com.cxgm.app.data.io.order.AddCartReq;
 import com.cxgm.app.data.io.order.UpdateCartReq;
 import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.ui.view.goods.GoodsSecondClassifyActivity;
+import com.cxgm.app.ui.view.order.VerifyOrderActivity;
 import com.deanlib.ootb.data.io.Request;
 import com.jakewharton.rxbinding.view.RxView;
 
@@ -20,6 +25,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.xutils.common.Callback;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import q.rorbin.badgeview.Badge;
@@ -135,6 +142,56 @@ public class ViewHelper {
         } catch (Exception e) {
             return htmltext;
         }
+    }
+
+    /**
+     * 筛选可用地址
+     * @param activity
+     * @param userAddresses
+     */
+    public static void filterAddress(Activity activity,List<UserAddress> userAddresses,int currentShopId,OnActionListener listener){
+        for (int i = 0;i<userAddresses.size();i++){
+
+            int finalI = i;
+            new CheckAddressReq(activity,userAddresses.get(i).getLongitude(),userAddresses.get(i).getDimension())
+                    .execute(new Request.RequestCallback<List<Shop>>() {
+                        @Override
+                        public void onSuccess(List<Shop> shops) {
+                            if (shops!=null){
+                                for (Shop sh :shops){
+                                    if (sh.getId() == currentShopId){
+                                        userAddresses.get(finalI).isEnable = true;
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable ex, boolean isOnCallback) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(Callback.CancelledException cex) {
+
+                        }
+
+                        @Override
+                        public void onFinished() {
+                            if (finalI == userAddresses.size()-1){
+                                //排序
+                                Collections.sort(userAddresses);
+                                if (listener!=null){
+                                    listener.onSuccess();
+                                }
+                            }
+                        }
+                    });
+
+        }
+
+
     }
 
 }

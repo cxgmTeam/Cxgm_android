@@ -4,8 +4,6 @@ import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -37,9 +35,15 @@ public class AddrAdapter extends BaseAdapter {
 
     List<UserAddress> mList;
     Activity activity;
-    public AddrAdapter(Activity activity,List<UserAddress> mList) {
+    boolean isFilter;
+    public AddrAdapter(Activity activity,List<UserAddress> mList){
         this.mList = mList;
         this.activity = activity;
+    }
+    public AddrAdapter(Activity activity,List<UserAddress> mList,boolean isFilter) {
+        this.mList = mList;
+        this.activity = activity;
+        this.isFilter = isFilter;
     }
 
     @Override
@@ -146,6 +150,9 @@ public class AddrAdapter extends BaseAdapter {
                         });
             }
         });
+        if (isFilter)
+            setStyle(holder,mList.get(position).isEnable);
+        else setStyle(holder,true);
 
         return convertView;
     }
@@ -172,6 +179,24 @@ public class AddrAdapter extends BaseAdapter {
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
+        }
+    }
+
+    private void setStyle(ViewHolder holder,boolean isEnable){
+        if (isEnable){
+            holder.tvName.setTextColor(activity.getResources().getColor(R.color.textBlack));
+            holder.tvPhoneNumber.setTextColor(activity.getResources().getColor(R.color.textBlack));
+            holder.tvAddr.setTextColor(activity.getResources().getColor(R.color.textGray));
+            holder.tvDefaultCheck.setTextColor(activity.getResources().getColor(R.color.textBlackTint));
+            holder.tvEdit.setTextColor(activity.getResources().getColor(R.color.textBlackTint));
+            holder.tvDelete.setTextColor(activity.getResources().getColor(R.color.textBlackTint));
+        }else {
+            holder.tvName.setTextColor(activity.getResources().getColor(R.color.textStrike));
+            holder.tvPhoneNumber.setTextColor(activity.getResources().getColor(R.color.textStrike));
+            holder.tvAddr.setTextColor(activity.getResources().getColor(R.color.textStrike));
+            holder.tvDefaultCheck.setTextColor(activity.getResources().getColor(R.color.textStrike));
+            holder.tvEdit.setTextColor(activity.getResources().getColor(R.color.textStrike));
+            holder.tvDelete.setTextColor(activity.getResources().getColor(R.color.textStrike));
         }
     }
 }

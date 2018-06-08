@@ -180,7 +180,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
 
             @Override
             public void onGetReverseGeoCodeResult(ReverseGeoCodeResult reverseGeoCodeResult) {
-                if (reverseGeoCodeResult != null) {
+                if (reverseGeoCodeResult != null && reverseGeoCodeResult.getAddressDetail()!=null) {
                     mTempCity = reverseGeoCodeResult.getAddressDetail().city;
                     //获取POI检索结果
                     setPoiList(reverseGeoCodeResult.getPoiList());

@@ -22,7 +22,9 @@ import com.cxgm.app.data.entity.CouponDetail;
 import com.cxgm.app.data.entity.Invoice;
 import com.cxgm.app.data.entity.Order;
 import com.cxgm.app.data.entity.OrderProduct;
+import com.cxgm.app.data.entity.Shop;
 import com.cxgm.app.data.entity.UserAddress;
+import com.cxgm.app.data.io.common.CheckAddressReq;
 import com.cxgm.app.data.io.order.AddOrderReq;
 import com.cxgm.app.data.io.order.AddressListReq;
 import com.cxgm.app.data.io.order.CheckCouponReq;
@@ -31,6 +33,7 @@ import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.utils.Helper;
 import com.cxgm.app.utils.StringHelper;
 import com.cxgm.app.utils.ToastManager;
+import com.cxgm.app.utils.ViewHelper;
 import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.utils.DeviceUtils;
 import com.deanlib.ootb.utils.TextUtils;
@@ -229,18 +232,24 @@ public class VerifyOrderActivity extends BaseActivity {
             @Override
             public void onSuccess(List<UserAddress> userAddresses) {
                 if (userAddresses!=null && userAddresses.size()>0){
-                    for (UserAddress address : userAddresses){
-                        if (address.getIsDef() == 1){
-                            mUserAddress = address;
-                            initUserAddress();
-                            break;
+                    ViewHelper.filterAddress(VerifyOrderActivity.this, userAddresses, Constants.currentShop.getId(), new ViewHelper.OnActionListener() {
+                        @Override
+                        public void onSuccess() {
+                            for (UserAddress address:userAddresses) {
+                                if (address.getIsDef() == 1) {
+                                    mUserAddress = address;
+                                    initUserAddress();
+                                    break;
+                                }
+                            }
+                            //如果没有设置默认
+                            if (mUserAddress==null){
+                                mUserAddress = userAddresses.get(0);
+                                initUserAddress();
+                            }
                         }
-                    }
-                    //如果没有设置默认
-                    if (mUserAddress==null){
-                        mUserAddress = userAddresses.get(0);
-                        initUserAddress();
-                    }
+                    });
+
                 }
             }
 

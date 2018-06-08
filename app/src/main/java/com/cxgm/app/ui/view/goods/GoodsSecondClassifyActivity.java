@@ -99,6 +99,12 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
         }
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkShopCart();
+    }
+
     private void init() {
         tvTitle.setText(mFirstCategory.getName());
         imgBack.setVisibility(View.VISIBLE);
@@ -200,6 +206,9 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
                     }
                 });
 
+    }
+
+    private void checkShopCart(){
         if (Constants.currentShop!=null) {
             //查询购物车
             new ShopCartListReq(this, Constants.currentShop.getId(), 1, 1)
@@ -228,7 +237,6 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
                         }
                     });
         }
-
     }
 
     /**

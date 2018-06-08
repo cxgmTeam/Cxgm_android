@@ -2,6 +2,7 @@ package com.cxgm.app.data.entity;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import com.deanlib.ootb.entity.BaseEntity;
 
@@ -11,7 +12,7 @@ import com.deanlib.ootb.entity.BaseEntity;
  * @anthor Dean
  * @time 2018/5/12 0012 22:49
  */
-public class UserAddress extends BaseEntity implements Cloneable{
+public class UserAddress extends BaseEntity implements Cloneable ,Comparable<UserAddress>{
 
 
     /**
@@ -32,6 +33,7 @@ public class UserAddress extends BaseEntity implements Cloneable{
     private String realName;
     private int isDef;//是否为默认值
     private String remarks;
+    public boolean isEnable;//地址相对于当前商铺是可用的，在配送范围内的
 
     public String getRemarks() {
         return remarks;
@@ -115,5 +117,11 @@ public class UserAddress extends BaseEntity implements Cloneable{
         }
 
         return o;
+    }
+
+    @Override
+    public int compareTo(@NonNull UserAddress o) {
+
+        return this.isEnable?-1:1;
     }
 }

@@ -11,12 +11,15 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
+import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.entity.UserAddress;
 import com.cxgm.app.data.io.order.AddressListReq;
 import com.cxgm.app.ui.adapter.AddrAdapter;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
+import com.cxgm.app.utils.ToastManager;
 import com.cxgm.app.utils.UserManager;
+import com.cxgm.app.utils.ViewHelper;
 import com.deanlib.ootb.data.io.Request;
 
 import org.xutils.common.Callback;
@@ -73,16 +76,20 @@ public class AddrOptionActivity extends BaseActivity {
 
 
         mAddrList = new ArrayList<>();
-        mAddrAdapter = new AddrAdapter(this,mAddrList);
+        mAddrAdapter = new AddrAdapter(this,mAddrList,true);
         lvAddr.setAdapter(mAddrAdapter);
 
         lvAddr.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent data = new Intent();
-                data.putExtra("address",mAddrList.get((int)id));
-                setResult(RESULT_OK,data);
-                finish();
+                if (mAddrList.get((int)id).isEnable) {
+                    Intent data = new Intent();
+                    data.putExtra("address", mAddrList.get((int) id));
+                    setResult(RESULT_OK, data);
+                    finish();
+                }else {
+                    ToastManager.sendToast(getString(R.string.adress_invalid));
+                }
             }
         });
 
@@ -94,8 +101,14 @@ public class AddrOptionActivity extends BaseActivity {
                     @Override
                     public void onSuccess(List<UserAddress> userAddresses) {
                         if (userAddresses!=null){
-                            mAddrList.addAll(userAddresses);
-                            mAddrAdapter.notifyDataSetChanged();
+                            ViewHelper.filterAddress(AddrOptionActivity.this, userAddresses, Constants.currentShop.getId(), new ViewHelper.OnActionListener() {
+                                @Override
+                                public void onSuccess() {
+                                    mAddrList.addAll(userAddresses);
+                                    mAddrAdapter.notifyDataSetChanged();
+                                }
+                            });
+
                         }
                     }
 

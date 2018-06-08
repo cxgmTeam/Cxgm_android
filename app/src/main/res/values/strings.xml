@@ -253,5 +253,6 @@
     <string name="exchange_success">兑换成功</string>
     <string name="num_not_0">购买数量不能小于1</string>
     <string name="remark_tag">这里输入备注信息～</string>
+    <string name="adress_invalid">该地址不在配送范围</string>
 
 </resources>

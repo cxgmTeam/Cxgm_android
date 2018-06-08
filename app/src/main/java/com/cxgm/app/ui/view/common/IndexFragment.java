@@ -597,6 +597,7 @@ public class IndexFragment extends BaseFragment {
                                         //todo 不能更新currentShop，用户可以只点了重新定位，而没有在地图上选择
                                         //返回得到的定位信息内仍然可能没有商铺
                                         //或者有商铺，而非用户最开始选择的商铺，直接替换，是否需要提示给用户
+                                        //todo 地址配送区域重叠
                                     }
                                 }
 
