@@ -1,5 +1,6 @@
 package com.cxgm.app.ui.view.order;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Path;
 import android.graphics.RectF;
@@ -11,6 +12,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -59,6 +61,7 @@ import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.utils.MapHelper;
 import com.cxgm.app.utils.ToastManager;
 import com.deanlib.ootb.data.io.Request;
+import com.deanlib.ootb.utils.DeviceUtils;
 import com.deanlib.ootb.widget.ListViewForScrollView;
 
 import org.xutils.common.Callback;
@@ -205,6 +208,11 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     String keyword = etSearchWord.getText().toString().trim();
                     if (!TextUtils.isEmpty(keyword)) {
+                        View view = getWindow().peekDecorView();
+                        if (view != null) {
+                            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),0);
+                        }
                         loadPoi(mTempCity, keyword);
                     }
                 }
@@ -223,18 +231,14 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
 
                 for (int i = 0; i < mPoiList.size(); i++) {
                     mPoiList.get(i).isChecked = i == id;
-                    mPoiAdapter.notifyDataSetChanged();
-                    /**
-                    if (i == id) {
-                        //标记定位点
-                        drawLocationPoint(mPoiList.get((int) id).location.latitude, mPoiList.get((int) id).location.longitude);
-                        //反向编码，以得到城市名，也可以得到POI信息 开启后，得到新的结果会重置这个list,看上去就是跳来跳去
-                        //mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(mPoiList.get((int) id).location.latitude, mPoiList.get((int) id).location.longitude)));
-                    }
-                    **/
                 }
-
-                //改成选一个地址直接就返回
+                mPoiAdapter.notifyDataSetChanged();
+                /** 改成选一个地址直接就返回 不再需要定位
+                //标记定位点
+                drawLocationPoint(mPoiList.get((int) id).location.latitude, mPoiList.get((int) id).location.longitude);
+                //反向编码，以得到城市名，也可以得到POI信息 开启后，得到新的结果会重置这个list,看上去就是跳来跳去
+                mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(mPoiList.get((int) id).location.latitude, mPoiList.get((int) id).location.longitude)));
+                **/
                 finish();
 
             }
@@ -429,6 +433,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
                 UserPoiInfo info = new UserPoiInfo(poiInfos.get(i));
                 if (i == 0) {
                     info.isChecked = true;
+                    drawLocationPoint(info.location.latitude,info.location.longitude);
                 }
                 mPoiList.add(info);
             }

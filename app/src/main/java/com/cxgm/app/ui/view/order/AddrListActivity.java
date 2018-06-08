@@ -148,6 +148,7 @@ public class AddrListActivity extends BaseActivity implements MapHelper.Location
                 ViewJump.toNewAddr(this);
                 break;
             case R.id.tvRelocation:
+                tvCurrentAddr.setText("");
                 location();
                 break;
         }

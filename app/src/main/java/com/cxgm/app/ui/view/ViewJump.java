@@ -54,6 +54,8 @@ public class ViewJump {
     public static final int CODE_INVOICE = 4;
     public static final int CODE_COUPON_OPTION = 5;
     public static final int CODE_DELIVERY_TIME_DIALOG = 6;
+    public static final int CODE_GOODS_SPECIFICATION_DIALOG = 7;
+    public static final int CODE_GOODS_DETAIL = 8;
 
     public static void toMain(Activity activity){
         Intent intent = new Intent(activity, MainActivity.class);
@@ -116,7 +118,7 @@ public class ViewJump {
     public static void toGoodsDetail(Activity activity, int productId){
         Intent intent = new Intent(activity, GoodsDetailActivity.class);
         intent.putExtra("productId",productId);
-        activity.startActivity(intent);
+        activity.startActivityForResult(intent,CODE_GOODS_DETAIL);
     }
 
     public static void toGoodsSecondClassify(Activity activity,ShopCategory category){
@@ -177,7 +179,7 @@ public class ViewJump {
     public static void toGoodsSpecificationDialog(Activity activity,ProductTransfer product){
         Intent intent = new Intent(activity,GoodsSpecificationDialogActivity.class);
         intent.putExtra("product",product);
-        activity.startActivity(intent);
+        activity.startActivityForResult(intent,CODE_GOODS_SPECIFICATION_DIALOG);
         activity.overridePendingTransition(R.anim.anim_down_up,0);
     }
 

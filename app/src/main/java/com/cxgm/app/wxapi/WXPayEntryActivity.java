@@ -7,7 +7,6 @@ import android.widget.Toast;
 
 import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.event.PayEvent;
-import com.cxgm.app.ui.base.BaseActivity;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
@@ -70,7 +69,8 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
                     break;
             }
 
-            PayEvent event = new PayEvent(PayEvent.PAY_WAY_CODE_WECHAT,resp.errCode==0?PayEvent.STATUS_SUCCESS:PayEvent.STATUS_FAIL);
+            PayEvent event = new PayEvent(PayEvent.PAY_TYPE_WECHAT,resp.errCode==0?PayEvent.STATUS_SUCCESS:PayEvent.STATUS_FAIL);
+            event.obj = resp;
             EventBus.getDefault().post(event);
 
             finish();

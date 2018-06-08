@@ -1,5 +1,6 @@
 package com.cxgm.app.ui.view.goods;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -17,8 +18,12 @@ import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.entity.ProductImage;
 import com.cxgm.app.data.entity.ProductTransfer;
+import com.cxgm.app.data.entity.ShopCart;
+import com.cxgm.app.data.entity.base.PageInfo;
 import com.cxgm.app.data.io.goods.FindProductDetailReq;
 import com.cxgm.app.data.io.goods.PushProductsReq;
+import com.cxgm.app.data.io.order.DeleteAddressReq;
+import com.cxgm.app.data.io.order.ShopCartListReq;
 import com.cxgm.app.ui.adapter.GoodsAdapter;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
@@ -76,8 +81,8 @@ public class GoodsDetailActivity extends BaseActivity {
     TextView tvOriginal;
     @BindView(R.id.imgDiscounts)
     ImageView imgDiscounts;
-    @BindView(R.id.tvSpecification)
-    TextView tvSpecification;
+//    @BindView(R.id.tvSpecification)
+//    TextView tvSpecification;
     @BindView(R.id.layoutSpecification)
     LinearLayout layoutSpecification;
     @BindView(R.id.tvTrademark)
@@ -113,7 +118,7 @@ public class GoodsDetailActivity extends BaseActivity {
     boolean isScrollLock = false;
     //    boolean isSelectLock = false;
     int mBannerPosition = 1;
-
+    int mShopCartNum = 0; //种类数
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -238,6 +243,8 @@ public class GoodsDetailActivity extends BaseActivity {
                         }
 
                         //规格
+//                        if (mActionNum > 0)
+//                            tvSpecification.setText(getString(R.string.select_, mActionNum + mProduct.getUnit()));
                         layoutSpecification.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
@@ -295,7 +302,7 @@ public class GoodsDetailActivity extends BaseActivity {
                         //商品介绍图
 //                        Glide.with(GoodsDetailActivity.this).load(mProduct.getIntroduction()).apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
 //                                .into(imgGoodsDetailPic);
-                        wvIntroduction.loadData(mProduct.getIntroduction(), "text/html; charset=UTF-8", null);
+                        wvIntroduction.loadData(ViewHelper.getNewContent(mProduct.getIntroduction()), "text/html; charset=UTF-8", null);
 
 
                         //猜你喜欢
@@ -344,10 +351,44 @@ public class GoodsDetailActivity extends BaseActivity {
                 }
             });
 
+            checkShopCart();
+
         }
     }
 
-    @OnClick({R.id.imgBack, R.id.imgAction1,R.id.imgToTop,R.id.tvAddShopCart})
+    //查询购物车
+    private void checkShopCart (){
+
+        if (Constants.currentShop !=null) {
+            new ShopCartListReq(this, Constants.currentShop.getId(), 1, 1)
+                    .execute(new Request.RequestCallback<PageInfo<ShopCart>>() {
+                        @Override
+                        public void onSuccess(PageInfo<ShopCart> shopCartPageInfo) {
+                            if (shopCartPageInfo != null) {
+                                mShopCartNum = shopCartPageInfo.getTotal();
+                                ViewHelper.updateShopCartNum(GoodsDetailActivity.this, imgAction1, mShopCartNum);
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable ex, boolean isOnCallback) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(Callback.CancelledException cex) {
+
+                        }
+
+                        @Override
+                        public void onFinished() {
+
+                        }
+                    });
+        }
+    }
+
+    @OnClick({R.id.imgBack, R.id.imgAction1, R.id.imgToTop, R.id.tvAddShopCart})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgBack:
@@ -362,10 +403,53 @@ public class GoodsDetailActivity extends BaseActivity {
                 isScrollLock = false;
                 break;
             case R.id.tvAddShopCart:
-                if (mProduct!=null)
-                    ViewHelper.addOrUpdateShopCart(this,mProduct,1);
+                if (mProduct != null) {
+                    ViewJump.toGoodsSpecificationDialog(this, mProduct);
+//                    if (mActionNum <= 0) {
+//                        ViewJump.toGoodsSpecificationDialog(this, mProduct);
+//                        return;
+//                    }
+//                    ViewHelper.addOrUpdateShopCart(this, mProduct, mActionNum, new ViewHelper.OnActionListener() {
+//                        @Override
+//                        public void onSuccess() {
+//                            if (mProduct.getShopCartNum()==mActionNum) {
+//                                mShopCartNum++;
+//                                ViewHelper.updateShopCartNum(GoodsDetailActivity.this, imgAction1,mShopCartNum);
+//                            }
+//                        }
+//                    });
+                    //TODO 加入购物车  duang 加特效
+                }
                 break;
         }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
+                case ViewJump.CODE_GOODS_SPECIFICATION_DIALOG:
+                    if (data != null) {
+                        int num = data.getIntExtra("num", 0);
+                        if (mProduct!=null) {
+                            mProduct.setShopCartNum(num);
+                            checkShopCart();
+//                        if (mActionNum > 0)
+//                            tvSpecification.setText(getString(R.string.select_, mActionNum + mProduct.getUnit()));
+                        }
+                    }
+                    break;
+            }
+        }
+    }
+
+    @Override
+    public void finish() {
+        Intent data = new Intent();
+        data.putExtra("product",mProduct);
+        setResult(RESULT_OK,data);
+        super.finish();
     }
 
     /**

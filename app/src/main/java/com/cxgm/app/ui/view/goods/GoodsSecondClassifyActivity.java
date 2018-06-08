@@ -1,5 +1,6 @@
 package com.cxgm.app.ui.view.goods;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import com.cxgm.app.ui.adapter.ExpandableGoodsListAdapter;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.ui.view.common.MainActivity;
+import com.cxgm.app.utils.ViewHelper;
 import com.deanlib.ootb.data.io.Request;
 import com.jakewharton.rxbinding.view.RxView;
 
@@ -78,7 +80,7 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
     Map<String,List<ProductTransfer>> mProductMap;
 
     ExpandableGoodsListAdapter mEGLAdapter;
-    Badge mShopCartBadge;
+//    Badge mShopCartBadge;
     int mShopCartNum = 0; //种类数
 
     @Override
@@ -206,7 +208,7 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
                         public void onSuccess(PageInfo<ShopCart> shopCartPageInfo) {
                             if (shopCartPageInfo != null) {
                                 mShopCartNum = shopCartPageInfo.getTotal();
-                                updateShopCartNum(mShopCartNum);
+                                ViewHelper.updateShopCartNum(GoodsSecondClassifyActivity.this,imgAction2,mShopCartNum);
                             }
                         }
 
@@ -373,18 +375,45 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
         }
     }
 
-    private void updateShopCartNum(int num){
-        //商品种类，不是商品数量
-        if (mShopCartBadge == null) {
-            mShopCartBadge = new QBadgeView(GoodsSecondClassifyActivity.this)
-                    .bindTarget(imgAction2).setBadgeTextSize(8, true);
-            RxView.clicks(imgAction2).throttleFirst(2, TimeUnit.SECONDS)
-                    .subscribe(o->{ViewJump.toMain(this,R.id.rbShopCart);});
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK){
+            switch (requestCode){
+                case ViewJump.CODE_GOODS_DETAIL:
+                    //更新数量
+                    if (data!=null){
+                        ProductTransfer product = (ProductTransfer) data.getSerializableExtra("product");
+                        if (product!=null){
+                            List<ProductTransfer> list = mProductMap.get(product.getProductCategoryThirdName());
+                            if (list!=null) {
+                                for (ProductTransfer p : list){
+                                    if (p.getId() == product.getId()){
+                                        p.setShopCartNum(product.getShopCartNum());
+                                        mEGLAdapter.notifyDataSetChanged();
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    break;
+            }
         }
-        if (num>0)
-            mShopCartBadge.setBadgeNumber(num);
-        else mShopCartBadge.hide(true);
     }
+
+    //    private void updateShopCartNum(int num){
+//        //商品种类，不是商品数量
+//        if (mShopCartBadge == null) {
+//            mShopCartBadge = new QBadgeView(GoodsSecondClassifyActivity.this)
+//                    .bindTarget(imgAction2).setBadgeTextSize(8, true);
+//            RxView.clicks(imgAction2).throttleFirst(2, TimeUnit.SECONDS)
+//                    .subscribe(o->{ViewJump.toMain(this,R.id.rbShopCart);});
+//        }
+//        if (num>0)
+//            mShopCartBadge.setBadgeNumber(num);
+//        else mShopCartBadge.hide(true);
+//    }
 
 
     @Override
@@ -392,7 +421,7 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
         if (product!=null && product.getShopCartNum() == 1){
             //从无到有
             mShopCartNum ++;
-            updateShopCartNum(mShopCartNum);
+            ViewHelper.updateShopCartNum(GoodsSecondClassifyActivity.this,imgAction2,mShopCartNum);
         }
 
     }
@@ -404,7 +433,7 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
             mShopCartNum --;
             if (mShopCartNum<0)
                 mShopCartNum = 0;
-            updateShopCartNum(mShopCartNum);
+            ViewHelper.updateShopCartNum(GoodsSecondClassifyActivity.this,imgAction2,mShopCartNum);
         }
     }
 }

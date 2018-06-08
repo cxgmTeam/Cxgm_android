@@ -14,6 +14,7 @@ import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.io.common.VersionControlReq;
 import com.cxgm.app.ui.base.BaseActivity;
+import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.utils.UserManager;
 import com.deanlib.ootb.data.PersistenceUtils;
 import com.deanlib.ootb.data.io.Request;
@@ -100,7 +101,8 @@ public class SettingsActivity extends BaseActivity {
                 break;
             case R.id.tvLogout:
                 UserManager.deleteUser();
-                init();
+                ViewJump.toLogin(this);
+                finish();
                 break;
         }
     }

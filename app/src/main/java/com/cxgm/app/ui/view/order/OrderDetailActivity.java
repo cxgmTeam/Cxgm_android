@@ -165,7 +165,7 @@ public class OrderDetailActivity extends BaseActivity {
                         tvOrderNum.setText(order.getOrderNum());
                         tvOrderTime.setText(order.getOrderTime());
                         //支付方式
-                        tvPayWay.setText(PayEvent.PAY_WAY_CODE_WECHAT.equals(order.getPayType())?R.string.wechat_pay:R.string.alipay);
+                        tvPayWay.setText(PayEvent.PAY_TYPE_WECHAT.equals(order.getPayType())?R.string.wechat_pay:R.string.alipay);
                         //发票
                         if (order.getReceipt() != null) {
                             tvInvoiceType.setText(Invoice.TYPE_PERSON.equals(order.getReceipt().getType()) ? R.string.person : R.string.company);

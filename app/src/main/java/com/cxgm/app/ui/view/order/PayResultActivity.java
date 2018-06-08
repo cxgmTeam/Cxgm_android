@@ -16,7 +16,6 @@ import com.cxgm.app.utils.StringHelper;
 import com.deanlib.ootb.data.io.Request;
 
 import org.xutils.common.Callback;
-import org.xutils.common.util.DensityUtil;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -83,7 +82,7 @@ public class PayResultActivity extends BaseActivity {
         textView2.setText(isPaySuccess?R.string.pay_successful:R.string.pay_fail);
         textView2.setCompoundDrawablesWithIntrinsicBounds(isPaySuccess?R.mipmap.tick2:R.mipmap.error,0,0,0);
         textView2.setTextColor(getResources().getColor(isPaySuccess?R.color.textBlackTint:R.color.textRed));
-        tvPayTag.setText(isPaySuccess?getString(PayEvent.PAY_WAY_CODE_WECHAT.equals(mPayType)?R.string.wechat_pay_:R.string.alipay_, StringHelper.getRMBFormat(mAmount)):getString(R.string.pay_fail_tag));
+        tvPayTag.setText(isPaySuccess?getString(PayEvent.PAY_TYPE_WECHAT.equals(mPayType)?R.string.wechat_pay_:R.string.alipay_, StringHelper.getRMBFormat(mAmount)):getString(R.string.pay_fail_tag));
         tvPayTag.setTextSize(isPaySuccess?20:15);
         tvPayAction1.setText(isPaySuccess?R.string.check_order:R.string.pay_again);
         tvPayAction2.setText(isPaySuccess?R.string.return_index:R.string.check_order);
@@ -91,30 +90,7 @@ public class PayResultActivity extends BaseActivity {
     }
 
     private void loadData(){
-        if (isPaySuccess && mOrderId>0) {
-            //通知服务器支付成功
-            new UpdateStatusReq(this, mOrderId,mPayType).execute(new Request.RequestCallback<String>() {
-                @Override
-                public void onSuccess(String o) {
 
-                }
-
-                @Override
-                public void onError(Throwable ex, boolean isOnCallback) {
-
-                }
-
-                @Override
-                public void onCancelled(Callback.CancelledException cex) {
-
-                }
-
-                @Override
-                public void onFinished() {
-
-                }
-            },false);
-        }
     }
 
     @OnClick({R.id.imgBack, R.id.tvPayAction1,R.id.tvPayAction2})

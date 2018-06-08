@@ -76,7 +76,7 @@
         android:id="@+id/view2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/tvAddShopCart"
+        android:layout_above="@+id/tvOK"
         android:background="@color/colorWhite"
         android:paddingBottom="@dimen/margin_giant"
         android:paddingLeft="@dimen/margin_giant"
@@ -121,13 +121,13 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/tvAddShopCart"
+        android:id="@+id/tvOK"
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_height2"
         android:layout_alignParentBottom="true"
         android:background="@color/colorGreen"
         android:gravity="center"
-        android:text="@string/add_shopcart"
+        android:text="@string/ok"
         android:textColor="@color/textWhite"
         android:textSize="@dimen/text_size_giant" />
 

@@ -1,5 +1,6 @@
 package com.cxgm.app.ui.view.goods;
 
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
@@ -52,8 +53,8 @@ public class GoodsSpecificationDialogActivity extends BaseActivity {
     TextView tvNum;
     @BindView(R.id.tvPlus)
     TextView tvPlus;
-    @BindView(R.id.tvAddShopCart)
-    TextView tvAddShopCart;
+    @BindView(R.id.tvOK)
+    TextView tvOK;
 
     ProductTransfer mProduct;
     int mNum = 1;
@@ -71,6 +72,7 @@ public class GoodsSpecificationDialogActivity extends BaseActivity {
     }
 
     private void init() {
+        mNum = mProduct.getShopCartNum();
         Glide.with(this).load(mProduct.getImage()).apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
                 .into(imgCover);
         tvPrice.setText(StringHelper.getRMBFormat(mProduct.getPrice()));
@@ -84,10 +86,11 @@ public class GoodsSpecificationDialogActivity extends BaseActivity {
         tvSpecification.setText(getString(R.string.specification_,
                 StringHelper.getSpecification(mProduct.getWeight(),mProduct.getUnit())));
         tvNumUnitTag.setText(getString(R.string.buy_num,mProduct.getUnit()));
+        tvNum.setText(mNum+"");
 
     }
 
-    @OnClick({R.id.imgClose, R.id.tvMinus, R.id.tvPlus, R.id.tvAddShopCart})
+    @OnClick({R.id.imgClose, R.id.tvMinus, R.id.tvPlus, R.id.tvOK})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgClose:
@@ -97,20 +100,30 @@ public class GoodsSpecificationDialogActivity extends BaseActivity {
                 if (mNum>1){
                     mNum--;
                     tvSelectNum.setText(getString(R.string.select_,mNum+mProduct.getUnit()));
+                    tvNum.setText(mNum+"");
                 }
                 break;
             case R.id.tvPlus:
                 //最大数量
-                if (mNum < mProduct.getMaximumQuantity()) {
+//                if (mNum < mProduct.getMaximumQuantity()) {
+                if (mNum < 99) {
                     mNum++;
                     tvSelectNum.setText(getString(R.string.select_,mNum+mProduct.getUnit()));
+                    tvNum.setText(mNum+"");
                 }else {
                     ToastManager.sendToast(getString(R.string.max_quantity));
                 }
                 break;
-            case R.id.tvAddShopCart:
-                ViewHelper.addOrUpdateShopCart(this,mProduct,mNum);
-                //finish();
+            case R.id.tvOK:
+                ViewHelper.addOrUpdateShopCart(this, mProduct, mNum - mProduct.getShopCartNum(), new ViewHelper.OnActionListener() {
+                    @Override
+                    public void onSuccess() {
+                        Intent data = new Intent();
+                        data.putExtra("num",mProduct.getShopCartNum());
+                        setResult(RESULT_OK,data);
+                        finish();
+                    }
+                });
                 break;
         }
     }
