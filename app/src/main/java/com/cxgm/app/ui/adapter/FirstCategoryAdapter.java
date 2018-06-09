@@ -56,7 +56,7 @@ public class FirstCategoryAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        Glide.with(convertView).load(mList.get(position).getImage())
+        Glide.with(convertView).load(mList.get(position).getImageUrl())
                 .apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
                 .into(holder.imgCover);
         holder.tvName.setText(mList.get(position).getName());

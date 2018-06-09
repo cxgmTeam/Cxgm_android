@@ -22,23 +22,23 @@ public class ShopCategory extends BaseEntity {
     private int id;
     private String name;
     private List<ShopCategory> shopCategoryList;
-    private String image;//TODO 需要增加图片字段
+    private String imageUrl;//TODO 需要增加图片字段
 
     public ShopCategory() {
     }
 
-    public ShopCategory(int id, String name, String image) {
+    public ShopCategory(int id, String name, String imageUrl) {
         this.id = id;
         this.name = name;
-        this.image = image;
+        this.imageUrl = imageUrl;
     }
 
-    public String getImage() {
-        return image;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
-    public void setImage(String image) {
-        this.image = image;
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public int getId() {

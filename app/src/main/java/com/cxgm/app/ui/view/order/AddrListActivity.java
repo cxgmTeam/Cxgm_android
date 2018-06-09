@@ -14,6 +14,7 @@ import com.baidu.mapapi.search.core.PoiInfo;
 import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.entity.UserAddress;
+import com.cxgm.app.data.entity.UserPoiInfo;
 import com.cxgm.app.data.io.order.AddressListReq;
 import com.cxgm.app.ui.adapter.AddrAdapter;
 import com.cxgm.app.ui.base.BaseActivity;
@@ -86,8 +87,8 @@ public class AddrListActivity extends BaseActivity implements MapHelper.Location
         imgBack.setVisibility(View.VISIBLE);
         tvTitle.setText(R.string.receiver_addr);
 
-        if (Constants.currentLocation != null) {
-            tvCurrentAddr.setText(Constants.currentLocation.getDistrict() + Constants.currentLocation.getStreet() + Constants.currentLocation.getLocationDescribe());
+        if (Constants.getLocation() != null) {
+            tvCurrentAddr.setText(Constants.getLocation().address);
         } else {
             location();
         }
@@ -164,7 +165,9 @@ public class AddrListActivity extends BaseActivity implements MapHelper.Location
     public void onReceiveLocation(BDLocation bdLocation) {
         if (bdLocation!=null) {
             Constants.currentLocation = bdLocation;
-            tvCurrentAddr.setText(Constants.currentLocation.getDistrict() + Constants.currentLocation.getStreet() + Constants.currentLocation.getLocationDescribe());
+            //重新定位功能 置Null currentUserLocation
+            Constants.currentUserLocation = null;
+            tvCurrentAddr.setText(Constants.getLocation().address);
         }
     }
 
@@ -182,6 +185,9 @@ public class AddrListActivity extends BaseActivity implements MapHelper.Location
                         PoiInfo mPoiInfo = data.getParcelableExtra("poiInfo");
                         if (mPoiInfo!=null){
                             tvCurrentAddr.setText(mPoiInfo.address);
+                            mUpdatedLocation = true;
+                            //设置用户指定的位置
+                            Constants.currentUserLocation = mPoiInfo;
                         }
                     }
                     break;

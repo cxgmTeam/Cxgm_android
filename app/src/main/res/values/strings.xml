@@ -254,5 +254,7 @@
     <string name="num_not_0">购买数量不能小于1</string>
     <string name="remark_tag">这里输入备注信息～</string>
     <string name="adress_invalid">该地址不在配送范围</string>
+    <string name="according_location_recommend_shop">根据定位为你推荐以下店铺</string>
+    <string name="show_shop_list">定位不在该商铺配送范围内，将切换到商铺列表</string>
 
 </resources>

@@ -1,7 +1,9 @@
 package com.cxgm.app.app;
 
 import com.baidu.location.BDLocation;
+import com.baidu.mapapi.search.core.PoiInfo;
 import com.cxgm.app.data.entity.Shop;
+import com.cxgm.app.data.entity.UserPoiInfo;
 
 /**
  * 常量
@@ -36,10 +38,19 @@ public class Constants {
     public static final String BAIDU_AK = "KevuKZ68Ny3gszdU1h4Y7Rc2ytTY9BPq";
 
     public static BDLocation currentLocation;//当前定位
+    public static PoiInfo currentUserLocation;//用户在地图上点选的位置
     public static Shop currentShop;//当前商铺
     public static boolean checkAddress = false;//当前地址可配送
 
     public static boolean notify = true;//是否接收通知
     public static float postage = 10f;//邮费
+
+    //获得地址  定位或用户点选
+    public static PoiInfo getLocation(){
+        if (currentUserLocation==null && currentLocation!=null) {
+            PoiInfo info = new UserPoiInfo(currentLocation);
+            return info;
+        }else return currentUserLocation;
+    }
 
 }

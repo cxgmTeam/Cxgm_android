@@ -166,6 +166,8 @@ public class NewAddrActivity extends BaseActivity {
             public void onSuccess(List<Shop> shops) {
                 if (shops!=null && shops.size()>0) {
                     if (mIsEdit) {
+                        //约定编辑传Null 以区分设置默认功能
+                        mAddress.setIsDef(null);
                         new UpdateAddressReq(NewAddrActivity.this, mAddress).execute(callback);
                     } else {
                         new AddAddressReq(NewAddrActivity.this, mAddress).execute(callback);

@@ -103,6 +103,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
     PoiSearch mPoiSearch;
     GeoCoder mGeoCoder;
     String mTempCity;
+    PoiInfo mSearchInfo; //todo 搜索出来的地址，应该加入到poi list的第一个
     PoiAdapter mPoiAdapter;
     List<UserPoiInfo> mPoiList;
     float mZoomLevel = 15;
@@ -180,8 +181,12 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
 
             @Override
             public void onGetReverseGeoCodeResult(ReverseGeoCodeResult reverseGeoCodeResult) {
-                if (reverseGeoCodeResult != null && reverseGeoCodeResult.getAddressDetail()!=null) {
+                if (reverseGeoCodeResult != null && reverseGeoCodeResult.getAddressDetail() != null) {
                     mTempCity = reverseGeoCodeResult.getAddressDetail().city;
+//                    mSearchInfo = new PoiInfo();
+//                    mSearchInfo.name = reverseGeoCodeResult.get
+//                    mSearchInfo.address = reverseGeoCodeResult.getAddress();
+//                    mSearchInfo.location = reverseGeoCodeResult.getLocation();
                     //获取POI检索结果
                     setPoiList(reverseGeoCodeResult.getPoiList());
                 }
@@ -211,7 +216,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
                         View view = getWindow().peekDecorView();
                         if (view != null) {
                             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(),0);
+                            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
                         }
                         loadPoi(mTempCity, keyword);
                     }
@@ -234,11 +239,11 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
                 }
                 mPoiAdapter.notifyDataSetChanged();
                 /** 改成选一个地址直接就返回 不再需要定位
-                //标记定位点
-                drawLocationPoint(mPoiList.get((int) id).location.latitude, mPoiList.get((int) id).location.longitude);
-                //反向编码，以得到城市名，也可以得到POI信息 开启后，得到新的结果会重置这个list,看上去就是跳来跳去
-                mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(mPoiList.get((int) id).location.latitude, mPoiList.get((int) id).location.longitude)));
-                **/
+                 //标记定位点
+                 drawLocationPoint(mPoiList.get((int) id).location.latitude, mPoiList.get((int) id).location.longitude);
+                 //反向编码，以得到城市名，也可以得到POI信息 开启后，得到新的结果会重置这个list,看上去就是跳来跳去
+                 mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(mPoiList.get((int) id).location.latitude, mPoiList.get((int) id).location.longitude)));
+                 **/
                 finish();
 
             }
@@ -285,10 +290,10 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
                 String[] lnglat = s.split("_");
                 if (lnglat.length == 2) {
                     pts.add(new LatLng(Double.parseDouble(lnglat[1]), Double.parseDouble(lnglat[0])));
-                    if (path.isEmpty()){
-                        path.moveTo(Float.parseFloat(lnglat[1])*mPathBaseNum,Float.parseFloat(lnglat[0])*mPathBaseNum);
-                    }else {
-                        path.lineTo(Float.parseFloat(lnglat[1])*mPathBaseNum,Float.parseFloat(lnglat[0])*mPathBaseNum);
+                    if (path.isEmpty()) {
+                        path.moveTo(Float.parseFloat(lnglat[1]) * mPathBaseNum, Float.parseFloat(lnglat[0]) * mPathBaseNum);
+                    } else {
+                        path.lineTo(Float.parseFloat(lnglat[1]) * mPathBaseNum, Float.parseFloat(lnglat[0]) * mPathBaseNum);
                     }
                 }
             }
@@ -403,7 +408,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
      */
     private void loadPoi(String city, String keyword) {
         if (TextUtils.isEmpty(city))
-            city = Constants.currentLocation.getCity();
+            city = Constants.getLocation().city;
         mPoiSearch.searchInCity(new PoiCitySearchOption()
                 .city(city).keyword(keyword).pageNum(20)
         );
@@ -433,7 +438,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
                 UserPoiInfo info = new UserPoiInfo(poiInfos.get(i));
                 if (i == 0) {
                     info.isChecked = true;
-                    drawLocationPoint(info.location.latitude,info.location.longitude);
+                    drawLocationPoint(info.location.latitude, info.location.longitude);
                 }
                 mPoiList.add(info);
             }
@@ -475,9 +480,9 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
         for (UserPoiInfo info : mPoiList) {
             if (info.isChecked) {
 //                if (checkPointEnable(info.location.latitude,info.location.longitude)) {
-                    Intent data = new Intent();
-                    data.putExtra("poiInfo", info);
-                    setResult(RESULT_OK, data);
+                Intent data = new Intent();
+                data.putExtra("poiInfo", info);
+                setResult(RESULT_OK, data);
 //                }else {
 //                    ToastManager.sendToast(getString(R.string.addr_cannot_delivery));
 //                }

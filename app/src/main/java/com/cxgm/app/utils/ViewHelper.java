@@ -26,6 +26,7 @@ import org.jsoup.select.Elements;
 import org.xutils.common.Callback;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -181,7 +182,20 @@ public class ViewHelper {
                         public void onFinished() {
                             if (finalI == userAddresses.size()-1){
                                 //排序
+                                //将有效地址提前
                                 Collections.sort(userAddresses);
+                                //默认值提前
+                                int defPosition = -1;
+                                for (int i = 0;i<userAddresses.size();i++){
+                                    if (userAddresses.get(i).getIsDef() == 1){
+                                        defPosition = i;
+                                        break;
+                                    }
+                                }
+                                if (defPosition>0){
+                                    userAddresses.add(0,userAddresses.remove(defPosition));
+                                }
+
                                 if (listener!=null){
                                     listener.onSuccess();
                                 }

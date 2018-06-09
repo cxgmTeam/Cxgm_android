@@ -1,5 +1,6 @@
 package com.cxgm.app.data.entity;
 
+import com.baidu.location.BDLocation;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.search.core.PoiInfo;
 
@@ -22,5 +23,14 @@ public class UserPoiInfo extends PoiInfo {
         location = info.location;
         hasCaterDetails = info.hasCaterDetails;
         isPano = info.isPano;
+    }
+
+    public UserPoiInfo(BDLocation location) {
+        if (location != null) {
+            name = location.getBuildingName();
+            address = location.getDistrict() + location.getStreet() + location.getLocationDescribe();
+            city = location.getCity();
+            this.location = new LatLng(location.getLatitude(),location.getLongitude());
+        }
     }
 }

@@ -31,7 +31,7 @@ public class UserAddress extends BaseEntity implements Cloneable ,Comparable<Use
     private String longitude;
     private String phone;
     private String realName;
-    private int isDef;//是否为默认值
+    private Integer isDef;//是否为默认值
     private String remarks;
     public boolean isEnable;//地址相对于当前商铺是可用的，在配送范围内的
 
@@ -51,11 +51,11 @@ public class UserAddress extends BaseEntity implements Cloneable ,Comparable<Use
         this.id = id;
     }
 
-    public int getIsDef() {
+    public Integer getIsDef() {
         return isDef;
     }
 
-    public void setIsDef(int isDef) {
+    public void setIsDef(Integer isDef) {
         this.isDef = isDef;
     }
 
@@ -121,7 +121,6 @@ public class UserAddress extends BaseEntity implements Cloneable ,Comparable<Use
 
     @Override
     public int compareTo(@NonNull UserAddress o) {
-
         return this.isEnable?-1:1;
     }
 }

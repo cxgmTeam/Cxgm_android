@@ -104,8 +104,9 @@ public class LaunchActivity extends BaseActivity implements MapHelper.LocationCa
     public void onReceiveLocation(BDLocation bdLocation) {
         if (bdLocation != null) {
             Constants.currentLocation = bdLocation;
-
-            new CheckAddressReq(this, Constants.currentLocation.getLongitude() + "", Constants.currentLocation.getLatitude() + "")
+            //定位功能 置Null currentUserLocation
+            Constants.currentUserLocation = null;
+            new CheckAddressReq(this, bdLocation.getLongitude() + "", bdLocation.getLatitude() + "")
                     .execute(false,new Request.RequestCallback<List<Shop>>() {
 
                 @Override
