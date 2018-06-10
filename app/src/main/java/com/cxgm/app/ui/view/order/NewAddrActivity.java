@@ -156,12 +156,14 @@ public class NewAddrActivity extends BaseActivity {
         mAddress.setArea(district);
         mAddress.setAddress(number);
         //经纬度信息
-        mAddress.setLongitude(mPoiInfo.location.longitude+"");
-        mAddress.setDimension(mPoiInfo.location.latitude+"");
+        if (mPoiInfo != null && mPoiInfo.location!=null) {
+            mAddress.setLongitude(mPoiInfo.location.longitude + "");
+            mAddress.setDimension(mPoiInfo.location.latitude + "");
+        }
         mAddress.setRemarks(remark);
 
         //检查范围
-        new CheckAddressReq(this,mPoiInfo.location.longitude+"",mPoiInfo.location.latitude+"").execute(new Request.RequestCallback<List<Shop>>() {
+        new CheckAddressReq(this,mAddress.getLongitude()+"",mAddress.getDimension()+"").execute(new Request.RequestCallback<List<Shop>>() {
             @Override
             public void onSuccess(List<Shop> shops) {
                 if (shops!=null && shops.size()>0) {

@@ -96,6 +96,7 @@ public class AddrListActivity extends BaseActivity implements MapHelper.Location
         mAddrList = new ArrayList<>();
         mAddrAdapter = new AddrAdapter(this,mAddrList);
         lvAddr.setAdapter(mAddrAdapter);
+        lvAddr.setFocusable(false);
     }
 
     private void loadData(){
