@@ -213,11 +213,12 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     String keyword = etSearchWord.getText().toString().trim();
                     if (!TextUtils.isEmpty(keyword)) {
-                        View view = getWindow().peekDecorView();
-                        if (view != null) {
-                            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
-                        }
+//                        View view = getWindow().peekDecorView();
+//                        if (view != null) {
+//                            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+//                            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
+//                        }
+                        DeviceUtils.hideKeyboard(MapLocationActivity.this);
                         loadPoi(mTempCity, keyword);
                     }
                 }

@@ -24,6 +24,6 @@
             android:layout_height="wrap_content"
             android:divider="@null"
             android:dividerHeight="0dp"
-            android:listSelector="@color/translate" />
+            android:listSelector="@color/transparent" />
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 </LinearLayout>

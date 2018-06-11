@@ -365,7 +365,7 @@
                     android:layout_marginTop="@dimen/margin_normal"
                     android:background="@color/colorWhite"
                     android:horizontalSpacing="@dimen/margin_normal"
-                    android:listSelector="@color/translate"
+                    android:listSelector="@color/transparent"
                     android:numColumns="2"
                     android:padding="@dimen/margin_large_t"
                     android:scrollbars="none"

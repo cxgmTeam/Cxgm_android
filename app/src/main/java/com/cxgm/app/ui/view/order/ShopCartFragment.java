@@ -119,7 +119,7 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (!hidden){
+        if (!hidden) {
             reset();
         }
     }
@@ -130,7 +130,7 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
         reset();
     }
 
-    private void reset(){
+    private void reset() {
         if (!isLoadData) {
             isLoadData = true;
             mPageNum = 1;
@@ -151,7 +151,7 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
         lvGoods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ViewJump.toGoodsDetail(getActivity(),mCartList.get((int)id).getProductId());
+                ViewJump.toGoodsDetail(getActivity(), mCartList.get((int) id).getProductId());
             }
         });
         srl.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
@@ -185,7 +185,7 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
     }
 
     private void loadData() {
-        if (Constants.currentShop!=null) {
+        if (UserManager.isUserLogin() && Constants.currentShop != null) {
             new ShopCartListReq(getActivity(), Constants.currentShop.getId(), mPageNum, 10)
                     .execute(new Request.RequestCallback<PageInfo<ShopCart>>() {
                         @Override
@@ -220,7 +220,7 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
                             }
                         }
                     });
-        }else
+        } else
             isLoadData = false;
     }
 
@@ -232,15 +232,15 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
     }
 
     @Override
-    public void onUpdateGoods(final ShopCart cartGoods,int actionNum) {
+    public void onUpdateGoods(final ShopCart cartGoods, int actionNum) {
 
         //限制最小为1
-        if (cartGoods.getGoodNum() + actionNum <= 0){
+        if (cartGoods.getGoodNum() + actionNum <= 0) {
             ToastManager.sendToast(getString(R.string.num_not_0));
             return;
         }
 
-        if ((cartGoods.getGoodNum() + actionNum)>0) {
+        if ((cartGoods.getGoodNum() + actionNum) > 0) {
             final ShopCart cart = cartGoods.clone();
             cart.setGoodNum(cart.getGoodNum() + actionNum);
             cart.setAmount(Helper.moneyMultiply(cart.getPrice(), cart.getGoodNum()));
@@ -268,19 +268,19 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
 
                 }
             });
-        }else {
+        } else {
             //如果限制最小为1 的话，删除 逻辑就走不到了
-            new DeleteCartReq(getActivity(), cartGoods.getId()+"").execute(false, new Request.RequestCallback<Integer>() {
+            new DeleteCartReq(getActivity(), cartGoods.getId() + "").execute(false, new Request.RequestCallback<Integer>() {
                 @Override
                 public void onSuccess(Integer integer) {
                     mCartList.remove(cartGoods);
                     mCartAdapter.notifyDataSetChanged();
-                    if (mCartList.size() == 0){
+                    if (mCartList.size() == 0) {
                         layoutGoodsList.setVisibility(View.GONE);
                         layoutEmptyShopCart.setVisibility(View.VISIBLE);
                     }
                     loadBottomData();
-                    if (mCartList.size() <= 0){
+                    if (mCartList.size() <= 0) {
                         layoutGoodsList.setVisibility(View.GONE);
                         layoutEmptyShopCart.setVisibility(View.VISIBLE);
                     }
@@ -312,7 +312,7 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
             cbCheckAll.setChecked(isChecked);
         } else {
             boolean isCheckedAll = isChecked;
-            for (int i =0;i<mCartList.size();i++) {
+            for (int i = 0; i < mCartList.size(); i++) {
                 if (i != postion && mCartList.get(i).isChecked != isChecked) {
                     isCheckedAll = false;
                     break;
@@ -341,13 +341,13 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
                     }
                 }
             */
-                totalNum ++;
+                totalNum++;
             }
         }
 
         tvTotal.setText(getString(R.string.total_, StringHelper.getRMBFormat(totalAmount)));
         tvSum.setText(getString(R.string.sum_, StringHelper.getRMBFormat(totalOriginal)));
-        tvDiscounts.setText(getString(R.string.discounts_, StringHelper.getRMBFormat(Helper.moneySubtract(totalOriginal,totalAmount))));
+        tvDiscounts.setText(getString(R.string.discounts_, StringHelper.getRMBFormat(Helper.moneySubtract(totalOriginal, totalAmount))));
         //更新布局
         tvDiscounts.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
@@ -360,72 +360,72 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
                         mTextViewWidth = textViewWidth;
                         layoutSumDiscounts.setOrientation(LinearLayout.VERTICAL);
                     }
-                }else {
+                } else {
                     if (mTextViewWidth < textWidth) {
                         layoutSumDiscounts.setOrientation(LinearLayout.VERTICAL);
-                    }else {
+                    } else {
                         layoutSumDiscounts.setOrientation(LinearLayout.HORIZONTAL);
                     }
                 }
             }
         });
-        if (totalNum>0)
+        if (totalNum > 0)
             tvGoDuoShou.setText(getString(R.string.go_duoshou_, totalNum));
         else
             tvGoDuoShou.setText(R.string.go_duoshou);
     }
 
-    @OnClick({R.id.tvGoDuoShou, R.id.tvGoShopping,R.id.tvAction1})
+    @OnClick({R.id.tvGoDuoShou, R.id.tvGoShopping, R.id.tvAction1})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tvGoDuoShou:
                 ArrayList<OrderProduct> products = new ArrayList<>();
-                for (ShopCart cart : mCartList){
-                    if (cart.isChecked){
+                for (ShopCart cart : mCartList) {
+                    if (cart.isChecked) {
                         products.add(new OrderProduct(cart));
                     }
                 }
-                if (products.size() > 0){
-                    ViewJump.toVerifyOrder(getActivity(),products);
-                }else {
+                if (products.size() > 0) {
+                    ViewJump.toVerifyOrder(getActivity(), products);
+                } else {
                     ToastManager.sendToast(getString(R.string.do_not_have_selected_goods));
                 }
 
                 break;
             case R.id.tvGoShopping:
-                ((MainActivity)getActivity()).publicChangeView(R.id.rbGoods);
+                ((MainActivity) getActivity()).publicChangeView(R.id.rbGoods);
                 break;
             case R.id.tvAction1:
-                if (!UserManager.isUserLogin()){
+                if (!UserManager.isUserLogin()) {
                     ViewJump.toLogin(getActivity());
                     return;
                 }
                 //删除
-                //提示框
-                new AlertDialog.Builder(getActivity()).setTitle(R.string.hint)
-                        .setMessage(R.string.delete_tag).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        StringBuilder builder = new StringBuilder();
-                        for (ShopCart cart : mCartList){
-                            if (cart.isChecked)
-                                builder.append(cart.getId()+",");
-                        }
-                        if (builder.length()>0) {
+                StringBuilder builder = new StringBuilder();
+                for (ShopCart cart : mCartList) {
+                    if (cart.isChecked)
+                        builder.append(cart.getId() + ",");
+                }
+                if (builder.length() > 0) {
+                    //提示框
+                    new AlertDialog.Builder(getActivity()).setTitle(R.string.hint)
+                            .setMessage(R.string.delete_tag).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
                             String ids = builder.deleteCharAt(builder.length() - 1).toString();
                             new DeleteCartReq(getActivity(), ids).execute(new Request.RequestCallback<Integer>() {
                                 @Override
                                 public void onSuccess(Integer integer) {
-                                    for (int i = mCartList.size()-1;i>=0;i--){
-                                        if (mCartList.get(i).isChecked){
+                                    for (int i = mCartList.size() - 1; i >= 0; i--) {
+                                        if (mCartList.get(i).isChecked) {
                                             mCartList.remove(i);
-
                                         }
                                     }
                                     mCartAdapter.notifyDataSetChanged();
                                     loadBottomData();
 
-                                    if (mCartList.size() <= 0){
+                                    if (mCartList.size() <= 0) {
                                         layoutGoodsList.setVisibility(View.GONE);
                                         layoutEmptyShopCart.setVisibility(View.VISIBLE);
                                     }
@@ -446,11 +446,12 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
 
                                 }
                             });
-                        }else {
-                            ToastManager.sendToast(getString(R.string.nothing_selected));
                         }
-                    }
-                }).setNegativeButton(R.string.cancel,null).show();
+                    }).setNegativeButton(R.string.cancel, null).show();
+
+                } else {
+                    ToastManager.sendToast(getString(R.string.nothing_selected));
+                }
 
                 break;
         }

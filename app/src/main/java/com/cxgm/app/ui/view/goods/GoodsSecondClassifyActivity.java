@@ -26,6 +26,7 @@ import com.cxgm.app.ui.adapter.ExpandableGoodsListAdapter;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.ui.view.common.MainActivity;
+import com.cxgm.app.utils.UserManager;
 import com.cxgm.app.utils.ViewHelper;
 import com.deanlib.ootb.data.io.Request;
 import com.jakewharton.rxbinding.view.RxView;
@@ -209,7 +210,7 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
     }
 
     private void checkShopCart(){
-        if (Constants.currentShop!=null) {
+        if (UserManager.isUserLogin() && Constants.currentShop!=null) {
             //查询购物车
             new ShopCartListReq(this, Constants.currentShop.getId(), 1, 1)
                     .execute(new Request.RequestCallback<PageInfo<ShopCart>>() {

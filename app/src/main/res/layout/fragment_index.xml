@@ -93,7 +93,7 @@
                     </LinearLayout>
 
                     <com.deanlib.ootb.widget.ListViewForScrollView
-                        android:listSelector="@color/translate"
+                        android:listSelector="@color/transparent"
                         android:layout_marginTop="@dimen/margin_large_t"
                         android:id="@+id/lvShop"
                         android:layout_width="match_parent"
@@ -116,7 +116,7 @@
                         android:elevation="@dimen/elevation" />
 
                     <com.deanlib.ootb.widget.GridViewForScrollView
-                        android:listSelector="@color/translate"
+                        android:listSelector="@color/transparent"
                         android:id="@+id/gvFirstCategory"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -251,7 +251,7 @@
                             android:textSize="@dimen/text_size_small" />
 
                         <android.support.v7.widget.RecyclerView
-                            android:listSelector="@color/translate"
+                            android:listSelector="@color/transparent"
                             android:id="@+id/hlvRecommend"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -290,7 +290,7 @@
                             android:textSize="@dimen/text_size_small" />
 
                         <android.support.v7.widget.RecyclerView
-                            android:listSelector="@color/translate"
+                            android:listSelector="@color/transparent"
                             android:id="@+id/hlvNewGoods"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -301,7 +301,7 @@
                     </LinearLayout>
 
                     <com.deanlib.ootb.widget.ListViewForScrollView
-                        android:listSelector="@color/translate"
+                        android:listSelector="@color/transparent"
                         android:id="@+id/lvMotions"
                         android:layout_marginTop="@dimen/margin_normal"
                         android:dividerHeight="@dimen/margin_normal"
@@ -338,7 +338,7 @@
                             android:textSize="@dimen/text_size_small" />
 
                         <com.deanlib.ootb.widget.GridViewForScrollView
-                            android:listSelector="@color/translate"
+                            android:listSelector="@color/transparent"
                             android:id="@+id/gvGoods"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"

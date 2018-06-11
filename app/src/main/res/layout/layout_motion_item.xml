@@ -19,7 +19,7 @@
         android:src="@mipmap/default_img" />
 
     <android.support.v7.widget.RecyclerView
-        android:listSelector="@color/translate"
+        android:listSelector="@color/transparent"
         android:id="@+id/hlvAdGoods"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

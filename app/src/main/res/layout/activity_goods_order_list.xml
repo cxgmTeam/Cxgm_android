@@ -10,7 +10,7 @@
         layout="@layout/layout_back_title_action_appbar"/>
 
     <ListView
-        android:listSelector="@color/translate"
+        android:listSelector="@color/transparent"
         android:id="@+id/lvGoodsOrder"
         android:divider="@color/colorLine"
         android:dividerHeight="@dimen/line"

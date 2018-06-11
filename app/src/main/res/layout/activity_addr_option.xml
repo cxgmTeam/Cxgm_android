@@ -15,12 +15,12 @@
         android:layout_height="@dimen/line"/>
 
     <ListView
-        android:listSelector="@color/translate"
+        android:listSelector="@color/transparent"
         android:layout_weight="1"
         android:id="@+id/lvAddr"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@color/translate"
+        android:divider="@color/transparent"
         android:dividerHeight="@dimen/margin_normal" />
 
     <TextView

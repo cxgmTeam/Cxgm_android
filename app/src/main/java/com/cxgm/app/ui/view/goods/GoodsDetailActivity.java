@@ -29,8 +29,10 @@ import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.ui.widget.CustomScrollView;
 import com.cxgm.app.utils.StringHelper;
+import com.cxgm.app.utils.UserManager;
 import com.cxgm.app.utils.ViewHelper;
 import com.deanlib.ootb.data.io.Request;
+import com.deanlib.ootb.utils.WebViewUtils;
 import com.deanlib.ootb.widget.GridViewForScrollView;
 import com.kevin.loopview.AdLoopView;
 import com.kevin.loopview.internal.BaseLoopAdapter;
@@ -302,7 +304,7 @@ public class GoodsDetailActivity extends BaseActivity {
                         //商品介绍图
 //                        Glide.with(GoodsDetailActivity.this).load(mProduct.getIntroduction()).apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
 //                                .into(imgGoodsDetailPic);
-                        wvIntroduction.loadData(ViewHelper.getNewContent(mProduct.getIntroduction()), "text/html; charset=UTF-8", null);
+                        wvIntroduction.loadData(WebViewUtils.getFitPicContent(mProduct.getIntroduction()), "text/html; charset=UTF-8", null);
 
 
                         //猜你喜欢
@@ -359,7 +361,7 @@ public class GoodsDetailActivity extends BaseActivity {
     //查询购物车
     private void checkShopCart (){
 
-        if (Constants.currentShop !=null) {
+        if (UserManager.isUserLogin() && Constants.currentShop !=null) {
             new ShopCartListReq(this, Constants.currentShop.getId(), 1, 1)
                     .execute(new Request.RequestCallback<PageInfo<ShopCart>>() {
                         @Override

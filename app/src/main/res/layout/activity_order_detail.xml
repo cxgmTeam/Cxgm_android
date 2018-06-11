@@ -125,7 +125,7 @@
                     android:background="@color/colorLine" />
 
                 <com.deanlib.ootb.widget.ListViewForScrollView
-                    android:listSelector="@color/translate"
+                    android:listSelector="@color/transparent"
                     android:id="@+id/lvGoods"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

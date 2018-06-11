@@ -123,11 +123,11 @@
 
             <com.deanlib.ootb.widget.ListViewForScrollView
                 android:id="@+id/lvAddr"
-                android:listSelector="@color/translate"
+                android:listSelector="@color/transparent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin_large_t"
-                android:divider="@color/translate"
+                android:divider="@color/transparent"
                 android:dividerHeight="@dimen/margin_normal" />
         </LinearLayout>
     </ScrollView>

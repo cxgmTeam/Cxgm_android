@@ -28,7 +28,7 @@
             android:layout_height="wrap_content">
 
             <GridView
-                android:listSelector="@color/translate"
+                android:listSelector="@color/transparent"
                 android:id="@+id/gvGoods"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

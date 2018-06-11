@@ -15,7 +15,6 @@ import com.cxgm.app.R;
 import com.cxgm.app.data.entity.Motion;
 import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.ui.widget.SpaceItemDecoration;
-import com.deanlib.ootb.widget.HorizontalListView;
 
 import org.xutils.common.util.DensityUtil;
 

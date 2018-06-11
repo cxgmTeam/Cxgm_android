@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.cxgm.app.data.entity.User;
 import com.cxgm.app.utils.UserManager;
+import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.manager.NetworkManager;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.message.PushAgent;
@@ -37,10 +38,16 @@ public class BaseActivity extends AppCompatActivity implements UserManager.OnUse
 	}
 
 	@Override
+	public void finish() {
+		Request.dismissDialog();
+		super.finish();
+	}
+
+	@Override
 	protected void onDestroy() {
-		super.onDestroy();
 		NetworkManager.getInstance().removeNetworkListener(this);
 		UserManager.removeOnUserActionListener(this);
+		super.onDestroy();
 	}
 
 	@Override

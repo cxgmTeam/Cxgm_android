@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 
 import com.cxgm.app.data.entity.User;
 import com.cxgm.app.utils.UserManager;
+import com.deanlib.ootb.data.io.Request;
 
 import org.xutils.common.Callback;
 import org.xutils.x;
@@ -21,7 +22,7 @@ public class BaseFragment extends Fragment implements UserManager.OnUserActionLi
 
 //    private boolean injected = false;
 
-    public Callback.Cancelable httpCallback;
+//    public Callback.Cancelable httpCallback;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -59,15 +60,11 @@ public class BaseFragment extends Fragment implements UserManager.OnUserActionLi
 
     @Override
     public void onDestroy() {
-        super.onDestroy();
-
-        if(httpCallback!=null){
-
-            httpCallback.cancel();
-
-        }
-
+//        if(httpCallback!=null){
+//            httpCallback.cancel();
+//        }
         UserManager.removeOnUserActionListener(this);
+        super.onDestroy();
     }
 
     @Override
