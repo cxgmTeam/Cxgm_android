@@ -3,6 +3,7 @@ package com.cxgm.app.app;
 import android.app.Application;
 import android.content.Context;
 import android.os.Handler;
+import android.os.StrictMode;
 import android.provider.Settings;
 import android.support.multidex.MultiDexApplication;
 import android.text.TextUtils;
@@ -65,6 +66,11 @@ public class App extends MultiDexApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+
+        if (Constants.DEBUG) {
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().build());
+            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().build());
+        }
 
         OotbConfig.init(this,Constants.DEBUG);
 

@@ -555,6 +555,19 @@ public class IndexFragment extends BaseFragment {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        if (loopBanner.getLoopData()!=null && loopBanner.getLoopData().items!=null && loopBanner.getLoopData().items.size()>0)
+            loopBanner.startAutoLoop();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        loopBanner.stopAutoLoop();
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();

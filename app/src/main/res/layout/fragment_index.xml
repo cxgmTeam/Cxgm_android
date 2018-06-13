@@ -342,7 +342,6 @@
                             android:id="@+id/gvGoods"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:background="@color/colorWhite"
                             android:elevation="@dimen/elevation"
                             android:horizontalSpacing="@dimen/margin_normal"
                             android:numColumns="2"

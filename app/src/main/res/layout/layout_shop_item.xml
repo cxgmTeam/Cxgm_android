@@ -31,7 +31,6 @@
 
     <ImageView
         android:scaleType="fitXY"
-        android:src="@mipmap/default_img"
         android:id="@+id/imgShopCover"
         android:layout_marginTop="@dimen/margin_large_t"
         android:layout_width="match_parent"

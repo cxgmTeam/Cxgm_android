@@ -6,7 +6,6 @@
     android:layout_height="wrap_content">
 
     <ImageView
-        android:src="@mipmap/default_img"
         android:layout_centerVertical="true"
         android:scaleType="center"
         android:id="@+id/imgCover"
