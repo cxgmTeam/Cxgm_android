@@ -165,15 +165,44 @@ public class IndexFragment extends BaseFragment {
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
         if (!hidden) {
-            //地址提示
-            if (Constants.checkAddress && Constants.getLocation() != null) {
-                showPopLocationInfo(getString(R.string.destination_,
-                        Constants.getLocation().address));
-            } else {
-                showPopLocationInfo(getString(R.string.out_of_distribution));
+            doShowPop();
+            if (Constants.updatedAddress){
+                Constants.updatedAddress = false;
+                init();
+                loadData();
             }
         } else if (popupWindow != null && popupWindow.isShowing())
             popupWindow.dismiss();
+    }
+
+    private void doShowPop(){
+        //地址提示
+        if (Constants.getEnableDeliveryAddress() && Constants.getLocation(true) != null) {
+            showPopLocationInfo(getString(R.string.destination_,
+                    Constants.getLocation(true).address));
+        } else {
+            showPopLocationInfo(getString(R.string.out_of_distribution));
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!isHidden())
+            doShowPop();
+        if (Constants.updatedAddress){
+            Constants.updatedAddress = false;
+            init();
+            loadData();
+        }
+        if (loopBanner.getLoopData()!=null && loopBanner.getLoopData().items!=null && loopBanner.getLoopData().items.size()>0)
+            loopBanner.startAutoLoop();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        loopBanner.stopAutoLoop();
     }
 
     private void init() {
@@ -555,19 +584,6 @@ public class IndexFragment extends BaseFragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        if (loopBanner.getLoopData()!=null && loopBanner.getLoopData().items!=null && loopBanner.getLoopData().items.size()>0)
-            loopBanner.startAutoLoop();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        loopBanner.stopAutoLoop();
-    }
-
-    @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
@@ -599,7 +615,7 @@ public class IndexFragment extends BaseFragment {
             switch (requestCode) {
                 case ViewJump.CODE_ADDR_LIST:
                     //更新位置以及对应商铺以及对应的商品
-                    new CheckAddressReq(getActivity(), Constants.getLocation().location.longitude + "", Constants.getLocation().location.latitude + "")
+                    new CheckAddressReq(getActivity(), Constants.getLocation(false).location.longitude + "", Constants.getLocation(false).location.latitude + "")
                             .execute(new Request.RequestCallback<List<Shop>>() {
                                 @Override
                                 public void onSuccess(List<Shop> shops) {
@@ -621,7 +637,7 @@ public class IndexFragment extends BaseFragment {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
                                                 Constants.currentShop = shops.get(which);
-                                                Constants.checkAddress = true;//可配送
+                                                Constants.setEnableDeliveryAddress(true);//可配送
                                                 init();
                                                 loadData();
                                             }
@@ -642,7 +658,7 @@ public class IndexFragment extends BaseFragment {
                                                         @Override
                                                         public void onClick(DialogInterface dialog, int which) {
                                                             //shop置Null
-                                                            Constants.checkAddress = false;
+                                                            Constants.setEnableDeliveryAddress(false);
                                                             Constants.currentShop = null;
                                                             init();
                                                             loadData();

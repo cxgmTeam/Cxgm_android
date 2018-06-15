@@ -33,4 +33,13 @@ public class UserPoiInfo extends PoiInfo {
             this.location = new LatLng(location.getLatitude(),location.getLongitude());
         }
     }
+
+    public UserPoiInfo(UserAddress address){
+        if (address!= null){
+            name = address.getRealName();
+            this.address = address.getArea() + address.getAddress();
+            //city = address.getArea();
+            location = new LatLng(Double.valueOf(address.getDimension()),Double.valueOf(address.getLongitude()));
+        }
+    }
 }

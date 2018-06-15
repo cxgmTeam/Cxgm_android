@@ -3,6 +3,7 @@ package com.cxgm.app.app;
 import com.baidu.location.BDLocation;
 import com.baidu.mapapi.search.core.PoiInfo;
 import com.cxgm.app.data.entity.Shop;
+import com.cxgm.app.data.entity.UserAddress;
 import com.cxgm.app.data.entity.UserPoiInfo;
 
 /**
@@ -39,18 +40,36 @@ public class Constants {
 
     public static BDLocation currentLocation;//当前定位
     public static PoiInfo currentUserLocation;//用户在地图上点选的位置
+    public static UserAddress defaultUserAddress;//默认收货地址
     public static Shop currentShop;//当前商铺
-    public static boolean checkAddress = false;//当前地址可配送
+    private static boolean enableDeliveryAddress = false;//当前地址可配送
+    public static boolean updatedAddress = false;//标记位，标记地址发生变化 三个变量控制地址 过于复杂,好多地方需要放到onresume等方法即时更新，设置标记位以减少重复加载次数
 
     public static boolean notify = true;//是否接收通知
     public static float postage = 10f;//邮费
 
     //获得地址  定位或用户点选
-    public static PoiInfo getLocation(){
-        if (currentUserLocation==null && currentLocation!=null) {
+    //isReferenceUserAddress 参考收货地址
+    public static PoiInfo getLocation(boolean isReferenceUserAddress){
+        if (isReferenceUserAddress && currentUserLocation==null && defaultUserAddress!=null) {
+            PoiInfo info = new UserPoiInfo(defaultUserAddress);
+            return info;
+        }else if (currentUserLocation==null && currentLocation!=null) {
             PoiInfo info = new UserPoiInfo(currentLocation);
             return info;
         }else return currentUserLocation;
+    }
+
+    /**
+     * 当前地址 是否可配送
+     * @return
+     */
+    public static boolean getEnableDeliveryAddress(){
+        return enableDeliveryAddress;
+    }
+    public static void setEnableDeliveryAddress(boolean enable){
+        enableDeliveryAddress =  enable;
+        updatedAddress = true;
     }
 
 }

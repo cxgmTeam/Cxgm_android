@@ -9,7 +9,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
+import com.cxgm.app.app.Constants;
+import com.cxgm.app.data.entity.Shop;
 import com.cxgm.app.data.entity.UserAddress;
+import com.cxgm.app.data.io.common.CheckAddressReq;
 import com.cxgm.app.data.io.order.DeleteAddressReq;
 import com.cxgm.app.data.io.order.UpdateAddressReq;
 import com.cxgm.app.ui.view.ViewJump;
@@ -92,6 +95,36 @@ public class AddrAdapter extends BaseAdapter {
                                 mList.get(i).setIsDef(i == position ? 1 : 0);
                             }
                             notifyDataSetChanged();
+                            //更新全局默认地址
+                            Constants.defaultUserAddress = mList.get(position);
+                            //需要重新确定 地址是否是配送范围
+                            Constants.currentShop = null;
+                            Constants.setEnableDeliveryAddress(false);
+                            new CheckAddressReq(activity,Constants.defaultUserAddress.getLongitude(),Constants.defaultUserAddress.getDimension())
+                                    .execute(new Request.RequestCallback<List<Shop>>() {
+                                        @Override
+                                        public void onSuccess(List<Shop> shops) {
+                                            if (shops!=null && shops.size()>0){
+                                                Constants.currentShop = shops.get(0);
+                                                Constants.setEnableDeliveryAddress(true);
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onError(Throwable ex, boolean isOnCallback) {
+
+                                        }
+
+                                        @Override
+                                        public void onCancelled(Callback.CancelledException cex) {
+
+                                        }
+
+                                        @Override
+                                        public void onFinished() {
+
+                                        }
+                                    });
                         }
 
                         @Override

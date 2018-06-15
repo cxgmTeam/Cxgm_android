@@ -9,6 +9,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
     <TextView
+        android:singleLine="true"
         android:textSize="@dimen/text_size_normal"
         android:id="@+id/tvContent"
         android:textColor="@color/textWhite"

@@ -2,18 +2,20 @@ package com.cxgm.app.ui.view.common;
 
 import android.Manifest;
 import android.os.Bundle;
-import android.widget.TextView;
 
 import com.baidu.location.BDLocation;
 import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.entity.Shop;
+import com.cxgm.app.data.entity.UserAddress;
 import com.cxgm.app.data.io.common.CheckAddressReq;
 import com.cxgm.app.data.io.common.VersionControlReq;
+import com.cxgm.app.data.io.order.AddressListReq;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.utils.MapHelper;
 import com.cxgm.app.utils.ToastManager;
+import com.cxgm.app.utils.UserManager;
 import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.manager.PermissionManager;
 import com.deanlib.ootb.utils.VersionUtils;
@@ -23,7 +25,6 @@ import org.xutils.common.Callback;
 
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.functions.Action1;
 
@@ -113,7 +114,7 @@ public class LaunchActivity extends BaseActivity implements MapHelper.LocationCa
                 public void onSuccess(List<Shop> shops) {
                     if (shops != null && shops.size() > 0) {
                         Constants.currentShop = shops.get(0);
-                        Constants.checkAddress = true;
+                        Constants.setEnableDeliveryAddress(true);
                     }
                 }
 
@@ -129,8 +130,80 @@ public class LaunchActivity extends BaseActivity implements MapHelper.LocationCa
 
                 @Override
                 public void onFinished() {
-                    ViewJump.toMain(LaunchActivity.this);
-                    finish();
+                    //如果定位不在配送范围内 去查配送地址
+                    if (UserManager.isUserLogin() && !Constants.getEnableDeliveryAddress()){
+                        new AddressListReq(LaunchActivity.this).execute(new Request.RequestCallback<List<UserAddress>>() {
+                            @Override
+                            public void onSuccess(List<UserAddress> userAddresses) {
+                                if (userAddresses!=null && userAddresses.size()>0){
+                                    UserAddress temp  = userAddresses.get(0);
+                                    for (UserAddress address : userAddresses){
+                                        if (address.getIsDef() == 1){
+                                            temp = address;
+                                            break;
+                                        }
+                                    }
+                                    //设置默认收货地址
+                                    Constants.defaultUserAddress = temp;
+                                    //我日
+                                    new CheckAddressReq(LaunchActivity.this,temp.getLongitude(),temp.getDimension())
+                                            .execute(new Request.RequestCallback<List<Shop>>() {
+                                                @Override
+                                                public void onSuccess(List<Shop> shops) {
+                                                    if (shops!=null && shops.size()>0){
+                                                        Constants.currentShop = shops.get(0);
+                                                        Constants.setEnableDeliveryAddress(true);
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void onError(Throwable ex, boolean isOnCallback) {
+
+                                                }
+
+                                                @Override
+                                                public void onCancelled(Callback.CancelledException cex) {
+
+                                                }
+
+                                                @Override
+                                                public void onFinished() {
+                                                    //管他在不在，最后还是要进主页的
+                                                    ViewJump.toMain(LaunchActivity.this);
+                                                    finish();
+                                                }
+                                            });
+                                }else {
+                                    //登录但没有添加过地址
+                                    ViewJump.toMain(LaunchActivity.this);
+                                    finish();
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable ex, boolean isOnCallback) {
+                                //为什么分开搞三个，而没有在onFinished中，是因为onSuccess里还有一个网络请求
+                                ViewJump.toMain(LaunchActivity.this);
+                                finish();
+                            }
+
+                            @Override
+                            public void onCancelled(Callback.CancelledException cex) {
+                                ViewJump.toMain(LaunchActivity.this);
+                                finish();
+                            }
+
+                            @Override
+                            public void onFinished() {
+
+                            }
+                        });
+                    }else {
+                        //非登录，或者在配送范围
+                        ViewJump.toMain(LaunchActivity.this);
+                        finish();
+                    }
+
                 }
             });
 

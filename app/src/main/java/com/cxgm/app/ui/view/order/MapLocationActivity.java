@@ -54,7 +54,9 @@ import com.baidu.mapapi.search.poi.PoiSearch;
 import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.entity.PsfwTransfer;
+import com.cxgm.app.data.entity.Shop;
 import com.cxgm.app.data.entity.UserPoiInfo;
+import com.cxgm.app.data.io.common.CheckAddressReq;
 import com.cxgm.app.data.io.common.FindAllPsfwReq;
 import com.cxgm.app.ui.adapter.PoiAdapter;
 import com.cxgm.app.ui.base.BaseActivity;
@@ -252,35 +254,68 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
     }
 
     private void loadData() {
-        new FindAllPsfwReq(this, Constants.currentShop != null ? Constants.currentShop.getId() : 0)
-                .execute(new Request.RequestCallback<List<PsfwTransfer>>() {
-                    @Override
-                    public void onSuccess(List<PsfwTransfer> psfwTransfers) {
-                        if (psfwTransfers != null) {
-                            mPathList.clear();
-                            for (PsfwTransfer psfw : psfwTransfers) {
-                                drawPsfw(psfw.getPsfw());
+        //用定位地址区分是否显示全部店铺的区域，还是指定店铺的区域
+        if (Constants.currentLocation!=null){
+            new CheckAddressReq(this,Constants.currentLocation.getLongitude()+"",Constants.currentLocation.getLatitude()+"")
+                    .execute(new Request.RequestCallback<List<Shop>>() {
+                        @Override
+                        public void onSuccess(List<Shop> shops) {
+                            Shop temp = null;
+                            if (shops!=null && shops.size()>0){
+                                temp = shops.get(0);
                             }
+                            new FindAllPsfwReq(MapLocationActivity.this, temp != null ? temp.getId() : 0)
+                                    .execute(mPsfwCallback);
                         }
-                    }
 
-                    @Override
-                    public void onError(Throwable ex, boolean isOnCallback) {
+                        @Override
+                        public void onError(Throwable ex, boolean isOnCallback) {
+                            new FindAllPsfwReq(MapLocationActivity.this).execute(mPsfwCallback);
+                        }
 
-                    }
+                        @Override
+                        public void onCancelled(Callback.CancelledException cex) {
+                            new FindAllPsfwReq(MapLocationActivity.this).execute(mPsfwCallback);
+                        }
 
-                    @Override
-                    public void onCancelled(Callback.CancelledException cex) {
+                        @Override
+                        public void onFinished() {
 
-                    }
+                        }
+                    });
+        }else {
+            new FindAllPsfwReq(this).execute(mPsfwCallback);
+        }
 
-                    @Override
-                    public void onFinished() {
-
-                    }
-                });
 
     }
+
+    Request.RequestCallback mPsfwCallback = new Request.RequestCallback<List<PsfwTransfer>>() {
+        @Override
+        public void onSuccess(List<PsfwTransfer> psfwTransfers) {
+            if (psfwTransfers != null) {
+                mPathList.clear();
+                for (PsfwTransfer psfw : psfwTransfers) {
+                    drawPsfw(psfw.getPsfw());
+                }
+            }
+        }
+
+        @Override
+        public void onError(Throwable ex, boolean isOnCallback) {
+
+        }
+
+        @Override
+        public void onCancelled(Callback.CancelledException cex) {
+
+        }
+
+        @Override
+        public void onFinished() {
+
+        }
+    };
 
     private void drawPsfw(String psfw) {
         if (!TextUtils.isEmpty(psfw)) {
@@ -409,7 +444,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
      */
     private void loadPoi(String city, String keyword) {
         if (TextUtils.isEmpty(city))
-            city = Constants.getLocation().city;
+            city = Constants.getLocation(false).city;
         mPoiSearch.searchInCity(new PoiCitySearchOption()
                 .city(city).keyword(keyword).pageNum(20)
         );

@@ -87,8 +87,8 @@ public class AddrListActivity extends BaseActivity implements MapHelper.Location
         imgBack.setVisibility(View.VISIBLE);
         tvTitle.setText(R.string.receiver_addr);
 
-        if (Constants.getLocation() != null) {
-            tvCurrentAddr.setText(Constants.getLocation().address);
+        if (Constants.getLocation(false) != null) {
+            tvCurrentAddr.setText(Constants.getLocation(false).address);
         } else {
             location();
         }
@@ -168,7 +168,7 @@ public class AddrListActivity extends BaseActivity implements MapHelper.Location
             Constants.currentLocation = bdLocation;
             //重新定位功能 置Null currentUserLocation
             Constants.currentUserLocation = null;
-            tvCurrentAddr.setText(Constants.getLocation().address);
+            tvCurrentAddr.setText(Constants.getLocation(false).address);
         }
     }
 
