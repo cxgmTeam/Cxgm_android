@@ -73,8 +73,13 @@ public class CartGoodsAdapter extends BaseAdapter {
         holder.tvSpecification.setText(viewGroup.getContext()
                 .getString(R.string.specification_,mList.get(i).getSpecifications()));
         holder.tvPrice.setText(StringHelper.getRMBFormat(mList.get(i).getPrice()));
-        holder.tvOriginal.setText(StringHelper.getStrikeFormat(StringHelper.getRMBFormat(mList.get(i).getOriginalPrice())));
-        holder.tvOriginal.setVisibility(View.VISIBLE);
+        //原价
+        if (mList.get(i).getOriginalPrice()!= mList.get(i).getPrice()) {
+            holder.tvOriginal.setText(StringHelper.getStrikeFormat(StringHelper.getRMBFormat(mList.get(i).getOriginalPrice())));
+            holder.tvOriginal.setVisibility(View.VISIBLE);
+        }else {
+            holder.tvOriginal.setVisibility(View.GONE);
+        }
         holder.tvNum.setText(mList.get(i).getGoodNum()+"");
         holder.tvSubtotal.setText(StringHelper.getRMBFormat(mList.get(i).getAmount()));
         //满减

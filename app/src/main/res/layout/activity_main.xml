@@ -14,7 +14,6 @@
         android:layout_height="match_parent"/>
 
     <include
-        android:id="@+id/layoutMenu"
         layout="@layout/layout_main_menu"
         />
 

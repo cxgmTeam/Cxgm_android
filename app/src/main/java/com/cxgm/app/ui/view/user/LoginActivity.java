@@ -20,6 +20,7 @@ import com.cxgm.app.data.io.user.SendSMSReq;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.utils.ToastManager;
 import com.cxgm.app.utils.UserManager;
+import com.cxgm.app.utils.ViewHelper;
 import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.utils.ValidateUtils;
 
@@ -176,6 +177,7 @@ public class LoginActivity extends BaseActivity {
                             for (UserManager.OnUserActionListener listener:UserManager.mListenerList){
                                 listener.onLogin(user);
                             }
+                            ViewHelper.updateShopCart(getApplicationContext());
                             finish();
                         }
                     }

@@ -46,6 +46,7 @@ import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.ui.widget.SpaceItemDecoration;
 import com.cxgm.app.utils.Helper;
 import com.cxgm.app.utils.ToastManager;
+import com.cxgm.app.utils.ViewHelper;
 import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.widget.GridViewForScrollView;
 import com.deanlib.ootb.widget.ListViewForScrollView;
@@ -224,6 +225,7 @@ public class IndexFragment extends BaseFragment {
                     Constants.currentShop = mShopList.get((int) id);
                     init();
                     loadData();
+                    ViewHelper.updateShopCart(getActivity());
                 }
             });
             srl.setEnableRefresh(true);
@@ -576,7 +578,7 @@ public class IndexFragment extends BaseFragment {
                     }
                     TextView tvContent = popupWindow.getContentView().findViewById(R.id.tvContent);
                     tvContent.setText(message);
-                    if (!popupWindow.isShowing())
+                    if (!popupWindow.isShowing() && imgLocation!=null)
                         popupWindow.showAsDropDown(imgLocation, DensityUtil.dip2px(6), DensityUtil.dip2px(-6));
                 }
             }
@@ -640,6 +642,7 @@ public class IndexFragment extends BaseFragment {
                                                 Constants.setEnableDeliveryAddress(true);//可配送
                                                 init();
                                                 loadData();
+                                                ViewHelper.updateShopCart(getActivity());
                                             }
                                         });
                                         builder.setNegativeButton(R.string.cancel, null);
@@ -662,6 +665,7 @@ public class IndexFragment extends BaseFragment {
                                                             Constants.currentShop = null;
                                                             init();
                                                             loadData();
+                                                            ViewHelper.updateShopCart(getActivity());
                                                         }
                                                     }).show();
                                         }

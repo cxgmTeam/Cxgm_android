@@ -22,7 +22,6 @@ import com.cxgm.app.data.entity.ShopCart;
 import com.cxgm.app.data.entity.base.PageInfo;
 import com.cxgm.app.data.io.goods.FindProductDetailReq;
 import com.cxgm.app.data.io.goods.PushProductsReq;
-import com.cxgm.app.data.io.order.DeleteAddressReq;
 import com.cxgm.app.data.io.order.ShopCartListReq;
 import com.cxgm.app.ui.adapter.GoodsAdapter;
 import com.cxgm.app.ui.base.BaseActivity;
@@ -53,7 +52,7 @@ import butterknife.OnClick;
  * @anthor Dean
  * @time 2018/4/22 0022 17:17
  */
-public class GoodsDetailActivity extends BaseActivity {
+public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnShopCartUpdateListener {
 
     @BindView(R.id.imgBack)
     ImageView imgBack;
@@ -131,6 +130,7 @@ public class GoodsDetailActivity extends BaseActivity {
         setContentView(R.layout.activity_goods_detail);
         ButterKnife.bind(this);
         mProductId = getIntent().getIntExtra("productId", 0);
+        ViewHelper.addOnShopCartUpdateListener(this);
         init();
         loadData();
     }
@@ -361,33 +361,7 @@ public class GoodsDetailActivity extends BaseActivity {
     //查询购物车
     private void checkShopCart (){
 
-        if (UserManager.isUserLogin() && Constants.currentShop !=null) {
-            new ShopCartListReq(this, Constants.currentShop.getId(), 1, 1)
-                    .execute(new Request.RequestCallback<PageInfo<ShopCart>>() {
-                        @Override
-                        public void onSuccess(PageInfo<ShopCart> shopCartPageInfo) {
-                            if (shopCartPageInfo != null) {
-                                mShopCartNum = shopCartPageInfo.getTotal();
-                                ViewHelper.updateShopCartNum(GoodsDetailActivity.this, imgAction1, mShopCartNum);
-                            }
-                        }
-
-                        @Override
-                        public void onError(Throwable ex, boolean isOnCallback) {
-
-                        }
-
-                        @Override
-                        public void onCancelled(Callback.CancelledException cex) {
-
-                        }
-
-                        @Override
-                        public void onFinished() {
-
-                        }
-                    });
-        }
+        ViewHelper.updateShopCart(this);
     }
 
     @OnClick({R.id.imgBack, R.id.imgAction1, R.id.imgToTop, R.id.tvAddShopCart})
@@ -397,6 +371,7 @@ public class GoodsDetailActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.imgAction1:
+                //使用QBageView 导致失效
                 ViewJump.toMain(this, R.id.rbShopCart);
                 break;
             case R.id.imgToTop:
@@ -416,7 +391,7 @@ public class GoodsDetailActivity extends BaseActivity {
 //                        public void onSuccess() {
 //                            if (mProduct.getShopCartNum()==mActionNum) {
 //                                mShopCartNum++;
-//                                ViewHelper.updateShopCartNum(GoodsDetailActivity.this, imgAction1,mShopCartNum);
+//                                ViewHelper.drawShopCartNum(GoodsDetailActivity.this, imgAction1,mShopCartNum);
 //                            }
 //                        }
 //                    });
@@ -466,5 +441,17 @@ public class GoodsDetailActivity extends BaseActivity {
             return position = 1;
         }
         return ++position;
+    }
+
+    @Override
+    public void onUpdate(int num) {
+        mShopCartNum = num;
+        ViewHelper.drawShopCartNum(GoodsDetailActivity.this, imgAction1, mShopCartNum,true);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ViewHelper.removeShopCartUpdateListener(this);
     }
 }

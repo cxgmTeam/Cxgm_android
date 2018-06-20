@@ -1,49 +1,87 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/colorWhite"
-    android:layout_height="@dimen/main_menu_height"
-    android:gravity="center_vertical"
-    android:elevation="@dimen/elevation"
-    android:orientation="horizontal">
+    android:layout_height="@dimen/main_menu_height">
 
+    <RadioGroup
+        android:id="@+id/layoutMenu"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_menu_height"
+        android:background="@color/colorWhite"
+        android:elevation="@dimen/elevation"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
-    <RadioButton
-        android:id="@+id/rbIndex"
-        style="@style/MenuButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:drawableTop="@drawable/selector_index"
-        android:text="@string/home" />
+        <RadioButton
+            android:id="@+id/rbIndex"
+            style="@style/MenuButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/selector_index"
+            android:text="@string/home" />
 
-    <RadioButton
-        android:id="@+id/rbGoods"
-        style="@style/MenuButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:drawableTop="@drawable/selector_goods"
-        android:text="@string/classify" />
+        <RadioButton
+            android:id="@+id/rbGoods"
+            style="@style/MenuButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/selector_goods"
+            android:text="@string/classify" />
 
-    <RadioButton
-        android:id="@+id/rbShopCart"
-        style="@style/MenuButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:drawableTop="@drawable/selector_shop_cart"
-        android:text="@string/shop_cart" />
+        <RadioButton
+            android:id="@+id/rbShopCart"
+            style="@style/MenuButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/selector_shop_cart"
+            android:text="@string/shop_cart" />
 
-    <RadioButton
-        android:id="@+id/rbUser"
-        style="@style/MenuButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:drawableTop="@drawable/selector_user"
-        android:text="@string/my" />
+        <RadioButton
+            android:id="@+id/rbUser"
+            style="@style/MenuButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/selector_user"
+            android:text="@string/my" />
 
-</RadioGroup>
+    </RadioGroup>
+
+    <LinearLayout
+        android:elevation="1dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/main_menu_height">
+        <View
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/main_menu_height"
+            />
+        <View
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/main_menu_height"
+            />
+        <LinearLayout
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/main_menu_height"
+            >
+            <View
+                android:id="@+id/viewShopcartShadow"
+                android:layout_width="40dp"
+                android:layout_height="@dimen/main_menu_height"/>
+        </LinearLayout>
+        <View
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/main_menu_height"
+            />
+    </LinearLayout>
+</FrameLayout>

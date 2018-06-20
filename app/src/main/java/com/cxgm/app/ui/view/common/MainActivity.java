@@ -1,6 +1,5 @@
 package com.cxgm.app.ui.view.common;
 
-import android.Manifest;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -10,29 +9,26 @@ import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.baidu.location.BDLocation;
 import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
-import com.cxgm.app.data.entity.Shop;
-import com.cxgm.app.data.io.common.CheckAddressReq;
+import com.cxgm.app.data.entity.ShopCart;
+import com.cxgm.app.data.entity.base.PageInfo;
+import com.cxgm.app.data.io.order.ShopCartListReq;
 import com.cxgm.app.ui.base.BaseActivity;
 
 import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.ui.view.goods.GoodsFirstClassifyFragment;
 import com.cxgm.app.ui.view.order.ShopCartFragment;
 import com.cxgm.app.ui.view.user.UserFragment;
-import com.cxgm.app.utils.MapHelper;
 import com.cxgm.app.utils.ToastManager;
 import com.cxgm.app.utils.UserManager;
+import com.cxgm.app.utils.ViewHelper;
 import com.deanlib.ootb.data.io.Request;
-import com.deanlib.ootb.manager.PermissionManager;
-import com.tbruyelle.rxpermissions.Permission;
 
 import org.xutils.common.Callback;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import rx.functions.Action1;
 
 /**
  * 骨架
@@ -41,7 +37,7 @@ import rx.functions.Action1;
  * @time 2018/4/18 下午5:47
  */
 
-public class MainActivity extends BaseActivity{
+public class MainActivity extends BaseActivity implements ViewHelper.OnShopCartUpdateListener{
 
     @BindView(R.id.layoutContainer)
     FrameLayout layoutContainer;
@@ -55,6 +51,8 @@ public class MainActivity extends BaseActivity{
     RadioButton rbUser;
     @BindView(R.id.layoutMenu)
     RadioGroup layoutMenu;
+    @BindView(R.id.viewShopcartShadow)
+    View viewShopcartShadow;
 
     static IndexFragment mIndexFragment;
     static UserFragment mUserFragment;
@@ -81,6 +79,7 @@ public class MainActivity extends BaseActivity{
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         mCheckResId = getIntent().getIntExtra("resId",R.id.rbIndex);
+        ViewHelper.addOnShopCartUpdateListener(this);
         init();
 
     }
@@ -90,6 +89,13 @@ public class MainActivity extends BaseActivity{
         super.onNewIntent(intent);
         mCheckResId = intent.getIntExtra("resId",R.id.rbIndex);
         checkRadioBtn(mCheckResId);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //更新shopcart num
+        ViewHelper.updateShopCart(this);
     }
 
     private void init() {
@@ -110,16 +116,13 @@ public class MainActivity extends BaseActivity{
         });
 
         checkRadioBtn(mCheckResId);
+
     }
 
     private void checkRadioBtn(int resId){
         View view = findViewById(resId);
         if (view!=null &&view instanceof RadioButton)
             ((RadioButton)view).setChecked(true);
-    }
-
-    private void loadData() {
-
     }
 
     public void publicChangeView(int resId){
@@ -164,4 +167,15 @@ public class MainActivity extends BaseActivity{
         }
     }
 
+    @Override
+    public void onUpdate(int num) {
+        //由于viewShopcartShadow 不是监听点击事件的View,所以不会影响到rbShopCart的点击事件，这里gotoShopCart 设置 false
+        ViewHelper.drawShopCartNum(MainActivity.this,viewShopcartShadow,num,false);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ViewHelper.removeShopCartUpdateListener(this);
+    }
 }
