@@ -10,6 +10,7 @@ import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.cxgm.app.R;
+import com.cxgm.app.utils.ToastManager;
 import com.cxgm.app.utils.UserManager;
 import com.deanlib.ootb.OotbConfig;
 import com.deanlib.ootb.data.PersistenceUtils;
@@ -80,9 +81,9 @@ public class App extends MultiDexApplication {
         String notity = persistenceUtils.getCache("notity");
         Constants.notify = "on".equals(notity);
 
-        /*
-        //TODO 友盟统计
-        UMConfigure.init(this, "5af6acadb27b0a761e000306", "channel", UMConfigure.DEVICE_TYPE_PHONE, "Push推送业务的secret");
+
+        //TODO 友盟
+        UMConfigure.init(this, "5af6acadb27b0a761e000306", "channel", UMConfigure.DEVICE_TYPE_PHONE, "44b9f56acba05f8a5e6859d41f1e886b");
         UMConfigure.setLogEnabled(Constants.DEBUG);
 
         //友盟推送
@@ -116,7 +117,6 @@ public class App extends MultiDexApplication {
 
         DLogUtils.d("设备TOKEN:"+Constants.deviceToken);
 
-        */
 
         //设备ID
         Constants.deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
@@ -128,6 +128,16 @@ public class App extends MultiDexApplication {
 
     UmengMessageHandler messageHandler = new UmengMessageHandler() {
         @Override
+        public void handleMessage(Context context, UMessage uMessage) {
+            super.handleMessage(context, uMessage);
+        }
+
+        @Override
+        public void dealWithNotificationMessage(Context context, UMessage uMessage) {
+            super.dealWithNotificationMessage(context, uMessage);
+        }
+
+        @Override
         public void dealWithCustomMessage(final Context context, final UMessage msg) {
             new Handler(getMainLooper()).post(new Runnable() {
 
@@ -135,6 +145,7 @@ public class App extends MultiDexApplication {
                 public void run() {
 
                     DLogUtils.d("推送消息："+msg.custom);
+                    ToastManager.sendToast(msg.custom);
 
                     try {
 

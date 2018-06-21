@@ -33,7 +33,7 @@ public class BaseActivity extends AppCompatActivity implements UserManager.OnUse
 		NetworkManager.getInstance().addOnNetworkListener(this);
 
 		//推送统计应用启动数据  统计分析sdk中统计日活的方法无关
-		//PushAgent.getInstance(this).onAppStart();
+		PushAgent.getInstance(this).onAppStart();
 		
 	}
 

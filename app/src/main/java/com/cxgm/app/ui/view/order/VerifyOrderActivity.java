@@ -343,6 +343,7 @@ public class VerifyOrderActivity extends BaseActivity {
                     @Override
                     public void onSuccess(Integer integer) {
                         if (integer>0){
+                            ViewHelper.updateShopCart(getApplicationContext());
                             ViewJump.toOrderPay(VerifyOrderActivity.this,integer,mOrder.getOrderAmount());
                             finish();
                         }

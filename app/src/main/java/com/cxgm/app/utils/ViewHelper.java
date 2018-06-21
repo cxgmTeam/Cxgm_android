@@ -124,6 +124,10 @@ public class ViewHelper {
         mOnShopCartUpdateListeners.remove(listener);
     }
 
+    /**
+     * 更新购物车  提醒数据的变化
+     * @param context
+     */
     public static void updateShopCart(Context context) {
         if (UserManager.isUserLogin() && Constants.currentShop != null) {
             new ShopCartListReq(context, Constants.currentShop.getId(), 1, 1)

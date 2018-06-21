@@ -16,6 +16,7 @@ import com.cxgm.app.data.io.common.VersionControlReq;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.utils.UserManager;
+import com.deanlib.ootb.data.FileUtils;
 import com.deanlib.ootb.data.PersistenceUtils;
 import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.utils.VersionUtils;
@@ -94,8 +95,10 @@ public class SettingsActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tvClearCache:
+                FileUtils.deleteCacheAll();
                 break;
             case R.id.layoutCheckVersion:
+                loadCheckVersion();
                 break;
             case R.id.tvAbout:
                 break;

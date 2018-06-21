@@ -33,6 +33,7 @@ import com.cxgm.app.utils.Helper;
 import com.cxgm.app.utils.StringHelper;
 import com.cxgm.app.utils.ToastManager;
 import com.cxgm.app.utils.UserManager;
+import com.cxgm.app.utils.ViewHelper;
 import com.deanlib.ootb.data.io.Request;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -443,7 +444,7 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
 
                                 @Override
                                 public void onFinished() {
-
+                                    ViewHelper.updateShopCart(getActivity());
                                 }
                             });
                         }
