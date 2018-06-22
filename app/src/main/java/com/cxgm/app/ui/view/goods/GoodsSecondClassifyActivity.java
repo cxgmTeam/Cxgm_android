@@ -30,9 +30,11 @@ import com.deanlib.ootb.data.io.Request;
 import org.xutils.common.Callback;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -95,7 +97,7 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
     @Override
     protected void onResume() {
         super.onResume();
-        checkShopCart();
+        ViewHelper.updateShopCart(this);
     }
 
     private void init() {
@@ -201,9 +203,6 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
 
     }
 
-    private void checkShopCart(){
-        ViewHelper.updateShopCart(this);
-    }
 
     /**
      * 三级分类
@@ -298,6 +297,15 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
                                 }
                             }
                             mProductMap.put("",otherList);
+
+                            //清除无商品的三级分类，不显示
+                            Iterator<Map.Entry<String, List<ProductTransfer>>> iterator = mProductMap.entrySet().iterator();
+                            while (iterator.hasNext()){
+
+                                if (iterator.next().getValue().size() == 0 ){
+                                    iterator.remove();
+                                }
+                            }
 
                             mEGLAdapter.notifyDataSetChanged();
 
@@ -396,7 +404,7 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
             //从无到有
 //            mShopCartNum ++;
 //            ViewHelper.drawShopCartNum(GoodsSecondClassifyActivity.this,imgAction2,mShopCartNum);
-            checkShopCart();
+            ViewHelper.updateShopCart(this);
         }
 
     }
@@ -409,7 +417,7 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
 //            if (mShopCartNum<0)
 //                mShopCartNum = 0;
 //            ViewHelper.drawShopCartNum(GoodsSecondClassifyActivity.this,imgAction2,mShopCartNum);
-            checkShopCart();
+            ViewHelper.updateShopCart(this);
         }
     }
 

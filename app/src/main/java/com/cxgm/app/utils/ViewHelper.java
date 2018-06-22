@@ -56,6 +56,7 @@ public class ViewHelper {
                 public void onSuccess(Integer integer) {
                     product.setShopCartNum(goodsNum);
                     ToastManager.sendToast(activity.getString(R.string.update_shop_cart));
+                    ViewHelper.updateShopCart(activity.getApplicationContext());
                     if (listener != null)
                         listener.onSuccess();
                 }
@@ -82,6 +83,7 @@ public class ViewHelper {
                     product.setShopCartId(integer);
                     product.setShopCartNum(goodsNum);
                     ToastManager.sendToast(activity.getString(R.string.added_shop_cart));
+                    ViewHelper.updateShopCart(activity.getApplicationContext());
                     if (listener != null)
                         listener.onSuccess();
                 }
@@ -175,8 +177,12 @@ public class ViewHelper {
         if (activity == null || view == null)
             return;
         //商品种类，不是商品数量
-        Badge mShopCartBadge = new QBadgeView(activity)
-                .bindTarget(view).setBadgeTextSize(8, true);
+        Badge mShopCartBadge = (Badge) view.getTag();
+        if (mShopCartBadge==null) {
+            mShopCartBadge = new QBadgeView(activity)
+                    .bindTarget(view).setBadgeTextSize(8, true);
+            view.setTag(mShopCartBadge);
+        }
         if (gotoShopCart)
             RxView.clicks(view).throttleFirst(2, TimeUnit.SECONDS)
                     .subscribe(o -> {

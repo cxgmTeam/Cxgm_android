@@ -138,6 +138,7 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
             mCartList.clear();
             loadData();
             cbCheckAll.setChecked(false);
+            ViewHelper.updateShopCart(getActivity());
         }
     }
 
@@ -285,6 +286,7 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
                         layoutGoodsList.setVisibility(View.GONE);
                         layoutEmptyShopCart.setVisibility(View.VISIBLE);
                     }
+                    ViewHelper.updateShopCart(getActivity());
                 }
 
                 @Override
@@ -430,6 +432,7 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
                                         layoutGoodsList.setVisibility(View.GONE);
                                         layoutEmptyShopCart.setVisibility(View.VISIBLE);
                                     }
+                                    ViewHelper.updateShopCart(getActivity());
                                 }
 
                                 @Override
@@ -444,7 +447,7 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
 
                                 @Override
                                 public void onFinished() {
-                                    ViewHelper.updateShopCart(getActivity());
+
                                 }
                             });
                         }

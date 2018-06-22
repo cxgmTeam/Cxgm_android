@@ -353,16 +353,11 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
                 }
             });
 
-            checkShopCart();
+            ViewHelper.updateShopCart(this);
 
         }
     }
 
-    //查询购物车
-    private void checkShopCart (){
-
-        ViewHelper.updateShopCart(this);
-    }
 
     @OnClick({R.id.imgBack, R.id.imgAction1, R.id.imgToTop, R.id.tvAddShopCart})
     public void onViewClicked(View view) {
@@ -411,7 +406,7 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
                         int num = data.getIntExtra("num", 0);
                         if (mProduct!=null) {
                             mProduct.setShopCartNum(num);
-                            checkShopCart();
+                            ViewHelper.updateShopCart(this);
 //                        if (mActionNum > 0)
 //                            tvSpecification.setText(getString(R.string.select_, mActionNum + mProduct.getUnit()));
                         }

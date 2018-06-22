@@ -68,10 +68,10 @@ public class App extends MultiDexApplication {
     public void onCreate() {
         super.onCreate();
 
-        if (Constants.DEBUG) {
-            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().build());
-            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().build());
-        }
+//        if (Constants.DEBUG) {
+//            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder().detectAll().build());
+//            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().build());
+//        }
 
         OotbConfig.init(this,Constants.DEBUG);
 
@@ -145,7 +145,7 @@ public class App extends MultiDexApplication {
                 public void run() {
 
                     DLogUtils.d("推送消息："+msg.custom);
-                    ToastManager.sendToast(msg.custom);
+//                    ToastManager.sendToast(msg.custom);
 
                     try {
 

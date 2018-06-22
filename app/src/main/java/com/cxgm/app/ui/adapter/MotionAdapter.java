@@ -81,8 +81,8 @@ public class MotionAdapter extends BaseAdapter {
             holder.hlvAdGoods.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(1.5f)));
             adapter.setOnItemClickListener(new GoodsRecyclerViewAdapter.OnItemClickListener() {
                 @Override
-                public void onItemClick(View view, int position) {
-                    ViewJump.toGoodsDetail(activity,mList.get(position).getProductList().get(position).getId());
+                public void onItemClick(View view, int i) {
+                    ViewJump.toGoodsDetail(activity,mList.get(position).getProductList().get(i).getId());
                 }
             });
 
