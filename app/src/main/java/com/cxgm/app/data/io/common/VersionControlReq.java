@@ -39,7 +39,6 @@ public class VersionControlReq extends Request {
     @Override
     public Version parse(String json) {
         UserResult<Version> result = JSON.parseObject(json,new UserResult<Version>(){}.getEntityType());
-        result.data.setVersionNum("12");
         return result.data;
     }
 }

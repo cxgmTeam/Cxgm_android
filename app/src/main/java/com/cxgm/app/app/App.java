@@ -6,8 +6,10 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.os.StrictMode;
+import android.os.SystemClock;
 import android.provider.Settings;
 import android.support.multidex.MultiDexApplication;
 import android.support.v4.app.NotificationCompat;
@@ -73,6 +75,8 @@ public class App extends MultiDexApplication {
         });
     }
 
+    NotificationManager mNotificationManager;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -133,6 +137,8 @@ public class App extends MultiDexApplication {
 
         //用户
         UserManager.getInstance(this);
+
+        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
     UmengMessageHandler messageHandler = new UmengMessageHandler() {
@@ -152,11 +158,13 @@ public class App extends MultiDexApplication {
             if (Constants.notify) {
                 //todo 通知栏通知 声音
                 Intent intent = new Intent(getApplicationContext(),LaunchActivity.class);
-                PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),100,intent,PendingIntent.FLAG_UPDATE_CURRENT);
-                Notification notification = new NotificationCompat.Builder(getApplicationContext(),"cxgm").setContentTitle(uMessage.title)
-                        .setContentText(uMessage.custom).setContentIntent(pendingIntent).build();
-                NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                manager.notify(111,notification);
+                PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0,intent,0);
+                Notification notification = new Notification.Builder(getApplicationContext()).setContentTitle(uMessage.title)
+                        .setSmallIcon(R.mipmap.ic_launcher).setLargeIcon( ((BitmapDrawable) getResources().getDrawable(R.mipmap.ic_launcher)).getBitmap())
+                        .setWhen(SystemClock.uptimeMillis())
+                        .setContentText(uMessage.custom).setContentIntent(pendingIntent).setDefaults(Notification.DEFAULT_ALL).build();
+                notification.flags |= Notification.FLAG_AUTO_CANCEL;
+                mNotificationManager.notify(1,notification);
             }
 
             new Handler(getMainLooper()).post(new Runnable() {
