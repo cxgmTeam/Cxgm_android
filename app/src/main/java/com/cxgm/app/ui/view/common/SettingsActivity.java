@@ -1,7 +1,11 @@
 package com.cxgm.app.ui.view.common;
 
+import android.content.DialogInterface;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
@@ -12,9 +16,12 @@ import android.widget.TextView;
 
 import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
+import com.cxgm.app.data.entity.Version;
 import com.cxgm.app.data.io.common.VersionControlReq;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
+import com.cxgm.app.utils.Helper;
+import com.cxgm.app.utils.ToastManager;
 import com.cxgm.app.utils.UserManager;
 import com.deanlib.ootb.data.FileUtils;
 import com.deanlib.ootb.data.PersistenceUtils;
@@ -53,6 +60,27 @@ public class SettingsActivity extends BaseActivity {
     TextView tvLogout;
     @BindView(R.id.cbNotifySwitch)
     CheckBox cbNotifySwitch;
+
+    Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 1:
+                    Version version = (Version) msg.obj;
+                    if (version!=null) {
+                        new AlertDialog.Builder(SettingsActivity.this).setTitle(R.string.update_version)
+                                .setMessage(R.string.new_version).setPositiveButton(R.string.update, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ViewJump.toThirdWebView(SettingsActivity.this, version.getUrl());
+                            }
+                        }).setNegativeButton(R.string.not_update, null).show();
+                    }
+                    break;
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,29 +139,33 @@ public class SettingsActivity extends BaseActivity {
     }
 
     private void loadCheckVersion(){
-        new VersionControlReq(this,VersionUtils.getAppVersionCode()+"")
-                .execute(new Request.RequestCallback() {
-                    @Override
-                    public void onSuccess(Object o) {
-                        //TODO 判断
-//                        tvVersionTag.setText(R.string.last_version);
-//                        tvVersionTag.setText(R.string.new_version);
-                    }
+        new VersionControlReq(this).execute(new Request.RequestCallback<Version>() {
+            @Override
+            public void onSuccess(Version version) {
+                //判断版本
+                if (version!=null && Helper.str2Float(version.getVersionNum())> VersionUtils.getAppVersionCode()){
+                    mHandler.sendMessageDelayed(mHandler.obtainMessage(1,version),500);
+                }else {
+                    ToastManager.sendToast(getString(R.string.last_version));
+                }
 
-                    @Override
-                    public void onError(Throwable ex, boolean isOnCallback) {
+            }
 
-                    }
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                ToastManager.sendToast(getString(R.string.last_version));
+            }
 
-                    @Override
-                    public void onCancelled(Callback.CancelledException cex) {
+            @Override
+            public void onCancelled(Callback.CancelledException cex) {
+                ToastManager.sendToast(getString(R.string.last_version));
+            }
 
-                    }
+            @Override
+            public void onFinished() {
 
-                    @Override
-                    public void onFinished() {
+            }
+        });
 
-                    }
-                });
     }
 }

@@ -179,6 +179,9 @@
     <string name="update_online">在线更新</string>
     <string name="last_version">已是最新版本</string>
     <string name="new_version">有新版本可更新</string>
+    <string name="update_version">版本更新</string>
+    <string name="update">更新</string>
+    <string name="not_update">暂不更新</string>
     <string name="about_me">关于我们</string>
     <string name="logout">注销账号</string>
 

@@ -10,13 +10,16 @@ import com.cxgm.app.data.entity.ProductTransfer;
 import com.cxgm.app.data.entity.Shop;
 import com.cxgm.app.data.entity.ShopCart;
 import com.cxgm.app.data.entity.UserAddress;
+import com.cxgm.app.data.entity.Version;
 import com.cxgm.app.data.entity.base.PageInfo;
 import com.cxgm.app.data.io.common.CheckAddressReq;
+import com.cxgm.app.data.io.common.VersionControlReq;
 import com.cxgm.app.data.io.order.AddCartReq;
 import com.cxgm.app.data.io.order.ShopCartListReq;
 import com.cxgm.app.data.io.order.UpdateCartReq;
 import com.cxgm.app.ui.view.ViewJump;
 import com.deanlib.ootb.data.io.Request;
+import com.deanlib.ootb.utils.VersionUtils;
 import com.jakewharton.rxbinding.view.RxView;
 
 import org.xutils.common.Callback;

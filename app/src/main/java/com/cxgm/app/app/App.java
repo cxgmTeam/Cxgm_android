@@ -1,15 +1,23 @@
 package com.cxgm.app.app;
 
 import android.app.Application;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.provider.Settings;
 import android.support.multidex.MultiDexApplication;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.NotificationManagerCompat;
 import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.cxgm.app.R;
+import com.cxgm.app.data.entity.Message;
+import com.cxgm.app.ui.view.common.LaunchActivity;
 import com.cxgm.app.utils.ToastManager;
 import com.cxgm.app.utils.UserManager;
 import com.deanlib.ootb.OotbConfig;
@@ -34,6 +42,7 @@ import com.umeng.message.UmengMessageHandler;
 import com.umeng.message.entity.UMessage;
 
 import org.greenrobot.eventbus.EventBus;
+import org.xutils.ex.DbException;
 
 /**
  * Application
@@ -73,16 +82,16 @@ public class App extends MultiDexApplication {
 //            StrictMode.setVmPolicy(new StrictMode.VmPolicy.Builder().detectAll().build());
 //        }
 
-        OotbConfig.init(this,Constants.DEBUG);
+        OotbConfig.init(this, Constants.DEBUG);
 
-        OotbConfig.setRequestServer(Constants.SERVICE_URL,new UserParam(),new UserResult(),new DefaultLoadingDialog());
+        OotbConfig.setRequestServer(Constants.SERVICE_URL, new UserParam(), new UserResult(), new DefaultLoadingDialog());
         //通知
         PersistenceUtils persistenceUtils = new PersistenceUtils();
         String notity = persistenceUtils.getCache("notity");
         Constants.notify = "on".equals(notity);
 
 
-        //TODO 友盟
+        //友盟
         UMConfigure.init(this, "5af6acadb27b0a761e000306", "channel", UMConfigure.DEVICE_TYPE_PHONE, "44b9f56acba05f8a5e6859d41f1e886b");
         UMConfigure.setLogEnabled(Constants.DEBUG);
 
@@ -115,7 +124,7 @@ public class App extends MultiDexApplication {
 
         Constants.deviceToken = mPushAgent.getRegistrationId();
 
-        DLogUtils.d("设备TOKEN:"+Constants.deviceToken);
+        DLogUtils.d("设备TOKEN:" + Constants.deviceToken);
 
 
         //设备ID
@@ -135,29 +144,34 @@ public class App extends MultiDexApplication {
         @Override
         public void dealWithNotificationMessage(Context context, UMessage uMessage) {
             super.dealWithNotificationMessage(context, uMessage);
+
         }
 
         @Override
-        public void dealWithCustomMessage(final Context context, final UMessage msg) {
-            new Handler(getMainLooper()).post(new Runnable() {
+        public void dealWithCustomMessage(final Context context, final UMessage uMessage) {
+            if (Constants.notify) {
+                //todo 通知栏通知 声音
+                Intent intent = new Intent(getApplicationContext(),LaunchActivity.class);
+                PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),100,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+                Notification notification = new NotificationCompat.Builder(getApplicationContext(),"cxgm").setContentTitle(uMessage.title)
+                        .setContentText(uMessage.custom).setContentIntent(pendingIntent).build();
+                NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                manager.notify(111,notification);
+            }
 
+            new Handler(getMainLooper()).post(new Runnable() {
                 @Override
                 public void run() {
 
-                    DLogUtils.d("推送消息："+msg.custom);
-//                    ToastManager.sendToast(msg.custom);
-
+                    Message msg = new Message(uMessage);
+                    DLogUtils.d("推送消息：" + msg);
                     try {
-
-                        if (!TextUtils.isEmpty(msg.custom)) {
-
-
-                        }
-
-                    } catch (Exception e) {
-
+                        DB.getDbManager().save(msg);
+                    } catch (DbException e) {
                         e.printStackTrace();
                     }
+                }
+            });
 
 //                        // 对于自定义消息，PushSDK默认只统计送达。若开发者需要统计点击和忽略，则需手动调用统计方法。
 //                        boolean isClickOrDismissed = true;
@@ -170,9 +184,6 @@ public class App extends MultiDexApplication {
 //                        }
 //                    Toast.makeText(context, msg.custom, Toast.LENGTH_LONG).show();
 
-
-                }
-            });
         }
     };
 }

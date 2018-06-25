@@ -6,7 +6,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.cxgm.app.R;
+import com.cxgm.app.data.entity.Message;
+
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -19,23 +23,24 @@ import butterknife.ButterKnife;
  */
 public class MessageAdapter extends BaseAdapter {
 
-    public MessageAdapter() {
-
+    List<Message> mMessageList;
+    public MessageAdapter(List<Message> mMessageList) {
+        this.mMessageList = mMessageList;
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return mMessageList.size();
     }
 
     @Override
     public Object getItem(int position) {
-        return null;
+        return mMessageList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
     }
 
     @Override
@@ -49,7 +54,25 @@ public class MessageAdapter extends BaseAdapter {
             holder = (ViewHolder) convertView.getTag();
         }
 
-        //todo message
+        holder.tvTitle.setText(mMessageList.get(position).getTitle());
+        holder.tvContent.setText(mMessageList.get(position).getContent());
+        holder.tvTime.setText(mMessageList.get(position).getDate());
+        int coverResId = R.mipmap.notification;
+        switch (mMessageList.get(position).getTitle()){
+            case Message.TYPE_PROMOTION:
+                coverResId = R.mipmap.promotion;
+                break;
+            case Message.TYPE_SERVICE:
+                coverResId = R.mipmap.service2;
+                break;
+            case Message.TYPE_NOTIFICATION:
+                coverResId = R.mipmap.notification;
+                break;
+            case Message.TYPE_NEWS:
+                coverResId = R.mipmap.news;
+                break;
+        }
+        Glide.with(convertView).load(coverResId).into(holder.imgCover);
 
         return convertView;
     }

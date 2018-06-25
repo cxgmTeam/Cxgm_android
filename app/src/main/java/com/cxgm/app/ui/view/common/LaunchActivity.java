@@ -1,21 +1,28 @@
 package com.cxgm.app.ui.view.common;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
+import android.support.v7.app.AlertDialog;
 
 import com.baidu.location.BDLocation;
 import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.entity.Shop;
 import com.cxgm.app.data.entity.UserAddress;
+import com.cxgm.app.data.entity.Version;
 import com.cxgm.app.data.io.common.CheckAddressReq;
 import com.cxgm.app.data.io.common.VersionControlReq;
 import com.cxgm.app.data.io.order.AddressListReq;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
+import com.cxgm.app.utils.Helper;
 import com.cxgm.app.utils.MapHelper;
 import com.cxgm.app.utils.ToastManager;
 import com.cxgm.app.utils.UserManager;
+import com.cxgm.app.utils.ViewHelper;
 import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.manager.PermissionManager;
 import com.deanlib.ootb.utils.VersionUtils;
@@ -47,17 +54,48 @@ public class LaunchActivity extends BaseActivity implements MapHelper.LocationCa
 
     int mCount = 0;
 
+    Handler mHandler = new Handler(){
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what){
+                case 1:
+                    Version version = (Version) msg.obj;
+                    if (version!=null) {
+                        new AlertDialog.Builder(LaunchActivity.this).setTitle(R.string.update_version)
+                                .setMessage(R.string.new_version).setPositiveButton(R.string.update, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                ViewJump.toThirdWebView(LaunchActivity.this, version.getUrl());
+                            }
+                        }).setNegativeButton(R.string.not_update, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                toMain();
+                            }
+                        }).show();
+                    }
+                    break;
+            }
+        }
+    };
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
         ButterKnife.bind(this);
 
-        new VersionControlReq(this, VersionUtils.getAppVersionCode() + "").execute(new Request.RequestCallback() {
+        new VersionControlReq(this).execute(new Request.RequestCallback<Version>() {
             @Override
-            public void onSuccess(Object o) {
-                //TODO 判断版本
-                toMain();
+            public void onSuccess(Version version) {
+                //判断版本
+                if (version!=null && Helper.str2Float(version.getVersionNum())> VersionUtils.getAppVersionCode()){
+                    mHandler.sendMessageDelayed(mHandler.obtainMessage(1,version),500);
+                }else {
+                    toMain();
+                }
+
             }
 
             @Override
@@ -67,7 +105,7 @@ public class LaunchActivity extends BaseActivity implements MapHelper.LocationCa
 
             @Override
             public void onCancelled(Callback.CancelledException cex) {
-
+                toMain();
             }
 
             @Override

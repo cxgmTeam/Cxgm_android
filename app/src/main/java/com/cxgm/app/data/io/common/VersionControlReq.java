@@ -5,8 +5,10 @@ import android.content.Context;
 import com.alibaba.fastjson.JSON;
 import com.cxgm.app.app.Constants;
 import com.cxgm.app.app.UserResult;
+import com.cxgm.app.data.entity.Version;
 import com.deanlib.ootb.data.io.Request;
 
+import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
 
 /**
@@ -17,10 +19,8 @@ import org.xutils.http.RequestParams;
  */
 public class VersionControlReq extends Request {
 
-    String versionCode;
-    public VersionControlReq(Context context,String versionCode) {
+    public VersionControlReq(Context context) {
         super(context);
-        this.versionCode = versionCode;
     }
 
     @Override
@@ -31,15 +31,15 @@ public class VersionControlReq extends Request {
     @Override
     public RequestParams params() {
 
-        RequestParams params = new RequestParams(SERVER + Constants.PORT7 + "/user/visionControl");
-        params.addQueryStringParameter("visionCode",versionCode);
+        RequestParams params = new RequestParams(SERVER + Constants.PORT7 + "/version/getVersion");
+        params.setMethod(HttpMethod.GET);
         return params;
     }
 
     @Override
-    public <T> T parse(String json) {
-        //TODO t
-        UserResult<T> result = JSON.parseObject(json,new UserResult<T>(){}.getEntityType());
+    public Version parse(String json) {
+        UserResult<Version> result = JSON.parseObject(json,new UserResult<Version>(){}.getEntityType());
+        result.data.setVersionNum("12");
         return result.data;
     }
 }

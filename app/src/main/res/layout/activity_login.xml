@@ -13,31 +13,36 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
 
-    <RelativeLayout
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_marginTop="40dp"
         android:layout_marginLeft="@dimen/margin_giant_xxxx"
         android:layout_marginRight="@dimen/margin_giant_xxxx"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+
         <EditText
             android:inputType="phone"
             android:layout_marginRight="@dimen/margin_normal"
-            android:layout_toLeftOf="@+id/tvGetCheckCode"
             android:id="@+id/etPhoneNum"
-            android:layout_alignBaseline="@+id/tvGetCheckCode"
             android:textColor="@color/textBlack"
             android:background="@null"
             android:hint="@string/input_your_phone_num"
             android:textColorHint="@color/textGray"
             android:textSize="@dimen/text_size_normal_x"
+            android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <TextView
             android:enabled="false"
             android:id="@+id/tvGetCheckCode"
-            android:layout_alignParentRight="true"
             android:text="@string/get_check_code"
             android:background="@drawable/shape_tc_tran_gray_2"
             android:paddingLeft="@dimen/margin_small"
@@ -48,13 +53,14 @@
             android:textColor="@color/textWhite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
+        </LinearLayout>
         <View
-            android:layout_marginTop="@dimen/margin_normal"
+            android:layout_marginTop="@dimen/margin_micro"
             android:layout_below="@+id/etPhoneNum"
             android:background="@color/colorLine"
             android:layout_width="match_parent"
             android:layout_height="@dimen/line"/>
-    </RelativeLayout>
+    </LinearLayout>
     <RelativeLayout
         android:layout_marginLeft="@dimen/margin_giant_xxxx"
         android:layout_marginRight="@dimen/margin_giant_xxxx"

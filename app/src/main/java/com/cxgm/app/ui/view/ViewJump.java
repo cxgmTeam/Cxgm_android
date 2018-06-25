@@ -2,6 +2,7 @@ package com.cxgm.app.ui.view;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 
 import com.cxgm.app.R;
@@ -218,6 +219,12 @@ public class ViewJump {
         intent.putExtra("status",status);
         intent.putExtra("payType",payType);
         intent.putExtra("amount",amount);
+        activity.startActivity(intent);
+    }
+
+    public static void toThirdWebView(Activity activity,String url){
+        Uri uri = Uri.parse(url);
+        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
         activity.startActivity(intent);
     }
 
