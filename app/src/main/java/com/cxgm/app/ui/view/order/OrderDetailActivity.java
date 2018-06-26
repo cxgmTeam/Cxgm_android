@@ -110,6 +110,10 @@ public class OrderDetailActivity extends BaseActivity {
     TextView tvPayNow;
     @BindView(R.id.layoutBottomAction)
     LinearLayout layoutBottomAction;
+    @BindView(R.id.layoutRefund)
+    LinearLayout layoutRefund;
+    @BindView(R.id.tvRefundAmount)
+    TextView tvRefundAmount;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -219,6 +223,7 @@ public class OrderDetailActivity extends BaseActivity {
                     tvOrderTag.setText(R.string.unpaid_tag);
                     tvTime.setText(R.string.remaining_);
                     layoutBottomAction.setVisibility(View.VISIBLE);
+                    layoutRefund.setVisibility(View.GONE);
                     break;
                 case Order.STATUS_DISTRIBUTION:
                     layoutOrderState.setBackgroundResource(R.color.colorGreen);
@@ -227,6 +232,7 @@ public class OrderDetailActivity extends BaseActivity {
                     tvOrderTag.setText(R.string.distributing_tag);
                     tvTime.setText("");
                     layoutBottomAction.setVisibility(View.GONE);
+                    layoutRefund.setVisibility(View.GONE);
                     break;
                 case Order.STATUS_DISTRIBUTING:
                     layoutOrderState.setBackgroundResource(R.color.colorGreen);
@@ -235,6 +241,7 @@ public class OrderDetailActivity extends BaseActivity {
                     tvOrderTag.setText(R.string.distributing_tag);
                     tvTime.setText("");
                     layoutBottomAction.setVisibility(View.GONE);
+                    layoutRefund.setVisibility(View.GONE);
                     break;
                 case Order.STATUS_COMPLETE:
                     layoutOrderState.setBackgroundResource(R.color.colorBlue);
@@ -243,6 +250,7 @@ public class OrderDetailActivity extends BaseActivity {
                     tvOrderTag.setText(R.string.complete_tag);
                     tvTime.setText("");
                     layoutBottomAction.setVisibility(View.GONE);
+                    layoutRefund.setVisibility(View.GONE);
                     break;
                 case Order.STATUS_WAIT_REFUND:
                     //待退款  图标 文字 颜色
@@ -252,6 +260,8 @@ public class OrderDetailActivity extends BaseActivity {
                     tvOrderTag.setText(R.string.wait_refund_tag);
                     tvTime.setText("");
                     layoutBottomAction.setVisibility(View.GONE);
+                    layoutRefund.setVisibility(View.VISIBLE);
+                    tvRefundAmount.setText(StringHelper.getRMBFormat(order.getOrderAmount()));
                     break;
                 case Order.STATUS_REFUND:
                     //已退款  图标 文字 颜色
@@ -261,6 +271,8 @@ public class OrderDetailActivity extends BaseActivity {
                     tvOrderTag.setText(R.string.refund_tag3);
                     tvTime.setText("");
                     layoutBottomAction.setVisibility(View.GONE);
+                    layoutRefund.setVisibility(View.VISIBLE);
+                    tvRefundAmount.setText(StringHelper.getRMBFormat(order.getOrderAmount()));
                     break;
                 case Order.STATUS_CANCEL:
                     layoutOrderState.setBackgroundResource(R.color.colorGrayDark2);
@@ -269,6 +281,7 @@ public class OrderDetailActivity extends BaseActivity {
                     tvOrderTag.setText(R.string.canceled_tag);
                     tvTime.setText("");
                     layoutBottomAction.setVisibility(View.GONE);
+                    layoutRefund.setVisibility(View.GONE);
                     break;
                 case Order.STATUS_SYSTEM_CANCEL:
                     layoutOrderState.setBackgroundResource(R.color.colorGrayDark2);
@@ -277,6 +290,10 @@ public class OrderDetailActivity extends BaseActivity {
                     tvOrderTag.setText(R.string.canceled_tag2);
                     tvTime.setText("");
                     layoutBottomAction.setVisibility(View.GONE);
+                    layoutRefund.setVisibility(View.GONE);
+                    break;
+                default:
+                    layoutOrderState.setVisibility(View.GONE);
                     break;
             }
 
@@ -288,6 +305,7 @@ public class OrderDetailActivity extends BaseActivity {
             new SurplusTimeReq(this, mOrder.getId()).execute(new Request.RequestCallback<Long>() {
                 @Override
                 public void onSuccess(Long aLong) {
+                    //todo 修改返回码 code 201
                     if (aLong > 0) {
                         //倒计时
                         mTimer = new CountDownTimer(aLong, 1000) {
@@ -306,6 +324,10 @@ public class OrderDetailActivity extends BaseActivity {
                             }
                         };
                         mTimer.start();
+                    }else {
+                        tvTime.setText(getString(R.string.remaining_, FormatUtils.convertDateTimestampToString(0, "mm:ss")));
+                        tvCancelOrder.setVisibility(View.GONE);
+                        tvPayNow.setVisibility(View.GONE);
                     }
                 }
 

@@ -264,5 +264,6 @@
     <string name="according_location_recommend_shop">根据定位为你推荐以下店铺</string>
     <string name="show_shop_list">定位不在该商铺配送范围内，将切换到商铺列表</string>
     <string name="search_no_result">没有搜索到相关结果</string>
+    <string name="refund_amount">退款总金额</string>
 
 </resources>

@@ -60,6 +60,32 @@
             android:src="@mipmap/right" />
     </RelativeLayout>
 
+    <LinearLayout
+        android:id="@+id/layoutRefund"
+        android:gravity="center_vertical"
+        android:paddingLeft="@dimen/margin_giant"
+        android:paddingRight="@dimen/margin_giant"
+        android:orientation="horizontal"
+        android:elevation="@dimen/elevation"
+        android:layout_marginTop="@dimen/margin_normal"
+        android:background="@color/colorWhite"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height">
+        <TextView
+            android:text="@string/refund_amount"
+            android:textColor="@color/textBlack"
+            android:textSize="@dimen/text_size_normal_x"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/tvRefundAmount"
+            android:textColor="@color/textGreen"
+            android:textSize="@dimen/text_size_giant_x"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

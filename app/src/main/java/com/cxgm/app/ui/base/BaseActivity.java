@@ -39,7 +39,7 @@ public class BaseActivity extends AppCompatActivity implements UserManager.OnUse
 
 	@Override
 	public void finish() {
-		Request.dismissDialog();
+		//Request.dismissDialog();
 		super.finish();
 	}
 

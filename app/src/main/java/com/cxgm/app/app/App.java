@@ -136,7 +136,6 @@ public class App extends MultiDexApplication {
 
         DLogUtils.d("设备TOKEN:" + Constants.deviceToken);
 
-
         //设备ID
         Constants.deviceId = Settings.Secure.getString(getContentResolver(), Settings.Secure.ANDROID_ID);
         Constants.versionName = VersionUtils.getAppVersionName();

@@ -178,6 +178,7 @@ public class LoginActivity extends BaseActivity {
                                 listener.onLogin(user);
                             }
                             ViewHelper.updateShopCart(getApplicationContext());
+                            Request.dismissDialog();
                             finish();
                         }
                     }
