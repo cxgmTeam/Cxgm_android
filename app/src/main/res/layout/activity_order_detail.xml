@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_alignBaseline="@+id/tvOrderState"
             android:layout_marginRight="@dimen/margin_giant_x"
-            android:layout_toLeftOf="@+id/image"
+            android:layout_alignParentRight="true"
             android:textColor="@color/textWhite"
             android:textSize="@dimen/text_size_normal" />
 
@@ -51,6 +51,7 @@
             android:textSize="@dimen/text_size_normal" />
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

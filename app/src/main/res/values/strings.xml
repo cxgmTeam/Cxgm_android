@@ -220,6 +220,7 @@
     <string name="nothing_selected">没有选中项</string>
 
     <string name="to_pay">去支付</string>
+    <string name="wait_refund">待退款</string>
     <string name="refunded">已退款</string>
     <string name="buy_again">再次购买</string>
     <string name="apply_for_returning">申请退货</string>
@@ -240,7 +241,10 @@
     <string name="message">消息</string>
     <string name="remaining_">剩余 %s</string>
     <string name="canceled">已取消</string>
-    <string name="canceled_tag">订单取消成功(订单超市未支付，系统取消订单)</string>
+    <string name="canceled_tag">订单已取消(用户取消)</string>
+    <string name="canceled_tag2">订单已取消(系统取消)</string>
+    <string name="wait_refund_tag">退款流程正在处理中，请耐心等待～</string>
+    <string name="refund_tag3">订单已成功退款</string>
     <string name="unpaid_tag">请在订单提交后，尽快支付，超时将取消订单</string>
     <string name="distributing_tag">订单已经确认，配送小哥正在飞奔配送，请注意查收～</string>
     <string name="complete_tag">订单已经完成，欢迎下次惠顾～</string>
@@ -259,5 +263,6 @@
     <string name="adress_invalid">该地址不在配送范围</string>
     <string name="according_location_recommend_shop">根据定位为你推荐以下店铺</string>
     <string name="show_shop_list">定位不在该商铺配送范围内，将切换到商铺列表</string>
+    <string name="search_no_result">没有搜索到相关结果</string>
 
 </resources>

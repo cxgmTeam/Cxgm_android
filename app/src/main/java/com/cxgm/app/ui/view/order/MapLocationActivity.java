@@ -105,7 +105,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
     PoiSearch mPoiSearch;
     GeoCoder mGeoCoder;
     String mTempCity;
-    PoiInfo mSearchInfo; //todo 搜索出来的地址，应该加入到poi list的第一个
+    //PoiInfo mSearchInfo; //搜索出来的地址，应该加入到poi list的第一个
     PoiAdapter mPoiAdapter;
     List<UserPoiInfo> mPoiList;
     float mZoomLevel = 15;

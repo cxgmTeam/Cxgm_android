@@ -164,9 +164,9 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
                     int position = 0;
                     if (t > tvGuessLike.getTop()) {
                         position = 2;
-                    } else if (t > wvIntroduction.getTop()) {
-                        position = 1;
                     } else if (t > layoutGoods.getTop()) {
+                        position = 1;
+                    } else if (t > loopBanner.getTop()) {
                         position = 0;
                     }
                     tabNavigation.setScrollPosition(position, 0, true);
@@ -183,10 +183,10 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
                 int scrollY = 0;
                 switch (tab.getPosition()) {
                     case 0://商品
-                        scrollY = layoutGoods.getTop();
+                        scrollY = loopBanner.getTop();
                         break;
                     case 1://详情
-                        scrollY = wvIntroduction.getTop();
+                        scrollY = layoutGoods.getTop();
                         break;
                     case 2://推荐
                         scrollY = tvGuessLike.getTop();
@@ -204,7 +204,7 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
+                onTabSelected(tab);
             }
         });
         //猜你喜欢

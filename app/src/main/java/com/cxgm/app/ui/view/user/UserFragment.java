@@ -151,7 +151,7 @@ public class UserFragment extends BaseFragment {
                 ViewJump.toUserOrder(getActivity(), Order.STATUS_COMPLETE);
                 break;
             case R.id.layoutInvite:
-                //邀请有礼
+                //todo 邀请有礼
                 if (!UserManager.isUserLogin()){
                     ViewJump.toLogin(getActivity());
                     return;
@@ -173,8 +173,10 @@ public class UserFragment extends BaseFragment {
                 ViewJump.toAddrList(getActivity());
                 break;
             case R.id.layoutHelp:
+                //todo 帮助
                 break;
             case R.id.layoutService:
+                //todo 客服
                 break;
             case R.id.layoutSettings:
                 ViewJump.toSettings(getActivity());

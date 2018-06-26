@@ -61,7 +61,7 @@ public class ShopAdapter extends BaseAdapter {
 
         Glide.with(parent.getContext()).load(mList.get(position).getImageUrl())
                 .apply(RequestOptions.bitmapTransform(
-                        new RoundedCornersTransformation(128,0, RoundedCornersTransformation.CornerType.TOP))
+                        new RoundedCornersTransformation(20,0, RoundedCornersTransformation.CornerType.TOP))
                 .placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
                 .into(holder.imgShopCover);
         holder.tvShopName.setText(mList.get(position).getShopName());

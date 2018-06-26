@@ -244,14 +244,37 @@ public class OrderDetailActivity extends BaseActivity {
                     tvTime.setText("");
                     layoutBottomAction.setVisibility(View.GONE);
                     break;
+                case Order.STATUS_WAIT_REFUND:
+                    //待退款  图标 文字 颜色
+                    layoutOrderState.setBackgroundResource(R.color.colorGrayDark3);
+                    imgIcon.setImageResource(R.mipmap.status_wait_refund);
+                    tvOrderState.setText(R.string.wait_refund);
+                    tvOrderTag.setText(R.string.wait_refund_tag);
+                    tvTime.setText("");
+                    layoutBottomAction.setVisibility(View.GONE);
+                    break;
                 case Order.STATUS_REFUND:
-                    //TODO 退款
+                    //已退款  图标 文字 颜色
+                    layoutOrderState.setBackgroundResource(R.color.colorRed);
+                    imgIcon.setImageResource(R.mipmap.status_refund);
+                    tvOrderState.setText(R.string.refunded);
+                    tvOrderTag.setText(R.string.refund_tag3);
+                    tvTime.setText("");
+                    layoutBottomAction.setVisibility(View.GONE);
                     break;
                 case Order.STATUS_CANCEL:
                     layoutOrderState.setBackgroundResource(R.color.colorGrayDark2);
                     imgIcon.setImageResource(R.mipmap.status_cancel);
                     tvOrderState.setText(R.string.canceled);
                     tvOrderTag.setText(R.string.canceled_tag);
+                    tvTime.setText("");
+                    layoutBottomAction.setVisibility(View.GONE);
+                    break;
+                case Order.STATUS_SYSTEM_CANCEL:
+                    layoutOrderState.setBackgroundResource(R.color.colorGrayDark2);
+                    imgIcon.setImageResource(R.mipmap.status_cancel);
+                    tvOrderState.setText(R.string.canceled);
+                    tvOrderTag.setText(R.string.canceled_tag2);
                     tvTime.setText("");
                     layoutBottomAction.setVisibility(View.GONE);
                     break;
@@ -276,7 +299,7 @@ public class OrderDetailActivity extends BaseActivity {
                             @Override
                             public void onFinish() {
                                 if (mOrder != null) {
-                                    mOrder.setStatus(Order.STATUS_CANCEL);
+                                    mOrder.setStatus(Order.STATUS_SYSTEM_CANCEL);
                                     setStateView(mOrder);
                                 }
 

@@ -165,13 +165,23 @@ public class UserOrderAdapter extends BaseAdapter {
                 holder.tvOrderAction.setText(R.string.buy_again);
                 holder.tvOrderAction.setVisibility(View.VISIBLE);
                 break;
+            case Order.STATUS_WAIT_REFUND:
+                //待退款
+                holder.tvOrderState.setText(R.string.wait_refund);
+                holder.tvOrderAction.setVisibility(View.GONE);
+                break;
             case Order.STATUS_REFUND:
-                //退款
-                //TODO 怎么区分退款中和已退款
+                //已退款
                 holder.tvOrderState.setText(R.string.refunded);
                 holder.tvOrderAction.setVisibility(View.GONE);
                 break;
             case Order.STATUS_CANCEL:
+                //已取消
+                holder.tvOrderState.setText(R.string.canceled);
+                holder.tvOrderAction.setText(R.string.buy_again);
+                holder.tvOrderAction.setVisibility(View.VISIBLE);
+                break;
+            case Order.STATUS_SYSTEM_CANCEL:
                 //已取消
                 holder.tvOrderState.setText(R.string.canceled);
                 holder.tvOrderAction.setText(R.string.buy_again);
@@ -206,7 +216,7 @@ public class UserOrderAdapter extends BaseAdapter {
                                             @Override
                                             public void onSuccess(Integer integer) {
                                                 ToastManager.sendToast(mActivity.getString(R.string.refund_tag));
-                                                mList.get(i).setStatus(Order.STATUS_REFUND);//TODO 需要区分退款中和已退款
+                                                mList.get(i).setStatus(Order.STATUS_WAIT_REFUND);
                                                 notifyDataSetChanged();
                                             }
 
@@ -232,6 +242,8 @@ public class UserOrderAdapter extends BaseAdapter {
                     case Order.STATUS_COMPLETE:
                         //已完成 再次购买
                     case Order.STATUS_CANCEL:
+                        //已取消 再次购买
+                    case Order.STATUS_SYSTEM_CANCEL:
                         //已取消 再次购买
                         ViewJump.toVerifyOrder(mActivity, (ArrayList<OrderProduct>) mList.get(i).getProductDetails());
                         break;

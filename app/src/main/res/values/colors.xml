@@ -36,5 +36,7 @@
     <color name="colorOrange">#FA8E2E</color>
     <color name="colorGrayDark2">#ADADAD</color>
     <color name="colorBlue">#249EE2</color>
+    <color name="colorRed">#F33F31</color>
+    <color name="colorGrayDark3">#989898</color>
 
 </resources>

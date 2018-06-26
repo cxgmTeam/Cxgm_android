@@ -48,6 +48,9 @@ public class Constants {
     public static boolean notify = true;//是否接收通知
     public static float postage = 10f;//邮费
 
+    public static final String NOTIFIY_CHANNEL_ID = "1";
+    public static final String NOTIFIY_CHANNEL_NAME = "Notifiy";
+
     //获得地址  定位或用户点选
     //isReferenceUserAddress 参考收货地址
     public static PoiInfo getLocation(boolean isReferenceUserAddress){

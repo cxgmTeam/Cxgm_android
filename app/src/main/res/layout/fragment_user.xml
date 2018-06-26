@@ -167,6 +167,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin_normal"
             android:background="@color/colorWhite"
+            android:layout_marginBottom="64dp"
             android:elevation="@dimen/elevation"
             android:orientation="vertical">
 
@@ -323,7 +324,6 @@
                 android:id="@+id/layoutSettings"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/item_height"
-                android:layout_marginBottom="64dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingLeft="@dimen/margin_large"

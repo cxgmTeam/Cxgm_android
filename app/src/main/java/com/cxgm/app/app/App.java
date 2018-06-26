@@ -2,11 +2,14 @@ package com.cxgm.app.app;
 
 import android.app.Application;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Handler;
 import android.os.StrictMode;
 import android.os.SystemClock;
@@ -14,7 +17,9 @@ import android.provider.Settings;
 import android.support.multidex.MultiDexApplication;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
+import android.text.Html;
 import android.text.TextUtils;
+import android.widget.RemoteViews;
 
 import com.alibaba.fastjson.JSON;
 import com.cxgm.app.R;
@@ -75,6 +80,7 @@ public class App extends MultiDexApplication {
         });
     }
 
+    int notifiyId = 1;
     NotificationManager mNotificationManager;
 
     @Override
@@ -92,7 +98,7 @@ public class App extends MultiDexApplication {
         //通知
         PersistenceUtils persistenceUtils = new PersistenceUtils();
         String notity = persistenceUtils.getCache("notity");
-        Constants.notify = "on".equals(notity);
+        Constants.notify = !"off".equals(notity);
 
 
         //友盟
@@ -137,8 +143,6 @@ public class App extends MultiDexApplication {
 
         //用户
         UserManager.getInstance(this);
-
-        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
     }
 
     UmengMessageHandler messageHandler = new UmengMessageHandler() {
@@ -154,17 +158,17 @@ public class App extends MultiDexApplication {
         }
 
         @Override
-        public void dealWithCustomMessage(final Context context, final UMessage uMessage) {
+        public void dealWithCustomMessage(Context context, final UMessage uMessage) {
             if (Constants.notify) {
-                //todo 通知栏通知 声音
-                Intent intent = new Intent(getApplicationContext(),LaunchActivity.class);
-                PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(),0,intent,0);
-                Notification notification = new Notification.Builder(getApplicationContext()).setContentTitle(uMessage.title)
-                        .setSmallIcon(R.mipmap.ic_launcher).setLargeIcon( ((BitmapDrawable) getResources().getDrawable(R.mipmap.ic_launcher)).getBitmap())
-                        .setWhen(SystemClock.uptimeMillis())
-                        .setContentText(uMessage.custom).setContentIntent(pendingIntent).setDefaults(Notification.DEFAULT_ALL).build();
-                notification.flags |= Notification.FLAG_AUTO_CANCEL;
-                mNotificationManager.notify(1,notification);
+                //通知栏通知 声音
+
+//                Notification notification = new NotificationCompat.Builder(getApplicationContext()).setContentTitle(uMessage.title)
+//                        .setSmallIcon(R.mipmap.ic_launcher).setLargeIcon( ((BitmapDrawable) getResources().getDrawable(R.mipmap.ic_launcher)).getBitmap())
+//                        .setWhen(SystemClock.uptimeMillis()).setTicker(uMessage.ticker)
+//                        .setContentText(uMessage.custom).setContentIntent(pendingIntent).setDefaults(Notification.DEFAULT_ALL).build();
+//                notification.flags |= Notification.FLAG_AUTO_CANCEL;
+//                mNotificationManager.notify(0,notification);
+                showNotification(context,uMessage);
             }
 
             new Handler(getMainLooper()).post(new Runnable() {
@@ -194,4 +198,49 @@ public class App extends MultiDexApplication {
 
         }
     };
+
+    private void showNotification(Context context, UMessage msg){
+
+//		Notification notification = new Notification();
+//		notification.icon = R.drawable.ic_launcher;
+//		notification.tickerText = tickerText;
+//		notification.largeIcon = BitmapFactory.decodeResource(context.getResources(), R.drawable.ic_launcher);
+//		notification.when = System.currentTimeMillis();
+//		notification.flags |= Notification.FLAG_AUTO_CANCEL;
+//		notification.defaults |= Notification.DEFAULT_ALL;
+//		if (remoteViews!=null) {
+//			notification.contentView = remoteViews;
+//		}else {
+//			notification.setLatestEventInfo(context, contentTitle, contentText, contentIntent);
+//		}
+//		manager.notify(Constants.NOTIFICATION_REQUEST_CODE, notification);
+
+        if (mNotificationManager==null) {
+            mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                NotificationChannel channel = new NotificationChannel(Constants.NOTIFIY_CHANNEL_ID, Constants.NOTIFIY_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
+                mNotificationManager.createNotificationChannel(channel);
+            }
+        }
+        Intent intent = new Intent(context,LaunchActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context,++notifiyId,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context,Constants.NOTIFIY_CHANNEL_ID);
+        builder.setSmallIcon(R.mipmap.ic_launcher);
+//        builder.setSmallIcon(android.os.Build.VERSION.SDK_INT>20?R.drawable.ic_launcher_round:R.drawable.ic_launcher);
+//        builder.setColor(context.getResources().getColor(R.color.icon_blue));
+        builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));
+        builder.setAutoCancel(true);
+        builder.setDefaults(Notification.DEFAULT_ALL);
+        builder.setTicker(msg.ticker);
+        builder.setContentTitle(msg.title);
+        builder.setContentText(msg.custom);
+        builder.setWhen(System.currentTimeMillis());
+        builder.setContentIntent(pendingIntent);
+        builder.setStyle(new NotificationCompat.BigTextStyle()
+                .bigText(msg.custom));
+
+        mNotificationManager.notify(notifiyId,builder.build());
+    }
 }

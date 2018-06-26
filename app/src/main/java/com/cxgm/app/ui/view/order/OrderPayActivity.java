@@ -192,7 +192,7 @@ public class OrderPayActivity extends BaseActivity {
                 if (mSurplusTime > 0) {
                     if (mTimer != null)
                         mTimer.cancel();
-                    //TODO 调起支付
+                    //调起支付
                     if (cbWeChatPay.isChecked()) {
                         new WeixinPayReq(this, mOrderId).execute(new Request.RequestCallback<PayInfo>() {
                             @Override
@@ -228,7 +228,7 @@ public class OrderPayActivity extends BaseActivity {
                             }
                         }, false);
                     } else {
-
+                        //todo 支付宝
                     }
                 } else {
                     ToastManager.sendToast(getString(R.string.order_pay_outtime));

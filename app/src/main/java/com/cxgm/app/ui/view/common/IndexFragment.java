@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -17,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -31,6 +33,7 @@ import com.cxgm.app.data.entity.ShopCategory;
 import com.cxgm.app.data.entity.base.PageInfo;
 import com.cxgm.app.data.io.common.CheckAddressReq;
 import com.cxgm.app.data.io.common.FindAdvertisementReq;
+import com.cxgm.app.data.io.common.FindReportReq;
 import com.cxgm.app.data.io.common.ShopListReq;
 import com.cxgm.app.data.io.goods.FindHotProductReq;
 import com.cxgm.app.data.io.goods.FindMotionReq;
@@ -124,6 +127,16 @@ public class IndexFragment extends BaseFragment {
 
     FirstCategoryAdapter mFCAdapter;
     List<ShopCategory> mFCList;
+    @BindView(R.id.imgAD21)
+    ImageView imgAD21;
+    @BindView(R.id.imgAD22)
+    ImageView imgAD22;
+    @BindView(R.id.imgAD23)
+    ImageView imgAD23;
+    @BindView(R.id.layoutAD2)
+    LinearLayout layoutAD2;
+    @BindView(R.id.scrollView)
+    ScrollView scrollView;
 
     GoodsRecyclerViewAdapter mTopProductAdapter;
     List<ProductTransfer> mTopProductList;
@@ -137,14 +150,10 @@ public class IndexFragment extends BaseFragment {
     int mShopListPageNum = 1;
     List<Shop> mShopList;
     ShopAdapter mShopAdapter;
-    @BindView(R.id.imgAD21)
-    ImageView imgAD21;
-    @BindView(R.id.imgAD22)
-    ImageView imgAD22;
-    @BindView(R.id.imgAD23)
-    ImageView imgAD23;
-    @BindView(R.id.layoutAD2)
-    LinearLayout layoutAD2;
+
+    List<Motion> mReportList;//简报
+    int mCurrentReportPosition = 0;
+
 
     @Nullable
     @Override
@@ -157,8 +166,6 @@ public class IndexFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        init();
-        loadData();
 
     }
 
@@ -167,11 +174,9 @@ public class IndexFragment extends BaseFragment {
         super.onHiddenChanged(hidden);
         if (!hidden) {
             doShowPop();
-            if (Constants.updatedAddress){
-                Constants.updatedAddress = false;
-                init();
-                loadData();
-            }
+            Constants.updatedAddress = false;
+            init();
+            loadData();
         } else if (popupWindow != null && popupWindow.isShowing())
             popupWindow.dismiss();
     }
@@ -228,22 +233,8 @@ public class IndexFragment extends BaseFragment {
                     ViewHelper.updateShopCart(getActivity());
                 }
             });
-            srl.setEnableRefresh(true);
-            srl.setEnableLoadMore(true);
-            srl.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
-                @Override
-                public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                    mShopListPageNum++;
-                    loadData();
-                }
 
-                @Override
-                public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                    mShopListPageNum = 1;
-                    mShopList.clear();
-                    loadData();
-                }
-            });
+            srl.setEnableLoadMore(true);
 
         } else {
             loopBanner.setOnClickListener(new BaseLoopAdapter.OnItemClickListener() {
@@ -253,17 +244,36 @@ public class IndexFragment extends BaseFragment {
                     //TODO 广告点击事件
                 }
             });
+            loopBanner.getViewPager().addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+                    if (mReportList!=null && mReportList.size()>0) {
+                        mCurrentReportPosition++;
+                        if (mCurrentReportPosition>=mReportList.size())
+                            mCurrentReportPosition = 0;
+                        tvNewsContent.setText(mReportList.get(mCurrentReportPosition).getMotionName());
+                    }
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+
+                }
+            });
 
             layoutShopShow.setVisibility(View.GONE);
             layoutGoodsShow.setVisibility(View.VISIBLE);
-
-            srl.setEnableRefresh(false);
-            srl.setEnableLoadMore(false);
 
             //First Category
             mFCList = new ArrayList<>();
             mFCAdapter = new FirstCategoryAdapter(mFCList);
             gvFirstCategory.setAdapter(mFCAdapter);
+            gvFirstCategory.setFocusable(false);
             gvFirstCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -278,6 +288,7 @@ public class IndexFragment extends BaseFragment {
             hlvRecommend.setLayoutManager(recommendLayoutManager);
             hlvRecommend.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(5)));
             hlvRecommend.setAdapter(mTopProductAdapter);
+            hlvRecommend.setFocusable(false);
             mTopProductAdapter.setOnItemClickListener(new GoodsRecyclerViewAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
@@ -292,6 +303,7 @@ public class IndexFragment extends BaseFragment {
             hlvNewGoods.setLayoutManager(newGoodsLayoutManager);
             hlvNewGoods.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(5)));
             hlvNewGoods.setAdapter(mNewProductAdapter);
+            hlvNewGoods.setFocusable(false);
             mNewProductAdapter.setOnItemClickListener(new GoodsRecyclerViewAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int position) {
@@ -302,6 +314,7 @@ public class IndexFragment extends BaseFragment {
             mHotProductList = new ArrayList<>();
             mHotProductAdapter = new GoodsAdapter(getActivity(), mHotProductList, 2, 30);
             gvGoods.setAdapter(mHotProductAdapter);
+            gvGoods.setFocusable(false);
             gvGoods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -312,7 +325,36 @@ public class IndexFragment extends BaseFragment {
             mMotionList = new ArrayList<>();
             mMotionAdapter = new MotionAdapter(getActivity(), mMotionList);
             lvMotions.setAdapter(mMotionAdapter);
+            lvMotions.setFocusable(false);
+
+            mReportList = new ArrayList<>();
+
+            srl.setEnableLoadMore(false);
+
         }
+
+
+        srl.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
+            @Override
+            public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
+                mShopListPageNum++;
+                loadData();
+            }
+
+            @Override
+            public void onRefresh(@NonNull RefreshLayout refreshLayout) {
+                mShopListPageNum = 1;
+                mShopList.clear();
+                loadData();
+            }
+        });
+
+        x.task().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.smoothScrollTo(0,0);
+            }
+        },500);
 
     }
 
@@ -387,7 +429,7 @@ public class IndexFragment extends BaseFragment {
 //
 //                @Override
 //                public void onFinished() {
-//
+//                     srl.finishRefresh();
 //                }
 //            });
 
@@ -413,7 +455,7 @@ public class IndexFragment extends BaseFragment {
 
                 @Override
                 public void onFinished() {
-
+                    srl.finishRefresh();
                 }
             });
 
@@ -439,7 +481,7 @@ public class IndexFragment extends BaseFragment {
 
                 @Override
                 public void onFinished() {
-
+                    srl.finishRefresh();
                 }
             });
 
@@ -465,7 +507,7 @@ public class IndexFragment extends BaseFragment {
 
                 @Override
                 public void onFinished() {
-
+                    srl.finishRefresh();
                 }
             });
 
@@ -529,7 +571,7 @@ public class IndexFragment extends BaseFragment {
 
                 @Override
                 public void onFinished() {
-
+                    srl.finishRefresh();
                 }
             });
 
@@ -560,6 +602,34 @@ public class IndexFragment extends BaseFragment {
                     } else {
                         lvMotions.setVisibility(View.GONE);
                     }
+                    srl.finishRefresh();
+                }
+            });
+
+            //简报
+            new FindReportReq(getActivity(),Constants.currentShop.getId()).execute(new Request.RequestCallback<List<Motion>>() {
+                @Override
+                public void onSuccess(List<Motion> motions) {
+                    if (motions!=null &&  motions.size()>0){
+                        mReportList.clear();
+                        mReportList.addAll(motions);
+                        //这里偷懒，借用banner的动画翻动简报
+                    }
+                }
+
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+
+                }
+
+                @Override
+                public void onCancelled(Callback.CancelledException cex) {
+
+                }
+
+                @Override
+                public void onFinished() {
+
                 }
             });
         }

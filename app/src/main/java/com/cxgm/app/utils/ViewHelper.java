@@ -1,8 +1,14 @@
 package com.cxgm.app.utils;
 
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.graphics.BitmapFactory;
+import android.text.Html;
 import android.view.View;
+import android.widget.RemoteViews;
 
 import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
@@ -260,5 +266,7 @@ public class ViewHelper {
 
 
     }
+
+
 
 }
