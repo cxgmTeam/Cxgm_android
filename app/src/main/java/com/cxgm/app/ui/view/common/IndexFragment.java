@@ -244,27 +244,7 @@ public class IndexFragment extends BaseFragment {
                     //TODO 广告点击事件
                 }
             });
-            loopBanner.getViewPager().addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-                @Override
-                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
 
-                }
-
-                @Override
-                public void onPageSelected(int position) {
-                    if (mReportList!=null && mReportList.size()>0) {
-                        mCurrentReportPosition++;
-                        if (mCurrentReportPosition>=mReportList.size())
-                            mCurrentReportPosition = 0;
-                        tvNewsContent.setText(mReportList.get(mCurrentReportPosition).getMotionName());
-                    }
-                }
-
-                @Override
-                public void onPageScrollStateChanged(int state) {
-
-                }
-            });
 
             layoutShopShow.setVisibility(View.GONE);
             layoutGoodsShow.setVisibility(View.VISIBLE);
@@ -393,6 +373,13 @@ public class IndexFragment extends BaseFragment {
                         }
                     });
         } else {
+
+            mFCList.clear();
+            mTopProductList.clear();
+            mNewProductList.clear();
+            mHotProductList.clear();
+            mMotionList.clear();
+            mReportList.clear();
             //首页分类
             mFCList.add(new ShopCategory(0, getString(R.string.first_category_1), "file:///android_asset/category/c1.png"));
             mFCList.add(new ShopCategory(0, getString(R.string.first_category_2), "file:///android_asset/category/c2.png"));
@@ -527,6 +514,27 @@ public class IndexFragment extends BaseFragment {
                             }
 //                            LoopData loopData = JsonTool.toBean("", LoopData.class);
                             loopBanner.refreshData(loopData);
+                            loopBanner.getViewPager().addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                                @Override
+                                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                                }
+
+                                @Override
+                                public void onPageSelected(int position) {
+                                    if (mReportList!=null && mReportList.size()>0) {
+                                        mCurrentReportPosition++;
+                                        if (mCurrentReportPosition>=mReportList.size())
+                                            mCurrentReportPosition = 0;
+                                        tvNewsContent.setText(mReportList.get(mCurrentReportPosition).getMotionName());
+                                    }
+                                }
+
+                                @Override
+                                public void onPageScrollStateChanged(int state) {
+
+                                }
+                            });
                             loopBanner.startAutoLoop();
                             loopBanner.setVisibility(View.VISIBLE);
                         } else {
@@ -614,6 +622,10 @@ public class IndexFragment extends BaseFragment {
                         mReportList.clear();
                         mReportList.addAll(motions);
                         //这里偷懒，借用banner的动画翻动简报
+
+                        mCurrentReportPosition = 0;
+                        tvNewsContent.setText(mReportList.get(mCurrentReportPosition).getMotionName());
+
                     }
                 }
 
@@ -661,7 +673,7 @@ public class IndexFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick({R.id.imgLocation, R.id.etSearchWord, R.id.layoutMessage})
+    @OnClick({R.id.imgLocation, R.id.etSearchWord, R.id.layoutMessage,R.id.tvNewsContent})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgLocation:
@@ -676,6 +688,12 @@ public class IndexFragment extends BaseFragment {
                 break;
             case R.id.layoutMessage:
                 ViewJump.toMessageList(getActivity());
+                break;
+            case R.id.tvNewsContent:
+                if (mReportList!=null && mReportList.size()>0){
+                    Motion motion = mReportList.get(mCurrentReportPosition);
+                    //TODO 简报点击
+                }
                 break;
         }
     }

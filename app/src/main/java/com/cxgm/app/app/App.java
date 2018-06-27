@@ -226,10 +226,10 @@ public class App extends MultiDexApplication {
         PendingIntent pendingIntent = PendingIntent.getActivity(context,++notifiyId,intent,PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context,Constants.NOTIFIY_CHANNEL_ID);
-        builder.setSmallIcon(R.mipmap.ic_launcher);
+        builder.setSmallIcon(R.mipmap.icon);
 //        builder.setSmallIcon(android.os.Build.VERSION.SDK_INT>20?R.drawable.ic_launcher_round:R.drawable.ic_launcher);
 //        builder.setColor(context.getResources().getColor(R.color.icon_blue));
-        builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher));
+        builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.icon));
         builder.setAutoCancel(true);
         builder.setDefaults(Notification.DEFAULT_ALL);
         builder.setTicker(msg.ticker);
