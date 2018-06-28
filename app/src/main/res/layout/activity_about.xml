@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/layout_back_title_action_appbar"/>
+    <ImageView
+        android:elevation="@dimen/elevation"
+        android:layout_marginTop="35dp"
+        android:src="@mipmap/icon_rc"
+        android:layout_width="80dp"
+        android:layout_height="80dp" />
+    <TextView
+        android:textSize="@dimen/text_size_giant_xx"
+        android:textColor="@color/textBlack"
+        android:text="@string/app_name"
+        android:layout_marginTop="@dimen/margin_giant"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/tvVersion"
+        android:layout_marginTop="@dimen/margin_small"
+        android:textColor="@color/textGray"
+        android:layout_width="wrap_content"
+        android:textSize="@dimen/text_size_small"
+        android:layout_height="wrap_content" />
+    <ScrollView
+        android:layout_marginTop="35dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:elevation="@dimen/elevation"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvAgreement"
+                android:gravity="center_vertical"
+                android:text="@string/agreement"
+                android:textSize="@dimen/text_size_normal_x"
+                android:textColor="@color/textBlack"
+                android:paddingLeft="@dimen/margin_giant"
+                android:paddingRight="@dimen/margin_giant"
+                android:background="@color/colorWhite"
+                android:drawableRight="@mipmap/right"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height" />
+            <View
+                android:background="@color/colorLine"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line"/>
+            <TextView
+                android:id="@+id/tvPolicy"
+                android:gravity="center_vertical"
+                android:text="@string/policy"
+                android:textSize="@dimen/text_size_normal_x"
+                android:textColor="@color/textBlack"
+                android:paddingLeft="@dimen/margin_giant"
+                android:paddingRight="@dimen/margin_giant"
+                android:background="@color/colorWhite"
+                android:drawableRight="@mipmap/right"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height" />
+            <View
+                android:background="@color/colorLine"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line"/>
+            <TextView
+                android:id="@+id/tvBusinessInfo"
+                android:gravity="center_vertical"
+                android:text="@string/business_information"
+                android:textSize="@dimen/text_size_normal_x"
+                android:textColor="@color/textBlack"
+                android:paddingLeft="@dimen/margin_giant"
+                android:paddingRight="@dimen/margin_giant"
+                android:background="@color/colorWhite"
+                android:drawableRight="@mipmap/right"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height" />
+            <View
+                android:background="@color/colorLine"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line"/>
+            <TextView
+                android:id="@+id/tvInsideEntrance"
+                android:gravity="center_vertical"
+                android:text="@string/inside_entrance"
+                android:textSize="@dimen/text_size_normal_x"
+                android:textColor="@color/textBlack"
+                android:paddingLeft="@dimen/margin_giant"
+                android:paddingRight="@dimen/margin_giant"
+                android:background="@color/colorWhite"
+                android:drawableRight="@mipmap/right"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/item_height" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>

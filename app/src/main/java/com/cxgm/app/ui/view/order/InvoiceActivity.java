@@ -17,6 +17,7 @@ import com.cxgm.app.data.entity.UserAddress;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.utils.ToastManager;
 import com.cxgm.app.utils.UserManager;
+import com.deanlib.ootb.utils.FormatUtils;
 import com.deanlib.ootb.utils.TextUtils;
 
 import butterknife.BindView;
@@ -90,7 +91,7 @@ public class InvoiceActivity extends BaseActivity {
             mInvoice = new Invoice();
             //收票人信息
             mInvoice.setPhone(mUserAddress.getPhone());
-            tvInvoiceReceiver.setText(TextUtils.hidePhoneNum(mUserAddress.getPhone()));
+            tvInvoiceReceiver.setText(FormatUtils.hidePhoneNum(mUserAddress.getPhone()));
 
             //发票类型
             rgInvoiceType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {

@@ -36,6 +36,7 @@ import com.cxgm.app.utils.ToastManager;
 import com.cxgm.app.utils.ViewHelper;
 import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.utils.DeviceUtils;
+import com.deanlib.ootb.utils.FormatUtils;
 import com.deanlib.ootb.utils.TextUtils;
 
 import org.xutils.common.Callback;
@@ -424,7 +425,7 @@ public class VerifyOrderActivity extends BaseActivity {
         if (mUserAddress!=null) {
             tvName.setText(mUserAddress.getRealName());
             tvAddr.setText(mUserAddress.getArea() + mUserAddress.getAddress());
-            tvPhoneNumber.setText(TextUtils.hidePhoneNum(mUserAddress.getPhone()));
+            tvPhoneNumber.setText(FormatUtils.hidePhoneNum(mUserAddress.getPhone()));
             mOrder.setAddressId(mUserAddress.getId()+"");
         }
     }

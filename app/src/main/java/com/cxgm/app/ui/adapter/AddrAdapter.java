@@ -18,6 +18,7 @@ import com.cxgm.app.data.io.order.UpdateAddressReq;
 import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.utils.ToastManager;
 import com.deanlib.ootb.data.io.Request;
+import com.deanlib.ootb.utils.FormatUtils;
 import com.deanlib.ootb.utils.TextUtils;
 
 import org.xutils.common.Callback;
@@ -78,7 +79,7 @@ public class AddrAdapter extends BaseAdapter {
         }
 
         holder.tvName.setText(mList.get(position).getRealName());
-        holder.tvPhoneNumber.setText(TextUtils.hidePhoneNum(mList.get(position).getPhone()));
+        holder.tvPhoneNumber.setText(FormatUtils.hidePhoneNum(mList.get(position).getPhone()));
         holder.tvAddr.setText(mList.get(position).getArea() + mList.get(position).getAddress());
         //设为默认
         holder.imgDefaultCheck.setImageResource(mList.get(position).getIsDef() == 1?R.mipmap.checked:R.mipmap.check);

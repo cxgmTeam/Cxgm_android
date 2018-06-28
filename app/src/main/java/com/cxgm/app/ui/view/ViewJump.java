@@ -11,8 +11,10 @@ import com.cxgm.app.data.entity.OrderProduct;
 import com.cxgm.app.data.entity.ProductTransfer;
 import com.cxgm.app.data.entity.ShopCategory;
 import com.cxgm.app.data.entity.UserAddress;
+import com.cxgm.app.ui.view.common.AboutActivity;
 import com.cxgm.app.ui.view.common.MainActivity;
 import com.cxgm.app.ui.view.common.SettingsActivity;
+import com.cxgm.app.ui.view.common.WebViewActivity;
 import com.cxgm.app.ui.view.goods.GoodsDetailActivity;
 import com.cxgm.app.ui.view.goods.GoodsSecondClassifyActivity;
 import com.cxgm.app.ui.view.goods.GoodsSpecificationDialogActivity;
@@ -222,9 +224,14 @@ public class ViewJump {
         activity.startActivity(intent);
     }
 
-    public static void toThirdWebView(Activity activity,String url){
-        Uri uri = Uri.parse(url);
-        Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+    public static void toWebView(Activity activity,String url){
+        Intent intent = new Intent(activity, WebViewActivity.class);
+        intent.putExtra("url",url);
+        activity.startActivity(intent);
+    }
+
+    public static void toAbout(Activity activity){
+        Intent intent = new Intent(activity, AboutActivity.class);
         activity.startActivity(intent);
     }
 

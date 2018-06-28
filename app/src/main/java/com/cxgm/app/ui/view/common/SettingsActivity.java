@@ -26,6 +26,7 @@ import com.cxgm.app.utils.UserManager;
 import com.deanlib.ootb.data.FileUtils;
 import com.deanlib.ootb.data.PersistenceUtils;
 import com.deanlib.ootb.data.io.Request;
+import com.deanlib.ootb.utils.AppUtils;
 import com.deanlib.ootb.utils.VersionUtils;
 
 import org.xutils.common.Callback;
@@ -73,7 +74,7 @@ public class SettingsActivity extends BaseActivity {
                                 .setMessage(R.string.new_version).setPositiveButton(R.string.update, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                ViewJump.toThirdWebView(SettingsActivity.this, version.getUrl());
+                                AppUtils.openThirdBrowser(SettingsActivity.this, version.getUrl());
                             }
                         }).setNegativeButton(R.string.not_update, null).show();
                     }
@@ -129,6 +130,7 @@ public class SettingsActivity extends BaseActivity {
                 loadCheckVersion();
                 break;
             case R.id.tvAbout:
+                ViewJump.toAbout(this);
                 break;
             case R.id.tvLogout:
                 UserManager.deleteUser();

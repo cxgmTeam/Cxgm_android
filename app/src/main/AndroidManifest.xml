@@ -113,6 +113,12 @@
         <activity android:name=".ui.view.news.MessageListActivity"
             android:screenOrientation="portrait"
             />
+        <activity android:name=".ui.view.common.AboutActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".ui.view.common.WebViewActivity"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:theme="@style/OotbAppTheme.NoActionBar.TransparentBackground"

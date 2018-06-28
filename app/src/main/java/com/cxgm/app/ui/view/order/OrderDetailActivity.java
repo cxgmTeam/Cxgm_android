@@ -148,7 +148,7 @@ public class OrderDetailActivity extends BaseActivity {
                         if (order.getAddress() != null) {
                             tvName.setText(order.getAddress().getRealName());
                             tvAddr.setText(order.getAddress().getArea() + order.getAddress().getAddress());
-                            tvPhoneNumber.setText(TextUtils.hidePhoneNum(order.getAddress().getPhone()));
+                            tvPhoneNumber.setText(FormatUtils.hidePhoneNum(order.getAddress().getPhone()));
                         }
                         //配送时间
                         tvReceiveTime.setText(order.getReceiveTime());
@@ -305,7 +305,6 @@ public class OrderDetailActivity extends BaseActivity {
             new SurplusTimeReq(this, mOrder.getId()).execute(new Request.RequestCallback<Long>() {
                 @Override
                 public void onSuccess(Long aLong) {
-                    //todo 修改返回码 code 201
                     if (aLong > 0) {
                         //倒计时
                         mTimer = new CountDownTimer(aLong, 1000) {

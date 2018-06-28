@@ -25,6 +25,7 @@ import com.cxgm.app.utils.UserManager;
 import com.cxgm.app.utils.ViewHelper;
 import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.manager.PermissionManager;
+import com.deanlib.ootb.utils.AppUtils;
 import com.deanlib.ootb.utils.VersionUtils;
 import com.tbruyelle.rxpermissions.Permission;
 
@@ -66,7 +67,7 @@ public class LaunchActivity extends BaseActivity implements MapHelper.LocationCa
                                 .setMessage(R.string.new_version).setPositiveButton(R.string.update, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                ViewJump.toThirdWebView(LaunchActivity.this, version.getUrl());
+                               AppUtils.openThirdBrowser(LaunchActivity.this, version.getUrl());
                             }
                         }).setNegativeButton(R.string.not_update, new DialogInterface.OnClickListener() {
                             @Override

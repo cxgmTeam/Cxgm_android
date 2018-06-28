@@ -163,9 +163,11 @@ public class LoginActivity extends BaseActivity {
             case R.id.tvLogin:
                 if (!ValidateUtils.isMobileNum(etPhoneNum.getText().toString())){
                     ToastManager.sendToast(getString(R.string.phone_num_invalid));
+                    return;
                 }
                 if (!etCheckCode.getText().toString().equals(mCheckCode)){
                     ToastManager.sendToast(getString(R.string.check_code_invalid));
+                    return;
                 }
 
                 new LoginReq(this,etPhoneNum.getText().toString(),etCheckCode.getText().toString()).execute(new Request.RequestCallback<User>() {
