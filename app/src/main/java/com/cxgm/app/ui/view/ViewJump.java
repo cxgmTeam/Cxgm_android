@@ -37,6 +37,7 @@ import com.cxgm.app.ui.view.order.VerifyOrderActivity;
 import com.cxgm.app.ui.view.user.CouponActivity;
 import com.cxgm.app.ui.view.user.InviteActivity;
 import com.cxgm.app.ui.view.user.LoginActivity;
+import com.deanlib.ootb.utils.DeviceUtils;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -183,7 +184,7 @@ public class ViewJump {
         Intent intent = new Intent(activity,GoodsSpecificationDialogActivity.class);
         intent.putExtra("product",product);
         activity.startActivityForResult(intent,CODE_GOODS_SPECIFICATION_DIALOG);
-        activity.overridePendingTransition(R.anim.anim_down_up,0);
+        DeviceUtils.backgroundAlpha(activity,0.5f);
     }
 
     public static void toGoodsList(Activity activity,ArrayList<OrderProduct> products){
@@ -196,6 +197,7 @@ public class ViewJump {
         Intent intent = new Intent(activity, DeliveryTimeDialogActivity.class);
         intent.putExtra("position",position);
         activity.startActivityForResult(intent,CODE_DELIVERY_TIME_DIALOG);
+        DeviceUtils.backgroundAlpha(activity,0.5f);
     }
 
     public static void toSearchResult(Activity activity,String keyword){

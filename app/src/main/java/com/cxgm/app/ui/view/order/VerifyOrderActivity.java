@@ -138,6 +138,12 @@ public class VerifyOrderActivity extends BaseActivity {
         loadData();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        DeviceUtils.backgroundAlpha(this,1);
+    }
+
     private void init() {
         tvTitle.setText(R.string.verify_order);
         imgBack.setVisibility(View.VISIBLE);

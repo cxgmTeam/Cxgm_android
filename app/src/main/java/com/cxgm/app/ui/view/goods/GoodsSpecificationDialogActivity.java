@@ -61,6 +61,7 @@ public class GoodsSpecificationDialogActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        overridePendingTransition(R.anim.anim_down_up,R.anim.anim_up_down);
         super.onCreate(savedInstanceState);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
@@ -126,5 +127,11 @@ public class GoodsSpecificationDialogActivity extends BaseActivity {
                 });
                 break;
         }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.anim_down_up,R.anim.anim_up_down);
     }
 }

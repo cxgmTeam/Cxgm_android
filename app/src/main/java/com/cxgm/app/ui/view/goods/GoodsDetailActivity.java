@@ -31,6 +31,7 @@ import com.cxgm.app.utils.StringHelper;
 import com.cxgm.app.utils.UserManager;
 import com.cxgm.app.utils.ViewHelper;
 import com.deanlib.ootb.data.io.Request;
+import com.deanlib.ootb.utils.DeviceUtils;
 import com.deanlib.ootb.utils.TextUtils;
 import com.deanlib.ootb.widget.GridViewForScrollView;
 import com.kevin.loopview.AdLoopView;
@@ -133,6 +134,12 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
         ViewHelper.addOnShopCartUpdateListener(this);
         init();
         loadData();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        DeviceUtils.backgroundAlpha(this,1);
     }
 
     private void init() {

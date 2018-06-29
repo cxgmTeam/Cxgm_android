@@ -38,5 +38,6 @@
     <color name="colorBlue">#249EE2</color>
     <color name="colorRed">#F33F31</color>
     <color name="colorGrayDark3">#989898</color>
+    <color name="colorAlphaGray">#7A000000</color>
 
 </resources>

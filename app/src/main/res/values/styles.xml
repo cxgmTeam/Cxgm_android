@@ -12,6 +12,12 @@
         <item name="android:windowBackground">@drawable/launch</item>
     </style>
 
+    <style name="AlphaGrayTheme" parent="OotbAppTheme.NoActionBar.TransparentBackground">
+        <item name="colorPrimary">@color/transparent</item>
+        <item name="colorPrimaryDark">@color/transparent</item>
+        <item name="colorAccent">@color/transparent</item>
+    </style>
+
     <style name="MenuButton">
         <item name="android:button">@null</item>
         <item name="android:textSize">@dimen/text_size_micro</item>

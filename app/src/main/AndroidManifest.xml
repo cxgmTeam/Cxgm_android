@@ -105,10 +105,10 @@
             android:screenOrientation="portrait"
             />
         <activity android:name=".ui.view.goods.GoodsSpecificationDialogActivity"
-            android:theme="@style/OotbAppTheme.NoActionBar.TransparentBackground"
+            android:theme="@style/AlphaGrayTheme"
             />
         <activity android:name=".ui.view.order.DeliveryTimeDialogActivity"
-            android:theme="@style/OotbAppTheme.NoActionBar.TransparentBackground"
+            android:theme="@style/AlphaGrayTheme"
             />
         <activity android:name=".ui.view.news.MessageListActivity"
             android:screenOrientation="portrait"
@@ -121,7 +121,7 @@
             />
         <activity
             android:name=".wxapi.WXPayEntryActivity"
-            android:theme="@style/OotbAppTheme.NoActionBar.TransparentBackground"
+            android:theme="@style/AlphaGrayTheme"
             android:exported="true"
             android:launchMode="singleTop"/>
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"> </service>
