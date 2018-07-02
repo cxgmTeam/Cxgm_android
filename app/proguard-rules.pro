@@ -63,3 +63,10 @@
 -keep class com.baidu.** {*;}
 -keep class vi.com.** {*;}
 -dontwarn com.baidu.**
+
+##### 腾讯浏览器 #####
+-keep class com.tencent.** {*;}
+-dontwarn com.tencent.**
+
+-libraryjars libs/BaiduLBS_Android.jar
+-libraryjars libs/tbs_sdk_thirdapp_v3.6.0.1249_43610_sharewithdownload_withoutGame_obfs_20180608_114954.jar

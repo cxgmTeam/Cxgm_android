@@ -7,9 +7,20 @@
     android:layout_height="match_parent">
 
     <include layout="@layout/layout_back_title_action_appbar"/>
-    <WebView
-        android:id="@+id/webview"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent">
+        <com.tencent.smtt.sdk.WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <ProgressBar
+            android:visibility="gone"
+            android:id="@+id/pbLoading"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </FrameLayout>
 
 </LinearLayout>
