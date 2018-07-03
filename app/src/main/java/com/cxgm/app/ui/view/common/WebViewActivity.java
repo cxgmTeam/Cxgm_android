@@ -34,8 +34,8 @@ public class WebViewActivity extends BaseActivity {
     TextView tvTitle;
     @BindView(R.id.webview)
     WebView webview;
-//    @BindView(R.id.pbLoading)
-//    ProgressBar pbLoading;
+    @BindView(R.id.pbLoading)
+    ProgressBar pbLoading;
 
     String mUrl;
 
@@ -102,12 +102,12 @@ public class WebViewActivity extends BaseActivity {
     private WebViewClient webViewClient = new WebViewClient(){
         @Override
         public void onPageFinished(WebView view, String url) {//页面加载完成
-//            pbLoading.setVisibility(View.GONE);
+            pbLoading.setVisibility(View.GONE);
         }
 
         @Override
         public void onPageStarted(WebView view, String url, Bitmap favicon) {//页面开始加载
-//            pbLoading.setVisibility(View.VISIBLE);
+            pbLoading.setVisibility(View.VISIBLE);
         }
 
         @Override

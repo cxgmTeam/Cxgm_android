@@ -41,6 +41,7 @@ import com.scwang.smartrefresh.layout.api.RefreshHeader;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.footer.ClassicsFooter;
 import com.scwang.smartrefresh.layout.header.ClassicsHeader;
+import com.tencent.smtt.sdk.QbSdk;
 import com.umeng.analytics.MobclickAgent;
 import com.umeng.commonsdk.UMConfigure;
 import com.umeng.message.IUmengRegisterCallback;
@@ -142,6 +143,8 @@ public class App extends MultiDexApplication {
 
         //用户
         UserManager.getInstance(this);
+        //预加载TBS X5内核
+        QbSdk.initX5Environment(this,null);
     }
 
     UmengMessageHandler messageHandler = new UmengMessageHandler() {
