@@ -73,6 +73,8 @@ public class UserOrderActivity extends BaseActivity {
                     vpContainer.setCurrentItem(1);
                     break;
                 case Order.STATUS_DISTRIBUTION:
+                case Order.STATUS_DISTRIBUTION2:
+                case Order.STATUS_DISTRIBUTION3:
                     vpContainer.setCurrentItem(2);
                     break;
                 case Order.STATUS_DISTRIBUTING:

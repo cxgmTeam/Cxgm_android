@@ -226,6 +226,8 @@ public class OrderDetailActivity extends BaseActivity {
                     layoutRefund.setVisibility(View.GONE);
                     break;
                 case Order.STATUS_DISTRIBUTION:
+                case Order.STATUS_DISTRIBUTION2:
+                case Order.STATUS_DISTRIBUTION3:
                     layoutOrderState.setBackgroundResource(R.color.colorGreen);
                     imgIcon.setImageResource(R.mipmap.status_distributing);
                     tvOrderState.setText(R.string.distribution);

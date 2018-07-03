@@ -148,6 +148,8 @@ public class UserOrderAdapter extends BaseAdapter {
                 holder.tvOrderAction.setVisibility(View.VISIBLE);
                 break;
             case Order.STATUS_DISTRIBUTION:
+            case Order.STATUS_DISTRIBUTION2:
+            case Order.STATUS_DISTRIBUTION3:
                 //待配送
                 holder.tvOrderState.setText(R.string.distribution);
                 holder.tvOrderAction.setText(R.string.apply_for_returning);
@@ -203,6 +205,8 @@ public class UserOrderAdapter extends BaseAdapter {
                         ViewJump.toOrderPay(mActivity,mList.get(i).getId(),mList.get(i).getOrderAmount());
                         break;
                     case Order.STATUS_DISTRIBUTION:
+                    case Order.STATUS_DISTRIBUTION2:
+                    case Order.STATUS_DISTRIBUTION3:
                         //待配送 申请退货
                     case Order.STATUS_DISTRIBUTING:
                         //配送中 申请退货

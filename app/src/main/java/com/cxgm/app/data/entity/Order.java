@@ -9,6 +9,8 @@ public class Order extends BaseEntity {
     //订单状态0待支付，1待配送（已支付），4配送中，5已完成，6待退款，7已退款，8系统取消 ,9自主取消
     public static final String STATUS_TO_BE_PAID = "0";
     public static final String STATUS_DISTRIBUTION = "1";
+    public static final String STATUS_DISTRIBUTION2 = "2";//分拣等工作，属于后台状态，不应出现在前端，但为了万一
+    public static final String STATUS_DISTRIBUTION3 = "3";
     public static final String STATUS_DISTRIBUTING = "4";
     public static final String STATUS_COMPLETE = "5";
     public static final String STATUS_WAIT_REFUND = "6";

@@ -61,6 +61,7 @@
     </RelativeLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/layoutRefund"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/margin_giant"
