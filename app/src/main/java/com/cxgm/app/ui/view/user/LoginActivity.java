@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.cxgm.app.R;
+import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.entity.User;
 import com.cxgm.app.data.io.user.LoginReq;
 import com.cxgm.app.data.io.user.SendSMSReq;
@@ -161,13 +162,15 @@ public class LoginActivity extends BaseActivity {
                 });
                 break;
             case R.id.tvLogin:
-                if (!ValidateUtils.isMobileNum(etPhoneNum.getText().toString())){
-                    ToastManager.sendToast(getString(R.string.phone_num_invalid));
-                    return;
-                }
-                if (!etCheckCode.getText().toString().equals(mCheckCode)){
-                    ToastManager.sendToast(getString(R.string.check_code_invalid));
-                    return;
+                if (!Constants.DEBUG) {
+                    if (!ValidateUtils.isMobileNum(etPhoneNum.getText().toString())) {
+                        ToastManager.sendToast(getString(R.string.phone_num_invalid));
+                        return;
+                    }
+                    if (!etCheckCode.getText().toString().equals(mCheckCode)) {
+                        ToastManager.sendToast(getString(R.string.check_code_invalid));
+                        return;
+                    }
                 }
 
                 new LoginReq(this,etPhoneNum.getText().toString(),etCheckCode.getText().toString()).execute(new Request.RequestCallback<User>() {

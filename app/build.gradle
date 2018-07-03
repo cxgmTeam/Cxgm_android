@@ -6,7 +6,7 @@ android {
         applicationId "com.cxgm.app"
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 17
+        versionCode 18
         versionName "1.0"
         multiDexEnabled = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
