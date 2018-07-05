@@ -15,10 +15,17 @@ import android.widget.Toast;
 
 import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
+import com.cxgm.app.data.entity.Shop;
 import com.cxgm.app.data.entity.User;
+import com.cxgm.app.data.entity.UserAddress;
+import com.cxgm.app.data.io.common.CheckAddressReq;
+import com.cxgm.app.data.io.order.AddressListReq;
 import com.cxgm.app.data.io.user.LoginReq;
 import com.cxgm.app.data.io.user.SendSMSReq;
 import com.cxgm.app.ui.base.BaseActivity;
+import com.cxgm.app.ui.view.ViewJump;
+import com.cxgm.app.ui.view.common.LaunchActivity;
+import com.cxgm.app.utils.MapHelper;
 import com.cxgm.app.utils.ToastManager;
 import com.cxgm.app.utils.UserManager;
 import com.cxgm.app.utils.ViewHelper;
@@ -27,6 +34,7 @@ import com.deanlib.ootb.utils.ValidateUtils;
 
 import org.xutils.common.Callback;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -183,8 +191,72 @@ public class LoginActivity extends BaseActivity {
                                 listener.onLogin(user);
                             }
                             ViewHelper.updateShopCart(getApplicationContext());
-                            Request.dismissDialog();
-                            finish();
+                            new AddressListReq(LoginActivity.this).execute(new Request.RequestCallback<List<UserAddress>>() {
+                                @Override
+                                public void onSuccess(List<UserAddress> userAddresses) {
+                                    if (userAddresses!=null && userAddresses.size()>0){
+                                        UserAddress temp  = userAddresses.get(0);
+                                        for (UserAddress address : userAddresses){
+                                            if (address.getIsDef() == 1){
+                                                temp = address;
+                                                break;
+                                            }
+                                        }
+                                        //设置默认收货地址
+                                        Constants.defaultUserAddress = temp;
+
+                                        new CheckAddressReq(LoginActivity.this,temp.getLongitude(),temp.getDimension())
+                                                .execute(new Request.RequestCallback<List<Shop>>() {
+                                                    @Override
+                                                    public void onSuccess(List<Shop> shops) {
+                                                        if (shops!=null && shops.size()>0){
+                                                            Constants.currentShop = shops.get(0);
+                                                            Constants.setEnableDeliveryAddress(true);
+                                                        }
+                                                    }
+
+                                                    @Override
+                                                    public void onError(Throwable ex, boolean isOnCallback) {
+
+                                                    }
+
+                                                    @Override
+                                                    public void onCancelled(Callback.CancelledException cex) {
+
+                                                    }
+
+                                                    @Override
+                                                    public void onFinished() {
+                                                        Request.dismissDialog();
+                                                        finish();
+                                                    }
+                                                });
+                                    }else {
+                                        //登录但没有添加过地址
+                                        Request.dismissDialog();
+                                        finish();
+                                    }
+                                }
+
+                                @Override
+                                public void onError(Throwable ex, boolean isOnCallback) {
+                                    //为什么分开搞三个，而没有在onFinished中，是因为onSuccess里还有一个网络请求
+                                    Request.dismissDialog();
+                                    finish();
+                                }
+
+                                @Override
+                                public void onCancelled(Callback.CancelledException cex) {
+                                    Request.dismissDialog();
+                                    finish();
+                                }
+
+                                @Override
+                                public void onFinished() {
+
+                                }
+                            });
+
                         }
                     }
 

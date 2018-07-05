@@ -18,6 +18,7 @@ import com.cxgm.app.data.entity.UserAddress;
 import com.cxgm.app.data.entity.UserPoiInfo;
 import com.cxgm.app.data.io.common.CheckAddressReq;
 import com.cxgm.app.data.io.order.AddAddressReq;
+import com.cxgm.app.data.io.order.AddressListReq;
 import com.cxgm.app.data.io.order.UpdateAddressReq;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
@@ -80,6 +81,7 @@ public class NewAddrActivity extends BaseActivity {
         mIsEdit = mAddress != null;
 
         init();
+        loadData();
     }
 
     private void init() {
@@ -93,6 +95,39 @@ public class NewAddrActivity extends BaseActivity {
         }else
             tvTitle.setText(R.string.new_addr);
         imgBack.setVisibility(View.VISIBLE);
+    }
+
+    private void loadData(){
+        //如果不是编辑，新添加，可能是第一次添加地址，如果是该用户的第一个地址，应自动设置为默认地址
+        if (!mIsEdit) {
+            new AddressListReq(this)
+                    .execute(new Request.RequestCallback<List<UserAddress>>() {
+                        @Override
+                        public void onSuccess(List<UserAddress> userAddresses) {
+                            if (userAddresses == null || userAddresses.size() == 0) {
+                                if (mAddress == null) {
+                                    mAddress = new UserAddress();
+                                }
+                                mAddress.setIsDef(1);//设置地址为默认地址
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable ex, boolean isOnCallback) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(Callback.CancelledException cex) {
+
+                        }
+
+                        @Override
+                        public void onFinished() {
+
+                        }
+                    });
+        }
     }
 
     @OnClick({R.id.imgBack, R.id.layoutDistrict, R.id.tvSave})

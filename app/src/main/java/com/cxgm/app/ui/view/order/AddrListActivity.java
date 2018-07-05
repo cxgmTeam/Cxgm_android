@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -66,9 +67,10 @@ public class AddrListActivity extends BaseActivity implements MapHelper.Location
     @BindView(R.id.tvRelocation)
     TextView tvRelocation;
 
-    boolean mUpdatedLocation = false;//地址更新
+//    boolean mUpdatedLocation = false;//地址更新
     List<UserAddress> mAddrList;
     AddrAdapter mAddrAdapter;
+    Intent mData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,6 +99,18 @@ public class AddrListActivity extends BaseActivity implements MapHelper.Location
         mAddrAdapter = new AddrAdapter(this,mAddrList);
         lvAddr.setAdapter(mAddrAdapter);
         lvAddr.setFocusable(false);
+        lvAddr.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                mUpdatedLocation = true;
+                //设置用户选择的地址
+                Constants.defaultUserAddress =  mAddrList.get((int)id);
+                if (mData == null)
+                    mData = new Intent();
+                mData.putExtra("isDefAddr",true);
+                finish();
+            }
+        });
     }
 
     private void loadData(){
@@ -157,7 +171,9 @@ public class AddrListActivity extends BaseActivity implements MapHelper.Location
     }
 
     private void location(){
-        mUpdatedLocation = true;
+//        mUpdatedLocation = true;
+        if (mData == null)
+            mData = new Intent();
         MapHelper helper = new MapHelper(this,this);
         helper.startLocation();
     }
@@ -168,6 +184,7 @@ public class AddrListActivity extends BaseActivity implements MapHelper.Location
             Constants.currentLocation = bdLocation;
             //重新定位功能 置Null currentUserLocation
             Constants.currentUserLocation = null;
+            mData.putExtra("isDefAddr",false);
             tvCurrentAddr.setText(Constants.getLocation(false).address);
         }
     }
@@ -186,9 +203,12 @@ public class AddrListActivity extends BaseActivity implements MapHelper.Location
                         PoiInfo mPoiInfo = data.getParcelableExtra("poiInfo");
                         if (mPoiInfo!=null){
                             tvCurrentAddr.setText(mPoiInfo.address);
-                            mUpdatedLocation = true;
+//                            mUpdatedLocation = true;
                             //设置用户指定的位置
                             Constants.currentUserLocation = mPoiInfo;
+                            if (mData == null)
+                                mData = new Intent();
+                            mData.putExtra("isDefAddr",false);
                         }
                     }
                     break;
@@ -198,8 +218,8 @@ public class AddrListActivity extends BaseActivity implements MapHelper.Location
 
     @Override
     public void finish() {
-        if (mUpdatedLocation)
-            setResult(RESULT_OK);
+        if (mData!=null)
+            setResult(RESULT_OK,mData);
         super.finish();
     }
 

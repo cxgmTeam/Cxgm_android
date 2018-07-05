@@ -216,6 +216,8 @@ public class IndexFragment extends BaseFragment {
         etSearchWord.setFocusable(false);
         etSearchWord.setKeyListener(null);
 
+        doShowPop();
+
         if (Constants.currentShop == null) {
             //无可配送商铺
             layoutShopShow.setVisibility(View.VISIBLE);
@@ -705,76 +707,94 @@ public class IndexFragment extends BaseFragment {
             switch (requestCode) {
                 case ViewJump.CODE_ADDR_LIST:
                     //更新位置以及对应商铺以及对应的商品
-                    new CheckAddressReq(getActivity(), Constants.getLocation(false).location.longitude + "", Constants.getLocation(false).location.latitude + "")
-                            .execute(new Request.RequestCallback<List<Shop>>() {
-                                @Override
-                                public void onSuccess(List<Shop> shops) {
-                                    if (shops != null && shops.size() > 0) {
-                                        if (shops.size() == 1 && Constants.currentShop != null
-                                                && shops.get(0).getId() == Constants.currentShop.getId())
-                                            return;
+                    if (data!=null) {
+                        boolean isDefAddr = data.getBooleanExtra("isDefAddr",false);
+                        new CheckAddressReq(getActivity(), Constants.getLocation(isDefAddr).location.longitude + "", Constants.getLocation(isDefAddr).location.latitude + "")
+                                .execute(new Request.RequestCallback<List<Shop>>() {
+                                    @Override
+                                    public void onSuccess(List<Shop> shops) {
+                                        if (shops != null && shops.size() > 0) {
+                                            if (shops.size() == 1 && Constants.currentShop != null
+                                                    && shops.get(0).getId() == Constants.currentShop.getId())
+                                                return;
 
-                                        //返回得到的定位信息内仍然可能没有商铺
-                                        //或者有商铺，而非用户最开始选择的商铺，直接替换，是否需要提示给用户
-                                        //地址配送区域重叠
-                                        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                                        builder.setTitle(R.string.according_location_recommend_shop);
-                                        String[] shopNames = new String[shops.size()];
-                                        for (int i = 0; i < shops.size(); i++) {
-                                            shopNames[i] = shops.get(i).getShopName();
-                                        }
-                                        builder.setItems(shopNames, new DialogInterface.OnClickListener() {
-                                            @Override
-                                            public void onClick(DialogInterface dialog, int which) {
-                                                Constants.currentShop = shops.get(which);
-                                                Constants.setEnableDeliveryAddress(true);//可配送
+                                            /**
+                                            //返回得到的定位信息内仍然可能没有商铺
+                                            //或者有商铺，而非用户最开始选择的商铺，直接替换，是否需要提示给用户
+                                            //地址配送区域重叠
+                                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                            builder.setTitle(R.string.according_location_recommend_shop);
+                                            String[] shopNames = new String[shops.size()];
+                                            for (int i = 0; i < shops.size(); i++) {
+                                                shopNames[i] = shops.get(i).getShopName();
+                                            }
+                                            builder.setItems(shopNames, new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    Constants.currentShop = shops.get(which);
+                                                    Constants.setEnableDeliveryAddress(true);//可配送
+                                                    init();
+                                                    loadData();
+                                                    ViewHelper.updateShopCart(getActivity());
+                                                }
+                                            });
+                                            builder.setNegativeButton(R.string.cancel, null);
+                                            builder.show();
+                                            */
+                                            Constants.currentShop = shops.get(0);
+                                            Constants.setEnableDeliveryAddress(true);//可配送
+                                            init();
+                                            loadData();
+                                            ViewHelper.updateShopCart(getActivity());
+                                        } else {
+                                            if (Constants.currentShop != null) {
+                                                //shop 从有到无
+                                                /*
+                                                new AlertDialog.Builder(getActivity()).setTitle(R.string.hint)
+                                                        .setMessage(R.string.show_shop_list).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        //取消掉用户指定的地址
+                                                        Constants.currentUserLocation = null;
+                                                    }
+                                                }).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        //shop置Null
+                                                        Constants.setEnableDeliveryAddress(false);
+                                                        Constants.currentShop = null;
+                                                        init();
+                                                        loadData();
+                                                        ViewHelper.updateShopCart(getActivity());
+                                                    }
+                                                }).show();
+                                                */
+                                                //shop置Null
+                                                Constants.setEnableDeliveryAddress(false);
+                                                Constants.currentShop = null;
                                                 init();
                                                 loadData();
                                                 ViewHelper.updateShopCart(getActivity());
                                             }
-                                        });
-                                        builder.setNegativeButton(R.string.cancel, null);
-                                        builder.show();
-                                    } else {
-                                        if (Constants.currentShop != null) {
-                                            //shop 从有到无
-                                            new AlertDialog.Builder(getActivity()).setTitle(R.string.hint)
-                                                    .setMessage(R.string.show_shop_list).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    //取消掉用户指定的地址
-                                                    Constants.currentUserLocation = null;
-                                                }
-                                            }).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                                        @Override
-                                                        public void onClick(DialogInterface dialog, int which) {
-                                                            //shop置Null
-                                                            Constants.setEnableDeliveryAddress(false);
-                                                            Constants.currentShop = null;
-                                                            init();
-                                                            loadData();
-                                                            ViewHelper.updateShopCart(getActivity());
-                                                        }
-                                                    }).show();
                                         }
                                     }
-                                }
 
-                                @Override
-                                public void onError(Throwable ex, boolean isOnCallback) {
+                                    @Override
+                                    public void onError(Throwable ex, boolean isOnCallback) {
 
-                                }
+                                    }
 
-                                @Override
-                                public void onCancelled(Callback.CancelledException cex) {
+                                    @Override
+                                    public void onCancelled(Callback.CancelledException cex) {
 
-                                }
+                                    }
 
-                                @Override
-                                public void onFinished() {
+                                    @Override
+                                    public void onFinished() {
 
-                                }
-                            });
+                                    }
+                                });
+                    }
                     break;
             }
         }

@@ -134,6 +134,7 @@ public class SettingsActivity extends BaseActivity {
                 break;
             case R.id.tvLogout:
                 UserManager.deleteUser();
+                Constants.defaultUserAddress = null;
                 ViewJump.toLogin(this);
                 finish();
                 break;
