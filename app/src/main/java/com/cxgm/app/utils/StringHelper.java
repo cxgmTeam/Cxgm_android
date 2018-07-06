@@ -33,8 +33,9 @@ public class StringHelper {
         }
     }
 
-    public static String getSpecification(float weight,String unit){
-        return StringHelper.getWeight(weight)+"/"+unit;
+    public static String getSpecification(String weight,String unit){
+//        return StringHelper.getWeight(weight)+"/"+unit;
+        return weight+"/"+unit;
     }
     
 }

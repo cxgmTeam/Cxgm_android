@@ -326,7 +326,8 @@ public class IndexFragment extends BaseFragment {
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 mShopListPageNum = 1;
-                mShopList.clear();
+                if (mShopList!=null)
+                    mShopList.clear();
                 loadData();
             }
         });

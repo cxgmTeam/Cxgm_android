@@ -114,7 +114,7 @@ public class ProductTransfer extends BaseEntity {
     private String weekHitsDate;
     private int weekSales;
     private String weekSalesDate;
-    private float weight;
+    private String weight;
     private List<ProductImage> productImageList;
     private String goodCode;
     private float originalPrice;
@@ -615,11 +615,11 @@ public class ProductTransfer extends BaseEntity {
         this.weekSalesDate = weekSalesDate;
     }
 
-    public float getWeight() {
+    public String getWeight() {
         return weight;
     }
 
-    public void setWeight(float weight) {
+    public void setWeight(String weight) {
         this.weight = weight;
     }
 
