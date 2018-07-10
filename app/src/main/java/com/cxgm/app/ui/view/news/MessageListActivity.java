@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -13,8 +14,10 @@ import com.cxgm.app.R;
 import com.cxgm.app.data.entity.Message;
 import com.cxgm.app.ui.adapter.MessageAdapter;
 import com.cxgm.app.ui.base.BaseActivity;
+import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.utils.Helper;
 import com.deanlib.ootb.data.db.DB;
+import com.deanlib.ootb.utils.FormatUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -67,6 +70,14 @@ public class MessageListActivity extends BaseActivity {
         tvTitle.setText(R.string.message);
         imgBack.setVisibility(View.VISIBLE);
         lvMessage.setAdapter(mMessageAdapter = new MessageAdapter(mMessageList = new ArrayList<>()));
+        lvMessage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ViewJump.toGoodsDetail(MessageListActivity.this,
+                        (int) FormatUtils.convertStringToNum(mMessageList.get((int)id).getShopId()),
+                        (int) FormatUtils.convertStringToNum(mMessageList.get((int)id).getGoodcode()));
+            }
+        });
         srl.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {

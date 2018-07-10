@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.StrictMode;
@@ -25,6 +26,7 @@ import com.alibaba.fastjson.JSON;
 import com.cxgm.app.R;
 import com.cxgm.app.data.entity.Message;
 import com.cxgm.app.ui.view.common.LaunchActivity;
+import com.cxgm.app.ui.view.goods.GoodsDetailActivity;
 import com.cxgm.app.utils.ToastManager;
 import com.cxgm.app.utils.UserManager;
 import com.deanlib.ootb.OotbConfig;
@@ -32,6 +34,7 @@ import com.deanlib.ootb.data.PersistenceUtils;
 import com.deanlib.ootb.data.db.DB;
 import com.deanlib.ootb.data.io.DefaultLoadingDialog;
 import com.deanlib.ootb.utils.DLogUtils;
+import com.deanlib.ootb.utils.FormatUtils;
 import com.deanlib.ootb.utils.VersionUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.DefaultRefreshFooterCreator;
@@ -51,6 +54,8 @@ import com.umeng.message.entity.UMessage;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.ex.DbException;
+
+import java.util.List;
 
 /**
  * Application
@@ -103,7 +108,8 @@ public class App extends MultiDexApplication {
 
 
         //友盟
-        UMConfigure.init(this, "5af6acadb27b0a761e000306", "channel", UMConfigure.DEVICE_TYPE_PHONE, "44b9f56acba05f8a5e6859d41f1e886b");
+//        UMConfigure.init(this, "5af6acadb27b0a761e000306", "channel", UMConfigure.DEVICE_TYPE_PHONE, "44b9f56acba05f8a5e6859d41f1e886b");
+        UMConfigure.init(this, "5b42fb3cf29d98568500000f", "channel", UMConfigure.DEVICE_TYPE_PHONE, "3be877a849c662d8cf85b18385291aa9");
         UMConfigure.setLogEnabled(Constants.DEBUG);
 
         //友盟推送
@@ -144,7 +150,7 @@ public class App extends MultiDexApplication {
         //用户
         UserManager.getInstance(this);
         //预加载TBS X5内核
-        QbSdk.initX5Environment(this,null);
+        QbSdk.initX5Environment(this, null);
     }
 
     UmengMessageHandler messageHandler = new UmengMessageHandler() {
@@ -160,32 +166,33 @@ public class App extends MultiDexApplication {
         }
 
         @Override
-        public void dealWithCustomMessage(Context context, final UMessage uMessage) {
-            if (Constants.notify) {
-                //通知栏通知 声音
+        public void dealWithCustomMessage(Context context, UMessage uMessage) {
+            if (uMessage != null && !TextUtils.isEmpty(uMessage.custom)) {
 
-//                Notification notification = new NotificationCompat.Builder(getApplicationContext()).setContentTitle(uMessage.title)
-//                        .setSmallIcon(R.mipmap.ic_launcher).setLargeIcon( ((BitmapDrawable) getResources().getDrawable(R.mipmap.ic_launcher)).getBitmap())
-//                        .setWhen(SystemClock.uptimeMillis()).setTicker(uMessage.ticker)
-//                        .setContentText(uMessage.custom).setContentIntent(pendingIntent).setDefaults(Notification.DEFAULT_ALL).build();
-//                notification.flags |= Notification.FLAG_AUTO_CANCEL;
-//                mNotificationManager.notify(0,notification);
-                showNotification(context,uMessage);
-            }
-
-            new Handler(getMainLooper()).post(new Runnable() {
-                @Override
-                public void run() {
-
-                    Message msg = new Message(uMessage);
-                    DLogUtils.d("推送消息：" + msg);
-                    try {
-                        DB.getDbManager().save(msg);
-                    } catch (DbException e) {
-                        e.printStackTrace();
+                new Handler(getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            List<Message> messages = JSON.parseArray(uMessage.custom, Message.class);
+                            if (messages != null && messages.size() > 0) {
+                                Message message = messages.get(0);
+                                message.setTitle(uMessage.title);
+                                if (Constants.notify) {
+                                    //通知栏通知 声音
+                                    showNotification(context, message);
+                                }
+                                DLogUtils.d("推送消息：" + message);
+                                try {
+                                    DB.getDbManager().save(message);
+                                } catch (DbException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
                     }
-                }
-            });
+                });
 
 //                        // 对于自定义消息，PushSDK默认只统计送达。若开发者需要统计点击和忽略，则需手动调用统计方法。
 //                        boolean isClickOrDismissed = true;
@@ -197,11 +204,11 @@ public class App extends MultiDexApplication {
 //                            UTrack.getInstance(getApplicationContext()).trackMsgDismissed(msg);
 //                        }
 //                    Toast.makeText(context, msg.custom, Toast.LENGTH_LONG).show();
-
+            }
         }
     };
 
-    private void showNotification(Context context, UMessage msg){
+    private void showNotification(Context context, Message msg) {
 
 //		Notification notification = new Notification();
 //		notification.icon = R.drawable.ic_launcher;
@@ -217,32 +224,43 @@ public class App extends MultiDexApplication {
 //		}
 //		manager.notify(Constants.NOTIFICATION_REQUEST_CODE, notification);
 
-        if (mNotificationManager==null) {
+        if (mNotificationManager == null) {
             mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
                 NotificationChannel channel = new NotificationChannel(Constants.NOTIFIY_CHANNEL_ID, Constants.NOTIFIY_CHANNEL_NAME, NotificationManager.IMPORTANCE_DEFAULT);
                 mNotificationManager.createNotificationChannel(channel);
             }
         }
-        Intent intent = new Intent(context,LaunchActivity.class);
+        Intent intent = new Intent();
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context,++notifiyId,intent,PendingIntent.FLAG_UPDATE_CURRENT);
+        intent.putExtra("isFromPushMessage",true);
+        if ("0".equals(msg.getType())) {
+            intent.setClass(context, GoodsDetailActivity.class);
+            intent.putExtra("productId", (int)FormatUtils.convertStringToNum(msg.getGoodcode()));
+            intent.putExtra("shopId", (int)FormatUtils.convertStringToNum(msg.getShopId()));
+        }else if ("1".equals(msg.getType())){
+            intent.setAction(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(msg.getGoodcode()));
+        }else {
+            intent.setClass(context, LaunchActivity.class);
+        }
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, ++notifiyId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(context,Constants.NOTIFIY_CHANNEL_ID);
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, Constants.NOTIFIY_CHANNEL_ID);
         builder.setSmallIcon(R.mipmap.icon);
 //        builder.setSmallIcon(android.os.Build.VERSION.SDK_INT>20?R.drawable.ic_launcher_round:R.drawable.ic_launcher);
 //        builder.setColor(context.getResources().getColor(R.color.icon_blue));
         builder.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.mipmap.icon));
         builder.setAutoCancel(true);
         builder.setDefaults(Notification.DEFAULT_ALL);
-        builder.setTicker(msg.ticker);
-        builder.setContentTitle(msg.title);
-        builder.setContentText(msg.custom);
+        builder.setTicker(msg.getTitle());
+        builder.setContentTitle(msg.getTitle());
+        builder.setContentText(msg.getContent());
         builder.setWhen(System.currentTimeMillis());
         builder.setContentIntent(pendingIntent);
         builder.setStyle(new NotificationCompat.BigTextStyle()
-                .bigText(msg.custom));
+                .bigText(msg.getContent()));
 
-        mNotificationManager.notify(notifiyId,builder.build());
+        mNotificationManager.notify(notifiyId, builder.build());
     }
 }

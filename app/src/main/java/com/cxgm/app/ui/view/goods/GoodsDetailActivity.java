@@ -121,6 +121,7 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
     //    boolean isSelectLock = false;
     int mBannerPosition = 1;
     int mShopCartNum = 0; //种类数
+    int mShopId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +132,11 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
         setContentView(R.layout.activity_goods_detail);
         ButterKnife.bind(this);
         mProductId = getIntent().getIntExtra("productId", 0);
+        if (Constants.currentShop == null){
+            mShopId = getIntent().getIntExtra("shopId",0);
+        }else {
+            mShopId = Constants.currentShop.getId();
+        }
         ViewHelper.addOnShopCartUpdateListener(this);
         init();
         loadData();
@@ -228,8 +234,8 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
     }
 
     private void loadData() {
-        if (Constants.currentShop != null && mProductId > 0) {
-            new FindProductDetailReq(this, mProductId, Constants.currentShop.getId()).execute(new Request.RequestCallback<ProductTransfer>() {
+        if (mShopId != 0 && mProductId > 0) {
+            new FindProductDetailReq(this, mProductId, mShopId).execute(new Request.RequestCallback<ProductTransfer>() {
                 @Override
                 public void onSuccess(ProductTransfer product) {
                     if (product != null) {
@@ -315,7 +321,7 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
 
 
                         //猜你喜欢
-                        new PushProductsReq(GoodsDetailActivity.this, Constants.currentShop.getId(), mProduct.getProductCategoryTwoId(), mProduct.getProductCategoryThirdId())
+                        new PushProductsReq(GoodsDetailActivity.this, mShopId, mProduct.getProductCategoryTwoId(), mProduct.getProductCategoryThirdId())
                                 .execute(new Request.RequestCallback<List<ProductTransfer>>() {
                                     @Override
                                     public void onSuccess(List<ProductTransfer> productTransfers) {

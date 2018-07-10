@@ -26,16 +26,24 @@ public class Message extends BaseEntity {
     String title;
     @Column(name = "content")
     String content;
-    @Column(name = "date")
-    String date;
+
+    /**
+     * time : 2018-07-06 18:33:13
+     * type : 0
+     * goodcode : 09869
+     */
+
+    @Column(name = "time")
+    private String time;
+    @Column(name = "type")
+    private String type;//type为0时跳转商品详情，type为1时直接打开H5连接
+    @Column(name = "goodcode")
+    private String goodcode;
+    @Column(name = "shopId")
+    private String shopId;
+
 
     public Message() {
-    }
-
-    public Message(UMessage uMessage) {
-        title = uMessage.title;
-        content = uMessage.custom;
-        date = uMessage.text;
     }
 
     public int getId() {
@@ -62,20 +70,35 @@ public class Message extends BaseEntity {
         this.content = content;
     }
 
-    public String getDate() {
-        return date;
+    public String getTime() {
+        return time;
     }
 
-    public void setDate(String date) {
-        this.date = date;
+    public void setTime(String time) {
+        this.time = time;
     }
 
-    @Override
-    public String toString() {
-        return "Message{" +
-                "title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                ", date='" + date + '\'' +
-                '}';
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public String getGoodcode() {
+        return goodcode;
+    }
+
+    public void setGoodcode(String goodcode) {
+        this.goodcode = goodcode;
+    }
+
+    public String getShopId() {
+        return shopId;
+    }
+
+    public void setShopId(String shopId) {
+        this.shopId = shopId;
     }
 }

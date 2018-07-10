@@ -125,6 +125,13 @@ public class ViewJump {
         activity.startActivityForResult(intent,CODE_GOODS_DETAIL);
     }
 
+    public static void toGoodsDetail(Activity activity,int shopId, int productId){
+        Intent intent = new Intent(activity, GoodsDetailActivity.class);
+        intent.putExtra("productId",productId);
+        intent.putExtra("shopId",shopId);
+        activity.startActivityForResult(intent,CODE_GOODS_DETAIL);
+    }
+
     public static void toGoodsSecondClassify(Activity activity,ShopCategory category){
         Intent intent = new Intent(activity, GoodsSecondClassifyActivity.class);
         intent.putExtra("category",category);

@@ -56,7 +56,7 @@ public class MessageAdapter extends BaseAdapter {
 
         holder.tvTitle.setText(mMessageList.get(position).getTitle());
         holder.tvContent.setText(mMessageList.get(position).getContent());
-        holder.tvTime.setText(mMessageList.get(position).getDate());
+        holder.tvTime.setText(mMessageList.get(position).getTime());
         int coverResId = R.mipmap.notification;
         switch (mMessageList.get(position).getTitle()){
             case Message.TYPE_PROMOTION:
