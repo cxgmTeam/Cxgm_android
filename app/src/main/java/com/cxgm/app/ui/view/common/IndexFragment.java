@@ -51,6 +51,7 @@ import com.cxgm.app.utils.Helper;
 import com.cxgm.app.utils.ToastManager;
 import com.cxgm.app.utils.ViewHelper;
 import com.deanlib.ootb.data.io.Request;
+import com.deanlib.ootb.utils.FormatUtils;
 import com.deanlib.ootb.widget.GridViewForScrollView;
 import com.deanlib.ootb.widget.ListViewForScrollView;
 import com.kevin.loopview.AdLoopView;
@@ -242,8 +243,13 @@ public class IndexFragment extends BaseFragment {
             loopBanner.setOnClickListener(new BaseLoopAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(PagerAdapter parent, View view, int position, int realPosition) {
-                    loopBanner.getLoopData();
-                    //TODO 广告点击事件
+                    LoopData.ItemData itemData = loopBanner.getLoopData().items.get(position);
+                    //广告点击事件
+                    if ("1".equals(itemData.type)){
+                        ViewJump.toWebView(getActivity(),itemData.link);
+                    }else if ("2".equals(itemData.type)){
+                        ViewJump.toGoodsDetail(getActivity(),(int) FormatUtils.convertStringToNum(itemData.link));
+                    }
                 }
             });
 
@@ -509,11 +515,11 @@ public class IndexFragment extends BaseFragment {
                     List<Advertisement>[] ads = convertAdvertisements(advertisements);
                     if (ads != null) {
                         //banner
-                        if (ads[0].size() > 0) {
+                        if (ads.length>0 && ads[0].size() > 0) {
                             LoopData loopData = new LoopData();
                             loopData.items = new ArrayList<>();
                             for (Advertisement ad : ads[0]) {
-                                loopData.items.add(loopData.new ItemData(ad.getId() + "", ad.getImageUrl(), "", "", ""));
+                                loopData.items.add(loopData.new ItemData(ad.getId() + "", ad.getImageUrl(), "2".equals(ad.getType())?ad.getProductCode():ad.getNotifyUrl(), ad.getAdverName(), ad.getType()));
                             }
 //                            LoopData loopData = JsonTool.toBean("", LoopData.class);
                             loopBanner.refreshData(loopData);
@@ -543,28 +549,61 @@ public class IndexFragment extends BaseFragment {
                         } else {
                             loopBanner.setVisibility(View.GONE);
                         }
+                        if (ads.length>1) {
+                            layoutAD2.setVisibility(View.VISIBLE);
+                            layoutAD2Small.setVisibility(View.VISIBLE);
+                            imgAD22.setVisibility(View.VISIBLE);
+                            imgAD23.setVisibility(View.VISIBLE);
+                            switch (ads[1].size()) {
+                                case 3:
+                                    Glide.with(getActivity()).load(ads[1].get(2).getImageUrl()).apply(new RequestOptions()
+                                            .placeholder(R.mipmap.default_img).error(R.mipmap.default_img)).into(imgAD23);
+                                    imgAD23.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            if ("1".equals(ads[1].get(2).getType())){
+                                                ViewJump.toWebView(getActivity(),ads[1].get(2).getNotifyUrl());
+                                            }else if ("2".equals(ads[1].get(2).getType())){
+                                                ViewJump.toGoodsDetail(getActivity(),(int) FormatUtils.convertStringToNum(ads[1].get(2).getProductCode()));
+                                            }
+                                        }
+                                    });
+                                case 2:
+                                    imgAD23.setVisibility(View.GONE);
+                                    Glide.with(getActivity()).load(ads[1].get(1).getImageUrl()).apply(new RequestOptions()
+                                            .placeholder(R.mipmap.default_img).error(R.mipmap.default_img)).into(imgAD22);
+                                    imgAD22.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            if ("1".equals(ads[1].get(1).getType())){
+                                                ViewJump.toWebView(getActivity(),ads[1].get(1).getNotifyUrl());
+                                            }else if ("2".equals(ads[1].get(1).getType())){
+                                                ViewJump.toGoodsDetail(getActivity(),(int) FormatUtils.convertStringToNum(ads[1].get(1).getProductCode()));
+                                            }
+                                        }
+                                    });
+                                case 1:
+                                    layoutAD2Small.setVisibility(View.GONE);
+                                    Glide.with(getActivity()).load(ads[1].get(0).getImageUrl()).apply(new RequestOptions()
+                                            .placeholder(R.mipmap.default_img).error(R.mipmap.default_img)).into(imgAD21);
+                                    imgAD21.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            if ("1".equals(ads[1].get(0).getType())){
+                                                ViewJump.toWebView(getActivity(),ads[1].get(0).getNotifyUrl());
+                                            }else if ("2".equals(ads[1].get(0).getType())){
+                                                ViewJump.toGoodsDetail(getActivity(),(int) FormatUtils.convertStringToNum(ads[1].get(0).getProductCode()));
+                                            }
+                                        }
+                                    });
+                                    break;
+                                case 0:
+                                    //没有广告时
+                                    layoutAD2.setVisibility(View.GONE);
 
-                        layoutAD2.setVisibility(View.VISIBLE);
-                        layoutAD2Small.setVisibility(View.VISIBLE);
-                        imgAD22.setVisibility(View.VISIBLE);
-                        imgAD23.setVisibility(View.VISIBLE);
-                        switch (ads[1].size()) {
-                            case 3:
-                                Glide.with(getActivity()).load(ads[1].get(2).getImageUrl()).apply(new RequestOptions()
-                                        .placeholder(R.mipmap.default_img).error(R.mipmap.default_img)).into(imgAD23);
-                            case 2:
-                                imgAD23.setVisibility(View.GONE);
-                                Glide.with(getActivity()).load(ads[1].get(1).getImageUrl()).apply(new RequestOptions()
-                                        .placeholder(R.mipmap.default_img).error(R.mipmap.default_img)).into(imgAD22);
-                            case 1:
-                                layoutAD2Small.setVisibility(View.GONE);
-                                Glide.with(getActivity()).load(ads[1].get(0).getImageUrl()).apply(new RequestOptions()
-                                        .placeholder(R.mipmap.default_img).error(R.mipmap.default_img)).into(imgAD21);
-                                break;
-                            case 0:
-                                //没有广告时
-                                layoutAD2.setVisibility(View.GONE);
-
+                            }
+                        }else {
+                            layoutAD2.setVisibility(View.GONE);
                         }
 
                     }
@@ -624,7 +663,7 @@ public class IndexFragment extends BaseFragment {
                     if (motions!=null &&  motions.size()>0){
                         mReportList.clear();
                         mReportList.addAll(motions);
-                        //这里偷懒，借用banner的动画翻动简报
+                        //这里偷懒，借用banner的动画翻动简报 看 loopBanner.getViewPager().addOnPageChangeListener
 
                         mCurrentReportPosition = 0;
                         tvNewsContent.setText(mReportList.get(mCurrentReportPosition).getMotionName());
@@ -695,7 +734,12 @@ public class IndexFragment extends BaseFragment {
             case R.id.tvNewsContent:
                 if (mReportList!=null && mReportList.size()>0){
                     Motion motion = mReportList.get(mCurrentReportPosition);
-                    //TODO 简报点击
+                    //简报点击
+                    if ("1".equals(motion.getUrlType())){
+                        ViewJump.toWebView(getActivity(),motion.getNotifyUrl());
+                    }else if ("2".equals(motion.getUrlType())){
+                        ViewJump.toGoodsDetail(getActivity(),(int) FormatUtils.convertStringToNum(motion.getProductCode()));
+                    }
                 }
                 break;
         }

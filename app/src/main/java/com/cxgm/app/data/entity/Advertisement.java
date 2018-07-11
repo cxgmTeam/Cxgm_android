@@ -38,7 +38,7 @@ public class Advertisement extends BaseEntity implements Comparable<Advertisemen
     private String position;
     private String productCode;
     private int shopId;
-    private String type;
+    private String type;//1是网页 2是商品详情
 
     public String getAdverName() {
         return adverName;

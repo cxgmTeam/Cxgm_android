@@ -34,6 +34,9 @@ public class Motion extends BaseEntity {
     private String productIds;
     private int shopId;
     private List<ProductTransfer> productList;
+    private String urlType;//1是跳转网页2是跳转商品详情
+    private String notifyUrl;
+    private String productCode;
 
     public String getCreateTime() {
         return createTime;
@@ -105,5 +108,29 @@ public class Motion extends BaseEntity {
 
     public void setProductList(List<ProductTransfer> productList) {
         this.productList = productList;
+    }
+
+    public String getUrlType() {
+        return urlType;
+    }
+
+    public void setUrlType(String urlType) {
+        this.urlType = urlType;
+    }
+
+    public String getNotifyUrl() {
+        return notifyUrl;
+    }
+
+    public void setNotifyUrl(String notifyUrl) {
+        this.notifyUrl = notifyUrl;
+    }
+
+    public String getProductCode() {
+        return productCode;
+    }
+
+    public void setProductCode(String productCode) {
+        this.productCode = productCode;
     }
 }

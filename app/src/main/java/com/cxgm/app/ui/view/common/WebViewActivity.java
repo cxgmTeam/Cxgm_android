@@ -52,7 +52,7 @@ public class WebViewActivity extends BaseActivity {
     }
 
     private void init(){
-        tvTitle.setText(R.string.inside_entrance);
+        tvTitle.setText(R.string.app_name);
         imgBack.setVisibility(View.VISIBLE);
 
         if (!TextUtils.isEmpty(mUrl)) {
@@ -102,6 +102,13 @@ public class WebViewActivity extends BaseActivity {
     private WebViewClient webViewClient = new WebViewClient(){
         @Override
         public void onPageFinished(WebView view, String url) {//页面加载完成
+
+            String title = view.getTitle();
+            if (!TextUtils.isEmpty(title)){
+                tvTitle.setText(title);
+            }else {
+                tvTitle.setText(R.string.app_name);
+            }
             pbLoading.setVisibility(View.GONE);
         }
 

@@ -15,6 +15,7 @@ import com.cxgm.app.R;
 import com.cxgm.app.data.entity.Motion;
 import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.ui.widget.SpaceItemDecoration;
+import com.deanlib.ootb.utils.FormatUtils;
 
 import org.xutils.common.util.DensityUtil;
 
@@ -65,12 +66,16 @@ public class MotionAdapter extends BaseAdapter {
         Glide.with(convertView).load(mList.get(position).getImageUrl())
                 .apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
                 .into(holder.imgBanner);
-//        holder.imgBanner.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//            }
-//        });
+        holder.imgBanner.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if ("1".equals(mList.get(position).getUrlType())){
+                    ViewJump.toWebView(activity,mList.get(position).getNotifyUrl());
+                }else if ("2".equals(mList.get(position).getUrlType())){
+                    ViewJump.toGoodsDetail(activity,(int) FormatUtils.convertStringToNum(mList.get(position).getProductCode()));
+                }
+            }
+        });
         if (mList.get(position).getProductList() != null) {
 
             GoodsRecyclerViewAdapter adapter = new GoodsRecyclerViewAdapter(activity,mList.get(position).getProductList());
