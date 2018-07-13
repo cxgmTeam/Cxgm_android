@@ -8,6 +8,7 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.WindowManager;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.widget.AdapterView;
 import android.widget.ImageView;
@@ -269,7 +270,7 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
 
                         tvTrademark.setText(mProduct.getBrandName());
                         tvOriginPlace.setText(mProduct.getOriginPlace());
-                        tvProducedDate.setText(mProduct.getCreationDate());
+                        tvProducedDate.setText(R.string.look_pack);
                         //保质期
                         tvShelflife.setText(mProduct.getWarrantyPeriod());
                         tvStorageCondition.setText(mProduct.getStorageCondition());
@@ -313,11 +314,19 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
                             }
                         });
 
-
+                        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+                            wvIntroduction.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+                        }
+                        wvIntroduction.getSettings().setBlockNetworkImage(false);
+                        wvIntroduction.getSettings().setJavaScriptEnabled(true);
+                        wvIntroduction.getSettings().setDomStorageEnabled(true);
+//                        wvIntroduction.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
                         //商品介绍图
 //                        Glide.with(GoodsDetailActivity.this).load(mProduct.getIntroduction()).apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
 //                                .into(imgGoodsDetailPic);
-                        wvIntroduction.loadData(TextUtils.getFitPicContent(mProduct.getIntroduction()), "text/html; charset=UTF-8", null);
+                        String data = TextUtils.getFitPicContent(mProduct.getIntroduction());
+                        data="<html><head><style>img{width:100% !important;}</style></head><body style='margin:0;padding:0'>"+data+"</body></html>";
+                        wvIntroduction.loadData(data, "text/html; charset=UTF-8", null);
 
 
                         //猜你喜欢

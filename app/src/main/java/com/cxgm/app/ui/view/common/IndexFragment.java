@@ -265,7 +265,8 @@ public class IndexFragment extends BaseFragment {
             gvFirstCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    //TODO 分类点击事件
+                    //分类点击事件
+                    ViewJump.toGoodsSecondClassify(getActivity(),mFCList.get((int)id));
                 }
             });
             //精品推荐
@@ -390,14 +391,14 @@ public class IndexFragment extends BaseFragment {
             mMotionList.clear();
             mReportList.clear();
             //首页分类
-            mFCList.add(new ShopCategory(0, getString(R.string.first_category_1), "file:///android_asset/category/c1.png"));
-            mFCList.add(new ShopCategory(0, getString(R.string.first_category_2), "file:///android_asset/category/c2.png"));
-            mFCList.add(new ShopCategory(0, getString(R.string.first_category_3), "file:///android_asset/category/c3.png"));
-            mFCList.add(new ShopCategory(0, getString(R.string.first_category_4), "file:///android_asset/category/c4.png"));
-            mFCList.add(new ShopCategory(0, getString(R.string.first_category_5), "file:///android_asset/category/c5.png"));
-            mFCList.add(new ShopCategory(0, getString(R.string.first_category_6), "file:///android_asset/category/c6.png"));
-            mFCList.add(new ShopCategory(0, getString(R.string.first_category_7), "file:///android_asset/category/c7.png"));
-            mFCList.add(new ShopCategory(0, getString(R.string.first_category_8), "file:///android_asset/category/c8.png"));
+            mFCList.add(new ShopCategory(113, getString(R.string.first_category_1), "file:///android_asset/category/c1.png"));
+            mFCList.add(new ShopCategory(102, getString(R.string.first_category_2), "file:///android_asset/category/c2.png"));
+            mFCList.add(new ShopCategory(112, getString(R.string.first_category_3), "file:///android_asset/category/c3.png"));
+            mFCList.add(new ShopCategory(109, getString(R.string.first_category_4), "file:///android_asset/category/c4.png"));
+            mFCList.add(new ShopCategory(105, getString(R.string.first_category_5), "file:///android_asset/category/c5.png"));
+            mFCList.add(new ShopCategory(88, getString(R.string.first_category_6), "file:///android_asset/category/c6.png"));
+            mFCList.add(new ShopCategory(115, getString(R.string.first_category_7), "file:///android_asset/category/c7.png"));
+            mFCList.add(new ShopCategory(106, getString(R.string.first_category_8), "file:///android_asset/category/c8.png"));
 
             mFCAdapter.notifyDataSetChanged();
 

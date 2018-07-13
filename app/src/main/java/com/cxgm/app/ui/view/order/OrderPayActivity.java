@@ -3,18 +3,24 @@ package com.cxgm.app.ui.view.order;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.Message;
 import android.support.design.widget.Snackbar;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.alipay.sdk.app.PayTask;
 import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.entity.PayInfo;
 import com.cxgm.app.data.event.PayEvent;
+import com.cxgm.app.data.io.order.AliPayReq;
 import com.cxgm.app.data.io.order.SurplusTimeReq;
 import com.cxgm.app.data.io.order.UpdateStatusReq;
 import com.cxgm.app.data.io.order.WeixinPayReq;
@@ -34,6 +40,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.xutils.common.Callback;
+
+import java.util.Map;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -229,6 +238,44 @@ public class OrderPayActivity extends BaseActivity {
                         }, false);
                     } else {
                         //todo 支付宝
+                        new AliPayReq(this,mOrderId).execute(new Request.RequestCallback<String>() {
+                            @Override
+                            public void onSuccess(String orderInfo) {
+                                if (!TextUtils.isEmpty(orderInfo)){
+                                    Runnable payRunnable = new Runnable() {
+
+                                        @Override
+                                        public void run() {
+                                            PayTask alipay = new PayTask(OrderPayActivity.this);
+                                            Map<String, String> result = alipay.payV2(orderInfo,true);
+
+                                            Message msg = new Message();
+                                            msg.what = SDK_PAY_FLAG;
+                                            msg.obj = result;
+                                            mHandler.sendMessage(msg);
+                                        }
+                                    };
+                                    // 必须异步调用
+                                    Thread payThread = new Thread(payRunnable);
+                                    payThread.start();
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable ex, boolean isOnCallback) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(Callback.CancelledException cex) {
+
+                            }
+
+                            @Override
+                            public void onFinished() {
+
+                            }
+                        });
                     }
                 } else {
                     ToastManager.sendToast(getString(R.string.order_pay_outtime));
@@ -245,6 +292,22 @@ public class OrderPayActivity extends BaseActivity {
                 break;
         }
     }
+    private static final int SDK_PAY_FLAG = 1111;
+    static Handler mHandler = new Handler(){
+        public void handleMessage(Message msg) {
+            switch (msg.what){
+                case SDK_PAY_FLAG:
+                    Map<String, String> result = (Map<String, String>) msg.obj;
+//                    ToastManager.sendToast(result.);
+                    Set<Map.Entry<String, String>> entries = result.entrySet();
+                    for (Map.Entry<String, String> entry:entries){
+                        System.out.println("MMMMMMM:"+entry.getKey()+"    "+entry.getValue());
+                    }
+                    break;
+            }
+
+        };
+    };
 
     @Override
     protected void onPause() {

@@ -6,7 +6,7 @@ android {
         applicationId "com.cxgm.app"
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 23
+        versionCode 25
         versionName "1.0"
         multiDexEnabled = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
@@ -72,4 +72,5 @@ dependencies {
     //PushSDK
     compile 'com.umeng.sdk:push:4.2.0'
     implementation files('libs/tbs_sdk_thirdapp_v3.6.0.1249_43610_sharewithdownload_withoutGame_obfs_20180608_114954.jar')
+    implementation files('libs/alipaySdk-20180601.jar')
 }
