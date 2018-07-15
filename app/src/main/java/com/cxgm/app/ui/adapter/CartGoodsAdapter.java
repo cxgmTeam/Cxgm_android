@@ -74,7 +74,7 @@ public class CartGoodsAdapter extends BaseAdapter {
                 .getString(R.string.specification_,mList.get(i).getSpecifications()));
         holder.tvPrice.setText(StringHelper.getRMBFormat(mList.get(i).getPrice()));
         //原价
-        if (mList.get(i).getOriginalPrice()!= mList.get(i).getPrice()) {
+        if (mList.get(i).getOriginalPrice()> mList.get(i).getPrice()) {
             holder.tvOriginal.setText(StringHelper.getStrikeFormat(StringHelper.getRMBFormat(mList.get(i).getOriginalPrice())));
             holder.tvOriginal.setVisibility(View.VISIBLE);
         }else {

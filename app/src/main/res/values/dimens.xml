@@ -46,4 +46,5 @@
     <dimen name="goods_order_item_height">110dp</dimen>
     <dimen name="tab_item_height">40dp</dimen>
     <dimen name="goods_cover_height">315dp</dimen>
+    <dimen name="action_num_height">30dp</dimen>
 </resources>

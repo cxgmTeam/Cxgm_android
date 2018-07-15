@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
@@ -59,6 +60,8 @@ public class SearchResultActivity extends BaseActivity {
     ImageView imgShopCar;
     @BindView(R.id.srl)
     SmartRefreshLayout srl;
+    @BindView(R.id.layoutSearchEmpty)
+    LinearLayout layoutSearchEmpty;
 
     String mKeyword;
     List<ProductTransfer> mProductList;
@@ -144,10 +147,11 @@ public class SearchResultActivity extends BaseActivity {
                     public void onFinished() {
                         if (mProductList.size() > 0) {
                             srl.setVisibility(View.VISIBLE);
+                            layoutSearchEmpty.setVisibility(View.GONE);
                         } else {
                             //没有搜索到结果
-                            ToastManager.sendToast(getString(R.string.search_no_result));
                             srl.setVisibility(View.GONE);
+                            layoutSearchEmpty.setVisibility(View.VISIBLE);
                         }
                     }
                 });

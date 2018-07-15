@@ -68,7 +68,7 @@ public class OrderGoodsListAdatpter extends BaseAdapter {
         holder.tvSpecification.setText(mList.get(i).getSpecifications());
         holder.tvPrice.setText(StringHelper.getRMBFormat(mList.get(i).getPrice()));
 
-        if (mList.get(i).getPrice()!= mList.get(i).getOriginalPrice()) {
+        if (mList.get(i).getPrice()< mList.get(i).getOriginalPrice()) {
             holder.tvOriginal.setText(StringHelper.getStrikeFormat(StringHelper.getRMBFormat(mList.get(i).getOriginalPrice())));
             holder.tvOriginal.setVisibility(View.VISIBLE);
         }else holder.tvOriginal.setVisibility(View.GONE);

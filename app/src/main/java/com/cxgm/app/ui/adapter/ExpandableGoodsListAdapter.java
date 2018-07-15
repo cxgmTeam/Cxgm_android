@@ -52,10 +52,10 @@ public class ExpandableGoodsListAdapter extends BaseExpandableListAdapter {
         mActivity = activity;
         this.mListener = listener;
         mKeyList = new ArrayList<>();
-        Set<Map.Entry<String, List<ProductTransfer>>> entries = mProductMap.entrySet();
-        for (Map.Entry<String,List<ProductTransfer>> entry : entries){
-            mKeyList.add(entry.getKey());
-        }
+//        Set<Map.Entry<String, List<ProductTransfer>>> entries = mProductMap.entrySet();
+//        for (Map.Entry<String,List<ProductTransfer>> entry : entries){
+//            mKeyList.add(entry.getKey());
+//        }
     }
 
     public List<String> getKeyList(){

@@ -167,7 +167,10 @@ public class IndexFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        if (mShopList!=null) {
+            mShopList.clear();
+            mShopListPageNum = 1;
+        }
     }
 
     @Override
@@ -226,6 +229,7 @@ public class IndexFragment extends BaseFragment {
 
             mShopList = new ArrayList<>();
             mShopAdapter = new ShopAdapter(mShopList);
+            mShopListPageNum = 1;
             lvShop.setAdapter(mShopAdapter);
             lvShop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

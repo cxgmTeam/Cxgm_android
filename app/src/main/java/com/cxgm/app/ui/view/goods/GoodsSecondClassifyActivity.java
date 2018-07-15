@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
@@ -23,6 +24,7 @@ import com.cxgm.app.data.io.order.ShopCartListReq;
 import com.cxgm.app.ui.adapter.ExpandableGoodsListAdapter;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
+import com.cxgm.app.utils.ToastManager;
 import com.cxgm.app.utils.UserManager;
 import com.cxgm.app.utils.ViewHelper;
 import com.deanlib.ootb.data.io.Request;
@@ -68,6 +70,8 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
     TabLayout tabSubClassify;
     @BindView(R.id.lvGoods)
     ExpandableListView lvGoods;
+    @BindView(R.id.layoutEmpty)
+    LinearLayout layoutEmpty;
 
     ShopCategory mFirstCategory;
 //    List<ShopCategory> mSCList;
@@ -125,81 +129,85 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
     }
 
     private void loadData() {
-
-        //二级分类
-        new FindSecondCategoryReq(this, Constants.currentShop.getId(), mFirstCategory.getId())
-                .execute(new Request.RequestCallback<List<ShopCategory>>() {
-                    @Override
-                    public void onSuccess(final List<ShopCategory> shopCategories) {
-                        if (shopCategories != null && shopCategories.size()>0) {
-                            tabClassify.setTabAdapter(new TabAdapter() {
-                                @Override
-                                public int getCount() {
-                                    return shopCategories.size();
-                                }
-
-                                @Override
-                                public ITabView.TabBadge getBadge(int position) {
-                                    return null;
-                                }
-
-                                @Override
-                                public ITabView.TabIcon getIcon(int position) {
-                                    return null;
-                                }
-
-                                @Override
-                                public ITabView.TabTitle getTitle(int position) {
-                                    return new ITabView.TabTitle.Builder()
-                                            .setContent(shopCategories.get(position).getName())
-                                            .setTextColor(getResources().getColor(R.color.textBlack)
-                                                    ,getResources().getColor(R.color.textBlackTint)).build();
-                                }
-
-                                @Override
-                                public int getBackground(int position) {
-                                    return 0;
-                                }
-                            });
-                            tabClassify.addOnTabSelectedListener(new VerticalTabLayout.OnTabSelectedListener() {
-                                @Override
-                                public void onTabSelected(TabView tab, int position) {
-                                    for (int i = 0;i<tabClassify.getTabCount();i++){
-                                        if (i != position)
-                                            tabClassify.getTabAt(i).setBackgroundColor(0);
+        if (Constants.currentShop==null){
+            ToastManager.sendToast(getString(R.string.choice_shop));
+            finish();
+        }else {
+            //二级分类
+            new FindSecondCategoryReq(this, Constants.currentShop.getId(), mFirstCategory.getId())
+                    .execute(new Request.RequestCallback<List<ShopCategory>>() {
+                        @Override
+                        public void onSuccess(final List<ShopCategory> shopCategories) {
+                            if (shopCategories != null && shopCategories.size() > 0) {
+                                tabClassify.setTabAdapter(new TabAdapter() {
+                                    @Override
+                                    public int getCount() {
+                                        return shopCategories.size();
                                     }
-                                    tab.getTabView().setBackgroundColor(getResources().getColor(R.color.colorWhite));
-                                    loadSubTabs(shopCategories.get(position).getId());
-                                }
 
-                                @Override
-                                public void onTabReselected(TabView tab, int position) {
+                                    @Override
+                                    public ITabView.TabBadge getBadge(int position) {
+                                        return null;
+                                    }
 
-                                }
-                            });
+                                    @Override
+                                    public ITabView.TabIcon getIcon(int position) {
+                                        return null;
+                                    }
 
-                            tabClassify.setTabSelected(0,true);
-                            //上边的 callListener 不管用，所以有了下面这两行代码
-                            tabClassify.getTabAt(0).setBackgroundColor(getResources().getColor(R.color.colorWhite));
-                            loadSubTabs(shopCategories.get(0).getId());
+                                    @Override
+                                    public ITabView.TabTitle getTitle(int position) {
+                                        return new ITabView.TabTitle.Builder()
+                                                .setContent(shopCategories.get(position).getName())
+                                                .setTextColor(getResources().getColor(R.color.textBlack)
+                                                        , getResources().getColor(R.color.textBlackTint)).build();
+                                    }
+
+                                    @Override
+                                    public int getBackground(int position) {
+                                        return 0;
+                                    }
+                                });
+                                tabClassify.addOnTabSelectedListener(new VerticalTabLayout.OnTabSelectedListener() {
+                                    @Override
+                                    public void onTabSelected(TabView tab, int position) {
+                                        for (int i = 0; i < tabClassify.getTabCount(); i++) {
+                                            if (i != position)
+                                                tabClassify.getTabAt(i).setBackgroundColor(0);
+                                        }
+                                        tab.getTabView().setBackgroundColor(getResources().getColor(R.color.colorWhite));
+                                        loadSubTabs(shopCategories.get(position).getId());
+                                    }
+
+                                    @Override
+                                    public void onTabReselected(TabView tab, int position) {
+
+                                    }
+                                });
+
+                                tabClassify.setTabSelected(0, true);
+                                //上边的 callListener 不管用，所以有了下面这两行代码
+                                tabClassify.getTabAt(0).setBackgroundColor(getResources().getColor(R.color.colorWhite));
+                                loadSubTabs(shopCategories.get(0).getId());
+                            }
                         }
-                    }
 
-                    @Override
-                    public void onError(Throwable ex, boolean isOnCallback) {
+                        @Override
+                        public void onError(Throwable ex, boolean isOnCallback) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onCancelled(Callback.CancelledException cex) {
+                        @Override
+                        public void onCancelled(Callback.CancelledException cex) {
 
-                    }
+                        }
 
-                    @Override
-                    public void onFinished() {
+                        @Override
+                        public void onFinished() {
 
-                    }
-                });
+                        }
+                    });
+        }
 
     }
 
@@ -210,6 +218,7 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
      */
     private void loadSubTabs(final int tabId) {
         mTCList.clear();
+        tabSubClassify.removeAllTabs();
         new FindThirdCategoryReq(this, Constants.currentShop.getId(), tabId)
                 .execute(new Request.RequestCallback<List<ShopCategory>>() {
                     @Override
@@ -269,11 +278,12 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
      * @param tabId 二级分类ID
      */
     private void loadGoodsList(int tabId) {
-        mProductMap.clear();
+        //mProductMap.clear();
         new FindProductByCategoryReq(this, Constants.currentShop.getId(),tabId)
                 .execute(new Request.RequestCallback<List<ProductTransfer>>() {
                     @Override
                     public void onSuccess(List<ProductTransfer> productTransferPageInfo) {
+                        mProductMap.clear();
                         if (productTransferPageInfo != null ) {
                             for (ShopCategory category : mTCList) {
                                 //调整顺序到与 mTCList 一致
@@ -320,22 +330,27 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
                                     return true;
                                 }
                             });
+                            layoutEmpty.setVisibility(View.GONE);
+                            lvGoods.setVisibility(View.VISIBLE);
+                        }else {
+                            layoutEmpty.setVisibility(View.VISIBLE);
+                            lvGoods.setVisibility(View.GONE);
                         }
                     }
 
                     @Override
                     public void onError(Throwable ex, boolean isOnCallback) {
-
+                        System.out.println(111);
                     }
 
                     @Override
                     public void onCancelled(Callback.CancelledException cex) {
-
+                        System.out.println(111);
                     }
 
                     @Override
                     public void onFinished() {
-
+                        System.out.println(111);
                     }
                 });
     }

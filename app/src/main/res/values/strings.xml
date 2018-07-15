@@ -263,7 +263,7 @@
     <string name="adress_invalid">该地址不在配送范围</string>
     <string name="according_location_recommend_shop">根据定位为你推荐以下店铺</string>
     <string name="show_shop_list">定位不在该商铺配送范围内，将切换到商铺列表</string>
-    <string name="search_no_result">没有搜索到相关结果</string>
+    <string name="search_no_result">没有查找到您想要的商品~</string>
     <string name="refund_amount">退款总金额</string>
     <string name="version_v_">版本：V %s</string>
 
@@ -272,5 +272,9 @@
     <string name="business_information">菜鲜果美商家信息</string>
     <string name="inside_entrance">菜鲜果美内部专用入口</string>
     <string name="look_pack">详情见包装</string>
+
+    <string name="message_list_empty">您还没有任何消息哦~</string>
+    <string name="order_list_empty">您还没有订单信息~</string>
+    <string name="empty">这里空空如也哦~</string>
 
 </resources>

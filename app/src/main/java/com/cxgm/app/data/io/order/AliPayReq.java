@@ -18,7 +18,7 @@ import org.xutils.http.RequestParams;
 public class AliPayReq extends Request {
     int orderId;
     public AliPayReq(Context context,int orderId) {
-        super(context,false);
+        super(context);
         this.orderId = orderId;
     }
 

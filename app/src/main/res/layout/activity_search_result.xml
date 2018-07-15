@@ -39,6 +39,29 @@
                 android:verticalSpacing="@dimen/margin_giant" />
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
+        <LinearLayout
+            android:visibility="gone"
+            android:id="@+id/layoutSearchEmpty"
+            android:layout_marginTop="82dp"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:src="@mipmap/search_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:textSize="@dimen/text_size_giant_t"
+                android:textColor="@color/textGray"
+                android:text="@string/search_no_result"
+                android:layout_marginTop="24dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+
         <ImageView
             android:id="@+id/imgShopCar"
             android:layout_width="wrap_content"
@@ -47,6 +70,7 @@
             android:layout_margin="@dimen/margin_giant"
             android:elevation="@dimen/elevation"
             android:src="@mipmap/shop_cart2" />
+
     </FrameLayout>
 
 

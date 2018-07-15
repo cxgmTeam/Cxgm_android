@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 
 import com.cxgm.app.R;
@@ -44,6 +45,8 @@ public class UserOrderFragment extends BaseFragment {
     ListView listView;
     @BindView(R.id.srl)
     SmartRefreshLayout srl;
+    @BindView(R.id.layoutOrderEmpty)
+    LinearLayout layoutOrderEmpty;
     Unbinder unbinder;
 
     int mPageNum = 1;
@@ -122,6 +125,13 @@ public class UserOrderFragment extends BaseFragment {
             public void onFinished() {
                 srl.finishRefresh();
                 srl.finishLoadMore();
+                if (mOrderList.size()>0){
+                    srl.setVisibility(View.VISIBLE);
+                    layoutOrderEmpty.setVisibility(View.GONE);
+                }else {
+                    srl.setVisibility(View.GONE);
+                    layoutOrderEmpty.setVisibility(View.VISIBLE);
+                }
             }
         });
     }

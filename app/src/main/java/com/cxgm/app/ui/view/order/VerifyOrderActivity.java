@@ -38,12 +38,14 @@ import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.utils.DeviceUtils;
 import com.deanlib.ootb.utils.FormatUtils;
 import com.deanlib.ootb.utils.TextUtils;
+import com.jakewharton.rxbinding.view.RxView;
 
 import org.xutils.common.Callback;
 import org.xutils.common.util.DensityUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -232,6 +234,46 @@ public class VerifyOrderActivity extends BaseActivity {
         mOrder.setTotalAmount(goodsOriginalTotal);
         setCouponAndAmount(null);
 
+        //防抖
+        RxView.clicks(tvCommitOrder).throttleFirst(2, TimeUnit.SECONDS)
+                .subscribe(o->{
+                    //地址验证
+                    if (android.text.TextUtils.isEmpty(mOrder.getAddressId())){
+                        ToastManager.sendToast(getString(R.string.empty_consignee));
+                        return;
+                    }
+
+                    mOrder.setRemarks(etRemark.getText().toString().trim());
+
+                    //提交订单
+                    new AddOrderReq(this,mOrder).execute(new Request.RequestCallback<Integer>() {
+                        @Override
+                        public void onSuccess(Integer integer) {
+                            if (integer>0){
+                                Request.dismissDialog();
+                                ViewHelper.updateShopCart(getApplicationContext());
+                                ViewJump.toOrderPay(VerifyOrderActivity.this,integer,mOrder.getOrderAmount());
+                                finish();
+                            }
+                        }
+
+                        @Override
+                        public void onError(Throwable ex, boolean isOnCallback) {
+
+                        }
+
+                        @Override
+                        public void onCancelled(Callback.CancelledException cex) {
+
+                        }
+
+                        @Override
+                        public void onFinished() {
+
+                        }
+                    });
+        });
+
     }
 
     private void loadData(){
@@ -305,7 +347,7 @@ public class VerifyOrderActivity extends BaseActivity {
     }
 
 
-    @OnClick({R.id.layoutGooods,R.id.imgBack, R.id.layoutAddr, R.id.layoutReceiveTime, R.id.layoutCoupon, R.id.layoutInvoice, R.id.tvCommitOrder})
+    @OnClick({R.id.layoutGooods,R.id.imgBack, R.id.layoutAddr, R.id.layoutReceiveTime, R.id.layoutCoupon, R.id.layoutInvoice})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgBack:
@@ -335,42 +377,6 @@ public class VerifyOrderActivity extends BaseActivity {
                     ToastManager.sendToast(getString(R.string.increase_receiving_information));
                 }
 
-                break;
-            case R.id.tvCommitOrder:
-                //地址验证
-                if (android.text.TextUtils.isEmpty(mOrder.getAddressId())){
-                    ToastManager.sendToast(getString(R.string.empty_consignee));
-                    return;
-                }
-
-                mOrder.setRemarks(etRemark.getText().toString().trim());
-
-                //提交订单
-                new AddOrderReq(this,mOrder).execute(false,new Request.RequestCallback<Integer>() {
-                    @Override
-                    public void onSuccess(Integer integer) {
-                        if (integer>0){
-                            ViewHelper.updateShopCart(getApplicationContext());
-                            ViewJump.toOrderPay(VerifyOrderActivity.this,integer,mOrder.getOrderAmount());
-                            finish();
-                        }
-                    }
-
-                    @Override
-                    public void onError(Throwable ex, boolean isOnCallback) {
-
-                    }
-
-                    @Override
-                    public void onCancelled(Callback.CancelledException cex) {
-
-                    }
-
-                    @Override
-                    public void onFinished() {
-
-                    }
-                });
                 break;
             case R.id.layoutGooods:
                 //商品清单

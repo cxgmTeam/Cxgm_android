@@ -5,7 +5,7 @@
     android:background="@drawable/shape_tc_gray_tran"
     android:orientation="horizontal"
     android:layout_width="wrap_content"
-    android:layout_height="20dp"
+    android:layout_height="@dimen/action_num_height"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <TextView
         android:id="@+id/tvMinus"
@@ -13,8 +13,8 @@
         android:gravity="center"
         android:textSize="@dimen/text_size_normal_x"
         android:text="-"
-        android:layout_width="20dp"
-        android:layout_height="20dp" />
+        android:layout_width="@dimen/action_num_height"
+        android:layout_height="@dimen/action_num_height" />
     <TextView
         android:id="@+id/tvNum"
         android:textColor="@color/textBlack"
@@ -22,13 +22,13 @@
         android:gravity="center"
         android:textSize="@dimen/text_size_normal_x"
         android:layout_width="32dp"
-        android:layout_height="20dp" />
+        android:layout_height="@dimen/action_num_height" />
     <TextView
         android:id="@+id/tvPlus"
         android:textColor="@color/textBlack"
         android:gravity="center"
         android:textSize="@dimen/text_size_normal_x"
         android:text="+"
-        android:layout_width="20dp"
-        android:layout_height="20dp" />
+        android:layout_width="@dimen/action_num_height"
+        android:layout_height="@dimen/action_num_height" />
 </LinearLayout>

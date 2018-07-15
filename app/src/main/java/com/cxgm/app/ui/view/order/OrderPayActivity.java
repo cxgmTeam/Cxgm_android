@@ -275,7 +275,7 @@ public class OrderPayActivity extends BaseActivity {
                             public void onFinished() {
 
                             }
-                        });
+                        },false);
                     }
                 } else {
                     ToastManager.sendToast(getString(R.string.order_pay_outtime));

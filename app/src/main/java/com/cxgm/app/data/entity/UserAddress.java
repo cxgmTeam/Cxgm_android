@@ -34,6 +34,15 @@ public class UserAddress extends BaseEntity implements Cloneable ,Comparable<Use
     private Integer isDef;//是否为默认值 1默认
     private String remarks;
     public boolean isEnable;//地址相对于当前商铺是可用的，在配送范围内的
+    public int yn; //有效地址 1 有效
+
+    public int getYn() {
+        return yn;
+    }
+
+    public void setYn(int yn) {
+        this.yn = yn;
+    }
 
     public String getRemarks() {
         return remarks;
@@ -52,7 +61,7 @@ public class UserAddress extends BaseEntity implements Cloneable ,Comparable<Use
     }
 
     public Integer getIsDef() {
-        return isDef;
+        return isDef == null?0:isDef;
     }
 
     public void setIsDef(Integer isDef) {

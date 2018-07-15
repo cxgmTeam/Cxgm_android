@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -47,6 +48,8 @@ public class MessageListActivity extends BaseActivity {
     ListView lvMessage;
     @BindView(R.id.srl)
     SmartRefreshLayout srl;
+    @BindView(R.id.layoutMessageEmpty)
+    LinearLayout layoutMessageEmpty;
 
     int mPageNum = 1;
     List<Message> mMessageList;
@@ -110,6 +113,14 @@ public class MessageListActivity extends BaseActivity {
 
         srl.finishRefresh();
         srl.finishLoadMore();
+
+        if (mMessageList.size()>0){
+            srl.setVisibility(View.VISIBLE);
+            layoutMessageEmpty.setVisibility(View.GONE);
+        }else {
+            srl.setVisibility(View.GONE);
+            layoutMessageEmpty.setVisibility(View.VISIBLE);
+        }
     }
 
     @OnClick(R.id.imgBack)

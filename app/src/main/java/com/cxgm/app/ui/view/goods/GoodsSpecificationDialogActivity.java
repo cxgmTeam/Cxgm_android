@@ -74,11 +74,12 @@ public class GoodsSpecificationDialogActivity extends BaseActivity {
 
     private void init() {
         mNum = mProduct.getShopCartNum();
+        if (mNum==0) mNum = 1;
         Glide.with(this).load(mProduct.getImage()).apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
                 .into(imgCover);
         tvPrice.setText(StringHelper.getRMBFormat(mProduct.getPrice()));
         tvUnit.setText("/"+mProduct.getUnit());
-        if (mProduct.getPrice()!= mProduct.getOriginalPrice()) {
+        if (mProduct.getPrice()< mProduct.getOriginalPrice()) {
             tvOriginPlace.setText(StringHelper.getStrikeFormat(StringHelper.getRMBFormat(mProduct.getOriginalPrice())));
             tvOriginPlace.setVisibility(View.VISIBLE);
         }else tvOriginPlace.setVisibility(View.GONE);
