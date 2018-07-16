@@ -197,12 +197,14 @@
                         android:textSize="@dimen/text_size_large" />
 
                     <View
+                        android:id="@+id/gapTrademark"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/line"
                         android:layout_marginLeft="1dp"
                         android:background="@color/colorLine" />
 
                     <LinearLayout
+                        android:id="@+id/layoutTrademark"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/item_height"
                         android:gravity="center_vertical">
@@ -222,16 +224,17 @@
                             android:textColor="@color/textBlack"
                             android:textSize="@dimen/text_size_large" />
 
-
                     </LinearLayout>
 
                     <View
+                        android:id="@+id/gapOriginPlace"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/line"
                         android:layout_marginLeft="1dp"
                         android:background="@color/colorLine" />
 
                     <LinearLayout
+                        android:id="@+id/layoutOriginPlace"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/item_height"
                         android:gravity="center_vertical">
@@ -251,10 +254,10 @@
                             android:textColor="@color/textBlack"
                             android:textSize="@dimen/text_size_large" />
 
-
                     </LinearLayout>
 
                     <View
+                        android:id="@+id/gapProducedDate"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/line"
                         android:layout_marginLeft="1dp"
@@ -262,6 +265,7 @@
 
 
                     <LinearLayout
+                        android:id="@+id/layoutProducedDate"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/item_height"
                         android:gravity="center_vertical">
@@ -285,6 +289,7 @@
                     </LinearLayout>
 
                     <View
+                        android:id="@+id/gapShelflife"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/line"
                         android:layout_marginLeft="1dp"
@@ -292,6 +297,7 @@
 
 
                     <LinearLayout
+                        android:id="@+id/layoutShelflife"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/item_height"
                         android:gravity="center_vertical">
@@ -315,12 +321,14 @@
                     </LinearLayout>
 
                     <View
+                        android:id="@+id/gapStorageCondition"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/line"
                         android:layout_marginLeft="1dp"
                         android:background="@color/colorLine" />
 
                     <LinearLayout
+                        android:id="@+id/layoutStorageCondition"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/item_height"
                         android:gravity="center_vertical">

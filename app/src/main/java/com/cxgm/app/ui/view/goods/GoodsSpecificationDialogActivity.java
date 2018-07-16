@@ -73,8 +73,6 @@ public class GoodsSpecificationDialogActivity extends BaseActivity {
     }
 
     private void init() {
-        mNum = mProduct.getShopCartNum();
-        if (mNum==0) mNum = 1;
         Glide.with(this).load(mProduct.getImage()).apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
                 .into(imgCover);
         tvPrice.setText(StringHelper.getRMBFormat(mProduct.getPrice()));
@@ -117,7 +115,7 @@ public class GoodsSpecificationDialogActivity extends BaseActivity {
                 }
                 break;
             case R.id.tvOK:
-                ViewHelper.addOrUpdateShopCart(this, mProduct, mNum - mProduct.getShopCartNum(), new ViewHelper.OnActionListener() {
+                ViewHelper.addOrUpdateShopCart(this, mProduct, mNum, new ViewHelper.OnActionListener() {
                     @Override
                     public void onSuccess() {
                         Intent data = new Intent();

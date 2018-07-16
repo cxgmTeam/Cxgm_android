@@ -1,11 +1,15 @@
 package com.cxgm.app.ui.view.goods;
 
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -17,6 +21,8 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.entity.ProductImage;
@@ -28,13 +34,10 @@ import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.ui.widget.CustomScrollView;
 import com.cxgm.app.utils.StringHelper;
-import com.cxgm.app.utils.UserManager;
 import com.cxgm.app.utils.ViewHelper;
 import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.utils.DeviceUtils;
-import com.deanlib.ootb.utils.TextUtils;
 import com.deanlib.ootb.widget.GridViewForScrollView;
-import com.deanlib.ootb.widget.ListViewForScrollView;
 import com.kevin.loopview.AdLoopView;
 import com.kevin.loopview.internal.BaseLoopAdapter;
 import com.kevin.loopview.internal.LoopData;
@@ -88,7 +91,7 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
     TextView tvOriginal;
     @BindView(R.id.imgDiscounts)
     ImageView imgDiscounts;
-//    @BindView(R.id.tvSpecification)
+    //    @BindView(R.id.tvSpecification)
 //    TextView tvSpecification;
     @BindView(R.id.layoutSpecification)
     LinearLayout layoutSpecification;
@@ -102,12 +105,10 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
     TextView tvShelflife;
     @BindView(R.id.tvStorageCondition)
     TextView tvStorageCondition;
-//    @BindView(R.id.wvIntroduction)
+    //    @BindView(R.id.wvIntroduction)
 //    WebView wvIntroduction;
 //    @BindView(R.id.lvIntroduction)
 //    ListViewForScrollView lvIntroduction;
-    @BindView(R.id.layoutIntroduction)
-    LinearLayout layoutIntroduction;
     @BindView(R.id.gvGoods)
     GridViewForScrollView gvGoods;
     @BindView(R.id.scrollView)
@@ -131,6 +132,28 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
     int mBannerPosition = 1;
     int mShopCartNum = 0; //种类数
     int mShopId;
+    @BindView(R.id.gapTrademark)
+    View gapTrademark;
+    @BindView(R.id.layoutTrademark)
+    LinearLayout layoutTrademark;
+    @BindView(R.id.gapOriginPlace)
+    View gapOriginPlace;
+    @BindView(R.id.layoutOriginPlace)
+    LinearLayout layoutOriginPlace;
+    @BindView(R.id.gapProducedDate)
+    View gapProducedDate;
+    @BindView(R.id.layoutProducedDate)
+    LinearLayout layoutProducedDate;
+    @BindView(R.id.gapShelflife)
+    View gapShelflife;
+    @BindView(R.id.layoutShelflife)
+    LinearLayout layoutShelflife;
+    @BindView(R.id.gapStorageCondition)
+    View gapStorageCondition;
+    @BindView(R.id.layoutStorageCondition)
+    LinearLayout layoutStorageCondition;
+    @BindView(R.id.layoutIntroduction)
+    LinearLayout layoutIntroduction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,9 +164,9 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
         setContentView(R.layout.activity_goods_detail);
         ButterKnife.bind(this);
         mProductId = getIntent().getIntExtra("productId", 0);
-        if (Constants.currentShop == null){
-            mShopId = getIntent().getIntExtra("shopId",0);
-        }else {
+        if (Constants.currentShop == null) {
+            mShopId = getIntent().getIntExtra("shopId", 0);
+        } else {
             mShopId = Constants.currentShop.getId();
         }
         ViewHelper.addOnShopCartUpdateListener(this);
@@ -154,7 +177,7 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
     @Override
     protected void onResume() {
         super.onResume();
-        DeviceUtils.backgroundAlpha(this,1);
+        DeviceUtils.backgroundAlpha(this, 1);
     }
 
     private void init() {
@@ -276,12 +299,41 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
                             }
                         });
 
-                        tvTrademark.setText(mProduct.getBrandName());
-                        tvOriginPlace.setText(mProduct.getOriginPlace());
+                        if (!TextUtils.isEmpty(mProduct.getBrandName())) {
+                            tvTrademark.setText(mProduct.getBrandName());
+                            layoutTrademark.setVisibility(View.VISIBLE);
+                            gapTrademark.setVisibility(View.VISIBLE);
+                        }else {
+                            layoutTrademark.setVisibility(View.GONE);
+                            gapTrademark.setVisibility(View.GONE);
+                        }
+                        if (!TextUtils.isEmpty(mProduct.getOriginPlace())) {
+                            tvOriginPlace.setText(mProduct.getOriginPlace());
+                            layoutOriginPlace.setVisibility(View.VISIBLE);
+                            gapOriginPlace.setVisibility(View.VISIBLE);
+                        }else {
+                            layoutOriginPlace.setVisibility(View.GONE);
+                            gapOriginPlace.setVisibility(View.GONE);
+                        }
+                        if (!TextUtils.isEmpty(mProduct.getWarrantyPeriod())) {
+                            //保质期
+                            tvShelflife.setText(mProduct.getWarrantyPeriod());
+                            layoutShelflife.setVisibility(View.VISIBLE);
+                            gapShelflife.setVisibility(View.VISIBLE);
+                        }else {
+                            layoutShelflife.setVisibility(View.GONE);
+                            gapShelflife.setVisibility(View.GONE);
+                        }
+                        if (!TextUtils.isEmpty(mProduct.getStorageCondition())) {
+                            tvStorageCondition.setText(mProduct.getStorageCondition());
+                            layoutStorageCondition.setVisibility(View.VISIBLE);
+                            gapStorageCondition.setVisibility(View.VISIBLE);
+                        }else {
+                            layoutStorageCondition.setVisibility(View.GONE);
+                            gapStorageCondition.setVisibility(View.GONE);
+                        }
+
                         tvProducedDate.setText(R.string.look_pack);
-                        //保质期
-                        tvShelflife.setText(mProduct.getWarrantyPeriod());
-                        tvStorageCondition.setText(mProduct.getStorageCondition());
 
                         //商品轮播图
                         LoopData loopData = new LoopData();
@@ -323,67 +375,77 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
                         });
 
                         /**
-                        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
-                            wvIntroduction.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
-                        }
+                         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+                         wvIntroduction.getSettings().setMixedContentMode(WebSettings.MIXED_CONTENT_ALWAYS_ALLOW);
+                         }
 
-//                         *LayoutAlgorithm是一个枚举，用来控制html的布局，总共有三种类型：
-//                         *NORMAL：正常显示，没有渲染变化。
-//                         *SINGLE_COLUMN：把所有内容放到WebView组件等宽的一列中。这个是强制的，把网页都挤变形了
-//                         *NARROW_COLUMNS：可能的话，使所有列的宽度不超过屏幕宽度。
-                        wvIntroduction.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
+                         //                         *LayoutAlgorithm是一个枚举，用来控制html的布局，总共有三种类型：
+                         //                         *NORMAL：正常显示，没有渲染变化。
+                         //                         *SINGLE_COLUMN：把所有内容放到WebView组件等宽的一列中。这个是强制的，把网页都挤变形了
+                         //                         *NARROW_COLUMNS：可能的话，使所有列的宽度不超过屏幕宽度。
+                         wvIntroduction.getSettings().setLayoutAlgorithm(WebSettings.LayoutAlgorithm.NORMAL);
 
-                        //设置webview推荐使用的窗口，设置为true
-                        wvIntroduction.getSettings().setUseWideViewPort(true);
+                         //设置webview推荐使用的窗口，设置为true
+                         wvIntroduction.getSettings().setUseWideViewPort(true);
 
-                        //设置webview加载的页面的模式，也设置为true。这方法可以让你的页面适应手机屏幕的分辨率，完整的显示在屏幕上，可以放大缩小。
-                        wvIntroduction.getSettings().setLoadWithOverviewMode(true);
-                        wvIntroduction.getSettings().setDomStorageEnabled(true);
-                        wvIntroduction.getSettings().setBlockNetworkImage(false);
-                        wvIntroduction.getSettings().setJavaScriptEnabled(true);
-//                        wvIntroduction.getSettings().setDomStorageEnabled(true);
-//                        wvIntroduction.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-                        //商品介绍图
-//                        Glide.with(GoodsDetailActivity.this).load(mProduct.getIntroduction()).apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
-//                                .into(imgGoodsDetailPic);
-                        if (!android.text.TextUtils.isEmpty(mProduct.getIntroduction())) {
-//                            String data = TextUtils.getFitPicContent(mProduct.getIntroduction());
-                            String data = mProduct.getIntroduction();
-//                            try {
-//                                Document doc= Jsoup.parse(data);
-//                                Elements elements=doc.getElementsByTag("img");
-//                                for (Element element : elements) {
-//                                    Pattern pattern = Pattern.compile("http:\\/\\/.+\\.jpg");
-//                                    Matcher matcher = pattern.matcher(element.attr("src"));
-//                                    if (matcher.find()){
-//                                        element.attr("src",matcher.group());
-//                                    }
-//
-//                                }
-//
-//                                data =  doc.toString();
-//                            } catch (Exception e) {
-//                                e.printStackTrace();
-//                            }
-                            data = "<html><head><style type=\"text/css\">p {margin:-10px 0} img{width:100% !important;}</style></head><body style='margin:0;padding:0'>" + data + "</body></html>";
-                            wvIntroduction.loadData(data, "text/html; charset=UTF-8", null);
+                         //设置webview加载的页面的模式，也设置为true。这方法可以让你的页面适应手机屏幕的分辨率，完整的显示在屏幕上，可以放大缩小。
+                         wvIntroduction.getSettings().setLoadWithOverviewMode(true);
+                         wvIntroduction.getSettings().setDomStorageEnabled(true);
+                         wvIntroduction.getSettings().setBlockNetworkImage(false);
+                         wvIntroduction.getSettings().setJavaScriptEnabled(true);
+                         //                        wvIntroduction.getSettings().setDomStorageEnabled(true);
+                         //                        wvIntroduction.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
+                         //商品介绍图
+                         //                        Glide.with(GoodsDetailActivity.this).load(mProduct.getIntroduction()).apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
+                         //                                .into(imgGoodsDetailPic);
+                         if (!android.text.TextUtils.isEmpty(mProduct.getIntroduction())) {
+                         //                            String data = TextUtils.getFitPicContent(mProduct.getIntroduction());
+                         String data = mProduct.getIntroduction();
+                         //                            try {
+                         //                                Document doc= Jsoup.parse(data);
+                         //                                Elements elements=doc.getElementsByTag("img");
+                         //                                for (Element element : elements) {
+                         //                                    Pattern pattern = Pattern.compile("http:\\/\\/.+\\.jpg");
+                         //                                    Matcher matcher = pattern.matcher(element.attr("src"));
+                         //                                    if (matcher.find()){
+                         //                                        element.attr("src",matcher.group());
+                         //                                    }
+                         //
+                         //                                }
+                         //
+                         //                                data =  doc.toString();
+                         //                            } catch (Exception e) {
+                         //                                e.printStackTrace();
+                         //                            }
+                         data = "<html><head><style type=\"text/css\">p {margin:-10px 0} img{width:100% !important;}</style></head><body style='margin:0;padding:0'>" + data + "</body></html>";
+                         wvIntroduction.loadData(data, "text/html; charset=UTF-8", null);
 
-                        }
+                         }
                          */
 
 //                        List<String> urlList = new ArrayList<>();
                         layoutIntroduction.removeAllViews();
-                        if (!android.text.TextUtils.isEmpty(mProduct.getIntroduction())) {
+                        if (!TextUtils.isEmpty(mProduct.getIntroduction())) {
                             String data = mProduct.getIntroduction();
                             try {
                                 Document doc = Jsoup.parse(data);
                                 Elements elements = doc.getElementsByTag("img");
                                 for (Element element : elements) {
 //                                    urlList.add(element.attr("src"));
-                                    ImageView view = (ImageView) View.inflate(GoodsDetailActivity.this,R.layout.layout_image_item,null);
+                                    ImageView view = (ImageView) View.inflate(GoodsDetailActivity.this, R.layout.layout_image_item, null);
                                     Glide.with(GoodsDetailActivity.this).load(element.attr("src"))
                                             .apply(new RequestOptions().placeholder(R.mipmap.default_img)
-                                                    .error(R.mipmap.default_img)).into(view);
+                                                    .error(R.mipmap.default_img)).into(new SimpleTarget<Drawable>() {
+                                        @Override
+                                        public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
+                                            //System.out.println("mmmmmmmm："+resource.getIntrinsicWidth() +"   "+resource.getIntrinsicHeight());
+                                            float height = ((float) DeviceUtils.getSreenWidth()) / (((float) resource.getIntrinsicWidth()) / ((float) resource.getIntrinsicHeight()));
+                                            //System.out.println("wwwwww:"+view.getLayoutParams().width +"   "+height);
+                                            view.getLayoutParams().width = DeviceUtils.getSreenWidth();
+                                            view.getLayoutParams().height = (int) height;
+                                            view.setImageDrawable(resource);
+                                        }
+                                    });
                                     layoutIntroduction.addView(view);
                                 }
 
@@ -493,7 +555,7 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
                 case ViewJump.CODE_GOODS_SPECIFICATION_DIALOG:
                     if (data != null) {
                         int num = data.getIntExtra("num", 0);
-                        if (mProduct!=null) {
+                        if (mProduct != null) {
                             mProduct.setShopCartNum(num);
                             ViewHelper.updateShopCart(this);
 //                        if (mActionNum > 0)
@@ -508,8 +570,8 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
     @Override
     public void finish() {
         Intent data = new Intent();
-        data.putExtra("product",mProduct);
-        setResult(RESULT_OK,data);
+        data.putExtra("product", mProduct);
+        setResult(RESULT_OK, data);
         super.finish();
     }
 
@@ -530,7 +592,7 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
     @Override
     public void onUpdate(int num) {
         mShopCartNum = num;
-        ViewHelper.drawShopCartNum(GoodsDetailActivity.this, imgAction1, mShopCartNum,true);
+        ViewHelper.drawShopCartNum(GoodsDetailActivity.this, imgAction1, mShopCartNum, true);
     }
 
     @Override
@@ -541,7 +603,8 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
 
     class ImageListAdapter extends BaseAdapter {
         List<String> urlList;
-        public ImageListAdapter(List<String> urlList){
+
+        public ImageListAdapter(List<String> urlList) {
             this.urlList = urlList;
         }
 
@@ -563,12 +626,12 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-            if (convertView == null){
-                convertView = View.inflate(parent.getContext(),R.layout.layout_image_item,null);
+            if (convertView == null) {
+                convertView = View.inflate(parent.getContext(), R.layout.layout_image_item, null);
             }
             Glide.with(convertView).load(urlList.get(position))
                     .apply(new RequestOptions().placeholder(R.mipmap.default_img)
-                    .error(R.mipmap.default_img)).into((ImageView)convertView);
+                            .error(R.mipmap.default_img)).into((ImageView) convertView);
 
             return convertView;
         }

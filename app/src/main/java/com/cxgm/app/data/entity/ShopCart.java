@@ -35,7 +35,7 @@ public class ShopCart extends BaseEntity implements Cloneable{
     private int userId;
     private float originalPrice;
     private String specifications;
-    private CouponDetail coupon;
+    private String coupon;
     private int couponId;
     private int categoryId;//二级分类ID
     private int productId;
@@ -90,11 +90,11 @@ public class ShopCart extends BaseEntity implements Cloneable{
         this.specifications = specifications;
     }
 
-    public CouponDetail getCoupon() {
+    public String getCoupon() {
         return coupon;
     }
 
-    public void setCoupon(CouponDetail coupon) {
+    public void setCoupon(String coupon) {
         this.coupon = coupon;
     }
 

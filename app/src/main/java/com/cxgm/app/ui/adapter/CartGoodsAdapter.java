@@ -1,6 +1,7 @@
 package com.cxgm.app.ui.adapter;
 
 import android.graphics.Paint;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -83,8 +84,8 @@ public class CartGoodsAdapter extends BaseAdapter {
         holder.tvNum.setText(mList.get(i).getGoodNum()+"");
         holder.tvSubtotal.setText(StringHelper.getRMBFormat(mList.get(i).getAmount()));
         //满减
-        if (mList.get(i).getCoupon()!=null) {
-            holder.tvTag.setText(mList.get(i).getCoupon().getName());
+        if (!TextUtils.isEmpty(mList.get(i).getCoupon())) {
+            holder.tvTag.setText(mList.get(i).getCoupon());
         }else {
             holder.tvTag.setText("");
         }
