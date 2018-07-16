@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -37,8 +38,8 @@ public class DeliveryTimeDialogActivity extends BaseActivity {
     RelativeLayout layoutTime1;
     @BindView(R.id.tvTime2)
     TextView tvTime2;
-    @BindView(R.id.cbTiem2)
-    CheckBox cbTiem2;
+    @BindView(R.id.cbTime2)
+    CheckBox cbTime2;
     @BindView(R.id.layoutTime2)
     RelativeLayout layoutTime2;
 
@@ -66,6 +67,18 @@ public class DeliveryTimeDialogActivity extends BaseActivity {
         }else if (mPosition == 1){
             layoutTime2.performClick();
         }
+        cbTime1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                layoutTime1.performClick();
+            }
+        });
+        cbTime2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                layoutTime2.performClick();
+            }
+        });
     }
 
 
@@ -77,7 +90,7 @@ public class DeliveryTimeDialogActivity extends BaseActivity {
                 break;
             case R.id.layoutTime1:
                 tvTime2.setTextColor(getResources().getColor(R.color.textBlack));
-                cbTiem2.setChecked(false);
+                cbTime2.setChecked(false);
                 tvTime1.setTextColor(getResources().getColor(R.color.textGreen));
                 cbTime1.setChecked(true);
                 mPosition = 0;
@@ -86,7 +99,7 @@ public class DeliveryTimeDialogActivity extends BaseActivity {
                 tvTime1.setTextColor(getResources().getColor(R.color.textBlack));
                 cbTime1.setChecked(false);
                 tvTime2.setTextColor(getResources().getColor(R.color.textGreen));
-                cbTiem2.setChecked(true);
+                cbTime2.setChecked(true);
                 mPosition = 1;
                 break;
         }

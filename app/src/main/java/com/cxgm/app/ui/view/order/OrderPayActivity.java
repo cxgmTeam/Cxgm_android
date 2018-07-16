@@ -10,6 +10,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -144,6 +145,19 @@ public class OrderPayActivity extends BaseActivity {
         tvAmount.setText(StringHelper.getRMBFormat(mAmount));
         //选择支付方式
         layoutWeChatPay.performClick();
+
+        cbAlipay.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                layoutAlipay.performClick();
+            }
+        });
+        cbWeChatPay.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                layoutWeChatPay.performClick();
+            }
+        });
 
     }
 
@@ -293,16 +307,47 @@ public class OrderPayActivity extends BaseActivity {
         }
     }
     private static final int SDK_PAY_FLAG = 1111;
-    static Handler mHandler = new Handler(){
+    Handler mHandler = new Handler(){
         public void handleMessage(Message msg) {
             switch (msg.what){
                 case SDK_PAY_FLAG:
                     Map<String, String> result = (Map<String, String>) msg.obj;
 //                    ToastManager.sendToast(result.);
-                    Set<Map.Entry<String, String>> entries = result.entrySet();
-                    for (Map.Entry<String, String> entry:entries){
-                        System.out.println("MMMMMMM:"+entry.getKey()+"    "+entry.getValue());
+//                    Set<Map.Entry<String, String>> entries = result.entrySet();
+//                    for (Map.Entry<String, String> entry:entries){
+//                        System.out.println("MMMMMMM:"+entry.getKey()+"    "+entry.getValue());
+//                    }
+                    String resultStatus = result.get("resultStatus");
+                    int payStatus = PayEvent.STATUS_FAIL;
+                    switch (resultStatus){
+                        case "9000":
+                            payStatus = PayEvent.STATUS_SUCCESS;
+                            ToastManager.sendToast("订单支付成功");
+                            break;
+                        case "8000":
+                            ToastManager.sendToast("正在处理中，支付结果未知（有可能已经支付成功），请查询商户订单列表中订单的支付状态");
+                            break;
+                        case "4000":
+                            ToastManager.sendToast("订单支付失败");
+                            break;
+                        case "5000":
+                            ToastManager.sendToast("重复请求");
+                            break;
+                        case "6001":
+                            ToastManager.sendToast("用户中途取消");
+                            break;
+                        case "6002":
+                            ToastManager.sendToast("网络连接出错");
+                            break;
+                        case "6004":
+                            ToastManager.sendToast("支付结果未知（有可能已经支付成功），请查询商户订单列表中订单的支付状态");
+                            break;
+                        case "其它":
+                            ToastManager.sendToast("其它支付错误");
+                            break;
                     }
+                    PayEvent event = new PayEvent(PayEvent.PAY_TYPE_ALIPAY,payStatus);
+                    onPayEvent(event);
                     break;
             }
 
