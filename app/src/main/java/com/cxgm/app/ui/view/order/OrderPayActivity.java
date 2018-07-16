@@ -251,7 +251,7 @@ public class OrderPayActivity extends BaseActivity {
                             }
                         }, false);
                     } else {
-                        //todo 支付宝
+                        //支付宝
                         new AliPayReq(this,mOrderId).execute(new Request.RequestCallback<String>() {
                             @Override
                             public void onSuccess(String orderInfo) {

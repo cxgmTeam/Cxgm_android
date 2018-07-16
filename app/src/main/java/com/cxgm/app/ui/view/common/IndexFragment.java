@@ -212,6 +212,8 @@ public class IndexFragment extends BaseFragment {
     @Override
     public void onPause() {
         super.onPause();
+        if (popupWindow != null && popupWindow.isShowing())
+            popupWindow.dismiss();
         loopBanner.stopAutoLoop();
     }
 
@@ -524,7 +526,7 @@ public class IndexFragment extends BaseFragment {
                             LoopData loopData = new LoopData();
                             loopData.items = new ArrayList<>();
                             for (Advertisement ad : ads[0]) {
-                                loopData.items.add(loopData.new ItemData(ad.getId() + "", ad.getImageUrl(), "2".equals(ad.getType())?ad.getProductCode():ad.getNotifyUrl(), ad.getAdverName(), ad.getType()));
+                                loopData.items.add(loopData.new ItemData(ad.getId() + "", ad.getImageUrl(), "2".equals(ad.getType())?ad.getProductCode():ad.getNotifyUrl(), "", ad.getType()));
                             }
 //                            LoopData loopData = JsonTool.toBean("", LoopData.class);
                             loopBanner.refreshData(loopData);

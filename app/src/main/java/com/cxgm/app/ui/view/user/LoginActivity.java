@@ -117,6 +117,7 @@ public class LoginActivity extends BaseActivity {
             @Override
             public void afterTextChanged(Editable editable) {
                 enabledBtn(tvGetCheckCode,ValidateUtils.isMobileNum(editable.toString()));
+                enabledBtn(tvLogin,ValidateUtils.isMobileNum(etPhoneNum.getText().toString()) && !TextUtils.isEmpty(editable) && editable.length() >0);
             }
         });
         etCheckCode.addTextChangedListener(new TextWatcher() {
