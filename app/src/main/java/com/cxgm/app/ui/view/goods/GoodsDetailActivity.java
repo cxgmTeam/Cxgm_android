@@ -550,7 +550,6 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
 //                            }
 //                        }
 //                    });
-                    //TODO 加入购物车  duang 加特效
                 }
                 break;
         }
@@ -569,6 +568,8 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
                             ViewHelper.updateShopCart(this);
 //                        if (mActionNum > 0)
 //                            tvSpecification.setText(getString(R.string.select_, mActionNum + mProduct.getUnit()));
+                            //加入购物车  duang 加特效
+                            ViewHelper.duang(this,mProduct.getImage());
                         }
                     }
                     break;
