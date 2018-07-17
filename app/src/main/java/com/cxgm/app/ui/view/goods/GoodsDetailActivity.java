@@ -169,6 +169,7 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
         } else {
             mShopId = Constants.currentShop.getId();
         }
+
         ViewHelper.addOnShopCartUpdateListener(this);
         init();
         loadData();
@@ -178,6 +179,14 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
     protected void onResume() {
         super.onResume();
         DeviceUtils.backgroundAlpha(this, 1);
+        if (loopBanner.getLoopData()!=null && loopBanner.getLoopData().items!=null && loopBanner.getLoopData().items.size()>0)
+            loopBanner.startAutoLoop();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        loopBanner.stopAutoLoop();
     }
 
     private void init() {
@@ -185,6 +194,7 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
         imgBack.setVisibility(View.VISIBLE);
         imgAction1.setImageResource(R.mipmap.shop_cart3);
         imgAction1.setVisibility(View.VISIBLE);
+//        loopBanner.setLoopLayout(R.layout.layout_goods_loop);
 
         scrollView.setOnScrollChangeListener(new CustomScrollView.OnScrollChangeListener() {
             @Override
@@ -346,7 +356,6 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
                             loopData.items.add(loopData.new ItemData("", mProduct.getImage(), "", "", ""));
                         }
 
-                        loopBanner.setLoopLayout(R.layout.layout_goods_loop);
                         loopBanner.refreshData(loopData);
                         loopBanner.startAutoLoop();
                         loopBanner.setOnClickListener(new BaseLoopAdapter.OnItemClickListener() {

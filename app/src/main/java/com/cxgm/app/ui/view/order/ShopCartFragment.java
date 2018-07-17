@@ -334,7 +334,7 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
         for (ShopCart cart : mCartList) {
             if (cart.isChecked) {
                 totalAmount = Helper.moneyAdd(totalAmount, cart.getAmount());
-                totalOriginal = Helper.moneyAdd(Helper.moneyMultiply(cart.getOriginalPrice(), cart.getGoodNum()), totalOriginal);
+                totalOriginal = Helper.moneyAdd(Helper.moneyMultiply((cart.getOriginalPrice() == 0 ? cart.getPrice():cart.getOriginalPrice()), cart.getGoodNum()), totalOriginal);
             /* 促销活动的不要了
                 //满减
                 if (cart.getCoupon()!=null) {

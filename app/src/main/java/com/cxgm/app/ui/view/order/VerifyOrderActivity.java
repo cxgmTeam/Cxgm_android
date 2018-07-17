@@ -243,6 +243,7 @@ public class VerifyOrderActivity extends BaseActivity {
                         return;
                     }
 
+                    mOrder.setReceiveTime(tvReceiveTime.getText().toString());
                     mOrder.setRemarks(etRemark.getText().toString().trim());
 
                     //提交订单

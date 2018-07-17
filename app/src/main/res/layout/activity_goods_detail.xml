@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:kevin="http://schemas.android.com/tools"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
@@ -66,7 +67,9 @@
                             android:id="@+id/loopBanner"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/goods_cover_height"
-                            app:loop_defaultImg="@mipmap/default_img" />
+                            kevin:loop_autoLoop="false"
+                            kevin:loop_layout="@layout/layout_goods_loop"
+                            kevin:loop_defaultImg="@mipmap/default_img" />
 
                         <TextView
                             android:id="@+id/tvPicNum"

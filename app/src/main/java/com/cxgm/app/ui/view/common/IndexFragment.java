@@ -246,6 +246,7 @@ public class IndexFragment extends BaseFragment {
             srl.setEnableLoadMore(true);
 
         } else {
+//            loopBanner.setLoopLayout(R.layout.layout_banner_loop);
             loopBanner.setOnClickListener(new BaseLoopAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(PagerAdapter parent, View view, int position, int realPosition) {
@@ -529,7 +530,6 @@ public class IndexFragment extends BaseFragment {
                                 loopData.items.add(loopData.new ItemData(ad.getId() + "", ad.getImageUrl(), "2".equals(ad.getType())?ad.getProductCode():ad.getNotifyUrl(), "", ad.getType()));
                             }
 //                            LoopData loopData = JsonTool.toBean("", LoopData.class);
-                            loopBanner.setLoopLayout(R.layout.layout_banner_loop);
                             loopBanner.refreshData(loopData);
                             loopBanner.getViewPager().addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                                 @Override

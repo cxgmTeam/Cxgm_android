@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    xmlns:kevin="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorAppBackground"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -114,6 +115,11 @@
                         android:id="@+id/loopBanner"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/banner_height"
+                        kevin:loop_dotMargin="5dp"
+                        kevin:loop_layout="@layout/layout_banner_loop"
+                        kevin:loop_autoLoop="false"
+                        kevin:loop_dotSelector="@drawable/selector_banner_dot"
+                        kevin:loop_defaultImg="@mipmap/default_img"
                         android:elevation="@dimen/elevation" />
 
                     <com.deanlib.ootb.widget.GridViewForScrollView
