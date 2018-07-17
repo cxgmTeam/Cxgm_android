@@ -83,12 +83,12 @@ public class CartGoodsAdapter extends BaseAdapter {
         }
         holder.tvNum.setText(mList.get(i).getGoodNum()+"");
         holder.tvSubtotal.setText(StringHelper.getRMBFormat(mList.get(i).getAmount()));
-        //满减
-        if (!TextUtils.isEmpty(mList.get(i).getCoupon())) {
-            holder.tvTag.setText(mList.get(i).getCoupon());
-        }else {
-            holder.tvTag.setText("");
-        }
+        //满减 你把展示满减的那个去掉吧 所有的地方都不展示
+//        if (!TextUtils.isEmpty(mList.get(i).getCoupon())) {
+//            holder.tvTag.setText(mList.get(i).getCoupon());
+//        }else {
+//            holder.tvTag.setText("");
+//        }
 
         holder.imgSelect.setImageResource(mList.get(i).isChecked?R.mipmap.checked:R.mipmap.check);
         holder.layoutCheck.setOnClickListener(new View.OnClickListener() {
