@@ -105,7 +105,7 @@
             android:screenOrientation="portrait"
             />
         <activity android:name=".ui.view.goods.GoodsSpecificationDialogActivity"
-            android:theme="@style/AlphaGrayTheme"
+            android:theme="@style/Theme.notAnimation"
             />
         <activity android:name=".ui.view.order.DeliveryTimeDialogActivity"
             android:theme="@style/AlphaGrayTheme"

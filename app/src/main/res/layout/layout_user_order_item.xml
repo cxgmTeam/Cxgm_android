@@ -44,6 +44,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:layout_marginBottom="@dimen/margin_normal"
         android:paddingLeft="@dimen/margin_giant"
         android:paddingRight="@dimen/margin_giant"
         android:orientation="horizontal"
@@ -77,7 +78,6 @@
     </LinearLayout>
 
     <View
-        android:layout_marginTop="@dimen/margin_normal"
         android:background="@color/colorLine"
         android:layout_width="match_parent"
         android:layout_height="@dimen/line"/>

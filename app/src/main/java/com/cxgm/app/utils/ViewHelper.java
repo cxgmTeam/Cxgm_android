@@ -308,6 +308,7 @@ public class ViewHelper {
 
             @Override
             public void onAnimationEnd(Animator animation) {
+
                 dialog.dismiss();
             }
 
@@ -323,28 +324,8 @@ public class ViewHelper {
         });
         animatorSet.play(scaleX).with(scaleY).before(translationX);
         animatorSet.play(translationX).with(translationY).with(scaleX2).with(scaleY2).with(alpha);
+
         animatorSet.setDuration(500);
-
-//        ValueAnimator ainm = ValueAnimator.ofFloat(1,0);
-//        ainm.setDuration(10000);
-//        ainm.setStartDelay(100);
-//        ainm.setRepeatCount(0);
-//        ainm.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-//            @Override
-//            public void onAnimationUpdate(ValueAnimator animation) {
-//                float currentValue = (float) animation.getAnimatedValue();
-//                image.setScaleX(currentValue);
-//                image.setScaleY(currentValue);
-//
-//                image.setTranslationX(3);
-//                //image.setY(DeviceUtils.getSreenHight()/2*currentValue);
-//                image.requestLayout();
-//                if (currentValue <= 0){
-//                    dialog.dismiss();
-//                }
-//            }
-//        });
-
 
         dialog.setOnShowListener(new DialogInterface.OnShowListener() {
             @Override
@@ -352,13 +333,6 @@ public class ViewHelper {
                 animatorSet.start();
             }
         });
-//        Window dialogWindow = dialog.getWindow();
-//        WindowManager.LayoutParams layoutParams =dialogWindow.getAttributes();
-//        layoutParams.width = WindowManager.LayoutParams.MATCH_PARENT;
-//        layoutParams.height = DeviceUtils.getSreenHight()-200;
-//        dialogWindow.setAttributes(layoutParams);
-//        dialogWindow.setGravity(Gravity.CENTER);
-//        dialog.setContentView(view);
         dialog.show();
     }
 

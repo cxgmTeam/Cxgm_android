@@ -30,6 +30,7 @@ import com.cxgm.app.utils.ViewHelper;
 import com.deanlib.ootb.data.io.Request;
 
 import org.xutils.common.Callback;
+import org.xutils.common.util.DensityUtil;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -160,7 +161,8 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
                                         return new ITabView.TabTitle.Builder()
                                                 .setContent(shopCategories.get(position).getName())
                                                 .setTextColor(getResources().getColor(R.color.textBlack)
-                                                        , getResources().getColor(R.color.textBlackTint)).build();
+                                                        , getResources().getColor(R.color.textBlackTint))
+                                                .setTextSize(14).build();
                                     }
 
                                     @Override

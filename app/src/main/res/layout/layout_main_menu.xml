@@ -10,7 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/main_menu_height"
         android:background="@color/colorWhite"
-        android:elevation="@dimen/elevation"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -53,7 +52,6 @@
     </RadioGroup>
 
     <LinearLayout
-        android:elevation="1dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="@dimen/main_menu_height">
@@ -84,4 +82,9 @@
             android:layout_height="@dimen/main_menu_height"
             />
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/colorLine" />
 </FrameLayout>

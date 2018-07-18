@@ -24,6 +24,7 @@ import com.cxgm.app.utils.ToastManager;
 import com.cxgm.app.utils.UserManager;
 import com.cxgm.app.utils.ViewHelper;
 import com.deanlib.ootb.data.io.Request;
+import com.deanlib.ootb.utils.PopupUtils;
 
 import org.xutils.common.Callback;
 
@@ -177,5 +178,25 @@ public class MainActivity extends BaseActivity implements ViewHelper.OnShopCartU
     protected void onDestroy() {
         super.onDestroy();
         ViewHelper.removeShopCartUpdateListener(this);
+    }
+
+    private static final long EXIT_INTERVAL = 2000;
+    private long exitTime;
+
+    private boolean exit(){
+        if(System.currentTimeMillis()-exitTime>EXIT_INTERVAL) {
+            PopupUtils.sendToast(getString(R.string.again_exit));
+            exitTime= System.currentTimeMillis();
+            return false;
+        }
+
+        return true;
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (exit())
+            super.onBackPressed();
+
     }
 }

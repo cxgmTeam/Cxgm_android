@@ -276,5 +276,6 @@
     <string name="message_list_empty">您还没有任何消息哦~</string>
     <string name="order_list_empty">您还没有订单信息~</string>
     <string name="empty">这里空空如也哦~</string>
+    <string name="again_exit">再按一次退出程序</string>
 
 </resources>
