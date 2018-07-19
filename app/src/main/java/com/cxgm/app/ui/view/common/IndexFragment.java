@@ -181,8 +181,8 @@ public class IndexFragment extends BaseFragment {
             Constants.updatedAddress = false;
             init();
             loadData();
-        } else if (popupWindow != null && popupWindow.isShowing())
-            popupWindow.dismiss();
+        } else
+            dismissPopLocationInfo();
     }
 
     private void doShowPop(){
@@ -200,8 +200,8 @@ public class IndexFragment extends BaseFragment {
         super.onResume();
         if (!isHidden())
             doShowPop();
-        else if (popupWindow != null && popupWindow.isShowing())
-            popupWindow.dismiss();
+        else
+            dismissPopLocationInfo();
 
         if (Constants.updatedAddress){
             Constants.updatedAddress = false;
@@ -215,8 +215,7 @@ public class IndexFragment extends BaseFragment {
     @Override
     public void onPause() {
         super.onPause();
-        if (popupWindow != null && popupWindow.isShowing())
-            popupWindow.dismiss();
+        dismissPopLocationInfo();
         loopBanner.stopAutoLoop();
     }
 
@@ -720,10 +719,28 @@ public class IndexFragment extends BaseFragment {
         }, 1000);
     }
 
+    private void dismissPopLocationInfo(){
+        if (popupWindow != null && popupWindow.isShowing())
+            popupWindow.dismiss();
+    }
+
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        dismissPopLocationInfo();
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        dismissPopLocationInfo();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        dismissPopLocationInfo();
     }
 
     @OnClick({R.id.imgLocation, R.id.etSearchWord, R.id.layoutMessage,R.id.tvNewsContent})
