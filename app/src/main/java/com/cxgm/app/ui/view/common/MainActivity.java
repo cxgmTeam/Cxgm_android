@@ -72,11 +72,6 @@ public class MainActivity extends BaseActivity implements ViewHelper.OnShopCartU
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//透明状态栏
-//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);//透明导航栏
-        }
-
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         mCheckResId = getIntent().getIntExtra("resId",R.id.rbIndex);
@@ -139,9 +134,11 @@ public class MainActivity extends BaseActivity implements ViewHelper.OnShopCartU
         switch (checkedId) {
 
             case R.id.rbIndex:
+                setTranslucentStatus(false);
                 getSupportFragmentManager().beginTransaction().show(mIndexFragment).commit();
                 break;
             case R.id.rbUser:
+                setTranslucentStatus(true);
                 getSupportFragmentManager().beginTransaction().show(mUserFragment).commit();
                 break;
             case R.id.rbShopCart:
@@ -155,6 +152,7 @@ public class MainActivity extends BaseActivity implements ViewHelper.OnShopCartU
                     rbIndex.setChecked(true);
                     return;
                 }
+                setTranslucentStatus(true);
                 getSupportFragmentManager().beginTransaction().show(mShopCartFragment).commit();
                 break;
             case R.id.rbGoods:
@@ -163,8 +161,20 @@ public class MainActivity extends BaseActivity implements ViewHelper.OnShopCartU
                     rbIndex.setChecked(true);
                     return;
                 }
+                setTranslucentStatus(true);
                 getSupportFragmentManager().beginTransaction().show(mClassifyFragment).commit();
                 break;
+        }
+    }
+
+    private void setTranslucentStatus(boolean b){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            if (b) {
+                getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);//透明状态栏
+//            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);//透明导航栏
+            }else {
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+            }
         }
     }
 

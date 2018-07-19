@@ -17,8 +17,6 @@
         android:layout_height="wrap_content"
         android:id="@+id/layoutAppbar"
         android:elevation="@dimen/elevation"
-        android:fitsSystemWindows="true"
-        android:clipToPadding="true"
         android:background="@color/colorGreenTop"
         android:gravity="center_vertical"
         android:orientation="horizontal">

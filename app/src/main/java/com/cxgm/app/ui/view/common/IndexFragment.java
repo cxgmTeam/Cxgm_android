@@ -200,6 +200,9 @@ public class IndexFragment extends BaseFragment {
         super.onResume();
         if (!isHidden())
             doShowPop();
+        else if (popupWindow != null && popupWindow.isShowing())
+            popupWindow.dismiss();
+
         if (Constants.updatedAddress){
             Constants.updatedAddress = false;
             init();
