@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
@@ -55,6 +56,7 @@ public class MotionAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
         ViewHolder holder;
         if (convertView == null) {
             convertView = View.inflate(parent.getContext(), R.layout.layout_motion_item, null);
@@ -63,6 +65,7 @@ public class MotionAdapter extends BaseAdapter {
         }else {
             holder = (ViewHolder) convertView.getTag();
         }
+
         Glide.with(convertView).load(mList.get(position).getImageUrl())
                 .apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
                 .into(holder.imgBanner);
@@ -83,7 +86,7 @@ public class MotionAdapter extends BaseAdapter {
             LinearLayoutManager layoutManager = new LinearLayoutManager(activity);
             layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
             holder.hlvAdGoods.setLayoutManager(layoutManager);
-            holder.hlvAdGoods.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(1.5f)));
+            holder.hlvAdGoods.addItemDecoration(new SpaceItemDecoration(DensityUtil.dip2px(5)));
             adapter.setOnItemClickListener(new GoodsRecyclerViewAdapter.OnItemClickListener() {
                 @Override
                 public void onItemClick(View view, int i) {
@@ -92,6 +95,11 @@ public class MotionAdapter extends BaseAdapter {
             });
 
         }
+        //recyclerview的横向布局 第一个item 的间距存在问题，未找到导致原因，现阶段只能通过设置脏数据并隐藏第一项的方式解决
+        if (position == 0)
+            holder.layoutContainer.setVisibility(View.GONE);
+        else holder.layoutContainer.setVisibility(View.VISIBLE);
+
         return convertView;
     }
 
@@ -100,6 +108,8 @@ public class MotionAdapter extends BaseAdapter {
         ImageView imgBanner;
         @BindView(R.id.hlvAdGoods)
         RecyclerView hlvAdGoods;
+        @BindView(R.id.layoutContainer)
+        LinearLayout layoutContainer;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);

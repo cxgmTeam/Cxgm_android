@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     xmlns:kevin="http://schemas.android.com/apk/res-auto"
     android:background="@color/colorAppBackground"
@@ -51,6 +51,7 @@
     </LinearLayout>
 
     <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:layout_below="@+id/layoutAppbar"
         android:id="@+id/srl"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -148,7 +149,7 @@
                     android:orientation="vertical"
                     android:visibility="gone">
 
-                    <com.kevin.loopview.AdLoopView
+                    <com.kevin.loopview.BannerView
                         android:id="@+id/loopBanner"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/banner_height"
@@ -156,7 +157,7 @@
                         kevin:loop_layout="@layout/layout_banner_loop"
                         kevin:loop_autoLoop="false"
                         kevin:loop_dotSelector="@drawable/selector_banner_dot"
-                        kevin:loop_defaultImg="@mipmap/default_img"
+                        kevin:loop_placeholder="@mipmap/default_img"
                         android:elevation="@dimen/elevation" />
 
                     <com.deanlib.ootb.widget.GridViewForScrollView
@@ -346,9 +347,9 @@
                     </LinearLayout>
 
                     <com.deanlib.ootb.widget.ListViewForScrollView
+                        android:visibility="gone"
                         android:listSelector="@color/transparent"
                         android:id="@+id/lvMotions"
-                        android:layout_marginTop="@dimen/margin_normal"
                         android:dividerHeight="@dimen/margin_normal"
                         android:divider="@null"
                         android:layout_width="match_parent"
@@ -402,4 +403,14 @@
             </LinearLayout>
         </ScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
-</LinearLayout>
+
+    <include
+        android:id="@+id/layoutPopLocation"
+        android:visibility="gone"
+        android:layout_marginLeft="6dp"
+        android:layout_marginTop="-6dp"
+        android:layout_below="@+id/layoutAppbar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        layout="@layout/layout_location_info"/>
+</RelativeLayout>

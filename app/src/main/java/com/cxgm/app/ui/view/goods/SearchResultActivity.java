@@ -26,6 +26,7 @@ import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.utils.Helper;
 import com.cxgm.app.utils.ToastManager;
 import com.deanlib.ootb.data.io.Request;
+import com.deanlib.ootb.utils.DeviceUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
@@ -78,7 +79,7 @@ public class SearchResultActivity extends BaseActivity {
         ButterKnife.bind(this);
         mKeyword = getIntent().getStringExtra("keyword");
         init();
-        loadData(mKeyword);
+        loadData();
     }
 
     private void init() {
@@ -92,18 +93,19 @@ public class SearchResultActivity extends BaseActivity {
                 ViewJump.toGoodsDetail(SearchResultActivity.this, mProductList.get((int) id).getId());
             }
         });
+        srl.setEnableLoadMore(false);//没有分页
         srl.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
                 mPageNum++;
-                loadData(mKeyword);
+                loadData();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
                 mPageNum = 1;
                 mProductList.clear();
-                loadData(mKeyword);
+                loadData();
             }
         });
         //键盘监听
@@ -111,16 +113,19 @@ public class SearchResultActivity extends BaseActivity {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                    loadData(etSearchWord.getText().toString());
+                    DeviceUtils.hideKeyboard(SearchResultActivity.this);
+                    mProductList.clear();
+                    mPageNum = 1;
+                    loadData();
                 }
                 return true;
             }
         });
     }
 
-    private void loadData(String keyword) {
+    private void loadData() {
         if (Constants.currentShop != null) {
-            keyword = keyword.trim();
+            String keyword = etSearchWord.getText().toString().trim();
             if (TextUtils.isEmpty(keyword)) {
                 ToastManager.sendToast(getString(R.string.keyword_is_empty));
             } else {
@@ -153,6 +158,8 @@ public class SearchResultActivity extends BaseActivity {
                             srl.setVisibility(View.GONE);
                             layoutSearchEmpty.setVisibility(View.VISIBLE);
                         }
+                        srl.finishRefresh();
+                        srl.finishLoadMore();
                     }
                 });
             }

@@ -3,6 +3,7 @@ package com.cxgm.app.utils;
 import android.text.Spannable;
 import android.text.SpannableString;
 import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.text.style.StrikethroughSpan;
 
 import java.math.BigDecimal;
@@ -35,7 +36,10 @@ public class StringHelper {
 
     public static String getSpecification(String weight,String unit){
 //        return StringHelper.getWeight(weight)+"/"+unit;
-        return weight+"/"+unit;
+        String str = "/";
+        if (TextUtils.isEmpty(weight) || TextUtils.isEmpty(unit))
+            str = "";
+        return weight+str+unit;
     }
     
 }

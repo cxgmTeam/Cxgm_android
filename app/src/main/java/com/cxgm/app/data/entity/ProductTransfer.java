@@ -576,6 +576,8 @@ public class ProductTransfer extends BaseEntity {
     }
 
     public String getUnit() {
+        if (unit == null)
+            unit = "";
         return unit;
     }
 
@@ -616,6 +618,8 @@ public class ProductTransfer extends BaseEntity {
     }
 
     public String getWeight() {
+        if (weight == null)
+            weight = "";
         return weight;
     }
 

@@ -38,8 +38,9 @@ import com.cxgm.app.utils.ViewHelper;
 import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.utils.DeviceUtils;
 import com.deanlib.ootb.widget.GridViewForScrollView;
-import com.kevin.loopview.AdLoopView;
+import com.kevin.loopview.BannerView;
 import com.kevin.loopview.internal.BaseLoopAdapter;
+import com.kevin.loopview.internal.ImageLoader;
 import com.kevin.loopview.internal.LoopData;
 
 import org.jsoup.Jsoup;
@@ -76,7 +77,7 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
     @BindView(R.id.tabNavigation)
     TabLayout tabNavigation;
     @BindView(R.id.loopBanner)
-    AdLoopView loopBanner;
+    BannerView loopBanner;
     @BindView(R.id.tvPicNum)
     TextView tvPicNum;
     @BindView(R.id.tvGoodsTitle)
@@ -179,7 +180,7 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
     protected void onResume() {
         super.onResume();
         DeviceUtils.backgroundAlpha(this, 1);
-        if (loopBanner.getLoopData()!=null && loopBanner.getLoopData().items!=null && loopBanner.getLoopData().items.size()>0)
+        if (loopBanner.getData()!=null && loopBanner.getData().items!=null && loopBanner.getData().items.size()>0)
             loopBanner.startAutoLoop();
     }
 
@@ -194,7 +195,13 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
         imgBack.setVisibility(View.VISIBLE);
         imgAction1.setImageResource(R.mipmap.shop_cart3);
         imgAction1.setVisibility(View.VISIBLE);
-//        loopBanner.setLoopLayout(R.layout.layout_goods_loop);
+        loopBanner.setImageLoader(new ImageLoader() {
+            @Override
+            public void loadImage(ImageView imageView, String url, int placeholder) {
+                Glide.with(imageView.getContext()).load(url).apply(new RequestOptions().placeholder(placeholder).
+                    error(R.mipmap.default_img)).into(imageView);
+            }
+        });
 
         scrollView.setOnScrollChangeListener(new CustomScrollView.OnScrollChangeListener() {
             @Override
@@ -286,7 +293,8 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
                         tvGoodsTitle.setText(mProduct.getName());
                         tvGoodsSubTitle.setText(mProduct.getFullName());
                         tvPrice.setText(StringHelper.getRMBFormat(mProduct.getPrice()));
-                        tvUnit.setText("/" + mProduct.getUnit());
+                        if (!TextUtils.isEmpty(mProduct.getUnit()))
+                            tvUnit.setText("/" + mProduct.getUnit());
                         if (mProduct.getPrice() < mProduct.getOriginalPrice()) {
                             tvOriginal.setText(StringHelper.getStrikeFormat(StringHelper.getRMBFormat(mProduct.getOriginalPrice())));
                             tvOriginal.setVisibility(View.VISIBLE);
@@ -350,21 +358,22 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
                         loopData.items = new ArrayList<>();
                         if (mProduct.getProductImageList() != null) {
                             for (ProductImage image : mProduct.getProductImageList()) {
-                                loopData.items.add(loopData.new ItemData("", image.getUrl(), "", "", ""));
+                                loopData.items.add(loopData.new ItemData(image.getUrl(),"", ""));
                             }
                         } else {
-                            loopData.items.add(loopData.new ItemData("", mProduct.getImage(), "", "", ""));
+                            loopData.items.add(loopData.new ItemData(mProduct.getImage(),  "", ""));
                         }
 
-                        loopBanner.refreshData(loopData);
+                        loopBanner.setData(loopData);
                         loopBanner.startAutoLoop();
-                        loopBanner.setOnClickListener(new BaseLoopAdapter.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(PagerAdapter parent, View view, int position, int realPosition) {
-                                loopBanner.getLoopData();
-                            }
-                        });
-                        tvPicNum.setText(mBannerPosition + "/" + loopBanner.getLoopData().items.size());
+//                        loopBanner.setOnItemClickListener(new BaseLoopAdapter.OnItemClickListener() {
+//
+//                            @Override
+//                            public void onItemClick(View view, LoopData.ItemData itemData, int position) {
+//
+//                            }
+//                        });
+                        tvPicNum.setText(mBannerPosition + "/" + loopBanner.getData().items.size());
                         loopBanner.getViewPager().addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                             @Override
                             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -374,7 +383,7 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
                             @Override
                             public void onPageSelected(int position) {
 
-                                tvPicNum.setText((mBannerPosition = getBannerPosition(mBannerPosition, loopBanner.getLoopData().items.size())) + "/" + loopBanner.getLoopData().items.size());
+                                tvPicNum.setText((mBannerPosition = getBannerPosition(mBannerPosition, loopBanner.getData().items.size())) + "/" + loopBanner.getData().items.size());
                             }
 
                             @Override
@@ -447,9 +456,7 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
                                                     .error(R.mipmap.default_img)).into(new SimpleTarget<Drawable>() {
                                         @Override
                                         public void onResourceReady(@NonNull Drawable resource, @Nullable Transition<? super Drawable> transition) {
-                                            //System.out.println("mmmmmmmm："+resource.getIntrinsicWidth() +"   "+resource.getIntrinsicHeight());
                                             float height = ((float) DeviceUtils.getSreenWidth()) / (((float) resource.getIntrinsicWidth()) / ((float) resource.getIntrinsicHeight()));
-                                            //System.out.println("wwwwww:"+view.getLayoutParams().width +"   "+height);
                                             view.getLayoutParams().width = DeviceUtils.getSreenWidth();
                                             view.getLayoutParams().height = (int) height;
                                             view.setImageDrawable(resource);

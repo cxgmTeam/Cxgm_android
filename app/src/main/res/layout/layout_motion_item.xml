@@ -1,31 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:paddingTop="@dimen/margin_normal"
-    android:paddingBottom="@dimen/margin_giant_xx"
-    android:orientation="vertical"
-    android:background="@color/colorWhite"
-    android:elevation="@dimen/elevation"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    android:layout_height="wrap_content">
 
-    <ImageView
-        android:scaleType="fitXY"
-        android:id="@+id/imgBanner"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/ad_height"
-        android:paddingLeft="@dimen/margin_normal"
-        android:paddingRight="@dimen/margin_normal"
-        android:src="@mipmap/default_img" />
-
-    <android.support.v7.widget.RecyclerView
-        android:listSelector="@color/transparent"
-        android:id="@+id/hlvAdGoods"
+    <LinearLayout
+        android:id="@+id/layoutContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/margin_giant"
-        android:paddingLeft="@dimen/margin_normal"
-        android:paddingRight="@dimen/margin_normal"
-        android:scrollbars="none" />
+        android:background="@color/colorWhite"
+        android:elevation="@dimen/elevation"
+        android:orientation="vertical"
+        android:paddingBottom="@dimen/margin_giant_xx"
+        android:paddingTop="@dimen/margin_normal">
 
+        <ImageView
+            android:id="@+id/imgBanner"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/ad_height"
+            android:paddingLeft="@dimen/margin_normal"
+            android:paddingRight="@dimen/margin_normal"
+            android:scaleType="fitXY"
+            android:src="@mipmap/default_img" />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/hlvAdGoods"
+            android:layout_width="match_parent"
+            android:layout_height="162dp"
+            android:layout_marginTop="@dimen/margin_giant"
+            android:listSelector="@color/transparent"
+            android:paddingLeft="@dimen/margin_normal"
+            android:paddingRight="@dimen/margin_normal"
+            android:scrollbars="none" />
+
+    </LinearLayout>
 </LinearLayout>

@@ -27,9 +27,11 @@ public class OrderProduct implements Parcelable {
         this.specifications = specifications;
     }
 
-        private String unit;
+    private String unit;
     private String weight;
     public String getUnit() {
+        if (unit == null)
+            unit = "";
         return unit;
     }
 
@@ -38,6 +40,8 @@ public class OrderProduct implements Parcelable {
     }
 
     public String getWeight() {
+        if (weight == null)
+            weight = "";
         return weight;
     }
 

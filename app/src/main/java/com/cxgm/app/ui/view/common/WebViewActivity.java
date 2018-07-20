@@ -22,6 +22,8 @@ import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
 
+import java.util.regex.Pattern;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -56,6 +58,9 @@ public class WebViewActivity extends BaseActivity {
         imgBack.setVisibility(View.VISIBLE);
 
         if (!TextUtils.isEmpty(mUrl)) {
+            if (!Pattern.matches("https?:\\/\\/.+",mUrl)){
+                mUrl = "http://" + mUrl;
+            }
             webview.setWebChromeClient(webChromeClient);
             webview.setWebViewClient(webViewClient);
 

@@ -207,7 +207,8 @@
     <string name="empty_consignee">收货人信息不能为空</string>
     <string name="chioce_address">选择地址</string>
     <string name="add_shopcart">加入购物车</string>
-    <string name="buy_num">购买数量(%s)</string>
+    <string name="buy_num_">购买数量(%s)</string>
+    <string name="buy_num">购买数量</string>
     <string name="select_">已选：%s</string>
 
     <string name="goods">商品</string>

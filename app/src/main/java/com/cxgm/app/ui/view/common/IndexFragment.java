@@ -54,8 +54,9 @@ import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.utils.FormatUtils;
 import com.deanlib.ootb.widget.GridViewForScrollView;
 import com.deanlib.ootb.widget.ListViewForScrollView;
-import com.kevin.loopview.AdLoopView;
+import com.kevin.loopview.BannerView;
 import com.kevin.loopview.internal.BaseLoopAdapter;
+import com.kevin.loopview.internal.ImageLoader;
 import com.kevin.loopview.internal.LoopData;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
@@ -97,7 +98,7 @@ public class IndexFragment extends BaseFragment {
     LinearLayout layoutMessage;
 
     @BindView(R.id.loopBanner)
-    AdLoopView loopBanner;
+    BannerView loopBanner;
     @BindView(R.id.lvShop)
     ListViewForScrollView lvShop;
 
@@ -121,10 +122,12 @@ public class IndexFragment extends BaseFragment {
     SmartRefreshLayout srl;
     @BindView(R.id.layoutAD2Small)
     LinearLayout layoutAD2Small;
+    @BindView(R.id.layoutPopLocation)
+    LinearLayout layoutPopLocation;
 
     Unbinder unbinder;
 
-    PopupWindow popupWindow;
+//    PopupWindow popupWindow;
 
     FirstCategoryAdapter mFCAdapter;
     List<ShopCategory> mFCList;
@@ -208,7 +211,7 @@ public class IndexFragment extends BaseFragment {
             init();
             loadData();
         }
-        if (loopBanner.getLoopData()!=null && loopBanner.getLoopData().items!=null && loopBanner.getLoopData().items.size()>0)
+        if (loopBanner.getData()!=null && loopBanner.getData().items!=null && loopBanner.getData().items.size()>0)
             loopBanner.startAutoLoop();
     }
 
@@ -248,15 +251,21 @@ public class IndexFragment extends BaseFragment {
             srl.setEnableLoadMore(true);
 
         } else {
-//            loopBanner.setLoopLayout(R.layout.layout_banner_loop);
-            loopBanner.setOnClickListener(new BaseLoopAdapter.OnItemClickListener() {
+            loopBanner.setImageLoader(new ImageLoader() {
                 @Override
-                public void onItemClick(PagerAdapter parent, View view, int position, int realPosition) {
-                    LoopData.ItemData itemData = loopBanner.getLoopData().items.get(position);
+                public void loadImage(ImageView imageView, String url, int placeholder) {
+                    Glide.with(imageView.getContext()).load(url).apply(new RequestOptions()
+                            .placeholder(placeholder).error(R.mipmap.default_img)).into(imageView);
+                }
+            });
+            loopBanner.setOnItemClickListener(new BaseLoopAdapter.OnItemClickListener() {
+
+                @Override
+                public void onItemClick(View view, LoopData.ItemData itemData, int position) {
                     //广告点击事件
-                    if ("1".equals(itemData.type)){
+                    if ("1".equals(itemData.desc)){
                         ViewJump.toWebView(getActivity(),itemData.link);
-                    }else if ("2".equals(itemData.type)){
+                    }else if ("2".equals(itemData.desc)){
                         ViewJump.toGoodsDetail(getActivity(),(int) FormatUtils.convertStringToNum(itemData.link));
                     }
                 }
@@ -529,10 +538,10 @@ public class IndexFragment extends BaseFragment {
                             LoopData loopData = new LoopData();
                             loopData.items = new ArrayList<>();
                             for (Advertisement ad : ads[0]) {
-                                loopData.items.add(loopData.new ItemData(ad.getId() + "", ad.getImageUrl(), "2".equals(ad.getType())?ad.getProductCode():ad.getNotifyUrl(), "", ad.getType()));
+                                loopData.items.add(loopData.new ItemData(ad.getImageUrl(), ad.getType(), "2".equals(ad.getType())?ad.getProductCode():ad.getNotifyUrl()));
                             }
 //                            LoopData loopData = JsonTool.toBean("", LoopData.class);
-                            loopBanner.refreshData(loopData);
+                            loopBanner.setData(loopData);
                             loopBanner.getViewPager().addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                                 @Override
                                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -560,10 +569,10 @@ public class IndexFragment extends BaseFragment {
                             loopBanner.setVisibility(View.GONE);
                         }
                         if (ads.length>1) {
-                            layoutAD2.setVisibility(View.VISIBLE);
-                            layoutAD2Small.setVisibility(View.VISIBLE);
-                            imgAD22.setVisibility(View.VISIBLE);
-                            imgAD23.setVisibility(View.VISIBLE);
+                            layoutAD2.setVisibility(View.GONE);
+                            layoutAD2Small.setVisibility(View.GONE);
+                            imgAD22.setVisibility(View.GONE);
+                            imgAD23.setVisibility(View.GONE);
                             switch (ads[1].size()) {
                                 case 3:
                                     Glide.with(getActivity()).load(ads[1].get(2).getImageUrl()).apply(new RequestOptions()
@@ -578,8 +587,8 @@ public class IndexFragment extends BaseFragment {
                                             }
                                         }
                                     });
+                                    imgAD23.setVisibility(View.VISIBLE);
                                 case 2:
-                                    imgAD23.setVisibility(View.GONE);
                                     Glide.with(getActivity()).load(ads[1].get(1).getImageUrl()).apply(new RequestOptions()
                                             .placeholder(R.mipmap.default_img).error(R.mipmap.default_img)).into(imgAD22);
                                     imgAD22.setOnClickListener(new View.OnClickListener() {
@@ -592,8 +601,9 @@ public class IndexFragment extends BaseFragment {
                                             }
                                         }
                                     });
+                                    imgAD22.setVisibility(View.VISIBLE);
+                                    layoutAD2Small.setVisibility(View.VISIBLE);
                                 case 1:
-                                    layoutAD2Small.setVisibility(View.GONE);
                                     Glide.with(getActivity()).load(ads[1].get(0).getImageUrl()).apply(new RequestOptions()
                                             .placeholder(R.mipmap.default_img).error(R.mipmap.default_img)).into(imgAD21);
                                     imgAD21.setOnClickListener(new View.OnClickListener() {
@@ -606,6 +616,7 @@ public class IndexFragment extends BaseFragment {
                                             }
                                         }
                                     });
+                                    layoutAD2.setVisibility(View.VISIBLE);
                                     break;
                                 case 0:
                                     //没有广告时
@@ -640,8 +651,13 @@ public class IndexFragment extends BaseFragment {
                 @Override
                 public void onSuccess(List<Motion> motions) {
                     if (motions != null && motions.size() > 0) {
+                        //recyclerview的横向布局 第一个item 的间距存在问题，设置脏数据，配合MotionAdapter
+                        mMotionList.add(motions.get(0));
                         mMotionList.addAll(motions);
                         mMotionAdapter.notifyDataSetChanged();
+                        lvMotions.setVisibility(View.VISIBLE);
+                    }else {
+                        lvMotions.setVisibility(View.GONE);
                     }
                 }
 
@@ -657,11 +673,6 @@ public class IndexFragment extends BaseFragment {
 
                 @Override
                 public void onFinished() {
-                    if (mMotionList.size() > 0) {
-                        lvMotions.setVisibility(View.VISIBLE);
-                    } else {
-                        lvMotions.setVisibility(View.GONE);
-                    }
                     srl.finishRefresh();
                 }
             });
@@ -703,44 +714,32 @@ public class IndexFragment extends BaseFragment {
         x.task().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if (!isHidden()) {
-                    if (popupWindow == null) {
-                        popupWindow = new PopupWindow();
-                        popupWindow.setContentView(View.inflate(getActivity(), R.layout.layout_location_info, null));
-                        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
-                        popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-                    }
-                    TextView tvContent = popupWindow.getContentView().findViewById(R.id.tvContent);
-                    tvContent.setText(message);
-                    if (!popupWindow.isShowing() && imgLocation!=null)
-                        popupWindow.showAsDropDown(imgLocation, DensityUtil.dip2px(6), DensityUtil.dip2px(-6));
-                }
+                //使用Pop总是控制不好显示时机，存在一个异常，当APP长时候（几个小时）在后台，
+                // 再次启动时（不走Lanuchacitivity），会出现pop泄漏，新旧两个pop，
+                // 当切换到MainActivity的其他页面，有一个pop一直显示，不会消失，异常界面。
+//                if (!isHidden()) {
+//                    if (popupWindow == null) {
+//                        popupWindow = new PopupWindow();
+//                        popupWindow.setContentView(View.inflate(getActivity(), R.layout.layout_location_info, null));
+//                        popupWindow.setWidth(ViewGroup.LayoutParams.WRAP_CONTENT);
+//                        popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+//                    }
+//                    TextView tvContent = popupWindow.getContentView().findViewById(R.id.tvContent);
+//                    tvContent.setText(message);
+//                    if (!popupWindow.isShowing() && imgLocation!=null)
+//                        popupWindow.showAsDropDown(imgLocation, DensityUtil.dip2px(6), DensityUtil.dip2px(-6));
+//                }
+                TextView tvContent = layoutPopLocation.findViewById(R.id.tvContent);
+                tvContent.setText(message);
+                layoutPopLocation.setVisibility(View.VISIBLE);
             }
         }, 1000);
     }
 
     private void dismissPopLocationInfo(){
-        if (popupWindow != null && popupWindow.isShowing())
-            popupWindow.dismiss();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-        dismissPopLocationInfo();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        dismissPopLocationInfo();
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        dismissPopLocationInfo();
+//        if (popupWindow != null && popupWindow.isShowing())
+//            popupWindow.dismiss();
+        layoutPopLocation.setVisibility(View.GONE);
     }
 
     @OnClick({R.id.imgLocation, R.id.etSearchWord, R.id.layoutMessage,R.id.tvNewsContent})

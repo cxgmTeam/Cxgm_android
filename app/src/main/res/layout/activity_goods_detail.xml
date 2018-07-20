@@ -63,13 +63,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/goods_cover_height">
 
-                        <com.kevin.loopview.AdLoopView
+                        <com.kevin.loopview.BannerView
                             android:id="@+id/loopBanner"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/goods_cover_height"
                             kevin:loop_autoLoop="false"
                             kevin:loop_layout="@layout/layout_goods_loop"
-                            kevin:loop_defaultImg="@mipmap/default_img" />
+                            kevin:loop_placeholder="@mipmap/default_img" />
 
                         <TextView
                             android:id="@+id/tvPicNum"

@@ -3,6 +3,7 @@ package com.cxgm.app.ui.view.goods;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -76,7 +77,8 @@ public class GoodsSpecificationDialogActivity extends BaseActivity {
         Glide.with(this).load(mProduct.getImage()).apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
                 .into(imgCover);
         tvPrice.setText(StringHelper.getRMBFormat(mProduct.getPrice()));
-        tvUnit.setText("/"+mProduct.getUnit());
+        if (!TextUtils.isEmpty(mProduct.getUnit()))
+            tvUnit.setText("/"+mProduct.getUnit());
         if (mProduct.getPrice()< mProduct.getOriginalPrice()) {
             tvOriginPlace.setText(StringHelper.getStrikeFormat(StringHelper.getRMBFormat(mProduct.getOriginalPrice())));
             tvOriginPlace.setVisibility(View.VISIBLE);
@@ -85,15 +87,19 @@ public class GoodsSpecificationDialogActivity extends BaseActivity {
         tvSelectNum.setText(getString(R.string.select_,mNum+mProduct.getUnit()));//数量要实时更新
         tvSpecification.setText(getString(R.string.specification_,
                 StringHelper.getSpecification(mProduct.getWeight(),mProduct.getUnit())));
-        tvNumUnitTag.setText(getString(R.string.buy_num,mProduct.getUnit()));
+        if (!TextUtils.isEmpty(mProduct.getUnit()))
+            tvNumUnitTag.setText(getString(R.string.buy_num_,mProduct.getUnit()));
+        else
+            tvNumUnitTag.setText(R.string.buy_num);
         tvNum.setText(mNum+"");
 
     }
 
-    @OnClick({R.id.imgClose, R.id.tvMinus, R.id.tvPlus, R.id.tvOK})
+    @OnClick({R.id.imgClose, R.id.tvMinus, R.id.tvPlus, R.id.tvOK,R.id.viewTouchArea})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgClose:
+            case R.id.viewTouchArea:
                 finish();
                 break;
             case R.id.tvMinus:
