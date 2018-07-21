@@ -19,6 +19,7 @@ import com.cxgm.app.data.entity.ShopCart;
 import com.cxgm.app.data.entity.ShopCategory;
 import com.cxgm.app.data.io.order.AddCartReq;
 import com.cxgm.app.ui.view.ViewJump;
+import com.cxgm.app.ui.view.goods.GoodsSecondClassifyActivity;
 import com.cxgm.app.utils.StringHelper;
 import com.cxgm.app.utils.ToastManager;
 import com.cxgm.app.utils.UserManager;
@@ -46,12 +47,14 @@ public class ExpandableGoodsListAdapter extends BaseExpandableListAdapter {
     List<String> mKeyList;
     Map<String,List<ProductTransfer>> mProductMap;
     Activity mActivity;
+    List<int[]> mGroupNumList;//group postion in the list
     OnShopCartActionListener mListener;
     public ExpandableGoodsListAdapter(Activity activity,Map<String, List<ProductTransfer>> mProductMap,OnShopCartActionListener listener){
         this.mProductMap = mProductMap;
         mActivity = activity;
         this.mListener = listener;
         mKeyList = new ArrayList<>();
+        mGroupNumList = new ArrayList<>();
 //        Set<Map.Entry<String, List<ProductTransfer>>> entries = mProductMap.entrySet();
 //        for (Map.Entry<String,List<ProductTransfer>> entry : entries){
 //            mKeyList.add(entry.getKey());
@@ -61,13 +64,20 @@ public class ExpandableGoodsListAdapter extends BaseExpandableListAdapter {
     public List<String> getKeyList(){
         return mKeyList;
     }
+    public List<int[]> getGroupNumList(){
+        return mGroupNumList;
+    }
 
     @Override
     public void notifyDataSetChanged() {
         mKeyList.clear();
+        mGroupNumList.clear();
         Set<Map.Entry<String, List<ProductTransfer>>> entries = mProductMap.entrySet();
+        int p = 0;
         for (Map.Entry<String,List<ProductTransfer>> entry : entries){
             mKeyList.add(entry.getKey());
+            mGroupNumList.add(new int[]{p,p+entry.getValue().size()});
+            p = p + entry.getValue().size()+1;
         }
 
         super.notifyDataSetChanged();

@@ -293,8 +293,12 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
                         tvGoodsTitle.setText(mProduct.getName());
                         tvGoodsSubTitle.setText(mProduct.getFullName());
                         tvPrice.setText(StringHelper.getRMBFormat(mProduct.getPrice()));
-                        if (!TextUtils.isEmpty(mProduct.getUnit()))
-                            tvUnit.setText("/" + mProduct.getUnit());
+                        if (!TextUtils.isEmpty(mProduct.getUnit())) {
+                            if ("kg".equalsIgnoreCase(mProduct.getUnit()))
+                                tvUnit.setText(StringHelper.getSpecification(mProduct.getWeight(), mProduct.getUnit()));
+                            else
+                                tvUnit.setText("/" + mProduct.getUnit());
+                        }
                         if (mProduct.getPrice() < mProduct.getOriginalPrice()) {
                             tvOriginal.setText(StringHelper.getStrikeFormat(StringHelper.getRMBFormat(mProduct.getOriginalPrice())));
                             tvOriginal.setVisibility(View.VISIBLE);

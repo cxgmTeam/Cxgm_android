@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.AbsListView;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -83,6 +84,9 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
 //    Badge mShopCartBadge;
     int mShopCartNum = 0; //种类数
 
+    ShopCategory mOtherCategory = new ShopCategory(-1,"","");
+    boolean isListScrolling;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -126,6 +130,24 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
                 ViewJump.toGoodsDetail(GoodsSecondClassifyActivity.this,mProductMap.get(mEGLAdapter.getKeyList().get(groupPosition)).get(childPosition).getId());
                 return true;
             }
+        });
+        lvGoods.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+                isListScrolling = scrollState != AbsListView.OnScrollListener.SCROLL_STATE_IDLE;
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+                for (int i = 0;i< mEGLAdapter.getGroupNumList().size()-1;i++){
+                    if (mEGLAdapter.getGroupNumList().get(i)[0] == firstVisibleItem
+                            || mEGLAdapter.getGroupNumList().get(i)[1] == firstVisibleItem){
+                        tabSubClassify.setScrollPosition(i,0,true);
+                    }
+                }
+            }
+
         });
     }
 
@@ -234,12 +256,14 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
                             tabSubClassify.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                                 @Override
                                 public void onTabSelected(TabLayout.Tab tab) {
-                                    ShopCategory category = (ShopCategory) tab.getTag();
-                                    //锚点定位
-                                    for (int i = 0;i<mTCList.size();i++){
-                                        if (category.getId() == mTCList.get(i).getId()){
-                                            lvGoods.setSelectedGroup(i);
-                                            break;
+                                    if (!isListScrolling) {
+                                        ShopCategory category = (ShopCategory) tab.getTag();
+                                        //锚点定位
+                                        for (int i = 0; i < mTCList.size(); i++) {
+                                            if (category.getId() == mTCList.get(i).getId()) {
+                                                lvGoods.setSelectedGroup(i);
+                                                break;
+                                            }
                                         }
                                     }
 
@@ -308,7 +332,12 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
                                     otherList.add(product);
                                 }
                             }
-                            mProductMap.put("",otherList);
+                            if (otherList.size()>0) {
+                                mProductMap.put(mOtherCategory.getName(), otherList);
+                                mTCList.add(mOtherCategory);
+                                tabSubClassify.addTab(tabSubClassify.newTab()
+                                        .setText(mOtherCategory.getName()).setTag(mOtherCategory));
+                            }
 
                             //清除无商品的三级分类，不显示
                             Iterator<Map.Entry<String, List<ProductTransfer>>> iterator = mProductMap.entrySet().iterator();

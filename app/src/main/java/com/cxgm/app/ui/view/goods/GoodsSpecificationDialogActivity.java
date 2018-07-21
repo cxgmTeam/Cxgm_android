@@ -77,20 +77,25 @@ public class GoodsSpecificationDialogActivity extends BaseActivity {
         Glide.with(this).load(mProduct.getImage()).apply(new RequestOptions().placeholder(R.mipmap.default_img).error(R.mipmap.default_img))
                 .into(imgCover);
         tvPrice.setText(StringHelper.getRMBFormat(mProduct.getPrice()));
-        if (!TextUtils.isEmpty(mProduct.getUnit()))
-            tvUnit.setText("/"+mProduct.getUnit());
+        if (!TextUtils.isEmpty(mProduct.getUnit())) {
+            if ("kg".equalsIgnoreCase(mProduct.getUnit()))
+                tvUnit.setText(StringHelper.getSpecification(mProduct.getWeight(), mProduct.getUnit()));
+            else
+                tvUnit.setText("/" + mProduct.getUnit());
+        }
         if (mProduct.getPrice()< mProduct.getOriginalPrice()) {
             tvOriginPlace.setText(StringHelper.getStrikeFormat(StringHelper.getRMBFormat(mProduct.getOriginalPrice())));
             tvOriginPlace.setVisibility(View.VISIBLE);
         }else tvOriginPlace.setVisibility(View.GONE);
 
-        tvSelectNum.setText(getString(R.string.select_,mNum+mProduct.getUnit()));//数量要实时更新
+//        tvSelectNum.setText(getString(R.string.select_,mNum+mProduct.getUnit()));//数量要实时更新
+        tvSelectNum.setText(getString(R.string.select_,mNum+""));//数量要实时更新
         tvSpecification.setText(getString(R.string.specification_,
                 StringHelper.getSpecification(mProduct.getWeight(),mProduct.getUnit())));
-        if (!TextUtils.isEmpty(mProduct.getUnit()))
-            tvNumUnitTag.setText(getString(R.string.buy_num_,mProduct.getUnit()));
-        else
-            tvNumUnitTag.setText(R.string.buy_num);
+//        if (!TextUtils.isEmpty(mProduct.getUnit()))
+//            tvNumUnitTag.setText(getString(R.string.buy_num_,mProduct.getUnit()));
+//        else
+        tvNumUnitTag.setText(R.string.buy_num);
         tvNum.setText(mNum+"");
 
     }
@@ -105,7 +110,7 @@ public class GoodsSpecificationDialogActivity extends BaseActivity {
             case R.id.tvMinus:
                 if (mNum>1){
                     mNum--;
-                    tvSelectNum.setText(getString(R.string.select_,mNum+mProduct.getUnit()));
+                    tvSelectNum.setText(getString(R.string.select_,mNum+""));
                     tvNum.setText(mNum+"");
                 }
                 break;
@@ -114,7 +119,7 @@ public class GoodsSpecificationDialogActivity extends BaseActivity {
 //                if (mNum < mProduct.getMaximumQuantity()) {
                 if (mNum < 99) {
                     mNum++;
-                    tvSelectNum.setText(getString(R.string.select_,mNum+mProduct.getUnit()));
+                    tvSelectNum.setText(getString(R.string.select_,mNum+""));
                     tvNum.setText(mNum+"");
                 }else {
                     ToastManager.sendToast(getString(R.string.max_quantity));

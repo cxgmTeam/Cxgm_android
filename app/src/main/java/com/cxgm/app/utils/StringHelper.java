@@ -36,6 +36,9 @@ public class StringHelper {
 
     public static String getSpecification(String weight,String unit){
 //        return StringHelper.getWeight(weight)+"/"+unit;
+        if ("kg".equalsIgnoreCase(unit)){
+            return weight+unit;
+        }
         String str = "/";
         if (TextUtils.isEmpty(weight) || TextUtils.isEmpty(unit))
             str = "";
