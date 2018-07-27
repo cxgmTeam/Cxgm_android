@@ -147,7 +147,7 @@ public class MainActivity extends BaseActivity implements ViewHelper.OnShopCartU
                     rbIndex.setChecked(true);
                     return;
                 }
-                if (Constants.currentShop==null){
+                if (Constants.currentShopId==0){
                     ToastManager.sendToast(getString(R.string.choice_shop));
                     rbIndex.setChecked(true);
                     return;
@@ -156,7 +156,7 @@ public class MainActivity extends BaseActivity implements ViewHelper.OnShopCartU
                 getSupportFragmentManager().beginTransaction().show(mShopCartFragment).commit();
                 break;
             case R.id.rbGoods:
-                if (Constants.currentShop==null){
+                if (Constants.currentShopId==0){
                     ToastManager.sendToast(getString(R.string.choice_shop));
                     rbIndex.setChecked(true);
                     return;

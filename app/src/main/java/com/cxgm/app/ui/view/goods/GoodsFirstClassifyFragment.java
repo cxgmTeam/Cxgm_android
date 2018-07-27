@@ -70,7 +70,7 @@ public class GoodsFirstClassifyFragment extends BaseFragment {
     @Override
     public void onHiddenChanged(boolean hidden) {
         super.onHiddenChanged(hidden);
-        if (!hidden && Constants.currentShop != null) {
+        if (!hidden && Constants.currentShopId != 0) {
             mFCList.clear();
             loadData();
         }
@@ -95,7 +95,7 @@ public class GoodsFirstClassifyFragment extends BaseFragment {
 
     private void loadData() {
 
-        new FindFirstCategoryReq(getActivity(), Constants.currentShop.getId()).execute(new Request.RequestCallback<List<ShopCategory>>() {
+        new FindFirstCategoryReq(getActivity(), Constants.currentShopId).execute(new Request.RequestCallback<List<ShopCategory>>() {
             @Override
             public void onSuccess(List<ShopCategory> list) {
                 if (list != null) {

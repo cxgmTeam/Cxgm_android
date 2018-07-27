@@ -22,11 +22,12 @@ import java.util.List;
  */
 public class FindProductByCategoryReq extends Request {
 
-    int shopId,productCategoryTwoId;
+    int shopId,productCategoryId,productCategoryTwoId;
 
-    public FindProductByCategoryReq(Context context,int shopId,int productCategoryTwoId) {
+    public FindProductByCategoryReq(Context context,int shopId,int productCategoryId,int productCategoryTwoId) {
         super(context);
         this.shopId = shopId;
+        this.productCategoryId = productCategoryId;
         this.productCategoryTwoId = productCategoryTwoId;
     }
 
@@ -41,7 +42,9 @@ public class FindProductByCategoryReq extends Request {
         RequestParams params = new RequestParams(SERVER + Constants.PORT2 + "/homePage/findProductByCategory");
         params.setMethod(HttpMethod.GET);
         params.addQueryStringParameter("shopId",shopId+"");
-        params.addQueryStringParameter("productCategoryTwoId",productCategoryTwoId+"");
+        params.addQueryStringParameter("productCategoryId",productCategoryId+"");
+        if (productCategoryTwoId!=0)
+            params.addQueryStringParameter("productCategoryTwoId",productCategoryTwoId+"");
         return params;
     }
 

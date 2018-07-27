@@ -127,7 +127,7 @@ public class VerifyOrderActivity extends BaseActivity {
         setContentView(R.layout.activity_verify_order);
         ButterKnife.bind(this);
 
-        if (Constants.currentShop==null){
+        if (Constants.currentShopId==0){
             ToastManager.sendToast(getString(R.string.choice_shop));
             ViewJump.toMain(this,R.id.rbIndex);
             finish();
@@ -151,7 +151,7 @@ public class VerifyOrderActivity extends BaseActivity {
         imgBack.setVisibility(View.VISIBLE);
 
         mOrder = new Order();
-        mOrder.setStoreId(Constants.currentShop.getId());
+        mOrder.setStoreId(Constants.currentShopId);
 
         tvReceiveTime.setText(DeliveryTimeDialogActivity.TIMES[mDeliveryTimePosition]);
 
@@ -282,7 +282,7 @@ public class VerifyOrderActivity extends BaseActivity {
             @Override
             public void onSuccess(List<UserAddress> userAddresses) {
                 if (userAddresses!=null && userAddresses.size()>0){
-                    ViewHelper.filterAddress(VerifyOrderActivity.this, userAddresses, Constants.currentShop.getId(), new ViewHelper.OnActionListener() {
+                    ViewHelper.filterAddress(VerifyOrderActivity.this, userAddresses, Constants.currentShopId, new ViewHelper.OnActionListener() {
                         @Override
                         public void onSuccess() {
                             for (UserAddress address:userAddresses) {

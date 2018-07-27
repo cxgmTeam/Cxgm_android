@@ -132,7 +132,7 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
     //    boolean isSelectLock = false;
     int mBannerPosition = 1;
     int mShopCartNum = 0; //种类数
-    int mShopId;
+//    int mShopId;
     @BindView(R.id.gapTrademark)
     View gapTrademark;
     @BindView(R.id.layoutTrademark)
@@ -165,10 +165,9 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
         setContentView(R.layout.activity_goods_detail);
         ButterKnife.bind(this);
         mProductId = getIntent().getIntExtra("productId", 0);
-        if (Constants.currentShop == null) {
-            mShopId = getIntent().getIntExtra("shopId", 0);
-        } else {
-            mShopId = Constants.currentShop.getId();
+        if (Constants.currentShopId == 0) {
+            //推送消息时，传过来的shopid
+            Constants.currentShopId = getIntent().getIntExtra("shopId", 0);
         }
 
         ViewHelper.addOnShopCartUpdateListener(this);
@@ -283,8 +282,8 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
     }
 
     private void loadData() {
-        if (mShopId != 0 && mProductId > 0) {
-            new FindProductDetailReq(this, mProductId, mShopId).execute(new Request.RequestCallback<ProductTransfer>() {
+        if (Constants.currentShopId != 0 && mProductId > 0) {
+            new FindProductDetailReq(this, mProductId, Constants.currentShopId).execute(new Request.RequestCallback<ProductTransfer>() {
                 @Override
                 public void onSuccess(ProductTransfer product) {
                     if (product != null) {
@@ -337,7 +336,9 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
                             layoutOriginPlace.setVisibility(View.GONE);
                             gapOriginPlace.setVisibility(View.GONE);
                         }
-                        if (!TextUtils.isEmpty(mProduct.getWarrantyPeriod())) {
+                        if (!TextUtils.isEmpty(mProduct.getWarrantyPeriod())
+                                && "0天".equals(mProduct.getWarrantyPeriod())
+                                && "null天".equals(mProduct.getWarrantyPeriod())) {
                             //保质期
                             tvShelflife.setText(mProduct.getWarrantyPeriod());
                             layoutShelflife.setVisibility(View.VISIBLE);
@@ -479,7 +480,7 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
 
 
                         //猜你喜欢
-                        new PushProductsReq(GoodsDetailActivity.this, mShopId, mProduct.getProductCategoryTwoId(), mProduct.getProductCategoryThirdId())
+                        new PushProductsReq(GoodsDetailActivity.this, Constants.currentShopId, mProduct.getProductCategoryTwoId(), mProduct.getProductCategoryThirdId())
                                 .execute(new Request.RequestCallback<List<ProductTransfer>>() {
                                     @Override
                                     public void onSuccess(List<ProductTransfer> productTransfers) {

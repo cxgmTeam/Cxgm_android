@@ -79,7 +79,7 @@ public class ShopCart extends BaseEntity implements Cloneable{
     }
 
     public static ShopCart getShopCart(ProductTransfer product,int goodsNum){
-        return new ShopCart(product.getShopCartId(),product.getId(),product.getGoodCode(),product.getName(),goodsNum, Helper.moneyMultiply(product.getPrice(),goodsNum), Constants.currentShop.getId());
+        return new ShopCart(product.getShopCartId(),product.getId(),product.getGoodCode(),product.getName(),goodsNum, Helper.moneyMultiply(product.getPrice(),goodsNum), Constants.currentShopId);
     }
 
     public String getSpecifications() {

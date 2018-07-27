@@ -152,16 +152,17 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
     }
 
     private void loadData() {
-        if (Constants.currentShop==null){
+        if (Constants.currentShopId==0){
             ToastManager.sendToast(getString(R.string.choice_shop));
             finish();
         }else {
             //二级分类
-            new FindSecondCategoryReq(this, Constants.currentShop.getId(), mFirstCategory.getId())
+            new FindSecondCategoryReq(this, Constants.currentShopId, mFirstCategory.getId())
                     .execute(new Request.RequestCallback<List<ShopCategory>>() {
                         @Override
                         public void onSuccess(final List<ShopCategory> shopCategories) {
                             if (shopCategories != null && shopCategories.size() > 0) {
+                                tabClassify.setVisibility(View.VISIBLE);
                                 tabClassify.setTabAdapter(new TabAdapter() {
                                     @Override
                                     public int getCount() {
@@ -228,7 +229,12 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
 
                         @Override
                         public void onFinished() {
-
+                            //没有二级分类和三级分类
+                            if (tabClassify.getTabCount()<=0){
+                                loadGoodsList(0);
+                                tabClassify.setVisibility(View.GONE);
+                                tabSubClassify.setVisibility(View.GONE);
+                            }
                         }
                     });
         }
@@ -243,11 +249,12 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
     private void loadSubTabs(final int tabId) {
         mTCList.clear();
         tabSubClassify.removeAllTabs();
-        new FindThirdCategoryReq(this, Constants.currentShop.getId(), tabId)
+        new FindThirdCategoryReq(this, Constants.currentShopId, tabId)
                 .execute(new Request.RequestCallback<List<ShopCategory>>() {
                     @Override
                     public void onSuccess(List<ShopCategory> shopCategories) {
                         if (shopCategories != null) {
+                            tabSubClassify.setVisibility(View.VISIBLE);
                             mTCList.addAll(shopCategories);
                             for (ShopCategory category : mTCList) {
                                 tabSubClassify.addTab(tabSubClassify.newTab()
@@ -305,7 +312,7 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
      */
     private void loadGoodsList(int tabId) {
         //mProductMap.clear();
-        new FindProductByCategoryReq(this, Constants.currentShop.getId(),tabId)
+        new FindProductByCategoryReq(this, Constants.currentShopId,mFirstCategory.getId(),tabId)
                 .execute(new Request.RequestCallback<List<ProductTransfer>>() {
                     @Override
                     public void onSuccess(List<ProductTransfer> productTransferPageInfo) {

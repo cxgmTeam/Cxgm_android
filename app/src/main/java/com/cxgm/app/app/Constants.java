@@ -41,7 +41,8 @@ public class Constants {
     public static BDLocation currentLocation;//当前定位
     public static PoiInfo currentUserLocation;//用户在地图上点选的位置
     public static UserAddress defaultUserAddress;//默认收货地址或者在收货地址列表选择的地址,只做标记用，不要单独使用他，请使用getLocation()
-    public static Shop currentShop;//当前商铺
+//    public static Shop currentShop;//当前商铺
+    public static int currentShopId;//当前商铺ID
     private static boolean enableDeliveryAddress = false;//当前地址可配送
     public static boolean updatedAddress = false;//标记位，标记地址发生变化 三个变量控制地址 过于复杂,好多地方需要放到onresume等方法即时更新，设置标记位以减少重复加载次数
 

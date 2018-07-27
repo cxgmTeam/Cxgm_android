@@ -187,8 +187,8 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
     }
 
     private void loadData() {
-        if (UserManager.isUserLogin() && Constants.currentShop != null) {
-            new ShopCartListReq(getActivity(), Constants.currentShop.getId(), mPageNum, 10)
+        if (UserManager.isUserLogin() && Constants.currentShopId != 0) {
+            new ShopCartListReq(getActivity(), Constants.currentShopId, mPageNum, 10)
                     .execute(new Request.RequestCallback<PageInfo<ShopCart>>() {
                         @Override
                         public void onSuccess(PageInfo<ShopCart> shopCartPageInfo) {

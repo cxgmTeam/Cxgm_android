@@ -76,8 +76,8 @@ public class SearchActivity extends BaseActivity {
     }
 
     private void loadData(){
-        if (Constants.currentShop!=null) {
-            new FindHotProductReq(this, Constants.currentShop.getId(), 1, 8).execute(new Request.RequestCallback<PageInfo<ProductTransfer>>() {
+        if (Constants.currentShopId!=0) {
+            new FindHotProductReq(this, Constants.currentShopId, 1, 8).execute(new Request.RequestCallback<PageInfo<ProductTransfer>>() {
                 @Override
                 public void onSuccess(final PageInfo<ProductTransfer> productTransferPageInfo) {
                     if (productTransferPageInfo != null) {

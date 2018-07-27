@@ -148,8 +148,8 @@ public class IndexFragment extends BaseFragment {
     List<ProductTransfer> mNewProductList;
     GoodsAdapter mHotProductAdapter;
     List<ProductTransfer> mHotProductList;
-    MotionAdapter mMotionAdapter;
-    List<Motion> mMotionList;
+//    MotionAdapter mMotionAdapter;
+//    List<Motion> mMotionList;
 
     int mShopListPageNum = 1;
     List<Shop> mShopList;
@@ -229,7 +229,7 @@ public class IndexFragment extends BaseFragment {
 
         doShowPop();
 
-        if (Constants.currentShop == null) {
+        if (Constants.currentShopId == 0) {
             //无可配送商铺
             layoutShopShow.setVisibility(View.VISIBLE);
             layoutGoodsShow.setVisibility(View.GONE);
@@ -241,7 +241,7 @@ public class IndexFragment extends BaseFragment {
             lvShop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Constants.currentShop = mShopList.get((int) id);
+                    Constants.currentShopId = mShopList.get((int) id).getId();
                     init();
                     loadData();
                     ViewHelper.updateShopCart(getActivity());
@@ -329,9 +329,9 @@ public class IndexFragment extends BaseFragment {
                 }
             });
             //运营
-            mMotionList = new ArrayList<>();
-            mMotionAdapter = new MotionAdapter(getActivity(), mMotionList);
-            lvMotions.setAdapter(mMotionAdapter);
+//            mMotionList = new ArrayList<>();
+//            mMotionAdapter = new MotionAdapter(getActivity(), mMotionList);
+//            lvMotions.setAdapter(mMotionAdapter);
             lvMotions.setFocusable(false);
 
             mReportList = new ArrayList<>();
@@ -369,7 +369,7 @@ public class IndexFragment extends BaseFragment {
     private void loadData() {
 
 
-        if (Constants.currentShop == null) {
+        if (Constants.currentShopId == 0) {
             //商铺列表
             new ShopListReq(getActivity(), mShopListPageNum, 10)
                     .execute(new Request.RequestCallback<PageInfo<Shop>>() {
@@ -406,7 +406,7 @@ public class IndexFragment extends BaseFragment {
             mTopProductList.clear();
             mNewProductList.clear();
             mHotProductList.clear();
-            mMotionList.clear();
+//            mMotionList.clear();
             mReportList.clear();
             //首页分类
             mFCList.add(new ShopCategory(113, getString(R.string.first_category_1), "file:///android_asset/category/c1.png"));
@@ -449,7 +449,7 @@ public class IndexFragment extends BaseFragment {
 //            });
 
             //精品推荐
-            new FindTopProductReq(getActivity(), Constants.currentShop.getId(), 1, 10).execute(new Request.RequestCallback<PageInfo<ProductTransfer>>() {
+            new FindTopProductReq(getActivity(), Constants.currentShopId, 1, 10).execute(new Request.RequestCallback<PageInfo<ProductTransfer>>() {
                 @Override
                 public void onSuccess(PageInfo<ProductTransfer> productTransferPageInfo) {
                     if (productTransferPageInfo != null && productTransferPageInfo.getList() != null) {
@@ -475,7 +475,7 @@ public class IndexFragment extends BaseFragment {
             });
 
             //新品上市
-            new FindNewProductReq(getActivity(), Constants.currentShop.getId(), 1, 10).execute(new Request.RequestCallback<PageInfo<ProductTransfer>>() {
+            new FindNewProductReq(getActivity(), Constants.currentShopId, 1, 10).execute(new Request.RequestCallback<PageInfo<ProductTransfer>>() {
                 @Override
                 public void onSuccess(PageInfo<ProductTransfer> productTransferPageInfo) {
                     if (productTransferPageInfo != null && productTransferPageInfo.getList() != null) {
@@ -501,7 +501,7 @@ public class IndexFragment extends BaseFragment {
             });
 
             //热销推荐
-            new FindHotProductReq(getActivity(), Constants.currentShop.getId(), 1, 10).execute(new Request.RequestCallback<PageInfo<ProductTransfer>>() {
+            new FindHotProductReq(getActivity(), Constants.currentShopId, 1, 10).execute(new Request.RequestCallback<PageInfo<ProductTransfer>>() {
                 @Override
                 public void onSuccess(PageInfo<ProductTransfer> productTransferPageInfo) {
                     if (productTransferPageInfo != null && productTransferPageInfo.getList() != null) {
@@ -527,7 +527,7 @@ public class IndexFragment extends BaseFragment {
             });
 
             //轮播广告
-            new FindAdvertisementReq(getActivity(), Constants.currentShop.getId()).execute(new Request.RequestCallback<List<Advertisement>>() {
+            new FindAdvertisementReq(getActivity(), Constants.currentShopId).execute(new Request.RequestCallback<List<Advertisement>>() {
                 @Override
                 public void onSuccess(List<Advertisement> advertisements) {
                     //广告分组
@@ -647,14 +647,16 @@ public class IndexFragment extends BaseFragment {
             });
 
             //运营数据
-            new FindMotionReq(getActivity(), Constants.currentShop.getId()).execute(new Request.RequestCallback<List<Motion>>() {
+            new FindMotionReq(getActivity(), Constants.currentShopId).execute(new Request.RequestCallback<List<Motion>>() {
                 @Override
                 public void onSuccess(List<Motion> motions) {
                     if (motions != null && motions.size() > 0) {
                         //recyclerview的横向布局 第一个item 的间距存在问题，设置脏数据，配合MotionAdapter
-                        mMotionList.add(motions.get(0));
-                        mMotionList.addAll(motions);
-                        mMotionAdapter.notifyDataSetChanged();
+                        motions.add(0,motions.get(0));
+//                        mMotionList.add(motions.get(0));
+//                        mMotionList.addAll(motions);
+//                        mMotionAdapter.notifyDataSetChanged();
+                        lvMotions.setAdapter(new MotionAdapter(getActivity(), motions));
                         lvMotions.setVisibility(View.VISIBLE);
                     }else {
                         lvMotions.setVisibility(View.GONE);
@@ -678,7 +680,7 @@ public class IndexFragment extends BaseFragment {
             });
 
             //简报
-            new FindReportReq(getActivity(),Constants.currentShop.getId()).execute(new Request.RequestCallback<List<Motion>>() {
+            new FindReportReq(getActivity(),Constants.currentShopId).execute(new Request.RequestCallback<List<Motion>>() {
                 @Override
                 public void onSuccess(List<Motion> motions) {
                     if (motions!=null &&  motions.size()>0){
@@ -749,7 +751,7 @@ public class IndexFragment extends BaseFragment {
                 ViewJump.toAddrList(getActivity(), this);
                 break;
             case R.id.etSearchWord:
-                if (Constants.currentShop != null) {
+                if (Constants.currentShopId != 0) {
                     ViewJump.toSearch(getActivity());
                 } else {
                     ToastManager.sendToast(getString(R.string.choice_shop));
@@ -786,8 +788,8 @@ public class IndexFragment extends BaseFragment {
                                     @Override
                                     public void onSuccess(List<Shop> shops) {
                                         if (shops != null && shops.size() > 0) {
-                                            if (shops.size() == 1 && Constants.currentShop != null
-                                                    && shops.get(0).getId() == Constants.currentShop.getId())
+                                            if (shops.size() == 1 && Constants.currentShopId != 0
+                                                    && shops.get(0).getId() == Constants.currentShopId)
                                                 return;
 
                                             /**
@@ -813,13 +815,13 @@ public class IndexFragment extends BaseFragment {
                                             builder.setNegativeButton(R.string.cancel, null);
                                             builder.show();
                                             */
-                                            Constants.currentShop = shops.get(0);
+                                            Constants.currentShopId = shops.get(0).getId();
                                             Constants.setEnableDeliveryAddress(true);//可配送
                                             init();
                                             loadData();
                                             ViewHelper.updateShopCart(getActivity());
                                         } else {
-                                            if (Constants.currentShop != null) {
+                                            if (Constants.currentShopId != 0) {
                                                 //shop 从有到无
                                                 /*
                                                 new AlertDialog.Builder(getActivity()).setTitle(R.string.hint)
@@ -843,7 +845,7 @@ public class IndexFragment extends BaseFragment {
                                                 */
                                                 //shop置Null
                                                 Constants.setEnableDeliveryAddress(false);
-                                                Constants.currentShop = null;
+                                                Constants.currentShopId = 0;
                                                 init();
                                                 loadData();
                                                 ViewHelper.updateShopCart(getActivity());

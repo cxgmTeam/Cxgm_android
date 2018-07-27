@@ -124,12 +124,12 @@ public class SearchResultActivity extends BaseActivity {
     }
 
     private void loadData() {
-        if (Constants.currentShop != null) {
+        if (Constants.currentShopId != 0) {
             String keyword = etSearchWord.getText().toString().trim();
             if (TextUtils.isEmpty(keyword)) {
                 ToastManager.sendToast(getString(R.string.keyword_is_empty));
             } else {
-                new SearchReq(this, Constants.currentShop.getId(), keyword).execute(new Request.RequestCallback<PageInfo<ProductTransfer>>() {
+                new SearchReq(this, Constants.currentShopId, keyword).execute(new Request.RequestCallback<PageInfo<ProductTransfer>>() {
                     @Override
                     public void onSuccess(PageInfo<ProductTransfer> productTransferPageInfo) {
                         if (productTransferPageInfo != null && productTransferPageInfo.getList() != null) {

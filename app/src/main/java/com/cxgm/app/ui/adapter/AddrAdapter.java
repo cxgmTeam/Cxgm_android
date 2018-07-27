@@ -99,14 +99,14 @@ public class AddrAdapter extends BaseAdapter {
                             //更新全局默认地址
                             Constants.defaultUserAddress = mList.get(position);
                             //需要重新确定 地址是否是配送范围
-                            Constants.currentShop = null;
+                            Constants.currentShopId = 0;
                             Constants.setEnableDeliveryAddress(false);
                             new CheckAddressReq(activity,Constants.defaultUserAddress.getLongitude(),Constants.defaultUserAddress.getDimension())
                                     .execute(new Request.RequestCallback<List<Shop>>() {
                                         @Override
                                         public void onSuccess(List<Shop> shops) {
                                             if (shops!=null && shops.size()>0){
-                                                Constants.currentShop = shops.get(0);
+                                                Constants.currentShopId = shops.get(0).getId();
                                                 Constants.setEnableDeliveryAddress(true);
                                             }
                                         }

@@ -101,7 +101,7 @@ public class AddrOptionActivity extends BaseActivity {
                     @Override
                     public void onSuccess(List<UserAddress> userAddresses) {
                         if (userAddresses!=null){
-                            ViewHelper.filterAddress(AddrOptionActivity.this, userAddresses, Constants.currentShop.getId(), new ViewHelper.OnActionListener() {
+                            ViewHelper.filterAddress(AddrOptionActivity.this, userAddresses, Constants.currentShopId, new ViewHelper.OnActionListener() {
                                 @Override
                                 public void onSuccess() {
                                     mAddrList.addAll(userAddresses);

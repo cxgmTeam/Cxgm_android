@@ -211,7 +211,7 @@ public class LoginActivity extends BaseActivity {
                                                     @Override
                                                     public void onSuccess(List<Shop> shops) {
                                                         if (shops!=null && shops.size()>0){
-                                                            Constants.currentShop = shops.get(0);
+                                                            Constants.currentShopId = shops.get(0).getId();
                                                             Constants.setEnableDeliveryAddress(true);
                                                         }
                                                     }

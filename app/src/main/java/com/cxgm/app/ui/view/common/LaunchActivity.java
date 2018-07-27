@@ -153,7 +153,7 @@ public class LaunchActivity extends BaseActivity implements MapHelper.LocationCa
                                                 @Override
                                                 public void onSuccess(List<Shop> shops) {
                                                     if (shops!=null && shops.size()>0){
-                                                        Constants.currentShop = shops.get(0);
+                                                        Constants.currentShopId = shops.get(0).getId();
                                                         Constants.setEnableDeliveryAddress(true);
                                                     }
                                                 }
@@ -222,7 +222,7 @@ public class LaunchActivity extends BaseActivity implements MapHelper.LocationCa
                 @Override
                 public void onSuccess(List<Shop> shops) {
                     if (shops != null && shops.size() > 0) {
-                        Constants.currentShop = shops.get(0);
+                        Constants.currentShopId = shops.get(0).getId();
                         Constants.setEnableDeliveryAddress(true);
                     }
                 }
