@@ -427,4 +427,15 @@
             android:textColor="@color/textWhite"
             android:textSize="@dimen/text_size_large_x" />
     </LinearLayout>
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/tvBuyAgain"
+        android:background="@color/colorGreen"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height2"
+        android:text="@string/buy_again"
+        android:textColor="@color/textWhite"
+        android:textSize="@dimen/text_size_large_x" />
 </LinearLayout>

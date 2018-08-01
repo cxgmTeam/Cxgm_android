@@ -279,4 +279,9 @@
     <string name="empty">这里空空如也哦~</string>
     <string name="again_exit">再按一次退出程序</string>
 
+    <string name="tag_1">全球食材</string>
+    <string name="tag_2">优质放心</string>
+    <string name="tag_3">1小时送达</string>
+
+
 </resources>

@@ -16,6 +16,7 @@ import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.entity.Invoice;
 import com.cxgm.app.data.entity.Order;
+import com.cxgm.app.data.entity.OrderProduct;
 import com.cxgm.app.data.event.PayEvent;
 import com.cxgm.app.data.io.order.CancelOrderReq;
 import com.cxgm.app.data.io.order.OrderDetailReq;
@@ -31,6 +32,8 @@ import com.deanlib.ootb.utils.TextUtils;
 import com.deanlib.ootb.widget.ListViewForScrollView;
 
 import org.xutils.common.Callback;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -114,6 +117,8 @@ public class OrderDetailActivity extends BaseActivity {
     LinearLayout layoutRefund;
     @BindView(R.id.tvRefundAmount)
     TextView tvRefundAmount;
+    @BindView(R.id.tvBuyAgain)
+    TextView tvBuyAgain;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -224,6 +229,7 @@ public class OrderDetailActivity extends BaseActivity {
                     tvTime.setText(R.string.remaining_);
                     layoutBottomAction.setVisibility(View.VISIBLE);
                     layoutRefund.setVisibility(View.GONE);
+                    tvBuyAgain.setVisibility(View.GONE);
                     break;
                 case Order.STATUS_DISTRIBUTION:
                 case Order.STATUS_DISTRIBUTION2:
@@ -235,6 +241,7 @@ public class OrderDetailActivity extends BaseActivity {
                     tvTime.setText("");
                     layoutBottomAction.setVisibility(View.GONE);
                     layoutRefund.setVisibility(View.GONE);
+                    tvBuyAgain.setVisibility(View.VISIBLE);
                     break;
                 case Order.STATUS_DISTRIBUTING:
                     layoutOrderState.setBackgroundResource(R.color.colorGreen);
@@ -244,6 +251,7 @@ public class OrderDetailActivity extends BaseActivity {
                     tvTime.setText("");
                     layoutBottomAction.setVisibility(View.GONE);
                     layoutRefund.setVisibility(View.GONE);
+                    tvBuyAgain.setVisibility(View.VISIBLE);
                     break;
                 case Order.STATUS_COMPLETE:
                     layoutOrderState.setBackgroundResource(R.color.colorBlue);
@@ -253,6 +261,7 @@ public class OrderDetailActivity extends BaseActivity {
                     tvTime.setText("");
                     layoutBottomAction.setVisibility(View.GONE);
                     layoutRefund.setVisibility(View.GONE);
+                    tvBuyAgain.setVisibility(View.VISIBLE);
                     break;
                 case Order.STATUS_WAIT_REFUND:
                     //待退款  图标 文字 颜色
@@ -264,6 +273,7 @@ public class OrderDetailActivity extends BaseActivity {
                     layoutBottomAction.setVisibility(View.GONE);
                     layoutRefund.setVisibility(View.VISIBLE);
                     tvRefundAmount.setText(StringHelper.getRMBFormat(order.getOrderAmount()));
+                    tvBuyAgain.setVisibility(View.VISIBLE);
                     break;
                 case Order.STATUS_REFUND:
                     //已退款  图标 文字 颜色
@@ -275,6 +285,7 @@ public class OrderDetailActivity extends BaseActivity {
                     layoutBottomAction.setVisibility(View.GONE);
                     layoutRefund.setVisibility(View.VISIBLE);
                     tvRefundAmount.setText(StringHelper.getRMBFormat(order.getOrderAmount()));
+                    tvBuyAgain.setVisibility(View.VISIBLE);
                     break;
                 case Order.STATUS_CANCEL:
                     layoutOrderState.setBackgroundResource(R.color.colorGrayDark2);
@@ -284,6 +295,7 @@ public class OrderDetailActivity extends BaseActivity {
                     tvTime.setText("");
                     layoutBottomAction.setVisibility(View.GONE);
                     layoutRefund.setVisibility(View.GONE);
+                    tvBuyAgain.setVisibility(View.VISIBLE);
                     break;
                 case Order.STATUS_SYSTEM_CANCEL:
                     layoutOrderState.setBackgroundResource(R.color.colorGrayDark2);
@@ -293,6 +305,7 @@ public class OrderDetailActivity extends BaseActivity {
                     tvTime.setText("");
                     layoutBottomAction.setVisibility(View.GONE);
                     layoutRefund.setVisibility(View.GONE);
+                    tvBuyAgain.setVisibility(View.VISIBLE);
                     break;
                 default:
                     layoutOrderState.setVisibility(View.GONE);
@@ -358,7 +371,7 @@ public class OrderDetailActivity extends BaseActivity {
             mTimer.cancel();
     }
 
-    @OnClick({R.id.imgBack, R.id.tvCancelOrder, R.id.tvPayNow})
+    @OnClick({R.id.imgBack, R.id.tvCancelOrder, R.id.tvPayNow,R.id.tvBuyAgain})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgBack:
@@ -398,6 +411,11 @@ public class OrderDetailActivity extends BaseActivity {
                 if (mOrder!=null) {
                     ViewJump.toOrderPay(this, mOrder.getId(), mOrder.getOrderAmount());
                 }
+                break;
+            case R.id.tvBuyAgain:
+                //再次购买
+                if (mOrder!=null && mOrder.getProductDetails()!=null)
+                    ViewJump.toVerifyOrder(this, (ArrayList<OrderProduct>) mOrder.getProductDetails());
                 break;
         }
     }

@@ -12,7 +12,7 @@
         <!--android:layout_width="match_parent"-->
         <!--android:layout_height="@dimen/appbar_height"-->
         <!--android:layout_marginTop="@dimen/status_bar_height" />-->
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/layoutAppbar"
@@ -50,13 +50,77 @@
 
     </LinearLayout>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+    <LinearLayout
+        android:id="@+id/view1"
+        android:gravity="center_vertical"
         android:layout_below="@+id/layoutAppbar"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/margin_normal"
+        android:paddingRight="@dimen/margin_normal"
+        android:background="@color/colorGreen"
+        android:layout_width="match_parent"
+        android:layout_height="33dp">
+
+        <LinearLayout
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:src="@mipmap/tick3"
+                android:layout_width="13dp"
+                android:layout_height="13dp" />
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:text="@string/tag_1"
+                android:textColor="@color/textWhite"
+                android:textSize="@dimen/text_size_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_marginLeft="@dimen/margin_large"
+                android:src="@mipmap/tick3"
+                android:layout_width="13dp"
+                android:layout_height="13dp" />
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:text="@string/tag_2"
+                android:textColor="@color/textWhite"
+                android:textSize="@dimen/text_size_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <ImageView
+                android:layout_marginLeft="@dimen/margin_large"
+                android:src="@mipmap/tick3"
+                android:layout_width="13dp"
+                android:layout_height="13dp" />
+            <TextView
+                android:layout_marginLeft="5dp"
+                android:text="@string/tag_3"
+                android:textColor="@color/textWhite"
+                android:textSize="@dimen/text_size_small"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <ImageView
+            android:src="@mipmap/cxgm"
+            android:layout_width="81dp"
+            android:layout_height="21dp" />
+    </LinearLayout>
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:layout_below="@+id/view1"
         android:id="@+id/srl"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ScrollView
+        <com.cxgm.app.ui.widget.CustomScrollView
             android:id="@+id/scrollView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -401,7 +465,7 @@
                 </LinearLayout>
 
             </LinearLayout>
-        </ScrollView>
+        </com.cxgm.app.ui.widget.CustomScrollView>
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <include

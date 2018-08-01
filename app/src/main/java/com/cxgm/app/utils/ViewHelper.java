@@ -155,7 +155,7 @@ public class ViewHelper {
      */
     public static void updateShopCart(Context context) {
         if (UserManager.isUserLogin() && Constants.currentShopId != 0) {
-            new ShopCartListReq(context, Constants.currentShopId, 1, 1)
+            new ShopCartListReq(context, Constants.currentShopId)
                     .execute(false, new Request.RequestCallback<PageInfo<ShopCart>>() {
                         @Override
                         public void onSuccess(PageInfo<ShopCart> pageInfo) {

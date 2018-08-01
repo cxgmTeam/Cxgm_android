@@ -171,6 +171,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:visibility="gone"
                 android:id="@+id/layoutInvoice"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/item_height"

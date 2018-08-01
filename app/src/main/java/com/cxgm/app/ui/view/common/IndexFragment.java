@@ -46,6 +46,7 @@ import com.cxgm.app.ui.adapter.MotionAdapter;
 import com.cxgm.app.ui.adapter.ShopAdapter;
 import com.cxgm.app.ui.base.BaseFragment;
 import com.cxgm.app.ui.view.ViewJump;
+import com.cxgm.app.ui.widget.CustomScrollView;
 import com.cxgm.app.ui.widget.SpaceItemDecoration;
 import com.cxgm.app.utils.Helper;
 import com.cxgm.app.utils.ToastManager;
@@ -140,7 +141,7 @@ public class IndexFragment extends BaseFragment {
     @BindView(R.id.layoutAD2)
     LinearLayout layoutAD2;
     @BindView(R.id.scrollView)
-    ScrollView scrollView;
+    CustomScrollView scrollView;
 
     GoodsRecyclerViewAdapter mTopProductAdapter;
     List<ProductTransfer> mTopProductList;
@@ -354,6 +355,17 @@ public class IndexFragment extends BaseFragment {
                 if (mShopList!=null)
                     mShopList.clear();
                 loadData();
+            }
+        });
+
+        scrollView.setOnScrollChangeListener(new CustomScrollView.OnScrollChangeListener() {
+            @Override
+            public void onScrollChanged(CustomScrollView scrollView, int l, int t, int oldl, int oldt) {
+                if (t<10){
+                    doShowPop();
+                }else {
+                    dismissPopLocationInfo();
+                }
             }
         });
 

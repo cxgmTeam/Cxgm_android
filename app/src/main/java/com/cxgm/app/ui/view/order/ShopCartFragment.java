@@ -86,9 +86,10 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
     @BindView(R.id.layoutSumDiscounts)
     LinearLayout layoutSumDiscounts;
 
-    int mPageNum = 1;
+//    int mPageNum = 1;
     List<ShopCart> mCartList;
     CartGoodsAdapter mCartAdapter;
+    List<Integer> mCheckedCartIdList;//选中的ID
 
     //用于拦截OnShopCartActionListener.onChangeCheck方法更新数据时
     // cbCheckAll的setOnCheckedChangeListener方法
@@ -134,7 +135,8 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
     private void reset() {
         if (!isLoadData) {
             isLoadData = true;
-            mPageNum = 1;
+//            mPageNum = 1;
+            saveCheckedShopCartId();
             mCartList.clear();
             loadData();
             cbCheckAll.setChecked(false);
@@ -148,6 +150,7 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
         tvAction1.setVisibility(View.VISIBLE);
 
         mCartList = new ArrayList<>();
+        mCheckedCartIdList = new ArrayList<>();
         mCartAdapter = new CartGoodsAdapter(mCartList, this);
         lvGoods.setAdapter(mCartAdapter);
         lvGoods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -156,16 +159,19 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
                 ViewJump.toGoodsDetail(getActivity(), mCartList.get((int) id).getProductId());
             }
         });
+        srl.setEnableRefresh(true);
+        srl.setEnableLoadMore(false);
         srl.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
             @Override
             public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
-                mPageNum++;
+//                mPageNum++;
                 loadData();
             }
 
             @Override
             public void onRefresh(@NonNull RefreshLayout refreshLayout) {
-                mPageNum = 1;
+//                mPageNum = 1;
+                saveCheckedShopCartId();
                 mCartList.clear();
                 loadData();
             }
@@ -188,7 +194,7 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
 
     private void loadData() {
         if (UserManager.isUserLogin() && Constants.currentShopId != 0) {
-            new ShopCartListReq(getActivity(), Constants.currentShopId, mPageNum, 10)
+            new ShopCartListReq(getActivity(), Constants.currentShopId)
                     .execute(new Request.RequestCallback<PageInfo<ShopCart>>() {
                         @Override
                         public void onSuccess(PageInfo<ShopCart> shopCartPageInfo) {
@@ -196,6 +202,7 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
                                 layoutGoodsList.setVisibility(View.VISIBLE);
                                 layoutEmptyShopCart.setVisibility(View.GONE);
                                 mCartList.addAll(shopCartPageInfo.getList());
+                                syncCheckedShopCart();
                                 mCartAdapter.notifyDataSetChanged();
                                 loadBottomData();
                             }
@@ -224,6 +231,37 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
                     });
         } else
             isLoadData = false;
+    }
+
+    /**
+     * 同步选中的状态，状态集
+     */
+    private void syncCheckedShopCart(){
+        if (mCartList!=null && mCheckedCartIdList!=null){
+            for (int i :mCheckedCartIdList){
+                for (ShopCart shopCart : mCartList){
+                    if (shopCart.getId() == i){
+                        shopCart.isChecked = true;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * 保存选中阙状态
+     */
+    private void saveCheckedShopCartId(){
+        if (mCartList!=null ){
+            if (mCheckedCartIdList == null)
+                mCheckedCartIdList = new ArrayList<>();
+            mCheckedCartIdList.clear();
+            for (ShopCart shopCart : mCartList){
+                if (shopCart.isChecked)
+                    mCheckedCartIdList.add(shopCart.getId());
+            }
+        }
     }
 
 
