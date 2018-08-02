@@ -41,7 +41,7 @@
         android:id="@+id/srl"
         android:layout_marginTop="@dimen/margin_normal"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <ListView
             android:listSelector="@color/transparent"
@@ -49,7 +49,7 @@
             android:dividerHeight="0dp"
             android:id="@+id/listView"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:scrollbars="none" />
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>

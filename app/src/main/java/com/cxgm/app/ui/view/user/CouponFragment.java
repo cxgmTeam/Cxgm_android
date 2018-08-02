@@ -78,14 +78,7 @@ public class CouponFragment extends BaseFragment {
         }
 
         init();
-    }
-
-    @Override
-    public void onHiddenChanged(boolean hidden) {
-        super.onHiddenChanged(hidden);
-        if (!hidden){
-            loadData();
-        }
+        loadData();
     }
 
     private void init() {
