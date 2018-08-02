@@ -19,6 +19,7 @@ import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.entity.CategoryAndAmount;
 import com.cxgm.app.data.entity.CouponDetail;
+import com.cxgm.app.data.entity.DeliveryTime;
 import com.cxgm.app.data.entity.Invoice;
 import com.cxgm.app.data.entity.Order;
 import com.cxgm.app.data.entity.OrderProduct;
@@ -44,6 +45,7 @@ import org.xutils.common.Callback;
 import org.xutils.common.util.DensityUtil;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -116,7 +118,7 @@ public class VerifyOrderActivity extends BaseActivity {
     float mDiscounts = 0f;//限时优惠 不包括优惠券
     List<CouponDetail> mCouponList;
     Order mOrder;
-    int mDeliveryTimePosition = 0;
+//    int mDeliveryTimePosition = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,7 +155,29 @@ public class VerifyOrderActivity extends BaseActivity {
         mOrder = new Order();
         mOrder.setStoreId(Constants.currentShopId);
 
-        tvReceiveTime.setText(DeliveryTimeDialogActivity.TIMES[mDeliveryTimePosition]);
+        Calendar calendar = Calendar.getInstance();
+        int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+        int initHour = currentHour;
+
+        long offTime = 0;
+        if (currentHour<9){
+            //当日
+            initHour = 9;
+        }else if (currentHour>=21){
+            //次日
+
+            offTime = 1000 * 60 * 60 * 24;
+            initHour = 9;
+        }else {
+            initHour++;
+        }
+
+        String day = FormatUtils.convertDateTimestampToString(calendar.getTimeInMillis()+offTime,"yyyy年M月d日");
+
+        String time = initHour+":00-"+(initHour+1)+":00";
+
+        tvReceiveTime.setText(getString(offTime!=0?R.string.tomorrow:R.string.today) + " " +time);
+        tvReceiveTime.setTag(day + " "+time);
 
         //商品
         View itemView = View.inflate(this,R.layout.layout_3goods_1info,null);
@@ -243,7 +267,7 @@ public class VerifyOrderActivity extends BaseActivity {
                         return;
                     }
 
-                    mOrder.setReceiveTime(tvReceiveTime.getText().toString());
+                    mOrder.setReceiveTime((String)tvReceiveTime.getTag());
                     mOrder.setRemarks(etRemark.getText().toString().trim());
 
                     //提交订单
@@ -360,7 +384,7 @@ public class VerifyOrderActivity extends BaseActivity {
                 break;
             case R.id.layoutReceiveTime:
                 //选择送货时间
-                ViewJump.toDeliveryTimeDialog(this,mDeliveryTimePosition);
+                ViewJump.toDeliveryTimeDialog(this,(String)tvReceiveTime.getTag());
                 break;
             case R.id.layoutCoupon:
                 //优惠券 满减
@@ -426,8 +450,10 @@ public class VerifyOrderActivity extends BaseActivity {
                     break;
                 case ViewJump.CODE_DELIVERY_TIME_DIALOG:
                     if (data!=null){
-                        mDeliveryTimePosition = data.getIntExtra("position",mDeliveryTimePosition);
-                        tvReceiveTime.setText(DeliveryTimeDialogActivity.TIMES[mDeliveryTimePosition]);
+                        DeliveryTime time = (DeliveryTime) data.getSerializableExtra("deliveryTime");
+                        if (time!=null)
+                            tvReceiveTime.setText(getString(time.isCurrentDay()?R.string.today:R.string.tomorrow) + " " + time.getTime());
+                            tvReceiveTime.setTag(time.getDate());
                     }
                     break;
             }

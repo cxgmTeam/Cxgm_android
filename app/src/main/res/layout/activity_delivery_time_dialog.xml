@@ -48,94 +48,29 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tvDay"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/item_height"
                 android:background="@color/colorWhite"
                 android:gravity="center"
                 android:paddingLeft="@dimen/margin_giant"
                 android:paddingRight="@dimen/margin_giant"
-                android:text="@string/tomorrow"
+                android:text="@string/today"
                 android:textColor="@color/textGreen"
                 android:textSize="@dimen/text_size_large" />
         </LinearLayout>
 
-        <LinearLayout
+        <ListView
+            android:listSelector="@color/transparent"
+            android:id="@+id/lvTimes"
+            android:scrollbars="none"
+            android:dividerHeight="@dimen/line"
+            android:divider="@color/colorLine"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/view2"
             android:layout_toRightOf="@id/view3"
-            android:orientation="vertical"
-            android:paddingLeft="@dimen/margin_large_t"
-            android:paddingRight="@dimen/margin_giant">
-
-            <RelativeLayout
-                android:id="@+id/layoutTime1"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/item_height"
-                android:background="@color/colorWhite"
-                >
-
-                <TextView
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/cbTime1"
-                    android:id="@+id/tvTime1"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/textBlack"
-                    android:textSize="@dimen/text_size_large" />
-
-                <CheckBox
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    android:id="@+id/cbTime1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/item_height"
-                    android:button="@drawable/selector_check2"
-                    android:gravity="center_vertical" />
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/line"
-                android:background="@color/colorLine" />
-
-            <RelativeLayout
-                android:id="@+id/layoutTime2"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/item_height"
-                android:background="@color/colorWhite"
-                >
-
-                <TextView
-                    android:layout_toLeftOf="@id/tvTime2"
-                    android:id="@+id/tvTime2"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/textBlack"
-                    android:textSize="@dimen/text_size_large" />
-
-                <CheckBox
-                    android:layout_alignParentRight="true"
-                    android:layout_centerVertical="true"
-                    android:id="@+id/cbTime2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="@dimen/item_height"
-                    android:button="@drawable/selector_check2"
-                    android:gravity="center_vertical" />
-
-            </RelativeLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/line"
-                android:background="@color/colorLine" />
-
-        </LinearLayout>
-
+            />
 
     </RelativeLayout>
 </RelativeLayout>

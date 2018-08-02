@@ -5,15 +5,20 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
+import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
+import com.cxgm.app.data.entity.DeliveryTime;
+import com.cxgm.app.ui.adapter.TimeAdapter;
 import com.cxgm.app.ui.base.BaseActivity;
+import com.deanlib.ootb.utils.FormatUtils;
+
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -30,22 +35,17 @@ public class DeliveryTimeDialogActivity extends BaseActivity {
 
     @BindView(R.id.imgClose)
     ImageView imgClose;
-    @BindView(R.id.tvTime1)
-    TextView tvTime1;
-    @BindView(R.id.cbTime1)
-    CheckBox cbTime1;
-    @BindView(R.id.layoutTime1)
-    RelativeLayout layoutTime1;
-    @BindView(R.id.tvTime2)
-    TextView tvTime2;
-    @BindView(R.id.cbTime2)
-    CheckBox cbTime2;
-    @BindView(R.id.layoutTime2)
-    RelativeLayout layoutTime2;
+    @BindView(R.id.lvTimes)
+    ListView lvTimes;
+    @BindView(R.id.tvDay)
+    TextView tvDay;
 
-    public static final String[] TIMES = {"09:00-18:00","18:00-22:00"};
+//    public static final String[] TIMES = {"09:00-18:00", "18:00-22:00"};
 
-    int mPosition;
+    int mPosition = 0;
+    String mDate;
+    List<DeliveryTime> mTimeList;
+    TimeAdapter mTimeAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,52 +55,66 @@ public class DeliveryTimeDialogActivity extends BaseActivity {
         }
         setContentView(R.layout.activity_delivery_time_dialog);
         ButterKnife.bind(this);
-        mPosition = getIntent().getIntExtra("position",0);
+        mDate = getIntent().getStringExtra("date");
         init();
     }
 
     private void init() {
-        tvTime1.setText(TIMES[0]);
-        tvTime2.setText(TIMES[1]);
-        if (mPosition==0){
-            layoutTime1.performClick();
-        }else if (mPosition == 1){
-            layoutTime2.performClick();
+        mTimeList = new ArrayList<>();
+        Calendar calendar = Calendar.getInstance();
+        int currentHour = calendar.get(Calendar.HOUR_OF_DAY);
+        int initHour = currentHour;
+        tvDay.setText(R.string.today);
+        long offTime = 0;
+        if (currentHour<9){
+            //当日
+            initHour = 9;
+        }else if (currentHour>=21){
+            //次日
+            tvDay.setText(R.string.tomorrow);
+            offTime = 1000 * 60 * 60 * 24;
+            initHour = 9;
+        }else {
+            initHour++;
         }
-        cbTime1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                layoutTime1.performClick();
+
+        String day = FormatUtils.convertDateTimestampToString(calendar.getTimeInMillis()+offTime,"yyyy年M月d日");
+
+        for (int i = initHour;i<21;i++){
+            String time = i+":00-"+(i+1)+":00";
+            mTimeList.add(new DeliveryTime(time,day + " "+time,offTime==0));
+        }
+
+        if (mTimeList.size()>0) {
+            for (int i = 0;i<mTimeList.size();i++){
+                if (mTimeList.get(i).getDate().equals(mDate)){
+                    mPosition = i;
+                    break;
+                }
             }
-        });
-        cbTime2.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            mTimeList.get(mPosition).isChecked = true;
+        }
+
+        lvTimes.setAdapter(mTimeAdapter = new TimeAdapter(mTimeList));
+        lvTimes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                layoutTime2.performClick();
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                for (int i = 0 ;i<mTimeList.size();i++){
+                    mTimeList.get(i).isChecked = i == id;
+                }
+                mTimeAdapter.notifyDataSetChanged();
+                mPosition = (int) id;
             }
         });
     }
 
 
-    @OnClick({R.id.imgClose, R.id.layoutTime1, R.id.layoutTime2})
+    @OnClick({R.id.imgClose})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgClose:
                 finish();
-                break;
-            case R.id.layoutTime1:
-                tvTime2.setTextColor(getResources().getColor(R.color.textBlack));
-                cbTime2.setChecked(false);
-                tvTime1.setTextColor(getResources().getColor(R.color.textGreen));
-                cbTime1.setChecked(true);
-                mPosition = 0;
-                break;
-            case R.id.layoutTime2:
-                tvTime1.setTextColor(getResources().getColor(R.color.textBlack));
-                cbTime1.setChecked(false);
-                tvTime2.setTextColor(getResources().getColor(R.color.textGreen));
-                cbTime2.setChecked(true);
-                mPosition = 1;
                 break;
         }
     }
@@ -108,8 +122,12 @@ public class DeliveryTimeDialogActivity extends BaseActivity {
     @Override
     public void finish() {
         Intent data = new Intent();
-        data.putExtra("position",mPosition);
-        setResult(RESULT_OK,data);
+        if (mTimeList.size()>0)
+            data.putExtra("deliveryTime", mTimeList.get(mPosition));
+        setResult(RESULT_OK, data);
         super.finish();
     }
+
+
+
 }

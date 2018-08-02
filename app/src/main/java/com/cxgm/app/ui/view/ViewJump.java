@@ -200,9 +200,9 @@ public class ViewJump {
         activity.startActivity(intent);
     }
 
-    public static void toDeliveryTimeDialog(Activity activity,int position){
+    public static void toDeliveryTimeDialog(Activity activity,String date){
         Intent intent = new Intent(activity, DeliveryTimeDialogActivity.class);
-        intent.putExtra("position",position);
+        intent.putExtra("date",date);
         activity.startActivityForResult(intent,CODE_DELIVERY_TIME_DIALOG);
         DeviceUtils.backgroundAlpha(activity,0.5f);
     }
