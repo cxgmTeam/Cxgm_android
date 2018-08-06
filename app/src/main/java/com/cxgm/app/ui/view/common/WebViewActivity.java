@@ -1,6 +1,9 @@
 package com.cxgm.app.ui.view.common;
 
+import android.Manifest;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
@@ -15,7 +18,11 @@ import android.widget.TextView;
 
 import com.cxgm.app.R;
 import com.cxgm.app.ui.base.BaseActivity;
+import com.deanlib.ootb.manager.PermissionManager;
+import com.deanlib.ootb.utils.AppUtils;
 import com.deanlib.ootb.utils.DLogUtils;
+import com.deanlib.ootb.utils.ValidateUtils;
+import com.tbruyelle.rxpermissions.Permission;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
@@ -27,6 +34,7 @@ import java.util.regex.Pattern;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.functions.Action1;
 
 public class WebViewActivity extends BaseActivity {
 
@@ -125,6 +133,23 @@ public class WebViewActivity extends BaseActivity {
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
             DLogUtils.i("拦截url:"+url);
+            if (url.startsWith("tel://")){
+                PermissionManager.requstPermission(WebViewActivity.this, new Action1<Permission>() {
+                    @Override
+                    public void call(Permission permission) {
+                        if (permission.granted) {
+
+                            String phoneNum = url.substring(6);
+                            Intent intent = new Intent();
+                            intent.setAction(Intent.ACTION_CALL);
+                            intent.setData(Uri.parse("tel:"+phoneNum));
+                            startActivity(intent);
+                        }
+                    }
+                }, Manifest.permission.CALL_PHONE);
+
+                return true;
+            }
 //            if(url.equals("http://www.google.com/")){
 //                Toast.makeText(MainActivity.this,"国内不能访问google,拦截该url",Toast.LENGTH_LONG).show();
 //                return true;//表示我已经处理过了

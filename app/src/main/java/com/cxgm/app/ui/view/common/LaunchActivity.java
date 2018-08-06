@@ -125,10 +125,6 @@ public class LaunchActivity extends BaseActivity implements MapHelper.LocationCa
             @Override
             public void call(Permission permission) {
 
-                if (permission.granted) {
-
-
-                }
                 mCount++;
                 if (mCount >= mPermissions.length) {
                     //需要限定权限框询问结束时 打开定位打开Main

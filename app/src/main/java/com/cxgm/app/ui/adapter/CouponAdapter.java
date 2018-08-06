@@ -1,5 +1,6 @@
 package com.cxgm.app.ui.adapter;
 
+import android.animation.ObjectAnimator;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,9 +27,11 @@ import butterknife.ButterKnife;
  */
 public class CouponAdapter extends BaseAdapter {
     List<CouponDetail> mList;
-    public CouponAdapter(List<CouponDetail> mList){
+
+    public CouponAdapter(List<CouponDetail> mList) {
         this.mList = mList;
     }
+
     @Override
     public int getCount() {
         return mList.size();
@@ -52,19 +55,19 @@ public class CouponAdapter extends BaseAdapter {
             view = View.inflate(viewGroup.getContext(), R.layout.layout_coupon_item, null);
             holder = new ViewHolder(view);
             view.setTag(holder);
-        }else {
+        } else {
             holder = (ViewHolder) view.getTag();
         }
 
-        if (CouponDetail.STATUS_ENABLE == mList.get(i).getStatus()){
+        if (CouponDetail.STATUS_ENABLE == mList.get(i).getStatus()) {
             holder.layoutBg.setBackgroundResource(R.mipmap.coupon_bg);
-        }else {
+        } else {
             holder.layoutBg.setBackgroundResource(R.mipmap.coupon_bg2);
         }
         holder.tvValue.setText(mList.get(i).getPriceExpression());
-        holder.tvCondition.setText(viewGroup.getContext().getString(R.string._full_reduction,new BigDecimal(mList.get(i).getMaximumPrice()).setScale(2,BigDecimal.ROUND_DOWN).toString()));
+        holder.tvCondition.setText(viewGroup.getContext().getString(R.string._full_reduction, new BigDecimal(mList.get(i).getMaximumPrice()).setScale(2, BigDecimal.ROUND_DOWN).toString()));
         holder.tvName.setText(mList.get(i).getName());
-        holder.tvIndate.setText(Helper.longData2shortData(mList.get(i).getBeginDate()) + "-"+ Helper.longData2shortData(mList.get(i).getEndDate()));
+        holder.tvIndate.setText(Helper.longData2shortData(mList.get(i).getBeginDate()) + "-" + Helper.longData2shortData(mList.get(i).getEndDate()));
 
 //        holder.tvUse.setOnClickListener(new View.OnClickListener() {
 //            @Override
@@ -73,12 +76,27 @@ public class CouponAdapter extends BaseAdapter {
 //            }
 //        });
 
-        if (!TextUtils.isEmpty(mList.get(i).getIntroduction())){
-            holder.tvRulesContent.setVisibility(View.VISIBLE);
-            holder.tvRulesContent.setText(mList.get(i).getIntroduction());
-        }else {
-            holder.tvRulesContent.setVisibility(View.GONE);
-        }
+        holder.imgShowRules.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (holder.tvRulesContent.getVisibility() == View.GONE){
+                    ObjectAnimator.ofFloat(v,"rotation",180).start();
+                    holder.tvRulesContent.setVisibility(View.VISIBLE);
+                    holder.tvRulesContent.setText(mList.get(i).getIntroduction());
+                }else {
+                    ObjectAnimator.ofFloat(v,"rotation",0).start();
+                    holder.tvRulesContent.setVisibility(View.GONE);
+                }
+            }
+        });
+
+//        if (!TextUtils.isEmpty(mList.get(i).getIntroduction())) {
+//            holder.tvRulesContent.setVisibility(View.VISIBLE);
+//            holder.tvRulesContent.setText(mList.get(i).getIntroduction());
+//        } else {
+//            holder.tvRulesContent.setVisibility(View.GONE);
+//        }
+
 
         return view;
     }
