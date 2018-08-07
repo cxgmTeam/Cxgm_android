@@ -65,7 +65,7 @@ public class CouponAdapter extends BaseAdapter {
             holder.layoutBg.setBackgroundResource(R.mipmap.coupon_bg2);
         }
         holder.tvValue.setText(mList.get(i).getPriceExpression());
-        holder.tvCondition.setText(viewGroup.getContext().getString(R.string._full_reduction, new BigDecimal(mList.get(i).getMaximumPrice()).setScale(2, BigDecimal.ROUND_DOWN).toString()));
+        holder.tvCondition.setText(viewGroup.getContext().getString(R.string._full_reduction, mList.get(i).getMaximumPrice()+""));
         holder.tvName.setText(mList.get(i).getName());
         holder.tvIndate.setText(Helper.longData2shortData(mList.get(i).getBeginDate()) + "-" + Helper.longData2shortData(mList.get(i).getEndDate()));
 
