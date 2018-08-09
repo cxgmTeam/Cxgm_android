@@ -234,11 +234,11 @@ public class App extends MultiDexApplication {
         Intent intent = new Intent();
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         intent.putExtra("isFromPushMessage",true);
-        if ("0".equals(msg.getType())) {
+        if ("2".equals(msg.getUrlType())) {
             intent.setClass(context, GoodsDetailActivity.class);
             intent.putExtra("productId", (int)FormatUtils.convertStringToNum(msg.getGoodcode()));
             intent.putExtra("shopId", (int)FormatUtils.convertStringToNum(msg.getShopId()));
-        }else if ("1".equals(msg.getType())){
+        }else if ("1".equals(msg.getUrlType())){
             intent.setAction(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(msg.getGoodcode()));
         }else {

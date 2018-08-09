@@ -35,12 +35,15 @@ public class Message extends BaseEntity {
 
     @Column(name = "time")
     private String time;
-    @Column(name = "type")
-    private String type;//type为0时跳转商品详情，type为1时直接打开H5连接
+//    @Column(name = "type")
+//    private String type;
     @Column(name = "goodcode")
     private String goodcode;
     @Column(name = "shopId")
     private String shopId;
+    @Column(name = "urlType")
+    private String urlType;//1是跳转网页2是跳转商品详情
+
 
 
     public Message() {
@@ -78,13 +81,13 @@ public class Message extends BaseEntity {
         this.time = time;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
+//    public String getType() {
+//        return type;
+//    }
+//
+//    public void setType(String type) {
+//        this.type = type;
+//    }
 
     public String getGoodcode() {
         return goodcode;
@@ -100,5 +103,13 @@ public class Message extends BaseEntity {
 
     public void setShopId(String shopId) {
         this.shopId = shopId;
+    }
+
+    public String getUrlType() {
+        return urlType;
+    }
+
+    public void setUrlType(String urlType) {
+        this.urlType = urlType;
     }
 }

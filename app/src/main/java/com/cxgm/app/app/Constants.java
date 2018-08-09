@@ -47,7 +47,7 @@ public class Constants {
     public static boolean updatedAddress = false;//标记位，标记地址发生变化 三个变量控制地址 过于复杂,好多地方需要放到onresume等方法即时更新，设置标记位以减少重复加载次数
 
     public static boolean notify = true;//是否接收通知
-    public static float postage = 10f;//邮费
+    public static float postage = 7f;//邮费
 
     public static final String NOTIFIY_CHANNEL_ID = "1";
     public static final String NOTIFIY_CHANNEL_NAME = "Notifiy";
