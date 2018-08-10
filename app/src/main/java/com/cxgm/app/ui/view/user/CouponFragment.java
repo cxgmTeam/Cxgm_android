@@ -73,7 +73,7 @@ public class CouponFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        if (getArguments()!=null){
+        if (getArguments() != null) {
             mState = getArguments().getInt("state");
         }
 
@@ -83,9 +83,9 @@ public class CouponFragment extends BaseFragment {
 
     private void init() {
 
-        if (mState == CouponDetail.STATUS_ENABLE){
+        if (mState == CouponDetail.STATUS_ENABLE) {
             layoutExchange.setVisibility(View.VISIBLE);
-        }else {
+        } else {
             layoutExchange.setVisibility(View.GONE);
         }
 
@@ -109,14 +109,14 @@ public class CouponFragment extends BaseFragment {
     }
 
     private void loadData() {
-        new FindCouponsReq(getActivity(),mState, pageNum, 10)
+        new FindCouponsReq(getActivity(), mState, pageNum, 10)
                 .execute(new Request.RequestCallback<PageInfo<CouponDetail>>() {
                     @Override
                     public void onSuccess(PageInfo<CouponDetail> couponDetailPageInfo) {
                         if (couponDetailPageInfo != null && couponDetailPageInfo.getList() != null) {
                             mCouponList.addAll(couponDetailPageInfo.getList());
                             mCouponAdapter.notifyDataSetChanged();
-                            ((CouponActivity)getActivity()).updateTitleNum(mState,couponDetailPageInfo.getTotal());
+                            ((CouponActivity) getActivity()).updateTitleNum(mState, couponDetailPageInfo.getTotal());
                         }
                     }
 
@@ -144,41 +144,49 @@ public class CouponFragment extends BaseFragment {
         unbinder.unbind();
     }
 
-    @OnClick(R.id.tvExchange)
-    public void onViewClicked() {
-        //兑换
-        String code = etExchangeCode.getText().toString().trim();
-        if (TextUtils.isEmpty(code)){
-            ToastManager.sendToast(getString(R.string.coupon_code_invalid));
-            return;
-        }
-        new ExchangeCouponsReq(getActivity(),code)
-                .execute(new Request.RequestCallback<CouponDetail>() {
-                    @Override
-                    public void onSuccess(CouponDetail couponDetail) {
-                        if (couponDetail!=null){
-                            ToastManager.sendToast(getString(R.string.exchange_success));
-                            if (couponDetail.getStatus() == CouponDetail.STATUS_ENABLE){
-                                mCouponList.add(0,couponDetail);
-                                mCouponAdapter.notifyDataSetChanged();
+
+    @OnClick({R.id.imgScan, R.id.tvExchange})
+    public void onViewClicked(View view) {
+        switch (view.getId()) {
+            case R.id.imgScan:
+                //todo 扫码
+                break;
+            case R.id.tvExchange:
+                //兑换
+                String code = etExchangeCode.getText().toString().trim();
+                if (TextUtils.isEmpty(code)){
+                    ToastManager.sendToast(getString(R.string.coupon_code_invalid));
+                    return;
+                }
+                new ExchangeCouponsReq(getActivity(),code)
+                        .execute(new Request.RequestCallback<CouponDetail>() {
+                            @Override
+                            public void onSuccess(CouponDetail couponDetail) {
+                                if (couponDetail!=null){
+                                    ToastManager.sendToast(getString(R.string.exchange_success));
+                                    if (couponDetail.getStatus() == CouponDetail.STATUS_ENABLE){
+                                        mCouponList.add(0,couponDetail);
+                                        mCouponAdapter.notifyDataSetChanged();
+                                    }
+                                }
                             }
-                        }
-                    }
 
-                    @Override
-                    public void onError(Throwable ex, boolean isOnCallback) {
+                            @Override
+                            public void onError(Throwable ex, boolean isOnCallback) {
 
-                    }
+                            }
 
-                    @Override
-                    public void onCancelled(Callback.CancelledException cex) {
+                            @Override
+                            public void onCancelled(Callback.CancelledException cex) {
 
-                    }
+                            }
 
-                    @Override
-                    public void onFinished() {
+                            @Override
+                            public void onFinished() {
 
-                    }
-                });
+                            }
+                        });
+                break;
+        }
     }
 }
