@@ -1,5 +1,6 @@
 package com.cxgm.app.ui.view.user;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -19,6 +20,7 @@ import com.cxgm.app.data.io.user.ExchangeCouponsReq;
 import com.cxgm.app.data.io.user.FindCouponsReq;
 import com.cxgm.app.ui.adapter.CouponAdapter;
 import com.cxgm.app.ui.base.BaseFragment;
+import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.utils.Helper;
 import com.cxgm.app.utils.ToastManager;
 import com.deanlib.ootb.data.io.Request;
@@ -149,7 +151,8 @@ public class CouponFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgScan:
-                //todo 扫码
+                //扫码
+                ViewJump.toScan(getActivity(),this);
                 break;
             case R.id.tvExchange:
                 //兑换
@@ -168,6 +171,8 @@ public class CouponFragment extends BaseFragment {
                                         mCouponList.add(0,couponDetail);
                                         mCouponAdapter.notifyDataSetChanged();
                                     }
+                                }else {
+                                    ToastManager.sendToast(getString(R.string.exchange_code_invalid));
                                 }
                             }
 
@@ -187,6 +192,24 @@ public class CouponFragment extends BaseFragment {
                             }
                         });
                 break;
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == getActivity().RESULT_OK){
+            switch (requestCode){
+                case ViewJump.CODE_SCAN:
+                    if (data!=null) {
+                        String result = data.getStringExtra("result");
+                        if (result!=null) {
+                            etExchangeCode.setText(result);
+                            etExchangeCode.setSelection(result.length());
+                        }
+                    }
+                break;
+            }
         }
     }
 }

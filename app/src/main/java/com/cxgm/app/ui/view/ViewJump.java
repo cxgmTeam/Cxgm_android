@@ -13,6 +13,7 @@ import com.cxgm.app.data.entity.ShopCategory;
 import com.cxgm.app.data.entity.UserAddress;
 import com.cxgm.app.ui.view.common.AboutActivity;
 import com.cxgm.app.ui.view.common.MainActivity;
+import com.cxgm.app.ui.view.common.ScanActivity;
 import com.cxgm.app.ui.view.common.SettingsActivity;
 import com.cxgm.app.ui.view.common.WebViewActivity;
 import com.cxgm.app.ui.view.goods.GoodsDetailActivity;
@@ -60,6 +61,7 @@ public class ViewJump {
     public static final int CODE_DELIVERY_TIME_DIALOG = 6;
     public static final int CODE_GOODS_SPECIFICATION_DIALOG = 7;
     public static final int CODE_GOODS_DETAIL = 8;
+    public static final int CODE_SCAN = 9;
 
     public static void toMain(Activity activity){
         Intent intent = new Intent(activity, MainActivity.class);
@@ -242,6 +244,16 @@ public class ViewJump {
     public static void toAbout(Activity activity){
         Intent intent = new Intent(activity, AboutActivity.class);
         activity.startActivity(intent);
+    }
+
+    public static void toScan(Activity activity){
+        Intent intent = new Intent(activity, ScanActivity.class);
+        activity.startActivityForResult(intent,CODE_SCAN);
+    }
+
+    public static void toScan(Activity activity,Fragment fragment){
+        Intent intent = new Intent(activity, ScanActivity.class);
+        fragment.startActivityForResult(intent,CODE_SCAN);
     }
 
 }

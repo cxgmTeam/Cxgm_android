@@ -42,8 +42,9 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation('com.github.Dean1990:ootb:2.3.1', {
         exclude group: 'com.android.support'
-//        exclude group: 'io.reactivex'
+        exclude group: 'cn.bingoogolapple'
     })
+    implementation 'cn.bingoogolapple:bga-qrcode-zxing:1.2.5'
     //    implementation 'com.umeng.sdk:common:latest.integration'
     implementation 'com.umeng.sdk:analytics:7.5.0'
     //    implementation project(':push_4.0.0')

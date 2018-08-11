@@ -284,5 +284,8 @@
     <string name="tag_2">优质放心</string>
     <string name="tag_3">1小时送达</string>
 
+    <string name="scan_error">扫码出错</string>
+    <string name="exchange_code_invalid">兑换码已失效</string>
+
 
 </resources>
