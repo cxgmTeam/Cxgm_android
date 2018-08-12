@@ -13,28 +13,38 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/imgScan"
-            android:layout_gravity="center_vertical"
-            android:src="@mipmap/scan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-        <EditText
-            android:layout_marginLeft="@dimen/margin_normal"
-            android:id="@+id/etExchangeCode"
-            android:textColor="@color/textBlack"
-            android:gravity="center_vertical"
+        <LinearLayout
             android:paddingLeft="@dimen/margin_normal"
             android:paddingRight="@dimen/margin_normal"
-            android:singleLine="true"
-            android:textSize="@dimen/text_size_normal_x"
-            android:textColorHint="@color/textGray"
-            android:hint="@string/exchange_code"
+            android:gravity="center_vertical"
             android:background="@drawable/shape_tc_gray_gray"
             android:layout_weight="1"
+            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="34dp" />
+            android:layout_height="34dp">
+
+            <ImageView
+                android:id="@+id/imgScan"
+                android:layout_gravity="center_vertical"
+                android:src="@mipmap/scan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <EditText
+                android:background="@null"
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:id="@+id/etExchangeCode"
+                android:textColor="@color/textBlack"
+                android:gravity="center_vertical"
+                android:singleLine="true"
+                android:textSize="@dimen/text_size_normal_x"
+                android:textColorHint="@color/textGray"
+                android:hint="@string/exchange_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+        </LinearLayout>
+
         <TextView
             android:id="@+id/tvExchange"
             android:gravity="center"
