@@ -249,7 +249,7 @@ public class VerifyOrderActivity extends BaseActivity {
         tvDiscounts.setText(StringHelper.getRMBFormat(mDiscounts));
         //邮费固定值
         tvCarriage.setText(StringHelper.getRMBFormat(Constants.postage));
-        tvCoupon.setText(StringHelper.getRMBFormat(0));
+        tvCoupon.setText(R.string.not_coupon);
         tvInvoice.setText(R.string.not_invoice);
 
         //设置查询优惠券要用到的字段
