@@ -477,7 +477,7 @@ public class VerifyOrderActivity extends BaseActivity {
             //优惠券ID
             mOrder.setCouponCodeId(couponDetail.getCodeId());
             float exp = Helper.str2Float(couponDetail.getPriceExpression());
-            temp = Helper.moneySubtract(temp,exp);
+            tvCoupon.setText("- "+StringHelper.getRMBFormat(exp));
             preferential = Helper.moneyAdd(preferential,exp);
         }
         mOrder.setPreferential(preferential);

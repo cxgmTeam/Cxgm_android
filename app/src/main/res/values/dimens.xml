@@ -12,7 +12,7 @@
     <dimen name="text_size_giant">18sp</dimen>
     <dimen name="text_size_giant_x">20sp</dimen>
     <dimen name="text_size_giant_xx">22sp</dimen>
-    <dimen name="text_size_giant_xxxxx">38sp</dimen>
+    <dimen name="text_size_giant_xxxxx">30sp</dimen>
 
     <dimen name="margin_normal">10dp</dimen>
     <dimen name="margin_normal_t">8.5dp</dimen>
