@@ -51,6 +51,8 @@ public class Order extends BaseEntity {
     private List<CategoryAndAmount> categoryAndAmountList;//二级分类下的总金额
     private UserAddress address;//收货地址信息
 
+    private String psPhone;//配送电话
+
     private float totalAmount;//商品总额，没有优惠前
     private float preferential;//优惠总额
 
@@ -222,4 +224,11 @@ public class Order extends BaseEntity {
         this.productList = productList;
     }
 
+    public String getPsPhone() {
+        return psPhone;
+    }
+
+    public void setPsPhone(String psPhone) {
+        this.psPhone = psPhone;
+    }
 }
