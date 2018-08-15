@@ -12,7 +12,7 @@ public class StringHelper {
 
     public static String getRMBFormat(float money){
         BigDecimal decimal = new BigDecimal(money);
-        return getRMBFormat(decimal.setScale(2,BigDecimal.ROUND_DOWN).toString());
+        return getRMBFormat(decimal.setScale(2,BigDecimal.ROUND_UP).toString());
     }
 
     public static String getRMBFormat(String money){

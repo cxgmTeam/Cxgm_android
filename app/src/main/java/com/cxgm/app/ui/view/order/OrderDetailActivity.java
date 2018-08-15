@@ -1,5 +1,8 @@
 package com.cxgm.app.ui.view.order;
 
+import android.Manifest;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -24,12 +27,16 @@ import com.cxgm.app.data.io.order.SurplusTimeReq;
 import com.cxgm.app.ui.adapter.OrderGoodsListAdatpter;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
+import com.cxgm.app.ui.view.common.WebViewActivity;
 import com.cxgm.app.utils.StringHelper;
 import com.cxgm.app.utils.ToastManager;
 import com.deanlib.ootb.data.io.Request;
+import com.deanlib.ootb.manager.PermissionManager;
 import com.deanlib.ootb.utils.FormatUtils;
 import com.deanlib.ootb.utils.TextUtils;
+import com.deanlib.ootb.utils.ValidateUtils;
 import com.deanlib.ootb.widget.ListViewForScrollView;
+import com.tbruyelle.rxpermissions.Permission;
 
 import org.xutils.common.Callback;
 
@@ -38,6 +45,7 @@ import java.util.ArrayList;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import rx.functions.Action1;
 
 /**
  * 订单详情
@@ -119,6 +127,8 @@ public class OrderDetailActivity extends BaseActivity {
     TextView tvRefundAmount;
     @BindView(R.id.tvBuyAgain)
     TextView tvBuyAgain;
+    @BindView(R.id.imgPhone)
+    ImageView imgPhone;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -230,6 +240,7 @@ public class OrderDetailActivity extends BaseActivity {
                     layoutBottomAction.setVisibility(View.VISIBLE);
                     layoutRefund.setVisibility(View.GONE);
                     tvBuyAgain.setVisibility(View.GONE);
+                    imgPhone.setVisibility(View.GONE);
                     break;
                 case Order.STATUS_DISTRIBUTION:
                 case Order.STATUS_DISTRIBUTION2:
@@ -242,6 +253,7 @@ public class OrderDetailActivity extends BaseActivity {
                     layoutBottomAction.setVisibility(View.GONE);
                     layoutRefund.setVisibility(View.GONE);
                     tvBuyAgain.setVisibility(View.VISIBLE);
+                    imgPhone.setVisibility(View.GONE);
                     break;
                 case Order.STATUS_DISTRIBUTING:
                     layoutOrderState.setBackgroundResource(R.color.colorGreen);
@@ -252,6 +264,8 @@ public class OrderDetailActivity extends BaseActivity {
                     layoutBottomAction.setVisibility(View.GONE);
                     layoutRefund.setVisibility(View.GONE);
                     tvBuyAgain.setVisibility(View.VISIBLE);
+//                    if (ValidateUtils.isMobileNum(mOrder.getPsPhone()))
+                        imgPhone.setVisibility(View.VISIBLE);
                     break;
                 case Order.STATUS_COMPLETE:
                     layoutOrderState.setBackgroundResource(R.color.colorBlue);
@@ -262,6 +276,7 @@ public class OrderDetailActivity extends BaseActivity {
                     layoutBottomAction.setVisibility(View.GONE);
                     layoutRefund.setVisibility(View.GONE);
                     tvBuyAgain.setVisibility(View.VISIBLE);
+                    imgPhone.setVisibility(View.GONE);
                     break;
                 case Order.STATUS_WAIT_REFUND:
                     //待退款  图标 文字 颜色
@@ -274,6 +289,7 @@ public class OrderDetailActivity extends BaseActivity {
                     layoutRefund.setVisibility(View.VISIBLE);
                     tvRefundAmount.setText(StringHelper.getRMBFormat(order.getOrderAmount()));
                     tvBuyAgain.setVisibility(View.VISIBLE);
+                    imgPhone.setVisibility(View.GONE);
                     break;
                 case Order.STATUS_REFUND:
                     //已退款  图标 文字 颜色
@@ -286,6 +302,7 @@ public class OrderDetailActivity extends BaseActivity {
                     layoutRefund.setVisibility(View.VISIBLE);
                     tvRefundAmount.setText(StringHelper.getRMBFormat(order.getOrderAmount()));
                     tvBuyAgain.setVisibility(View.VISIBLE);
+                    imgPhone.setVisibility(View.GONE);
                     break;
                 case Order.STATUS_CANCEL:
                     layoutOrderState.setBackgroundResource(R.color.colorGrayDark2);
@@ -296,6 +313,7 @@ public class OrderDetailActivity extends BaseActivity {
                     layoutBottomAction.setVisibility(View.GONE);
                     layoutRefund.setVisibility(View.GONE);
                     tvBuyAgain.setVisibility(View.VISIBLE);
+                    imgPhone.setVisibility(View.GONE);
                     break;
                 case Order.STATUS_SYSTEM_CANCEL:
                     layoutOrderState.setBackgroundResource(R.color.colorGrayDark2);
@@ -306,6 +324,7 @@ public class OrderDetailActivity extends BaseActivity {
                     layoutBottomAction.setVisibility(View.GONE);
                     layoutRefund.setVisibility(View.GONE);
                     tvBuyAgain.setVisibility(View.VISIBLE);
+                    imgPhone.setVisibility(View.GONE);
                     break;
                 default:
                     layoutOrderState.setVisibility(View.GONE);
@@ -371,7 +390,7 @@ public class OrderDetailActivity extends BaseActivity {
             mTimer.cancel();
     }
 
-    @OnClick({R.id.imgBack, R.id.tvCancelOrder, R.id.tvPayNow,R.id.tvBuyAgain})
+    @OnClick({R.id.imgBack, R.id.tvCancelOrder, R.id.tvPayNow,R.id.tvBuyAgain,R.id.imgPhone})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgBack:
@@ -416,6 +435,21 @@ public class OrderDetailActivity extends BaseActivity {
                 //再次购买
                 if (mOrder!=null && mOrder.getProductDetails()!=null)
                     ViewJump.toVerifyOrder(this, (ArrayList<OrderProduct>) mOrder.getProductDetails());
+                break;
+            case R.id.imgPhone:
+                PermissionManager.requstPermission(this, new Action1<Permission>() {
+                    @Override
+                    public void call(Permission permission) {
+                        if (permission.granted) {
+
+                            String phoneNum = mOrder.getPsPhone();
+                            Intent intent = new Intent();
+                            intent.setAction(Intent.ACTION_CALL);
+                            intent.setData(Uri.parse("tel:"+phoneNum));
+                            startActivity(intent);
+                        }
+                    }
+                }, Manifest.permission.CALL_PHONE);
                 break;
         }
     }

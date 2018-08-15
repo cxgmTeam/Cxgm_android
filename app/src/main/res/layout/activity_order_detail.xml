@@ -14,7 +14,6 @@
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/margin_large_t"
         android:paddingLeft="@dimen/margin_giant"
-        android:paddingRight="@dimen/margin_giant"
         android:paddingTop="@dimen/margin_large_t">
 
         <ImageView
@@ -42,6 +41,8 @@
             android:textSize="@dimen/text_size_normal" />
 
         <TextView
+            android:layout_alignParentLeft="true"
+            android:layout_toLeftOf="@+id/imgPhone"
             android:id="@+id/tvOrderTag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -52,12 +53,16 @@
 
         <ImageView
             android:visibility="gone"
-            android:id="@+id/image"
+            android:paddingTop="@dimen/margin_normal"
+            android:paddingBottom="@dimen/margin_normal"
+            android:paddingLeft="@dimen/margin_normal"
+            android:paddingRight="@dimen/margin_giant_x"
+            android:id="@+id/imgPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:src="@mipmap/right" />
+            android:src="@mipmap/phone" />
     </RelativeLayout>
 
     <LinearLayout

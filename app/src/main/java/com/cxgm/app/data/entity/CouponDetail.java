@@ -135,6 +135,7 @@ public class CouponDetail implements Parcelable {
         dest.writeInt(this.productId);
         dest.writeInt(this.status);
         dest.writeString(this.priceExpression);
+        dest.writeFloat(this.maximumPrice);
     }
 
     public CouponDetail() {
@@ -150,6 +151,7 @@ public class CouponDetail implements Parcelable {
         this.productId = in.readInt();
         this.status = in.readInt();
         this.priceExpression = in.readString();
+        this.maximumPrice = in.readFloat();
     }
 
     public static final Creator<CouponDetail> CREATOR = new Creator<CouponDetail>() {
