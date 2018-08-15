@@ -173,7 +173,8 @@ public class UserFragment extends BaseFragment {
                 ViewJump.toAddrList(getActivity());
                 break;
             case R.id.layoutHelp:
-                //todo 帮助
+                //帮助
+                ViewJump.toWebView(getActivity(),"file:///android_asset/help.html");
                 break;
             case R.id.layoutService:
                 //todo 客服

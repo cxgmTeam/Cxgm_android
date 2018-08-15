@@ -66,7 +66,7 @@ public class WebViewActivity extends BaseActivity {
         imgBack.setVisibility(View.VISIBLE);
 
         if (!TextUtils.isEmpty(mUrl)) {
-            if (!Pattern.matches("https?:\\/\\/.+",mUrl)){
+            if (!mUrl.startsWith("file:///") && !Pattern.matches("https?:\\/\\/.+",mUrl)){
                 mUrl = "http://" + mUrl;
             }
             webview.setWebChromeClient(webChromeClient);
