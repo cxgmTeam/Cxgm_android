@@ -110,6 +110,7 @@
                 android:textSize="@dimen/text_size_normal" />
 
             <TextView
+                android:visibility="gone"
                 android:id="@+id/tvRefund"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

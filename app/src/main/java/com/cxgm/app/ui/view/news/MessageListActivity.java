@@ -1,5 +1,7 @@
 package com.cxgm.app.ui.view.news;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -16,6 +18,8 @@ import com.cxgm.app.data.entity.Message;
 import com.cxgm.app.ui.adapter.MessageAdapter;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
+import com.cxgm.app.ui.view.common.LaunchActivity;
+import com.cxgm.app.ui.view.goods.GoodsDetailActivity;
 import com.cxgm.app.utils.Helper;
 import com.deanlib.ootb.data.db.DB;
 import com.deanlib.ootb.utils.FormatUtils;
@@ -76,9 +80,14 @@ public class MessageListActivity extends BaseActivity {
         lvMessage.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                ViewJump.toGoodsDetail(MessageListActivity.this,
-                        (int) FormatUtils.convertStringToNum(mMessageList.get((int)id).getShopId()),
-                        (int) FormatUtils.convertStringToNum(mMessageList.get((int)id).getGoodcode()));
+
+                if ("2".equals(mMessageList.get((int)id).getUrlType())) {
+                    ViewJump.toGoodsDetail(MessageListActivity.this,
+                            (int) FormatUtils.convertStringToNum(mMessageList.get((int)id).getShopId()),
+                            (int) FormatUtils.convertStringToNum(mMessageList.get((int)id).getGoodcode()));
+                }else if ("1".equals(mMessageList.get((int)id).getUrlType())){
+                    ViewJump.toWebView(MessageListActivity.this,mMessageList.get((int)id).getGoodcode());
+                }
             }
         });
         srl.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {

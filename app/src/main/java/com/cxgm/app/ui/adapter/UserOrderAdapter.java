@@ -153,13 +153,13 @@ public class UserOrderAdapter extends BaseAdapter {
                 //待配送
                 holder.tvOrderState.setText(R.string.distribution);
                 holder.tvOrderAction.setText(R.string.apply_for_returning);
-                holder.tvOrderAction.setVisibility(View.VISIBLE);
+                holder.tvOrderAction.setVisibility(View.GONE);
                 break;
             case Order.STATUS_DISTRIBUTING:
                 //配送中
                 holder.tvOrderState.setText(R.string.distributing);
                 holder.tvOrderAction.setText(R.string.apply_for_returning);
-                holder.tvOrderAction.setVisibility(View.VISIBLE);
+                holder.tvOrderAction.setVisibility(View.GONE);
                 break;
             case Order.STATUS_COMPLETE:
                 //已完成
