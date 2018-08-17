@@ -240,7 +240,7 @@ public class App extends MultiDexApplication {
             intent.putExtra("shopId", (int)FormatUtils.convertStringToNum(msg.getShopId()));
         }else if ("1".equals(msg.getUrlType())){
             intent.setAction(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(msg.getGoodcode()));
+            intent.setData(Uri.parse(msg.getNotifyUrl()));
         }else {
             intent.setClass(context, LaunchActivity.class);
         }

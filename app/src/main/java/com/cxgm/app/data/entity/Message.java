@@ -43,7 +43,8 @@ public class Message extends BaseEntity {
     private String shopId;
     @Column(name = "urlType")
     private String urlType;//1是跳转网页2是跳转商品详情
-
+    @Column(name = "notifyUrl")
+    private String notifyUrl;
 
 
     public Message() {
@@ -111,5 +112,13 @@ public class Message extends BaseEntity {
 
     public void setUrlType(String urlType) {
         this.urlType = urlType;
+    }
+
+    public String getNotifyUrl() {
+        return notifyUrl;
+    }
+
+    public void setNotifyUrl(String notifyUrl) {
+        this.notifyUrl = notifyUrl;
     }
 }

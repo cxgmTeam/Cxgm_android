@@ -86,7 +86,7 @@ public class MessageListActivity extends BaseActivity {
                             (int) FormatUtils.convertStringToNum(mMessageList.get((int)id).getShopId()),
                             (int) FormatUtils.convertStringToNum(mMessageList.get((int)id).getGoodcode()));
                 }else if ("1".equals(mMessageList.get((int)id).getUrlType())){
-                    ViewJump.toWebView(MessageListActivity.this,mMessageList.get((int)id).getGoodcode());
+                    ViewJump.toWebView(MessageListActivity.this,mMessageList.get((int)id).getNotifyUrl());
                 }
             }
         });
