@@ -472,7 +472,7 @@ public class VerifyOrderActivity extends BaseActivity {
     private void setCouponAndAmount(CouponDetail couponDetail){
         //实付款
         float temp = Helper.moneyAdd(mOrderAmount,Constants.postage);
-        float preferential = mDiscounts;
+        float preferential = 0;
         if (couponDetail!=null) {
             //优惠券ID
             mOrder.setCouponCodeId(couponDetail.getCodeId());

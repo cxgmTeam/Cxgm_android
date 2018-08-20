@@ -3,6 +3,7 @@ package com.cxgm.app.data.io.order;
 import android.content.Context;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.cxgm.app.app.Constants;
 import com.cxgm.app.app.UserResult;
 import com.deanlib.ootb.data.io.Request;
@@ -41,6 +42,7 @@ public class UpdateStatusReq extends Request {
     @Override
     public String parse(String json) {
         //{"msg":"ok"}
-        return json;
+        JSONObject jsonObject = JSON.parseObject(json);
+        return jsonObject.getString("msg");
     }
 }

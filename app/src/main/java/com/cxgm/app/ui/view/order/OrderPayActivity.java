@@ -112,12 +112,14 @@ public class OrderPayActivity extends BaseActivity {
         new UpdateStatusReq(this, mOrderId, payType).execute(false,new Request.RequestCallback<String>() {
             @Override
             public void onSuccess(String o) {
+                if (!"ok".equals(o)){
 
+                }
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
+                updatePaySuccess(payType);
             }
 
             @Override

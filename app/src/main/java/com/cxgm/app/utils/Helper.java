@@ -18,16 +18,16 @@ public class Helper {
     };
 
     public static float moneyAdd(float x,float y){
-        return BigDecimal.valueOf(x).add(BigDecimal.valueOf(y)).setScale(2,BigDecimal.ROUND_HALF_UP).floatValue();
+        return BigDecimal.valueOf(x).add(BigDecimal.valueOf(y)).setScale(1,BigDecimal.ROUND_HALF_UP).floatValue();
     }
     public static float moneySubtract(float x,float y){
-        return BigDecimal.valueOf(x).subtract(BigDecimal.valueOf(y)).setScale(2,BigDecimal.ROUND_HALF_UP).floatValue();
+        return BigDecimal.valueOf(x).subtract(BigDecimal.valueOf(y)).setScale(1,BigDecimal.ROUND_HALF_UP).floatValue();
     }
     public static float moneyMultiply(float x,float y){
-        return BigDecimal.valueOf(x).multiply(BigDecimal.valueOf(y)).setScale(2,BigDecimal.ROUND_HALF_UP).floatValue();
+        return BigDecimal.valueOf(x).multiply(BigDecimal.valueOf(y)).setScale(1,BigDecimal.ROUND_HALF_UP).floatValue();
     }
     public static float moneyDivide(float x,float y){
-        return BigDecimal.valueOf(x).divide(BigDecimal.valueOf(y)).setScale(2,BigDecimal.ROUND_HALF_UP).floatValue();
+        return BigDecimal.valueOf(x).divide(BigDecimal.valueOf(y)).setScale(1,BigDecimal.ROUND_HALF_UP).floatValue();
     }
 
     /**

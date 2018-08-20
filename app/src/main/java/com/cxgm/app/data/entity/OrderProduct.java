@@ -184,7 +184,7 @@ public class OrderProduct implements Parcelable {
         this.goodCode = cart.getGoodCode();
         this.amount = cart.getAmount();
         this.price = cart.getPrice();
-        this.originalPrice = cart.getPrice();
+        this.originalPrice = cart.getOriginalPrice();
         this.categoryId = cart.getCategoryId();
         this.specifications = cart.getSpecifications();
     }

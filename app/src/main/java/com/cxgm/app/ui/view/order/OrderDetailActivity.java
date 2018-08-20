@@ -237,6 +237,7 @@ public class OrderDetailActivity extends BaseActivity {
                     tvOrderState.setText(R.string.unpaid);
                     tvOrderTag.setText(R.string.unpaid_tag);
                     tvTime.setText(R.string.remaining_);
+                    tvTime.setVisibility(View.VISIBLE);
                     layoutBottomAction.setVisibility(View.VISIBLE);
                     layoutRefund.setVisibility(View.GONE);
                     tvBuyAgain.setVisibility(View.GONE);
@@ -249,7 +250,7 @@ public class OrderDetailActivity extends BaseActivity {
                     imgIcon.setImageResource(R.mipmap.status_distributing);
                     tvOrderState.setText(R.string.distribution);
                     tvOrderTag.setText(R.string.distributing_tag);
-                    tvTime.setText("");
+                    tvTime.setVisibility(View.GONE);
                     layoutBottomAction.setVisibility(View.GONE);
                     layoutRefund.setVisibility(View.GONE);
                     tvBuyAgain.setVisibility(View.VISIBLE);
@@ -260,7 +261,7 @@ public class OrderDetailActivity extends BaseActivity {
                     imgIcon.setImageResource(R.mipmap.status_distributing);
                     tvOrderState.setText(R.string.distributing);
                     tvOrderTag.setText(R.string.distributing_tag);
-                    tvTime.setText("");
+                    tvTime.setVisibility(View.GONE);
                     layoutBottomAction.setVisibility(View.GONE);
                     layoutRefund.setVisibility(View.GONE);
                     tvBuyAgain.setVisibility(View.VISIBLE);
@@ -272,7 +273,7 @@ public class OrderDetailActivity extends BaseActivity {
                     imgIcon.setImageResource(R.mipmap.status_complete);
                     tvOrderState.setText(R.string.complete);
                     tvOrderTag.setText(R.string.complete_tag);
-                    tvTime.setText("");
+                    tvTime.setVisibility(View.GONE);
                     layoutBottomAction.setVisibility(View.GONE);
                     layoutRefund.setVisibility(View.GONE);
                     tvBuyAgain.setVisibility(View.VISIBLE);
@@ -284,7 +285,7 @@ public class OrderDetailActivity extends BaseActivity {
                     imgIcon.setImageResource(R.mipmap.status_wait_refund);
                     tvOrderState.setText(R.string.wait_refund);
                     tvOrderTag.setText(R.string.wait_refund_tag);
-                    tvTime.setText("");
+                    tvTime.setVisibility(View.GONE);
                     layoutBottomAction.setVisibility(View.GONE);
                     layoutRefund.setVisibility(View.VISIBLE);
                     tvRefundAmount.setText(StringHelper.getRMBFormat(order.getOrderAmount()));
@@ -297,7 +298,7 @@ public class OrderDetailActivity extends BaseActivity {
                     imgIcon.setImageResource(R.mipmap.status_refund);
                     tvOrderState.setText(R.string.refunded);
                     tvOrderTag.setText(R.string.refund_tag3);
-                    tvTime.setText("");
+                    tvTime.setVisibility(View.GONE);
                     layoutBottomAction.setVisibility(View.GONE);
                     layoutRefund.setVisibility(View.VISIBLE);
                     tvRefundAmount.setText(StringHelper.getRMBFormat(order.getOrderAmount()));
@@ -309,7 +310,7 @@ public class OrderDetailActivity extends BaseActivity {
                     imgIcon.setImageResource(R.mipmap.status_cancel);
                     tvOrderState.setText(R.string.canceled);
                     tvOrderTag.setText(R.string.canceled_tag);
-                    tvTime.setText("");
+                    tvTime.setVisibility(View.GONE);
                     layoutBottomAction.setVisibility(View.GONE);
                     layoutRefund.setVisibility(View.GONE);
                     tvBuyAgain.setVisibility(View.VISIBLE);
@@ -320,7 +321,7 @@ public class OrderDetailActivity extends BaseActivity {
                     imgIcon.setImageResource(R.mipmap.status_cancel);
                     tvOrderState.setText(R.string.canceled);
                     tvOrderTag.setText(R.string.canceled_tag2);
-                    tvTime.setText("");
+                    tvTime.setVisibility(View.GONE);
                     layoutBottomAction.setVisibility(View.GONE);
                     layoutRefund.setVisibility(View.GONE);
                     tvBuyAgain.setVisibility(View.VISIBLE);
@@ -406,6 +407,8 @@ public class OrderDetailActivity extends BaseActivity {
                                     ToastManager.sendToast(getString(R.string.canceled));
                                     mOrder.setStatus(Order.STATUS_CANCEL);
                                     setStateView(mOrder);
+                                    if (mTimer!=null)
+                                        mTimer.cancel();
                                 }
 
                                 @Override
@@ -432,7 +435,7 @@ public class OrderDetailActivity extends BaseActivity {
                 }
                 break;
             case R.id.tvBuyAgain:
-                //再次购买
+                //再次购买 这里有个BUG，当在限时优惠时购买的商品，再次购买时，可能限时优惠已过期，但还是可以用限时价格买到商品
                 if (mOrder!=null && mOrder.getProductDetails()!=null)
                     ViewJump.toVerifyOrder(this, (ArrayList<OrderProduct>) mOrder.getProductDetails());
                 break;
