@@ -227,6 +227,8 @@ public class VerifyOrderActivity extends BaseActivity {
         for (OrderProduct product:mOrderProductList){
             mOrderAmount = Helper.moneyAdd(product.getAmount(),mOrderAmount);
             //原价
+            if (product.getOriginalPrice() == 0)
+                product.setOriginalPrice(product.getPrice());
             goodsOriginalTotal = Helper.moneyAdd(Helper.moneyMultiply(product.getOriginalPrice(),product.getProductNum()),goodsOriginalTotal);
 
             //统计类总额

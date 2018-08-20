@@ -12,7 +12,7 @@ public class OrderProduct implements Parcelable {
     private String goodCode;
     private String createTime;
     private String productUrl;
-//    private String productCode;
+    private String productCode;
     private float amount;
     private float price;
     private int id;
@@ -64,6 +64,7 @@ public class OrderProduct implements Parcelable {
     }
 
     public void setGoodCode(String goodCode) {
+        this.productCode = goodCode;
         this.goodCode = goodCode;
     }
 
@@ -139,7 +140,14 @@ public class OrderProduct implements Parcelable {
         this.price = price;
     }
 
+    public String getProductCode() {
+        return productCode;
+    }
 
+    public void setProductCode(String productCode) {
+        this.goodCode = productCode;
+        this.productCode = productCode;
+    }
 
     public int getId() {
         return id;
@@ -164,6 +172,7 @@ public class OrderProduct implements Parcelable {
         dest.writeString(this.createTime);
         dest.writeString(this.productUrl);
         dest.writeString(this.goodCode);
+        dest.writeString(this.productCode);
         dest.writeFloat(this.amount);
         dest.writeFloat(this.price);
 //        dest.writeString(this.unit);
@@ -182,6 +191,7 @@ public class OrderProduct implements Parcelable {
         this.productNum = cart.getGoodNum();
         this.productUrl = cart.getImageUrl();
         this.goodCode = cart.getGoodCode();
+        this.productCode = cart.getGoodCode();
         this.amount = cart.getAmount();
         this.price = cart.getPrice();
         this.originalPrice = cart.getOriginalPrice();
@@ -197,6 +207,7 @@ public class OrderProduct implements Parcelable {
         this.createTime = in.readString();
         this.productUrl = in.readString();
         this.goodCode = in.readString();
+        this.productCode = in.readString();
         this.amount = in.readFloat();
         this.price = in.readFloat();
 //        this.unit = in.readString();
