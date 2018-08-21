@@ -123,6 +123,9 @@ public class ExpandableGoodsListAdapter extends BaseExpandableListAdapter {
         view = View.inflate(viewGroup.getContext(),R.layout.layout_third_title_item,null);
         TextView tvTitle = view.findViewById(R.id.tvTitle);
         tvTitle.setText(mKeyList.get(i));
+        if (mKeyList.size() == 1 && GoodsSecondClassifyActivity.mOtherCategory.getName().equals(mKeyList.get(i))){
+            tvTitle.getLayoutParams().height = 0;
+        }
         return view;
     }
 

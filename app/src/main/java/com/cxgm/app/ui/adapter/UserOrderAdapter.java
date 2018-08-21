@@ -117,7 +117,7 @@ public class UserOrderAdapter extends BaseAdapter {
                             .into(imgView1);
             }
 
-        }else {
+        }else if (mList.get(i).getProductDetails().size()>0){
             View itemView = View.inflate(viewGroup.getContext(),R.layout.layout_goods_order_item,null);
             holder.layoutContainer.addView(itemView);
             TextView tvCount = itemView.findViewById(R.id.tvCount);

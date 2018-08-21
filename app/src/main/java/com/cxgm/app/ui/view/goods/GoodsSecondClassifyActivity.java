@@ -84,7 +84,7 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
 //    Badge mShopCartBadge;
     int mShopCartNum = 0; //种类数
 
-    ShopCategory mOtherCategory = new ShopCategory(-1,"","");
+    public static ShopCategory mOtherCategory = new ShopCategory(-1,"","");
     boolean isListScrolling;
 
     @Override
@@ -253,7 +253,7 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
                 .execute(new Request.RequestCallback<List<ShopCategory>>() {
                     @Override
                     public void onSuccess(List<ShopCategory> shopCategories) {
-                        if (shopCategories != null) {
+                        if (shopCategories != null && shopCategories.size()>0) {
                             tabSubClassify.setVisibility(View.VISIBLE);
                             mTCList.addAll(shopCategories);
                             for (ShopCategory category : mTCList) {
@@ -286,6 +286,8 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
 
                                 }
                             });
+                        }else {
+                            tabSubClassify.setVisibility(View.GONE);
                         }
                     }
 

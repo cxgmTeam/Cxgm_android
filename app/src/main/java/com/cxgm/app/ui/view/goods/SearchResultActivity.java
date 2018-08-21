@@ -25,6 +25,7 @@ import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.utils.Helper;
 import com.cxgm.app.utils.ToastManager;
+import com.cxgm.app.utils.ViewHelper;
 import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.utils.DeviceUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
@@ -47,7 +48,7 @@ import butterknife.OnClick;
  * @time 2018/4/19 0019 22:50
  */
 
-public class SearchResultActivity extends BaseActivity {
+public class SearchResultActivity extends BaseActivity implements ViewHelper.OnShopCartUpdateListener{
 
     @BindView(R.id.imgBack)
     ImageView imgBack;
@@ -77,9 +78,16 @@ public class SearchResultActivity extends BaseActivity {
         }
         setContentView(R.layout.activity_search_result);
         ButterKnife.bind(this);
+        ViewHelper.addOnShopCartUpdateListener(this);
         mKeyword = getIntent().getStringExtra("keyword");
         init();
         loadData();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        ViewHelper.updateShopCart(this);
     }
 
     private void init() {
@@ -177,5 +185,10 @@ public class SearchResultActivity extends BaseActivity {
                 ViewJump.toMain(this,R.id.rbShopCart);
                 break;
         }
+    }
+
+    @Override
+    public void onUpdate(int num) {
+        ViewHelper.drawShopCartNum(SearchResultActivity.this,imgShopCar,num,true);
     }
 }

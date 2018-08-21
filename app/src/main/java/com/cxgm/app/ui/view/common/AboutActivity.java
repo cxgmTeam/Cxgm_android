@@ -63,13 +63,16 @@ public class AboutActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.tvAgreement:
-                //TODO 协议
+                //协议
+                ViewJump.toWebView(this,"file:///android_asset/service_agreement.html");
                 break;
             case R.id.tvPolicy:
-                //todo 政策
+                //隐私政策
+                ViewJump.toWebView(this,"file:///android_asset/private.html");
                 break;
             case R.id.tvBusinessInfo:
-                //todo 商铺信息
+                //商铺信息
+                ViewJump.toWebView(this,"file:///android_asset/business_info.html");
                 break;
             case R.id.tvInsideEntrance:
                 //http://47.104.226.173/

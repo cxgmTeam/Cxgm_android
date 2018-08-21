@@ -17,12 +17,14 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
+import com.cxgm.app.app.Constants;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.deanlib.ootb.manager.PermissionManager;
 import com.deanlib.ootb.utils.AppUtils;
 import com.deanlib.ootb.utils.DLogUtils;
 import com.deanlib.ootb.utils.ValidateUtils;
 import com.tbruyelle.rxpermissions.Permission;
+import com.tencent.smtt.export.external.interfaces.GeolocationPermissionsCallback;
 import com.tencent.smtt.export.external.interfaces.JsResult;
 import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
@@ -132,14 +134,16 @@ public class WebViewActivity extends BaseActivity {
 
         @Override
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            DLogUtils.i("拦截url:"+url);
+            DLogUtils.d("拦截url:"+url);
+
             if (url.startsWith("tel://")){
+                String url1 = url;
                 PermissionManager.requstPermission(WebViewActivity.this, new Action1<Permission>() {
                     @Override
                     public void call(Permission permission) {
                         if (permission.granted) {
 
-                            String phoneNum = url.substring(6);
+                            String phoneNum = url1.substring(6);
                             Intent intent = new Intent();
                             intent.setAction(Intent.ACTION_CALL);
                             intent.setData(Uri.parse("tel:"+phoneNum));
@@ -149,12 +153,17 @@ public class WebViewActivity extends BaseActivity {
                 }, Manifest.permission.CALL_PHONE);
 
                 return true;
+            }else if (url.contains("ps-xq.html")){
+                url += "&long="+ Constants.currentLocation.getLongitude()+"&lat="+Constants.currentLocation.getLatitude();
+//                url+="&long=116.384756&lat=39.960647";
+                DLogUtils.d("拼接url:"+url);
             }
 //            if(url.equals("http://www.google.com/")){
 //                Toast.makeText(MainActivity.this,"国内不能访问google,拦截该url",Toast.LENGTH_LONG).show();
 //                return true;//表示我已经处理过了
 //            }
-            return super.shouldOverrideUrlLoading(view, url);
+            view.loadUrl(url);
+            return true;
         }
     };
 
@@ -187,6 +196,12 @@ public class WebViewActivity extends BaseActivity {
         @Override
         public void onProgressChanged(WebView view, int newProgress) {
 //            pbLoading.setProgress(newProgress);
+        }
+
+        @Override
+        public void onGeolocationPermissionsShowPrompt(String s, GeolocationPermissionsCallback geolocationPermissionsCallback) {
+            geolocationPermissionsCallback.invoke(s,true,true);
+            super.onGeolocationPermissionsShowPrompt(s, geolocationPermissionsCallback);
         }
     };
 
