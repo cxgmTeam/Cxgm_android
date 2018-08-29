@@ -3,12 +3,14 @@ package com.cxgm.app.ui.view.order;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.RectF;
 import android.graphics.Region;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
@@ -25,6 +27,7 @@ import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.CircleOptions;
 import com.baidu.mapapi.map.MapPoi;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
@@ -39,6 +42,7 @@ import com.baidu.mapapi.map.Stroke;
 import com.baidu.mapapi.map.TextureMapView;
 import com.baidu.mapapi.model.LatLng;
 import com.baidu.mapapi.search.core.PoiInfo;
+import com.baidu.mapapi.search.geocode.GeoCodeOption;
 import com.baidu.mapapi.search.geocode.GeoCodeResult;
 import com.baidu.mapapi.search.geocode.GeoCoder;
 import com.baidu.mapapi.search.geocode.OnGetGeoCoderResultListener;
@@ -98,6 +102,8 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
     ListView lvAddr;
     @BindView(R.id.tvNoResult)
     TextView tvNoResult;
+    @BindView(R.id.imgMarket)
+    ImageView imgMarket;
 
     double mLongitude;
     double mLatitude;
@@ -112,6 +118,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
     Overlay mPointOverlay;
     List<Path> mPathList;
     final int mPathBaseNum = 100000;
+    Point mCenterPoint;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -149,7 +156,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
 
             @Override
             public void onMapStatusChange(MapStatus mapStatus) {
-
+                mZoomLevel = mapStatus.zoom;
             }
 
             @Override
@@ -157,28 +164,41 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
                 mZoomLevel = mapStatus.zoom;
             }
         });
-        mBaiduMap.setOnMapClickListener(new BaiduMap.OnMapClickListener() {
-            @Override
-            public void onMapClick(LatLng latLng) {
-                //标记定位点
-                drawLocationPoint(latLng.latitude, latLng.longitude);
-                //反向编码，以得到城市名，也可以得到POI信息
-                mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(latLng.latitude, latLng.longitude)));
-            }
+//        mBaiduMap.setOnMapClickListener(new BaiduMap.OnMapClickListener() {
+//            @Override
+//            public void onMapClick(LatLng latLng) {
+//                //标记定位点
+//                drawLocationPoint(latLng.latitude, latLng.longitude);
+//                //反向编码，以得到城市名，也可以得到POI信息
+//                mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(latLng.latitude, latLng.longitude)));
+//            }
+//
+//            @Override
+//            public boolean onMapPoiClick(MapPoi mapPoi) {
+//                onMapClick(mapPoi.getPosition());
+//                return true;
+//            }
+//        });
 
-            @Override
-            public boolean onMapPoiClick(MapPoi mapPoi) {
-                onMapClick(mapPoi.getPosition());
-                return true;
-            }
-        });
+
         mPoiSearch = PoiSearch.newInstance();
         mPoiSearch.setOnGetPoiSearchResultListener(this);
         mGeoCoder = GeoCoder.newInstance();
         mGeoCoder.setOnGetGeoCodeResultListener(new OnGetGeoCoderResultListener() {
             @Override
             public void onGetGeoCodeResult(GeoCodeResult geoCodeResult) {
-
+                //搜索时会调用到这里，但是这个结果里并没有poi，所以通过 反地理编码 可以得到POI 信息，
+                //使用Poi 的searchInCity 有时并不能得到信息，所以改用了地理编码的方式，先得到搜索关键字的地址信息
+                if (geoCodeResult!=null && geoCodeResult.getLocation()!=null){
+                    //标记定位点
+                    //缩放地图以定位点为中心
+                    mBaiduMap.animateMapStatus(MapStatusUpdateFactory
+                            .newMapStatus(new MapStatus.Builder()
+                                    .target(geoCodeResult.getLocation())
+                                    .zoom(mZoomLevel).build()));
+                    //反向编码，以得到城市名，也可以得到POI信息
+                    mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(geoCodeResult.getLocation()));
+                }
             }
 
             @Override
@@ -194,16 +214,60 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
                 }
             }
         });
-        if (mLongitude < 0 || mLatitude < 0) {
-            //没有经纬度信息时直接定位
-            MapHelper mapHelper = new MapHelper(this, this);
-            mapHelper.startLocation();
-        } else {
-            //标记定位点
-            drawLocationPoint(mLatitude, mLongitude);
+
+        //定位 画两个标记 自身定位一个，用户选择地址一个（总是在地图的正中心）
+        MapHelper mapHelper = new MapHelper(this, this);
+        mapHelper.startLocation();
+
+        if (mLongitude >= 0 || mLatitude >= 0) {
             //反向编码，以得到城市名，也可以得到POI信息
             mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(mLatitude, mLongitude)));
         }
+
+        mBaiduMap.setOnMapLoadedCallback(new BaiduMap.OnMapLoadedCallback() {
+            @Override
+            public void onMapLoaded() {
+                int[] location = new int[2] ;
+                imgMarket.getLocationOnScreen(location);//获取在整个屏幕内的绝对坐标
+                //拿到地图中间点的坐标
+                int x = DeviceUtils.getSreenWidth()/2;
+                int y = location[1];
+                mCenterPoint = new Point(x,y);
+                LatLng latLng = mapView.getMap().getProjection().fromScreenLocation(mCenterPoint);
+                //反向编码，以得到城市名，也可以得到POI信息
+                mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(latLng.latitude, latLng.longitude)));
+            }
+        });
+
+        mBaiduMap.setOnMapTouchListener(new BaiduMap.OnMapTouchListener() {
+            @Override
+            public void onTouch(MotionEvent motionEvent) {
+                switch (motionEvent.getAction()){
+                    case MotionEvent.ACTION_DOWN:
+                        break;
+                    case MotionEvent.ACTION_UP:
+                        if(motionEvent.getPointerCount()==1) {
+                            LatLng latLng = mapView.getMap().getProjection().fromScreenLocation(mCenterPoint);
+                            //反向编码，以得到城市名，也可以得到POI信息
+                            mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(latLng.latitude, latLng.longitude)));
+                            //缩放地图以定位点为中心
+                            mBaiduMap.animateMapStatus(MapStatusUpdateFactory
+                                    .newMapStatus(new MapStatus.Builder()
+                                            .target(latLng)
+                                            .zoom(mZoomLevel).build()));
+                        }
+
+                        break;
+                }
+
+            }
+        });
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+
     }
 
     private void init() {
@@ -370,6 +434,14 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
      * @param longitude
      */
     private void drawLocationPoint(double latitude, double longitude) {
+        //先画个圆
+        LatLng llCircle = new LatLng(latitude, longitude);
+        OverlayOptions ooCircle = new CircleOptions().fillColor(0x550000FF)
+                .center(llCircle).stroke(new Stroke(2, 0xAA0000FF)).radius(300);
+        //设置颜色和透明度，均使用16进制显示，0xAARRGGBB，如 0xAA000000 其中AA是透明度，000000为颜色
+        mBaiduMap.addOverlay(ooCircle);
+
+
         // 设置定位图层的配置（定位模式，是否允许方向信息，用户自定义定位图标）
         BitmapDescriptor mCurrentMarker = BitmapDescriptorFactory
                 .fromResource(R.mipmap.location3);
@@ -445,9 +517,10 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
     private void loadPoi(String city, String keyword) {
         if (TextUtils.isEmpty(city))
             city = Constants.getLocation(false).city;
-        mPoiSearch.searchInCity(new PoiCitySearchOption()
-                .city(city).keyword(keyword).pageNum(20)
-        );
+//        mPoiSearch.searchInCity(new PoiCitySearchOption()
+//                .city(city).keyword(keyword).pageNum(20)
+//        );
+        mGeoCoder.geocode(new GeoCodeOption().city(city).address(keyword));
     }
 
     @Override
@@ -460,6 +533,9 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
     @Override
     public void onGetPoiDetailResult(PoiDetailResult poiDetailResult) {
         //获取Place详情页检索结果
+        if (poiDetailResult!=null){
+
+        }
     }
 
     @Override
@@ -474,7 +550,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
                 UserPoiInfo info = new UserPoiInfo(poiInfos.get(i));
                 if (i == 0) {
                     info.isChecked = true;
-                    drawLocationPoint(info.location.latitude, info.location.longitude);
+                    //drawLocationPoint(info.location.latitude, info.location.longitude);
                 }
                 mPoiList.add(info);
             }

@@ -20,11 +20,22 @@
                 android:layout_height="@dimen/line"
                 android:background="@color/colorLine" />
 
-            <com.baidu.mapapi.map.TextureMapView
-                android:id="@+id/mapView"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/map_height" />
+                android:layout_height="@dimen/map_height">
+                <com.baidu.mapapi.map.TextureMapView
+                    android:id="@+id/mapView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/map_height" />
 
+                <ImageView
+                    android:id="@+id/imgMarket"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="-15dp"
+                    android:src="@mipmap/position"
+                    android:layout_width="wrap_content"
+                    android:layout_height="30dp" />
+            </FrameLayout>
             <ListView
                 android:listSelector="@color/transparent"
                 android:scrollbars="none"
