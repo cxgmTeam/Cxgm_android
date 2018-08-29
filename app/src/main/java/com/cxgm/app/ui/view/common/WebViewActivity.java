@@ -154,7 +154,8 @@ public class WebViewActivity extends BaseActivity {
 
                 return true;
             }else if (url.contains("ps-xq.html")){
-                url += "&long="+ Constants.currentLocation.getLongitude()+"&lat="+Constants.currentLocation.getLatitude();
+                if (Constants.currentLocation!=null)
+                    url += "&long="+ Constants.currentLocation.getLongitude()+"&lat="+Constants.currentLocation.getLatitude();
 //                url+="&long=116.384756&lat=39.960647";
                 DLogUtils.d("拼接url:"+url);
             }
@@ -162,7 +163,7 @@ public class WebViewActivity extends BaseActivity {
 //                Toast.makeText(MainActivity.this,"国内不能访问google,拦截该url",Toast.LENGTH_LONG).show();
 //                return true;//表示我已经处理过了
 //            }
-            view.loadUrl(url);
+            view.loadUrl(url);//只要return false，其实不加这一句也可以继续访问网页，但是需要加这一句，是因为上面url做了修改，如果不用loadUrl，url修改是无效的。
             return true;
         }
     };
