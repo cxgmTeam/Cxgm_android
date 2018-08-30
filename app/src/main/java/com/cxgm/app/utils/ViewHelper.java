@@ -224,6 +224,7 @@ public class ViewHelper {
      * @param userAddresses
      */
     public static void filterAddress(Activity activity, List<UserAddress> userAddresses, int currentShopId, OnActionListener listener) {
+        final int[] num = {0};//记录请求次数
         for (int i = 0; i < userAddresses.size(); i++) {
 
             int finalI = i;
@@ -231,9 +232,11 @@ public class ViewHelper {
                     .execute(new Request.RequestCallback<List<Shop>>() {
                         @Override
                         public void onSuccess(List<Shop> shops) {
+//                            System.out.println("mMmMmMmMm:"+finalI + "  shop:"+shops);
                             if (shops != null) {
                                 for (Shop sh : shops) {
                                     if (sh.getId() == currentShopId) {
+//                                        System.out.println("mMmMmMmMm:"+finalI + "  addr:"+userAddresses.get(finalI));
                                         userAddresses.get(finalI).isEnable = true;
                                         break;
                                     }
@@ -253,7 +256,9 @@ public class ViewHelper {
 
                         @Override
                         public void onFinished() {
-                            if (finalI == userAddresses.size() - 1) {
+                            num[0]++;
+                            if (num[0] == userAddresses.size()) {
+//                                System.out.println("mMmMmMmMm 排序");
                                 //排序
                                 //将有效地址提前
                                 Collections.sort(userAddresses);
@@ -266,6 +271,7 @@ public class ViewHelper {
                                     }
                                 }
                                 if (defPosition > 0) {
+                                    //放到第一个
                                     userAddresses.add(0, userAddresses.remove(defPosition));
                                 }
 

@@ -14,8 +14,12 @@ android {
     }
     buildTypes {
         release {
+            buildConfigField "boolean", "isDebug", "false"
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            buildConfigField "boolean", "isDebug", "true"
         }
     }
     packagingOptions {exclude 'META-INF/rxjava.properties'}

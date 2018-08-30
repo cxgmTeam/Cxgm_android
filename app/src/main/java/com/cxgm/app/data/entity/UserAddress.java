@@ -132,4 +132,21 @@ public class UserAddress extends BaseEntity implements Cloneable ,Comparable<Use
     public int compareTo(@NonNull UserAddress o) {
         return this.isEnable?-1:1;
     }
+
+    @Override
+    public String toString() {
+        return "UserAddress{" +
+                "id=" + id +
+                ", address='" + address + '\'' +
+                ", area='" + area + '\'' +
+                ", dimension='" + dimension + '\'' +
+                ", longitude='" + longitude + '\'' +
+                ", phone='" + phone + '\'' +
+                ", realName='" + realName + '\'' +
+                ", isDef=" + isDef +
+                ", remarks='" + remarks + '\'' +
+                ", isEnable=" + isEnable +
+                ", yn=" + yn +
+                '}';
+    }
 }
