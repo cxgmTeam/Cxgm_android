@@ -28,6 +28,7 @@ import com.baidu.mapapi.map.BaiduMap;
 import com.baidu.mapapi.map.BitmapDescriptor;
 import com.baidu.mapapi.map.BitmapDescriptorFactory;
 import com.baidu.mapapi.map.CircleOptions;
+import com.baidu.mapapi.map.GroundOverlayOptions;
 import com.baidu.mapapi.map.MapPoi;
 import com.baidu.mapapi.map.MapStatus;
 import com.baidu.mapapi.map.MapStatusUpdate;
@@ -38,9 +39,11 @@ import com.baidu.mapapi.map.MyLocationData;
 import com.baidu.mapapi.map.Overlay;
 import com.baidu.mapapi.map.OverlayOptions;
 import com.baidu.mapapi.map.PolygonOptions;
+import com.baidu.mapapi.map.PolylineOptions;
 import com.baidu.mapapi.map.Stroke;
 import com.baidu.mapapi.map.TextureMapView;
 import com.baidu.mapapi.model.LatLng;
+import com.baidu.mapapi.model.LatLngBounds;
 import com.baidu.mapapi.search.core.PoiInfo;
 import com.baidu.mapapi.search.geocode.GeoCodeOption;
 import com.baidu.mapapi.search.geocode.GeoCodeResult;
@@ -53,8 +56,10 @@ import com.baidu.mapapi.search.poi.PoiAddrInfo;
 import com.baidu.mapapi.search.poi.PoiCitySearchOption;
 import com.baidu.mapapi.search.poi.PoiDetailResult;
 import com.baidu.mapapi.search.poi.PoiIndoorResult;
+import com.baidu.mapapi.search.poi.PoiNearbySearchOption;
 import com.baidu.mapapi.search.poi.PoiResult;
 import com.baidu.mapapi.search.poi.PoiSearch;
+import com.baidu.mapapi.search.poi.PoiSortType;
 import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.entity.PsfwTransfer;
@@ -210,7 +215,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
 //                    mSearchInfo.address = reverseGeoCodeResult.getAddress();
 //                    mSearchInfo.location = reverseGeoCodeResult.getLocation();
                     //获取POI检索结果
-                    setPoiList(reverseGeoCodeResult.getPoiList());
+                    setPoiList(reverseGeoCodeResult.getPoiList(),false);
                 }
             }
         });
@@ -251,10 +256,10 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
                             //反向编码，以得到城市名，也可以得到POI信息
                             mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(latLng.latitude, latLng.longitude)));
                             //缩放地图以定位点为中心
-                            mBaiduMap.animateMapStatus(MapStatusUpdateFactory
-                                    .newMapStatus(new MapStatus.Builder()
-                                            .target(latLng)
-                                            .zoom(mZoomLevel).build()));
+//                            mBaiduMap.animateMapStatus(MapStatusUpdateFactory
+//                                    .newMapStatus(new MapStatus.Builder()
+//                                            .target(latLng)
+//                                            .zoom(mZoomLevel).build()));
                         }
 
                         break;
@@ -285,7 +290,8 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
 //                            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
 //                        }
                         DeviceUtils.hideKeyboard(MapLocationActivity.this);
-                        loadPoi(mTempCity, keyword);
+//                        loadPoi(mTempCity, keyword);
+                        loadPoi("北京", keyword);
                     }
                 }
                 return true;
@@ -403,11 +409,15 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
             //构建用户绘制多边形的Option对象
             OverlayOptions polygonOption = new PolygonOptions()
                     .points(pts)
-                    .stroke(new Stroke(5, 0xAA00FF00))
-                    .fillColor(0xAAFFFF00);
+//                    .stroke(new Stroke(5, 0xAA6A006C))
+                    .fillColor(0xAAB9F6F5);
+            //绘制虚线
+            OverlayOptions ooPolyline = new PolylineOptions().width(5)
+                    .color(0xAA6A006C).points(pts).dottedLine(true);
 
             //在地图上添加多边形Option，用于显示
             mBaiduMap.addOverlay(polygonOption);
+            mBaiduMap.addOverlay(ooPolyline);
         }
     }
 
@@ -436,8 +446,8 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
     private void drawLocationPoint(double latitude, double longitude) {
         //先画个圆
         LatLng llCircle = new LatLng(latitude, longitude);
-        OverlayOptions ooCircle = new CircleOptions().fillColor(0x550000FF)
-                .center(llCircle).stroke(new Stroke(2, 0xAA0000FF)).radius(300);
+        OverlayOptions ooCircle = new CircleOptions().fillColor(0x554AAEF3)
+                .center(llCircle).stroke(new Stroke(2, 0xAA4AAEF3)).radius(300);
         //设置颜色和透明度，均使用16进制显示，0xAARRGGBB，如 0xAA000000 其中AA是透明度，000000为颜色
         mBaiduMap.addOverlay(ooCircle);
 
@@ -517,17 +527,26 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
     private void loadPoi(String city, String keyword) {
         if (TextUtils.isEmpty(city))
             city = Constants.getLocation(false).city;
-//        mPoiSearch.searchInCity(new PoiCitySearchOption()
-//                .city(city).keyword(keyword).pageNum(20)
+        //市内方式
+        mPoiSearch.searchInCity(new PoiCitySearchOption()
+                .city(city).keyword(keyword)
+        );
+        //附近方式
+//        LatLng latLng = mapView.getMap().getProjection().fromScreenLocation(mCenterPoint);
+//        mPoiSearch.searchNearby(
+//                new PoiNearbySearchOption()
+//                .keyword(keyword).sortType(PoiSortType.distance_from_near_to_far)
+//                        .location(latLng).radius(10000)
 //        );
-        mGeoCoder.geocode(new GeoCodeOption().city(city).address(keyword));
+        //地理编码方式
+//        mGeoCoder.geocode(new GeoCodeOption().city(city).address(keyword));
     }
 
     @Override
     public void onGetPoiResult(PoiResult poiResult) {
         //获取POI检索结果
         if (poiResult != null)
-            setPoiList(poiResult.getAllPoi());
+            setPoiList(poiResult.getAllPoi(),true);
     }
 
     @Override
@@ -543,14 +562,21 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
 
     }
 
-    private void setPoiList(List<PoiInfo> poiInfos) {
+    private void setPoiList(List<PoiInfo> poiInfos,boolean isCenter) {
         if (poiInfos != null) {
             mPoiList.clear();
             for (int i = 0; i < poiInfos.size(); i++) {
                 UserPoiInfo info = new UserPoiInfo(poiInfos.get(i));
                 if (i == 0) {
                     info.isChecked = true;
-                    //drawLocationPoint(info.location.latitude, info.location.longitude);
+                    if (isCenter){
+                        mBaiduMap.animateMapStatus(MapStatusUpdateFactory
+                                .newMapStatus(new MapStatus.Builder()
+                                        .target(info.location)
+                                        .zoom(mZoomLevel).build()));
+                        //drawLocationPoint(info.location.latitude, info.location.longitude);
+                    }
+
                 }
                 mPoiList.add(info);
             }
