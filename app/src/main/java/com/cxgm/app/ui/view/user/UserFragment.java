@@ -1,8 +1,13 @@
 package com.cxgm.app.ui.view.user;
 
+import android.Manifest;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,12 +22,16 @@ import com.cxgm.app.R;
 import com.cxgm.app.data.entity.Order;
 import com.cxgm.app.ui.base.BaseFragment;
 import com.cxgm.app.ui.view.ViewJump;
+import com.cxgm.app.ui.view.common.WebViewActivity;
 import com.cxgm.app.utils.UserManager;
+import com.deanlib.ootb.manager.PermissionManager;
+import com.tbruyelle.rxpermissions.Permission;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import rx.functions.Action1;
 
 /**
  * 用户中心
@@ -177,7 +186,25 @@ public class UserFragment extends BaseFragment {
                 ViewJump.toWebView(getActivity(),"file:///android_asset/help.html");
                 break;
             case R.id.layoutService:
-                //todo 客服
+                //客服
+                PermissionManager.requstPermission(getActivity(), new Action1<Permission>() {
+                    @Override
+                    public void call(Permission permission) {
+                        if (permission.granted) {
+                            new AlertDialog.Builder(getActivity())
+                                    .setTitle("联系客户").setMessage("400 013 0888").setPositiveButton("呼叫", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent();
+                                    intent.setAction(Intent.ACTION_CALL);
+                                    intent.setData(Uri.parse("tel:4000130888"));
+                                    startActivity(intent);
+                                }
+                            }).setNegativeButton("取消",null).show();
+                        }
+                    }
+                }, Manifest.permission.CALL_PHONE);
+
                 break;
             case R.id.layoutSettings:
                 ViewJump.toSettings(getActivity());
