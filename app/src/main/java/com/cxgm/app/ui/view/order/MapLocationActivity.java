@@ -72,6 +72,7 @@ import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.utils.MapHelper;
 import com.cxgm.app.utils.ToastManager;
 import com.deanlib.ootb.data.io.Request;
+import com.deanlib.ootb.utils.DLogUtils;
 import com.deanlib.ootb.utils.DeviceUtils;
 import com.deanlib.ootb.widget.ListViewForScrollView;
 
@@ -192,6 +193,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
         mGeoCoder.setOnGetGeoCodeResultListener(new OnGetGeoCoderResultListener() {
             @Override
             public void onGetGeoCodeResult(GeoCodeResult geoCodeResult) {
+                //不用了
                 //搜索时会调用到这里，但是这个结果里并没有poi，所以通过 反地理编码 可以得到POI 信息，
                 //使用Poi 的searchInCity 有时并不能得到信息，所以改用了地理编码的方式，先得到搜索关键字的地址信息
                 if (geoCodeResult!=null && geoCodeResult.getLocation()!=null){
@@ -260,6 +262,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
 //                                    .newMapStatus(new MapStatus.Builder()
 //                                            .target(latLng)
 //                                            .zoom(mZoomLevel).build()));
+
                         }
 
                         break;
@@ -616,6 +619,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
     @Override
     public void finish() {
         for (UserPoiInfo info : mPoiList) {
+            DLogUtils.d(info.toString());
             if (info.isChecked) {
 //                if (checkPointEnable(info.location.latitude,info.location.longitude)) {
                 Intent data = new Intent();

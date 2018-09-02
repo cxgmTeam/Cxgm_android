@@ -42,4 +42,21 @@ public class UserPoiInfo extends PoiInfo {
             location = new LatLng(Double.valueOf(address.getDimension()),Double.valueOf(address.getLongitude()));
         }
     }
+
+    @Override
+    public String toString() {
+        return "UserPoiInfo{" +
+                "isChecked=" + isChecked +
+                ", name='" + name + '\'' +
+                ", uid='" + uid + '\'' +
+                ", address='" + address + '\'' +
+                ", city='" + city + '\'' +
+                ", phoneNum='" + phoneNum + '\'' +
+                ", postCode='" + postCode + '\'' +
+                ", type=" + type +
+                ", location=" + location +
+                ", hasCaterDetails=" + hasCaterDetails +
+                ", isPano=" + isPano +
+                '}';
+    }
 }
