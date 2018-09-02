@@ -221,8 +221,10 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
                         @Override
                         public void onFinished() {
                             isLoadData = false;
-                            srl.finishLoadMore();
-                            srl.finishRefresh();
+                            if(srl!=null) {
+                                srl.finishLoadMore();
+                                srl.finishRefresh();
+                            }
                             if (mCartList.size() <= 0) {
                                 layoutGoodsList.setVisibility(View.GONE);
                                 layoutEmptyShopCart.setVisibility(View.VISIBLE);
