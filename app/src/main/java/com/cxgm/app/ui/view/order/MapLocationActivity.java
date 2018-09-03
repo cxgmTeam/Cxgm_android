@@ -115,7 +115,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
     double mLatitude;
     BaiduMap mBaiduMap;
     PoiSearch mPoiSearch;
-    GeoCoder mGeoCoder;
+//    GeoCoder mGeoCoder;
     String mTempCity;
     //PoiInfo mSearchInfo; //搜索出来的地址，应该加入到poi list的第一个
     PoiAdapter mPoiAdapter;
@@ -189,6 +189,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
 
         mPoiSearch = PoiSearch.newInstance();
         mPoiSearch.setOnGetPoiSearchResultListener(this);
+        /*
         mGeoCoder = GeoCoder.newInstance();
         mGeoCoder.setOnGetGeoCodeResultListener(new OnGetGeoCoderResultListener() {
             @Override
@@ -221,15 +222,16 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
                 }
             }
         });
+        */
 
         //定位 画两个标记 自身定位一个，用户选择地址一个（总是在地图的正中心）
         MapHelper mapHelper = new MapHelper(this, this);
         mapHelper.startLocation();
 
-        if (mLongitude >= 0 || mLatitude >= 0) {
-            //反向编码，以得到城市名，也可以得到POI信息
-            mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(mLatitude, mLongitude)));
-        }
+//        if (mLongitude >= 0 || mLatitude >= 0) {
+//            //反向编码，以得到城市名，也可以得到POI信息
+//            mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(mLatitude, mLongitude)));
+//        }
 
         mBaiduMap.setOnMapLoadedCallback(new BaiduMap.OnMapLoadedCallback() {
             @Override
@@ -242,7 +244,9 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
                 mCenterPoint = new Point(x,y);
                 LatLng latLng = mapView.getMap().getProjection().fromScreenLocation(mCenterPoint);
                 //反向编码，以得到城市名，也可以得到POI信息
-                mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(latLng.latitude, latLng.longitude)));
+//                mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(latLng.latitude, latLng.longitude)));
+                mPoiSearch.searchNearby(new PoiNearbySearchOption().sortType(PoiSortType.distance_from_near_to_far)
+                        .location(latLng).keyword("").radius(1000));
             }
         });
 
@@ -256,7 +260,9 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
                         if(motionEvent.getPointerCount()==1) {
                             LatLng latLng = mapView.getMap().getProjection().fromScreenLocation(mCenterPoint);
                             //反向编码，以得到城市名，也可以得到POI信息
-                            mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(latLng.latitude, latLng.longitude)));
+//                            mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(latLng.latitude, latLng.longitude)));
+                            mPoiSearch.searchNearby(new PoiNearbySearchOption().sortType(PoiSortType.distance_from_near_to_far).keyword("")
+                                    .location(latLng).radius(1000));
                             //缩放地图以定位点为中心
 //                            mBaiduMap.animateMapStatus(MapStatusUpdateFactory
 //                                    .newMapStatus(new MapStatus.Builder()
@@ -293,8 +299,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
 //                            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
 //                        }
                         DeviceUtils.hideKeyboard(MapLocationActivity.this);
-//                        loadPoi(mTempCity, keyword);
-                        loadPoi("北京", keyword);
+                        loadPoi(mTempCity, keyword);
                     }
                 }
                 return true;
@@ -436,7 +441,9 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
             mTempCity = bdLocation.getCity();
             drawLocationPoint(bdLocation.getLatitude(), bdLocation.getLongitude());
             //反向编码，以得到城市名，也可以得到POI信息
-            mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude())));
+//            mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude())));
+            mPoiSearch.searchNearby(new PoiNearbySearchOption().sortType(PoiSortType.distance_from_near_to_far).keyword("")
+                    .location(new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude())).radius(1000));
         }
     }
 
@@ -518,7 +525,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
         super.onDestroy();
         mapView.onDestroy();
         mPoiSearch.destroy();
-        mGeoCoder.destroy();
+//        mGeoCoder.destroy();
     }
 
     /**
