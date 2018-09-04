@@ -74,6 +74,7 @@ import com.cxgm.app.utils.ToastManager;
 import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.utils.DLogUtils;
 import com.deanlib.ootb.utils.DeviceUtils;
+import com.deanlib.ootb.utils.PopupUtils;
 import com.deanlib.ootb.widget.ListViewForScrollView;
 
 import org.xutils.common.Callback;
@@ -226,10 +227,10 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
         MapHelper mapHelper = new MapHelper(this, this);
         mapHelper.startLocation();
 
-        if (mLongitude >= 0 || mLatitude >= 0) {
-            //反向编码，以得到城市名，也可以得到POI信息
-            mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(mLatitude, mLongitude)));
-        }
+//        if (mLongitude >= 0 || mLatitude >= 0) {
+//            //反向编码，以得到城市名，也可以得到POI信息
+//            mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(mLatitude, mLongitude)));
+//        }
 
         mBaiduMap.setOnMapLoadedCallback(new BaiduMap.OnMapLoadedCallback() {
             @Override
@@ -242,7 +243,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
                 mCenterPoint = new Point(x,y);
                 LatLng latLng = mapView.getMap().getProjection().fromScreenLocation(mCenterPoint);
                 //反向编码，以得到城市名，也可以得到POI信息
-                mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(latLng.latitude, latLng.longitude)));
+                mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(latLng));
             }
         });
 
@@ -256,7 +257,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
                         if(motionEvent.getPointerCount()==1) {
                             LatLng latLng = mapView.getMap().getProjection().fromScreenLocation(mCenterPoint);
                             //反向编码，以得到城市名，也可以得到POI信息
-                            mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(latLng.latitude, latLng.longitude)));
+                            mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(latLng));
                             //缩放地图以定位点为中心
 //                            mBaiduMap.animateMapStatus(MapStatusUpdateFactory
 //                                    .newMapStatus(new MapStatus.Builder()
@@ -293,8 +294,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
 //                            inputMethodManager.hideSoftInputFromWindow(view.getWindowToken(), 0);
 //                        }
                         DeviceUtils.hideKeyboard(MapLocationActivity.this);
-//                        loadPoi(mTempCity, keyword);
-                        loadPoi("北京", keyword);
+                        loadPoi(mTempCity, keyword);
                     }
                 }
                 return true;
@@ -320,7 +320,33 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
                  //反向编码，以得到城市名，也可以得到POI信息 开启后，得到新的结果会重置这个list,看上去就是跳来跳去
                  mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(mPoiList.get((int) id).location.latitude, mPoiList.get((int) id).location.longitude)));
                  **/
-                finish();
+                new CheckAddressReq(MapLocationActivity.this,mPoiList.get((int)id).location.longitude+"",
+                        mPoiList.get((int)id).location.latitude+"").execute(new Request.RequestCallback<List<Shop>>() {
+                    @Override
+                    public void onSuccess(List<Shop> shops) {
+                        if (shops!=null && shops.size()>0){
+                            Request.dismissDialog();
+                            finish();
+                        }else {
+                            PopupUtils.sendToast(R.string.adress_invalid);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(Callback.CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
 
             }
         });
