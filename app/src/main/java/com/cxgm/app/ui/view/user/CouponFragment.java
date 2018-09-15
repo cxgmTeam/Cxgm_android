@@ -1,5 +1,6 @@
 package com.cxgm.app.ui.view.user;
 
+import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -24,9 +25,11 @@ import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.utils.Helper;
 import com.cxgm.app.utils.ToastManager;
 import com.deanlib.ootb.data.io.Request;
+import com.deanlib.ootb.manager.PermissionManager;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+import com.tbruyelle.rxpermissions.Permission;
 
 import org.xutils.common.Callback;
 
@@ -37,6 +40,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import rx.functions.Action1;
 
 /**
  * 优惠券可用不可用页
@@ -152,7 +156,15 @@ public class CouponFragment extends BaseFragment {
         switch (view.getId()) {
             case R.id.imgScan:
                 //扫码
-                ViewJump.toScan(getActivity(),this);
+                PermissionManager.requstPermission(getActivity(), new Action1<Permission>() {
+                    @Override
+                    public void call(Permission permission) {
+                        if (permission.granted){
+                            ViewJump.toScan(getActivity(),CouponFragment.this);
+                        }
+                    }
+                }, Manifest.permission.CAMERA);
+
                 break;
             case R.id.tvExchange:
                 //兑换

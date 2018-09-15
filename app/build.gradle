@@ -6,8 +6,8 @@ android {
         applicationId "com.cxgm.app"
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 57
-        versionName "1.0.1"
+        versionCode 59
+        versionName "1.0.2"
         multiDexEnabled = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -22,19 +22,18 @@ android {
             buildConfigField "boolean", "isDebug", "true"
         }
     }
-    packagingOptions {exclude 'META-INF/rxjava.properties'}
-
+    packagingOptions { exclude 'META-INF/rxjava.properties' }
     compileOptions {
-        targetCompatibility 1.8
-        sourceCompatibility 1.8
+        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_1_8
     }
-
     lintOptions {
         checkReleaseBuilds false
         // Or, if you prefer, you can continue to check for errors in release builds,
         // but continue the build even when errors are found:
         abortOnError false
     }
+    buildToolsVersion '27.0.3'
 }
 
 dependencies {
@@ -49,6 +48,7 @@ dependencies {
         exclude group: 'cn.bingoogolapple'
     })
     implementation 'cn.bingoogolapple:bga-qrcode-zxing:1.2.5'
+    implementation 'cn.simonlee.xcodescanner:zbar:1.1.8'
     //    implementation 'com.umeng.sdk:common:latest.integration'
     implementation 'com.umeng.sdk:analytics:7.5.0'
     //    implementation project(':push_4.0.0')

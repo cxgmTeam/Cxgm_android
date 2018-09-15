@@ -74,6 +74,7 @@ import com.cxgm.app.utils.ToastManager;
 import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.utils.DLogUtils;
 import com.deanlib.ootb.utils.DeviceUtils;
+import com.deanlib.ootb.utils.PopupUtils;
 import com.deanlib.ootb.widget.ListViewForScrollView;
 
 import org.xutils.common.Callback;
@@ -115,7 +116,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
     double mLatitude;
     BaiduMap mBaiduMap;
     PoiSearch mPoiSearch;
-//    GeoCoder mGeoCoder;
+    GeoCoder mGeoCoder;
     String mTempCity;
     //PoiInfo mSearchInfo; //搜索出来的地址，应该加入到poi list的第一个
     PoiAdapter mPoiAdapter;
@@ -189,7 +190,6 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
 
         mPoiSearch = PoiSearch.newInstance();
         mPoiSearch.setOnGetPoiSearchResultListener(this);
-        /*
         mGeoCoder = GeoCoder.newInstance();
         mGeoCoder.setOnGetGeoCodeResultListener(new OnGetGeoCoderResultListener() {
             @Override
@@ -222,7 +222,6 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
                 }
             }
         });
-        */
 
         //定位 画两个标记 自身定位一个，用户选择地址一个（总是在地图的正中心）
         MapHelper mapHelper = new MapHelper(this, this);
@@ -244,9 +243,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
                 mCenterPoint = new Point(x,y);
                 LatLng latLng = mapView.getMap().getProjection().fromScreenLocation(mCenterPoint);
                 //反向编码，以得到城市名，也可以得到POI信息
-//                mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(latLng.latitude, latLng.longitude)));
-                mPoiSearch.searchNearby(new PoiNearbySearchOption().sortType(PoiSortType.distance_from_near_to_far)
-                        .location(latLng).keyword("").radius(1000));
+                mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(latLng));
             }
         });
 
@@ -260,9 +257,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
                         if(motionEvent.getPointerCount()==1) {
                             LatLng latLng = mapView.getMap().getProjection().fromScreenLocation(mCenterPoint);
                             //反向编码，以得到城市名，也可以得到POI信息
-//                            mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(latLng.latitude, latLng.longitude)));
-                            mPoiSearch.searchNearby(new PoiNearbySearchOption().sortType(PoiSortType.distance_from_near_to_far).keyword("")
-                                    .location(latLng).radius(1000));
+                            mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(latLng));
                             //缩放地图以定位点为中心
 //                            mBaiduMap.animateMapStatus(MapStatusUpdateFactory
 //                                    .newMapStatus(new MapStatus.Builder()
@@ -325,7 +320,33 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
                  //反向编码，以得到城市名，也可以得到POI信息 开启后，得到新的结果会重置这个list,看上去就是跳来跳去
                  mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(mPoiList.get((int) id).location.latitude, mPoiList.get((int) id).location.longitude)));
                  **/
-                finish();
+                new CheckAddressReq(MapLocationActivity.this,mPoiList.get((int)id).location.longitude+"",
+                        mPoiList.get((int)id).location.latitude+"").execute(new Request.RequestCallback<List<Shop>>() {
+                    @Override
+                    public void onSuccess(List<Shop> shops) {
+                        if (shops!=null && shops.size()>0){
+                            Request.dismissDialog();
+                            finish();
+                        }else {
+                            PopupUtils.sendToast(R.string.adress_invalid);
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(Callback.CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
 
             }
         });
@@ -441,9 +462,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
             mTempCity = bdLocation.getCity();
             drawLocationPoint(bdLocation.getLatitude(), bdLocation.getLongitude());
             //反向编码，以得到城市名，也可以得到POI信息
-//            mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude())));
-            mPoiSearch.searchNearby(new PoiNearbySearchOption().sortType(PoiSortType.distance_from_near_to_far).keyword("")
-                    .location(new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude())).radius(1000));
+            mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(bdLocation.getLatitude(), bdLocation.getLongitude())));
         }
     }
 
@@ -475,13 +494,10 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
                 // 此处设置开发者获取到的方向信息，顺时针0-360
                 .direction(0).latitude(latitude)
                 .longitude(longitude).build();
-
         // 设置定位数据
         mBaiduMap.setMyLocationData(locData);
-
         MyLocationConfiguration config = new MyLocationConfiguration(MyLocationConfiguration.LocationMode.NORMAL, true, null);
         mBaiduMap.setMyLocationConfiguration(config);
-
         // 当不需要定位图层时关闭定位图层
         //mBaiduMap.setMyLocationEnabled(false);
         */
@@ -525,7 +541,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
         super.onDestroy();
         mapView.onDestroy();
         mPoiSearch.destroy();
-//        mGeoCoder.destroy();
+        mGeoCoder.destroy();
     }
 
     /**

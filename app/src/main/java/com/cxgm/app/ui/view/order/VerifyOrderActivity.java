@@ -163,7 +163,7 @@ public class VerifyOrderActivity extends BaseActivity {
         if (currentHour<9){
             //当日
             initHour = 9;
-        }else if (currentHour>=21){
+        }else if (currentHour>=20){
             //次日
 
             offTime = 1000 * 60 * 60 * 24;
@@ -453,9 +453,10 @@ public class VerifyOrderActivity extends BaseActivity {
                 case ViewJump.CODE_DELIVERY_TIME_DIALOG:
                     if (data!=null){
                         DeliveryTime time = (DeliveryTime) data.getSerializableExtra("deliveryTime");
-                        if (time!=null)
-                            tvReceiveTime.setText(getString(time.isCurrentDay()?R.string.today:R.string.tomorrow) + " " + time.getTime());
+                        if (time!=null) {
+                            tvReceiveTime.setText(getString(time.isCurrentDay() ? R.string.today : R.string.tomorrow) + " " + time.getTime());
                             tvReceiveTime.setTag(time.getDate());
+                        }
                     }
                     break;
             }

@@ -69,7 +69,7 @@ public class DeliveryTimeDialogActivity extends BaseActivity {
         if (currentHour<9){
             //当日
             initHour = 9;
-        }else if (currentHour>=21){
+        }else if (currentHour>=20){
             //次日
             tvDay.setText(R.string.tomorrow);
             offTime = 1000 * 60 * 60 * 24;

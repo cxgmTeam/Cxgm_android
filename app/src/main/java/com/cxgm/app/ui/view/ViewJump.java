@@ -3,6 +3,7 @@ package com.cxgm.app.ui.view;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v4.app.Fragment;
 
 import com.cxgm.app.R;
@@ -13,6 +14,7 @@ import com.cxgm.app.data.entity.ShopCategory;
 import com.cxgm.app.data.entity.UserAddress;
 import com.cxgm.app.ui.view.common.AboutActivity;
 import com.cxgm.app.ui.view.common.MainActivity;
+import com.cxgm.app.ui.view.common.Scan2Activity;
 import com.cxgm.app.ui.view.common.ScanActivity;
 import com.cxgm.app.ui.view.common.SettingsActivity;
 import com.cxgm.app.ui.view.common.WebViewActivity;
@@ -247,12 +249,23 @@ public class ViewJump {
     }
 
     public static void toScan(Activity activity){
-        Intent intent = new Intent(activity, ScanActivity.class);
+        Intent intent;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            intent = new Intent(activity, ScanActivity.class);
+        }else {
+            intent = new Intent(activity, Scan2Activity.class);
+        }
+
         activity.startActivityForResult(intent,CODE_SCAN);
     }
 
     public static void toScan(Activity activity,Fragment fragment){
-        Intent intent = new Intent(activity, ScanActivity.class);
+        Intent intent;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            intent = new Intent(activity, ScanActivity.class);
+        }else {
+            intent = new Intent(activity, Scan2Activity.class);
+        }
         fragment.startActivityForResult(intent,CODE_SCAN);
     }
 

@@ -3,6 +3,7 @@ package com.cxgm.app.ui.view.common;
 import android.Manifest;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
 import com.cxgm.app.R;
 import com.cxgm.app.ui.base.BaseActivity;
@@ -11,16 +12,26 @@ import com.deanlib.ootb.manager.PermissionManager;
 import com.deanlib.ootb.utils.DLogUtils;
 import com.tbruyelle.rxpermissions.Permission;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.bingoogolapple.qrcode.core.BarcodeType;
 import cn.bingoogolapple.qrcode.core.QRCodeView;
 import cn.bingoogolapple.qrcode.zxing.ZXingView;
 import rx.functions.Action1;
 
+/**
+ * zxing实现
+ * 用于android 8 及以上
+ */
 public class ScanActivity extends BaseActivity {
 
     @BindView(R.id.scanView)
     ZXingView scanView;
+
+    Timer mTimer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,20 +39,12 @@ public class ScanActivity extends BaseActivity {
         setContentView(R.layout.activity_scan);
         ButterKnife.bind(this);
 
-        PermissionManager.requstPermission(this, new Action1<Permission>() {
-            @Override
-            public void call(Permission permission) {
-                if (permission.granted){
-                    init();
-                }else {
-                    finish();
-                }
-            }
-        }, Manifest.permission.CAMERA);
+        init();
 
     }
 
     private void init(){
+        scanView.setType(BarcodeType.ONLY_QR_CODE,null);
         scanView.setDelegate(new QRCodeView.Delegate() {
             @Override
             public void onScanQRCodeSuccess(String result) {
@@ -57,6 +60,13 @@ public class ScanActivity extends BaseActivity {
                 ToastManager.sendToast(getString(R.string.scan_error));
             }
         });
+        scanView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                scanView.stopSpot();
+                scanView.startSpot();
+            }
+        });
 
     }
 
@@ -65,6 +75,19 @@ public class ScanActivity extends BaseActivity {
         super.onResume();
         scanView.startCamera();
         scanView.startSpotAndShowRect();
+
+        //部分国产手机只自动对焦一次后就不再继续对焦
+        //代码开启3秒一次的重新对焦工作
+        mTimer = new Timer();
+        mTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                if (scanView!=null){
+                    scanView.stopSpot();
+                    scanView.startSpot();
+                }
+            }
+        },3000,3000);
     }
 
     @Override
@@ -72,5 +95,16 @@ public class ScanActivity extends BaseActivity {
         super.onPause();
         scanView.stopSpot();
         scanView.stopCamera();
+        if (mTimer!=null){
+            mTimer.purge();
+            mTimer.cancel();
+            mTimer = null;
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        scanView.onDestroy();
     }
 }

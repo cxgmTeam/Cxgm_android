@@ -124,6 +124,9 @@
         <activity android:name=".ui.view.common.ScanActivity"
             android:screenOrientation="portrait"
             />
+        <activity android:name=".ui.view.common.Scan2Activity"
+            android:screenOrientation="portrait"
+            />
 
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
