@@ -24,7 +24,7 @@
     <string name="remark_">备注信息：</string>
 
     <string name="location">当前定位</string>
-    <string name="my_receiver_addr">我的收获地址</string>
+    <string name="my_receiver_addr">我的收货地址</string>
     <string name="reposition">重新定位</string>
     <string name="surrounding">附近地址</string>
     <string name="new_receive_addr">新增收货地址</string>

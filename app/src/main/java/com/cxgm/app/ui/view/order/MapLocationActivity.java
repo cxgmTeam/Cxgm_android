@@ -153,12 +153,10 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
         mBaiduMap.setOnMapStatusChangeListener(new BaiduMap.OnMapStatusChangeListener() {
             @Override
             public void onMapStatusChangeStart(MapStatus mapStatus) {
-
             }
 
             @Override
             public void onMapStatusChangeStart(MapStatus mapStatus, int i) {
-
             }
 
             @Override
@@ -169,6 +167,9 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
             @Override
             public void onMapStatusChangeFinish(MapStatus mapStatus) {
                 mZoomLevel = mapStatus.zoom;
+                LatLng latLng = mapView.getMap().getProjection().fromScreenLocation(mCenterPoint);
+                //反向编码，以得到城市名，也可以得到POI信息
+                mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(latLng));
             }
         });
 //        mBaiduMap.setOnMapClickListener(new BaiduMap.OnMapClickListener() {
@@ -231,7 +232,6 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
 //            //反向编码，以得到城市名，也可以得到POI信息
 //            mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(mLatitude, mLongitude)));
 //        }
-
         mBaiduMap.setOnMapLoadedCallback(new BaiduMap.OnMapLoadedCallback() {
             @Override
             public void onMapLoaded() {
@@ -247,6 +247,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
             }
         });
 
+        /*
         mBaiduMap.setOnMapTouchListener(new BaiduMap.OnMapTouchListener() {
             @Override
             public void onTouch(MotionEvent motionEvent) {
@@ -271,6 +272,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
 
             }
         });
+        */
     }
 
     @Override
@@ -551,8 +553,12 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
      * @param keyword
      */
     private void loadPoi(String city, String keyword) {
-        if (TextUtils.isEmpty(city))
-            city = Constants.getLocation(false).city;
+        if (TextUtils.isEmpty(city)) {
+            if (Constants.getLocation(false) != null)
+                city = Constants.getLocation(false).city;
+            else
+                city = "北京市";
+        }
         //市内方式
         mPoiSearch.searchInCity(new PoiCitySearchOption()
                 .city(city).keyword(keyword)

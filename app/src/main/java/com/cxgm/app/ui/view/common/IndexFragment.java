@@ -795,46 +795,46 @@ public class IndexFragment extends BaseFragment {
                     //更新位置以及对应商铺以及对应的商品
                     if (data!=null) {
                         boolean isDefAddr = data.getBooleanExtra("isDefAddr",false);
-                        new CheckAddressReq(getActivity(), Constants.getLocation(isDefAddr).location.longitude + "", Constants.getLocation(isDefAddr).location.latitude + "")
-                                .execute(new Request.RequestCallback<List<Shop>>() {
-                                    @Override
-                                    public void onSuccess(List<Shop> shops) {
-                                        if (shops != null && shops.size() > 0) {
-                                            if (shops.size() == 1 && Constants.currentShopId != 0
-                                                    && shops.get(0).getId() == Constants.currentShopId)
-                                                return;
+                        if (Constants.getLocation(isDefAddr)!=null) {
+                            new CheckAddressReq(getActivity(), Constants.getLocation(isDefAddr).location.longitude + "", Constants.getLocation(isDefAddr).location.latitude + "")
+                                    .execute(new Request.RequestCallback<List<Shop>>() {
+                                        @Override
+                                        public void onSuccess(List<Shop> shops) {
+                                            if (shops != null && shops.size() > 0) {
+                                                if (shops.size() == 1 && Constants.currentShopId != 0
+                                                        && shops.get(0).getId() == Constants.currentShopId)
+                                                    return;
 
-                                            /**
-                                            //返回得到的定位信息内仍然可能没有商铺
-                                            //或者有商铺，而非用户最开始选择的商铺，直接替换，是否需要提示给用户
-                                            //地址配送区域重叠
-                                            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                                            builder.setTitle(R.string.according_location_recommend_shop);
-                                            String[] shopNames = new String[shops.size()];
-                                            for (int i = 0; i < shops.size(); i++) {
-                                                shopNames[i] = shops.get(i).getShopName();
-                                            }
-                                            builder.setItems(shopNames, new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialog, int which) {
-                                                    Constants.currentShop = shops.get(which);
-                                                    Constants.setEnableDeliveryAddress(true);//可配送
-                                                    init();
-                                                    loadData();
-                                                    ViewHelper.updateShopCart(getActivity());
+                                                /**
+                                                 //返回得到的定位信息内仍然可能没有商铺
+                                                 //或者有商铺，而非用户最开始选择的商铺，直接替换，是否需要提示给用户
+                                                 //地址配送区域重叠
+                                                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                                                 builder.setTitle(R.string.according_location_recommend_shop);
+                                                 String[] shopNames = new String[shops.size()];
+                                                 for (int i = 0; i < shops.size(); i++) {
+                                                 shopNames[i] = shops.get(i).getShopName();
+                                                 }
+                                                 builder.setItems(shopNames, new DialogInterface.OnClickListener() {
+                                                @Override public void onClick(DialogInterface dialog, int which) {
+                                                Constants.currentShop = shops.get(which);
+                                                Constants.setEnableDeliveryAddress(true);//可配送
+                                                init();
+                                                loadData();
+                                                ViewHelper.updateShopCart(getActivity());
                                                 }
-                                            });
-                                            builder.setNegativeButton(R.string.cancel, null);
-                                            builder.show();
-                                            */
-                                            Constants.currentShopId = shops.get(0).getId();
-                                            Constants.setEnableDeliveryAddress(true);//可配送
-                                            init();
-                                            loadData();
-                                            ViewHelper.updateShopCart(getActivity());
-                                        } else {
-                                            if (Constants.currentShopId != 0) {
-                                                //shop 从有到无
+                                                });
+                                                 builder.setNegativeButton(R.string.cancel, null);
+                                                 builder.show();
+                                                 */
+                                                Constants.currentShopId = shops.get(0).getId();
+                                                Constants.setEnableDeliveryAddress(true);//可配送
+                                                init();
+                                                loadData();
+                                                ViewHelper.updateShopCart(getActivity());
+                                            } else {
+                                                if (Constants.currentShopId != 0) {
+                                                    //shop 从有到无
                                                 /*
                                                 new AlertDialog.Builder(getActivity()).setTitle(R.string.hint)
                                                         .setMessage(R.string.show_shop_list).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -855,31 +855,32 @@ public class IndexFragment extends BaseFragment {
                                                     }
                                                 }).show();
                                                 */
-                                                //shop置Null
-                                                Constants.setEnableDeliveryAddress(false);
-                                                Constants.currentShopId = 0;
-                                                init();
-                                                loadData();
-                                                ViewHelper.updateShopCart(getActivity());
+                                                    //shop置Null
+                                                    Constants.setEnableDeliveryAddress(false);
+                                                    Constants.currentShopId = 0;
+                                                    init();
+                                                    loadData();
+                                                    ViewHelper.updateShopCart(getActivity());
+                                                }
                                             }
                                         }
-                                    }
 
-                                    @Override
-                                    public void onError(Throwable ex, boolean isOnCallback) {
+                                        @Override
+                                        public void onError(Throwable ex, boolean isOnCallback) {
 
-                                    }
+                                        }
 
-                                    @Override
-                                    public void onCancelled(Callback.CancelledException cex) {
+                                        @Override
+                                        public void onCancelled(Callback.CancelledException cex) {
 
-                                    }
+                                        }
 
-                                    @Override
-                                    public void onFinished() {
+                                        @Override
+                                        public void onFinished() {
 
-                                    }
-                                });
+                                        }
+                                    });
+                        }
                     }
                     break;
             }

@@ -225,7 +225,8 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
                                 srl.finishLoadMore();
                                 srl.finishRefresh();
                             }
-                            if (mCartList.size() <= 0) {
+                            if (mCartList.size() <= 0 && layoutGoodsList!=null
+                                    && layoutEmptyShopCart!=null) {
                                 layoutGoodsList.setVisibility(View.GONE);
                                 layoutEmptyShopCart.setVisibility(View.VISIBLE);
                             }

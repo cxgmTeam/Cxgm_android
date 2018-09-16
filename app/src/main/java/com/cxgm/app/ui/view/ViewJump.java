@@ -1,5 +1,6 @@
 package com.cxgm.app.ui.view;
 
+import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
@@ -40,11 +41,15 @@ import com.cxgm.app.ui.view.order.VerifyOrderActivity;
 import com.cxgm.app.ui.view.user.CouponActivity;
 import com.cxgm.app.ui.view.user.InviteActivity;
 import com.cxgm.app.ui.view.user.LoginActivity;
+import com.deanlib.ootb.manager.PermissionManager;
 import com.deanlib.ootb.utils.DeviceUtils;
+import com.tbruyelle.rxpermissions.Permission;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import rx.functions.Action1;
 
 /**
  * 界面跳转总控
@@ -107,10 +112,17 @@ public class ViewJump {
     }
 
     public static void toMapLocation(Activity activity,double longitude,double latitude){
-        Intent intent = new Intent(activity, MapLocationActivity.class);
-        intent.putExtra("longitude",longitude);
-        intent.putExtra("latitude",latitude);
-        activity.startActivityForResult(intent,CODE_MAP_LOCATION);
+        PermissionManager.requstPermission(activity, new Action1<Permission>() {
+            @Override
+            public void call(Permission permission) {
+                if(permission.granted) {
+                    Intent intent = new Intent(activity, MapLocationActivity.class);
+                    intent.putExtra("longitude", longitude);
+                    intent.putExtra("latitude", latitude);
+                    activity.startActivityForResult(intent, CODE_MAP_LOCATION);
+                }
+            }
+        }, Manifest.permission.ACCESS_FINE_LOCATION);
     }
 
     public static void toInvite(Activity activity){
