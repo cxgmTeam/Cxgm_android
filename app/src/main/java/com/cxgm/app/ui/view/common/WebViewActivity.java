@@ -1,6 +1,7 @@
 package com.cxgm.app.ui.view.common;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -78,7 +79,7 @@ public class WebViewActivity extends BaseActivity {
 
             WebSettings webSettings = webview.getSettings();
             webSettings.setJavaScriptEnabled(true);
-            webview.addJavascriptInterface(this,"cxgm");
+            webview.addJavascriptInterface(new CxgmJS(this),"cxgm");
 
             //Uncaught TypeError: Cannot read property ‘getItem’ of null”
             webSettings.setDomStorageEnabled(true);//允许浏览器保存doom原型，这样js就可以调用这个方法了
@@ -218,14 +219,20 @@ public class WebViewActivity extends BaseActivity {
         return super.onKeyDown(keyCode,event);
     }
 
-    /**
-     * JS调用android的方法
-     * @return
-     */
-    @JavascriptInterface
-    public void  toGoodsDetail(String productId,String shopId){
-        DLogUtils.i("productId:" + productId + " shopid:" + shopId);
-//        ViewJump.toGoodsDetail(this,shopId,productId);
+    public class CxgmJS{
+        Activity activity;
+        public CxgmJS(Activity activity){
+            this.activity = activity;
+        }
+        /**
+         * JS调用android的方法
+         * @return
+         */
+        @JavascriptInterface
+        public void  toGoodsDetail(String productId,String shopId){
+            DLogUtils.i("productId:" + productId + " shopid:" + shopId);
+            ViewJump.toGoodsDetail(activity,Integer.valueOf(shopId),Integer.valueOf(productId));
+        }
     }
 
     @Override
