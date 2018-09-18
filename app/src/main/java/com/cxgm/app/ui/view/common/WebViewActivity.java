@@ -19,6 +19,7 @@ import android.widget.TextView;
 import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
 import com.cxgm.app.ui.base.BaseActivity;
+import com.cxgm.app.ui.view.ViewJump;
 import com.deanlib.ootb.manager.PermissionManager;
 import com.deanlib.ootb.utils.AppUtils;
 import com.deanlib.ootb.utils.DLogUtils;
@@ -77,6 +78,7 @@ public class WebViewActivity extends BaseActivity {
 
             WebSettings webSettings = webview.getSettings();
             webSettings.setJavaScriptEnabled(true);
+            webview.addJavascriptInterface(this,"cxgm");
 
             //Uncaught TypeError: Cannot read property ‘getItem’ of null”
             webSettings.setDomStorageEnabled(true);//允许浏览器保存doom原型，这样js就可以调用这个方法了
@@ -218,12 +220,12 @@ public class WebViewActivity extends BaseActivity {
 
     /**
      * JS调用android的方法
-     * @param str
      * @return
      */
-    @JavascriptInterface //仍然必不可少
-    public void  getClient(String str){
-        DLogUtils.i("html调用客户端:"+str);
+    @JavascriptInterface
+    public void  toGoodsDetail(String productId,String shopId){
+        DLogUtils.i("productId:" + productId + " shopid:" + shopId);
+//        ViewJump.toGoodsDetail(this,shopId,productId);
     }
 
     @Override

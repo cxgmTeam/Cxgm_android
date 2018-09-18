@@ -50,6 +50,7 @@ import com.cxgm.app.ui.widget.CustomScrollView;
 import com.cxgm.app.ui.widget.SpaceItemDecoration;
 import com.cxgm.app.utils.Helper;
 import com.cxgm.app.utils.ToastManager;
+import com.cxgm.app.utils.UserManager;
 import com.cxgm.app.utils.ViewHelper;
 import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.utils.FormatUtils;
@@ -265,7 +266,17 @@ public class IndexFragment extends BaseFragment {
                 public void onItemClick(View view, LoopData.ItemData itemData, int position) {
                     //广告点击事件
                     if ("1".equals(itemData.desc)){
-                        ViewJump.toWebView(getActivity(),itemData.link);
+                        String url = itemData.link;
+//                        String url = "http://www.sangchunxi.com/freshfruitbeauty";
+                        if (UserManager.isUserLogin()) {
+                            if (url.contains("?")) {
+                                url += "&";
+                            } else {
+                                url += "?";
+                            }
+                            url += "token=" + UserManager.user.getToken();
+                        }
+                        ViewJump.toWebView(getActivity(),url);
                     }else if ("2".equals(itemData.desc)){
                         ViewJump.toGoodsDetail(getActivity(),(int) FormatUtils.convertStringToNum(itemData.link));
                     }
