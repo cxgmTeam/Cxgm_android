@@ -19,8 +19,15 @@ import android.widget.TextView;
 
 import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
+import com.cxgm.app.data.entity.ProductTransfer;
+import com.cxgm.app.data.entity.ShopCart;
+import com.cxgm.app.data.entity.base.PageInfo;
+import com.cxgm.app.data.io.order.ShopCartListReq;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
+import com.cxgm.app.utils.UserManager;
+import com.cxgm.app.utils.ViewHelper;
+import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.manager.PermissionManager;
 import com.deanlib.ootb.utils.AppUtils;
 import com.deanlib.ootb.utils.DLogUtils;
@@ -32,6 +39,8 @@ import com.tencent.smtt.sdk.WebChromeClient;
 import com.tencent.smtt.sdk.WebSettings;
 import com.tencent.smtt.sdk.WebView;
 import com.tencent.smtt.sdk.WebViewClient;
+
+import org.xutils.common.Callback;
 
 import java.util.regex.Pattern;
 
@@ -220,18 +229,68 @@ public class WebViewActivity extends BaseActivity {
     }
 
     public class CxgmJS{
+        //JS调用android的方法
+
         Activity activity;
         public CxgmJS(Activity activity){
             this.activity = activity;
         }
         /**
-         * JS调用android的方法
+         * 商品详情
          * @return
          */
         @JavascriptInterface
         public void  toGoodsDetail(String productId,String shopId){
-            DLogUtils.i("productId:" + productId + " shopid:" + shopId);
+            DLogUtils.d("productId:" + productId + " shopid:" + shopId);
             ViewJump.toGoodsDetail(activity,Integer.valueOf(shopId),Integer.valueOf(productId));
+        }
+
+        /**
+         * 加购物车
+         * @param goodCode
+         * @param goodName
+         * @param categoryId
+         * @param shopId
+         * @param productId
+         */
+        public void addGoodsToCart(String goodCode,String goodName,String categoryId,String shopId,String productId){
+            if (UserManager.isUserLogin() && Constants.currentShopId != 0) {
+                ProductTransfer product = null;
+                new ShopCartListReq(activity, Constants.currentShopId)
+                        .execute(false, new Request.RequestCallback<PageInfo<ShopCart>>() {
+                            @Override
+                            public void onSuccess(PageInfo<ShopCart> pageInfo) {
+                                if (pageInfo != null && pageInfo.getList()!=null) {
+                                    for (ShopCart shopCart : pageInfo.getList()){
+
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onError(Throwable ex, boolean isOnCallback) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(Callback.CancelledException cex) {
+
+                            }
+
+                            @Override
+                            public void onFinished() {
+                                if (product == null){
+
+                                }
+                                ViewHelper.addOrUpdateShopCart(activity, product,1 , new ViewHelper.OnActionListener() {
+                                    @Override
+                                    public void onSuccess() {
+
+                                    }
+                                });
+                            }
+                        });
+            }
         }
     }
 

@@ -267,7 +267,7 @@ public class IndexFragment extends BaseFragment {
                     //广告点击事件
                     if ("1".equals(itemData.desc)){
                         String url = itemData.link;
-//                        String url = "http://www.sangchunxi.com/freshfruitbeauty";
+//                        String url = "file:///android_asset/freshfruitbeauty/index.html";
                         if (UserManager.isUserLogin()) {
                             if (url.contains("?")) {
                                 url += "&";
