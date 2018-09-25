@@ -17,6 +17,9 @@ public class Order extends BaseEntity {
     public static final String STATUS_REFUND = "7";
     public static final String STATUS_SYSTEM_CANCEL = "8";
     public static final String STATUS_CANCEL = "9";
+
+    public static final String TYPE_ONESELF = "自取";
+    public static final String TYPE_DISTRIBUTION = "配送";
     /**
      * orderAmount : 0
      * orderNum : string
@@ -55,6 +58,25 @@ public class Order extends BaseEntity {
 
     private float totalAmount;//商品总额，没有优惠前
     private float preferential;//优惠总额
+
+    private String extractionType;//配送方式，自取和配送
+    private float postage;//邮费
+
+    public float getPostage() {
+        return postage;
+    }
+
+    public void setPostage(float postage) {
+        this.postage = postage;
+    }
+
+    public String getExtractionType() {
+        return extractionType;
+    }
+
+    public void setExtractionType(String extractionType) {
+        this.extractionType = extractionType;
+    }
 
     public float getTotalAmount() {
         return totalAmount;

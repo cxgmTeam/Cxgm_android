@@ -191,4 +191,10 @@ public class SearchResultActivity extends BaseActivity implements ViewHelper.OnS
     public void onUpdate(int num) {
         ViewHelper.drawShopCartNum(SearchResultActivity.this,imgShopCar,num,true);
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        ViewHelper.removeShopCartUpdateListener(this);
+    }
 }

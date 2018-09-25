@@ -16,7 +16,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
-import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.entity.Invoice;
 import com.cxgm.app.data.entity.Order;
 import com.cxgm.app.data.entity.OrderProduct;
@@ -27,14 +26,11 @@ import com.cxgm.app.data.io.order.SurplusTimeReq;
 import com.cxgm.app.ui.adapter.OrderGoodsListAdatpter;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
-import com.cxgm.app.ui.view.common.WebViewActivity;
 import com.cxgm.app.utils.StringHelper;
 import com.cxgm.app.utils.ToastManager;
 import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.manager.PermissionManager;
 import com.deanlib.ootb.utils.FormatUtils;
-import com.deanlib.ootb.utils.TextUtils;
-import com.deanlib.ootb.utils.ValidateUtils;
 import com.deanlib.ootb.widget.ListViewForScrollView;
 import com.tbruyelle.rxpermissions.Permission;
 
@@ -129,6 +125,8 @@ public class OrderDetailActivity extends BaseActivity {
     TextView tvBuyAgain;
     @BindView(R.id.imgPhone)
     ImageView imgPhone;
+    @BindView(R.id.tvExtraction)
+    TextView tvExtraction;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,6 +165,8 @@ public class OrderDetailActivity extends BaseActivity {
                         }
                         //配送时间
                         tvReceiveTime.setText(order.getReceiveTime());
+                        //配送方式
+                        tvExtraction.setText(order.getExtractionType());
                         //商铺
                         tvShopName.setText(order.getShopName());
                         tvShopAddr.setText(order.getShopAddress());
@@ -176,7 +176,7 @@ public class OrderDetailActivity extends BaseActivity {
                             lvGoods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                                 @Override
                                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                                    ViewJump.toGoodsDetail(OrderDetailActivity.this,order.getProductDetails().get((int)id).getProductId());
+                                    ViewJump.toGoodsDetail(OrderDetailActivity.this, order.getProductDetails().get((int) id).getProductId());
                                 }
                             });
                         }
@@ -184,7 +184,7 @@ public class OrderDetailActivity extends BaseActivity {
                         tvOrderNum.setText(order.getOrderNum());
                         tvOrderTime.setText(order.getOrderTime());
                         //支付方式
-                        tvPayWay.setText(PayEvent.PAY_TYPE_WECHAT.equals(order.getPayType())?R.string.wechat_pay:R.string.alipay);
+                        tvPayWay.setText(PayEvent.PAY_TYPE_WECHAT.equals(order.getPayType()) ? R.string.wechat_pay : R.string.alipay);
                         //发票
                         if (order.getReceipt() != null) {
                             tvInvoiceType.setText(Invoice.TYPE_PERSON.equals(order.getReceipt().getType()) ? R.string.person : R.string.company);
@@ -195,7 +195,7 @@ public class OrderDetailActivity extends BaseActivity {
                         //付款
                         tvGoodsTotal.setText(StringHelper.getRMBFormat(order.getTotalAmount()));
                         tvDiscounts.setText(StringHelper.getRMBFormat(order.getPreferential()));
-                        tvCarriage.setText(StringHelper.getRMBFormat(Constants.postage));
+                        tvCarriage.setText(StringHelper.getRMBFormat(order.getPostage()));
                         tvPayment.setText(StringHelper.getRMBFormat(order.getOrderAmount()));
                     }
                 }
@@ -266,7 +266,7 @@ public class OrderDetailActivity extends BaseActivity {
                     layoutRefund.setVisibility(View.GONE);
                     tvBuyAgain.setVisibility(View.VISIBLE);
 //                    if (ValidateUtils.isMobileNum(mOrder.getPsPhone()))
-                        imgPhone.setVisibility(View.VISIBLE);
+                    imgPhone.setVisibility(View.VISIBLE);
                     break;
                 case Order.STATUS_COMPLETE:
                     layoutOrderState.setBackgroundResource(R.color.colorBlue);
@@ -358,7 +358,7 @@ public class OrderDetailActivity extends BaseActivity {
                             }
                         };
                         mTimer.start();
-                    }else {
+                    } else {
                         tvTime.setText(getString(R.string.remaining_, FormatUtils.convertDateTimestampToString(0, "mm:ss")));
                         tvCancelOrder.setVisibility(View.GONE);
                         tvPayNow.setVisibility(View.GONE);
@@ -391,7 +391,7 @@ public class OrderDetailActivity extends BaseActivity {
             mTimer.cancel();
     }
 
-    @OnClick({R.id.imgBack, R.id.tvCancelOrder, R.id.tvPayNow,R.id.tvBuyAgain,R.id.imgPhone})
+    @OnClick({R.id.imgBack, R.id.tvCancelOrder, R.id.tvPayNow, R.id.tvBuyAgain, R.id.imgPhone})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgBack:
@@ -399,7 +399,7 @@ public class OrderDetailActivity extends BaseActivity {
                 break;
             case R.id.tvCancelOrder:
                 //取消订单
-                if (mOrder!=null) {
+                if (mOrder != null) {
                     new CancelOrderReq(this, mOrder.getId())
                             .execute(new Request.RequestCallback<Integer>() {
                                 @Override
@@ -407,7 +407,7 @@ public class OrderDetailActivity extends BaseActivity {
                                     ToastManager.sendToast(getString(R.string.canceled));
                                     mOrder.setStatus(Order.STATUS_CANCEL);
                                     setStateView(mOrder);
-                                    if (mTimer!=null)
+                                    if (mTimer != null)
                                         mTimer.cancel();
                                 }
 
@@ -430,13 +430,13 @@ public class OrderDetailActivity extends BaseActivity {
                 break;
             case R.id.tvPayNow:
                 //支付
-                if (mOrder!=null) {
+                if (mOrder != null) {
                     ViewJump.toOrderPay(this, mOrder.getId(), mOrder.getOrderAmount());
                 }
                 break;
             case R.id.tvBuyAgain:
                 //再次购买 这里有个BUG，当在限时优惠时购买的商品，再次购买时，可能限时优惠已过期，但还是可以用限时价格买到商品
-                if (mOrder!=null && mOrder.getProductDetails()!=null)
+                if (mOrder != null && mOrder.getProductDetails() != null)
                     ViewJump.toVerifyOrder(this, (ArrayList<OrderProduct>) mOrder.getProductDetails());
                 break;
             case R.id.imgPhone:
@@ -448,7 +448,7 @@ public class OrderDetailActivity extends BaseActivity {
                             String phoneNum = mOrder.getPsPhone();
                             Intent intent = new Intent();
                             intent.setAction(Intent.ACTION_CALL);
-                            intent.setData(Uri.parse("tel:"+phoneNum));
+                            intent.setData(Uri.parse("tel:" + phoneNum));
                             startActivity(intent);
                         }
                     }

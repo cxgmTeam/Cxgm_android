@@ -3,6 +3,7 @@ package com.cxgm.app.app;
 import com.baidu.location.BDLocation;
 import com.baidu.mapapi.search.core.PoiInfo;
 import com.cxgm.app.BuildConfig;
+import com.cxgm.app.data.entity.Postage;
 import com.cxgm.app.data.entity.Shop;
 import com.cxgm.app.data.entity.UserAddress;
 import com.cxgm.app.data.entity.UserPoiInfo;
@@ -48,7 +49,7 @@ public class Constants {
     public static boolean updatedAddress = false;//标记位，标记地址发生变化 三个变量控制地址 过于复杂,好多地方需要放到onresume等方法即时更新，设置标记位以减少重复加载次数
 
     public static boolean notify = true;//是否接收通知
-    public static float postage = 7f;//邮费
+    public static Postage postage;//邮费
 
     public static final String NOTIFIY_CHANNEL_ID = "1";
     public static final String NOTIFIY_CHANNEL_NAME = "Notifiy";

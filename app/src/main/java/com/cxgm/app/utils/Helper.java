@@ -3,6 +3,8 @@ package com.cxgm.app.utils;
 
 import android.text.TextUtils;
 
+import com.cxgm.app.data.entity.Postage;
+
 import java.math.BigDecimal;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -72,5 +74,16 @@ public class Helper {
             return data;
         }
         return data.substring(0,10);
+    }
+
+    public static float calculatePostage(float totalAmount, Postage postage){
+        if (postage!=null){
+            if (totalAmount>=postage.getSatisfyMoney()){
+                return 0;
+            }else {
+                return postage.getReduceMoney();
+            }
+        }
+        return 7f;
     }
 }

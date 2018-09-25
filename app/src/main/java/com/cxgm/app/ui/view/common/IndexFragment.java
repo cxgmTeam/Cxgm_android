@@ -27,6 +27,7 @@ import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.entity.Advertisement;
 import com.cxgm.app.data.entity.Motion;
+import com.cxgm.app.data.entity.Postage;
 import com.cxgm.app.data.entity.ProductTransfer;
 import com.cxgm.app.data.entity.Shop;
 import com.cxgm.app.data.entity.ShopCategory;
@@ -39,6 +40,7 @@ import com.cxgm.app.data.io.goods.FindHotProductReq;
 import com.cxgm.app.data.io.goods.FindMotionReq;
 import com.cxgm.app.data.io.goods.FindNewProductReq;
 import com.cxgm.app.data.io.goods.FindTopProductReq;
+import com.cxgm.app.data.io.order.OrderPostageReq;
 import com.cxgm.app.ui.adapter.FirstCategoryAdapter;
 import com.cxgm.app.ui.adapter.GoodsAdapter;
 import com.cxgm.app.ui.adapter.GoodsRecyclerViewAdapter;
@@ -714,6 +716,31 @@ public class IndexFragment extends BaseFragment {
                         mCurrentReportPosition = 0;
                         tvNewsContent.setText(mReportList.get(mCurrentReportPosition).getMotionName());
 
+                    }
+                }
+
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+
+                }
+
+                @Override
+                public void onCancelled(Callback.CancelledException cex) {
+
+                }
+
+                @Override
+                public void onFinished() {
+
+                }
+            });
+
+            //查询邮费
+            new OrderPostageReq(getActivity(),Constants.currentShopId).execute(new Request.RequestCallback<Postage>() {
+                @Override
+                public void onSuccess(Postage postage) {
+                    if (postage!=null){
+                        Constants.postage = postage;
                     }
                 }
 
