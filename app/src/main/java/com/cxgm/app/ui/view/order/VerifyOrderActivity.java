@@ -3,9 +3,13 @@ package com.cxgm.app.ui.view.order;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Spannable;
+import android.text.SpannableString;
 import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.util.SparseArray;
 import android.view.View;
 import android.view.WindowManager;
@@ -43,6 +47,7 @@ import com.jakewharton.rxbinding.view.RxView;
 import org.xutils.common.Callback;
 import org.xutils.common.util.DensityUtil;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -110,6 +115,8 @@ public class VerifyOrderActivity extends BaseActivity {
     LinearLayout layoutGooods;
     @BindView(R.id.etRemark)
     EditText etRemark;
+    @BindView(R.id.text3)
+    TextView text3;
 
     ArrayList<OrderProduct> mOrderProductList;
     UserAddress mUserAddress;
@@ -120,6 +127,7 @@ public class VerifyOrderActivity extends BaseActivity {
     @BindView(R.id.tvExtraction)
     TextView tvExtraction;
 //    int mDeliveryTimePosition = 0;
+    CouponDetail mCouponDetail;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -258,7 +266,19 @@ public class VerifyOrderActivity extends BaseActivity {
         mOrder.setProductList(mOrderProductList);
         mOrder.setCategoryAndAmountList(caaList);
         mOrder.setTotalAmount(goodsOriginalTotal);
-        setCouponAndPostageAndAmount(null);
+
+        tvExtraction.setText(Order.TYPE_DISTRIBUTION);
+        mOrder.setExtractionType(Order.TYPE_DISTRIBUTION);
+
+        if (Constants.postage!=null) {
+            BigDecimal decimal = new BigDecimal(Constants.postage.getSatisfyMoney());
+            String str = getString(R.string.carriage, decimal.setScale(1, BigDecimal.ROUND_HALF_UP).toString());
+            SpannableString ss = new SpannableString(str);
+            ss.setSpan(new ForegroundColorSpan(Color.RED),2,str.length(), Spannable.SPAN_INCLUSIVE_EXCLUSIVE);
+            text3.setText(ss);
+        }
+
+        setCouponAndPostageAndAmount(mCouponDetail);
 
         //防抖
         RxView.clicks(tvCommitOrder).throttleFirst(2, TimeUnit.SECONDS)
@@ -301,8 +321,7 @@ public class VerifyOrderActivity extends BaseActivity {
                     });
                 });
 
-        tvExtraction.setText(Order.TYPE_DISTRIBUTION);
-        mOrder.setExtractionType(Order.TYPE_DISTRIBUTION);
+
     }
 
     private void loadData() {
@@ -354,7 +373,8 @@ public class VerifyOrderActivity extends BaseActivity {
                 if (couponDetails != null && couponDetails.size() > 0) {
                     //优惠券 总价更新
                     mCouponList = couponDetails;
-                    setCouponAndPostageAndAmount(mCouponList.get(0));
+                    mCouponDetail = mCouponList.get(0);
+                    setCouponAndPostageAndAmount(mCouponDetail);
                 }
             }
 
@@ -419,6 +439,7 @@ public class VerifyOrderActivity extends BaseActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         tvExtraction.setText(items[which]);
                         mOrder.setExtractionType(items[which]);
+                        setCouponAndPostageAndAmount(mCouponDetail);
                     }
                 }).show();
                 break;
@@ -443,8 +464,8 @@ public class VerifyOrderActivity extends BaseActivity {
                 case ViewJump.CODE_COUPON_OPTION:
                     if (data != null) {
                         //更新总额
-                        CouponDetail couponDetail = data.getParcelableExtra("coupon");
-                        setCouponAndPostageAndAmount(couponDetail);
+                        mCouponDetail = data.getParcelableExtra("coupon");
+                        setCouponAndPostageAndAmount(mCouponDetail);
 
                     }
                     break;
@@ -499,7 +520,10 @@ public class VerifyOrderActivity extends BaseActivity {
         //折扣后，不含邮费
         float temp = Helper.moneySubtract(mOrderAmount, preferential);
         //邮费
-        float postage = Helper.calculatePostage(temp, Constants.postage);
+        float postage = 0; //自取邮费是0
+        if (Order.TYPE_DISTRIBUTION.equals(mOrder.getExtractionType())){
+            postage = Helper.calculatePostage(temp, Constants.postage);
+        }
         tvCarriage.setText(StringHelper.getRMBFormat(postage));
         mOrder.setPostage(postage);
 

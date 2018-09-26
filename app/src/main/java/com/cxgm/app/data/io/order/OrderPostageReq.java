@@ -8,6 +8,7 @@ import com.cxgm.app.app.UserResult;
 import com.cxgm.app.data.entity.Postage;
 import com.deanlib.ootb.data.io.Request;
 
+import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
 
 /**
@@ -32,7 +33,8 @@ public class OrderPostageReq extends Request {
     public RequestParams params() {
 
         RequestParams params = new RequestParams(SERVER + Constants.PORT3 + "/order/orderPostage");
-
+        params.setMethod(HttpMethod.GET);
+        params.addQueryStringParameter("shopId",shopId+"");
         return params;
     }
 

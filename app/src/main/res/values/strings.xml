@@ -54,7 +54,7 @@
     <string name="commit_order">提交订单</string>
     <string name="goods_total">商品总额</string>
     <string name="discounts">优惠</string>
-    <string name="carriage">运费</string>
+    <string name="carriage">运费（满%s元包邮）</string>
     <string name="invoice">发票</string>
     <string name="not_invoice">不开发票</string>
 
