@@ -284,7 +284,9 @@ public class VerifyOrderActivity extends BaseActivity {
         RxView.clicks(tvCommitOrder).throttleFirst(2, TimeUnit.SECONDS)
                 .subscribe(o -> {
                     //地址验证
-                    if (TextUtils.isEmpty(mOrder.getAddressId())) {
+                    if (
+//                        Order.TYPE_DISTRIBUTION.equals(mOrder.getExtractionType())&&
+                          TextUtils.isEmpty(mOrder.getAddressId())) {
                         ToastManager.sendToast(getString(R.string.empty_consignee));
                         return;
                     }
