@@ -85,6 +85,12 @@ public class GoodsAdapter extends BaseAdapter {
                 .into(holder.imgCover);
         holder.tvTitle.setText(mList.get(i).getName());
         holder.tvMoney.setText(StringHelper.getRMBFormat(mList.get(i).getPrice()));
+        if (mList.get(i).getPrice() < mList.get(i).getOriginalPrice()) {
+            holder.tvOriginPlace.setVisibility(View.VISIBLE);
+            holder.tvOriginPlace.setText(StringHelper.getStrikeFormat(StringHelper.getRMBFormat(mList.get(i).getOriginalPrice())));
+        }else {
+            holder.tvOriginPlace.setVisibility(View.GONE);
+        }
 
         holder.imgAdd.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,6 +109,8 @@ public class GoodsAdapter extends BaseAdapter {
         TextView tvTitle;
         @BindView(R.id.tvMoney)
         TextView tvMoney;
+        @BindView(R.id.tvOriginPlace)
+        TextView tvOriginPlace;
         @BindView(R.id.imgAdd)
         ImageView imgAdd;
 

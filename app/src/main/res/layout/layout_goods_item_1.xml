@@ -27,17 +27,32 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
-        <TextView
-            android:singleLine="true"
-            android:id="@+id/tvMoney"
-            android:text="1111"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <LinearLayout
             android:layout_weight="1"
-            android:textColor="@color/textGreen"
-            android:textSize="@dimen/text_size_large" />
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:singleLine="true"
+                android:id="@+id/tvMoney"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/textGreen"
+                android:textSize="@dimen/text_size_large" />
+
+            <TextView
+                android:layout_marginLeft="@dimen/margin_normal"
+                android:visibility="gone"
+                android:id="@+id/tvOriginPlace"
+                android:textColor="@color/textStrike"
+                android:singleLine="true"
+                android:textSize="@dimen/text_size_normal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
 
         <ImageView
+            android:layout_marginLeft="@dimen/margin_normal"
             android:id="@+id/imgAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
