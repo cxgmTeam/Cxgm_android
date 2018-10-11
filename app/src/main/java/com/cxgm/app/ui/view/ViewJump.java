@@ -36,6 +36,7 @@ import com.cxgm.app.ui.view.order.NewAddrActivity;
 import com.cxgm.app.ui.view.order.OrderDetailActivity;
 import com.cxgm.app.ui.view.order.OrderPayActivity;
 import com.cxgm.app.ui.view.order.PayResultActivity;
+import com.cxgm.app.ui.view.order.ShopCartActivity;
 import com.cxgm.app.ui.view.order.UserOrderActivity;
 import com.cxgm.app.ui.view.order.VerifyOrderActivity;
 import com.cxgm.app.ui.view.user.CouponActivity;
@@ -279,6 +280,10 @@ public class ViewJump {
             intent = new Intent(activity, Scan2Activity.class);
         }
         fragment.startActivityForResult(intent,CODE_SCAN);
+    }
+
+    public static void toShopCart(Activity activity){
+        activity.startActivity(new Intent(activity, ShopCartActivity.class));
     }
 
 }

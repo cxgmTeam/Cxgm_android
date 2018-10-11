@@ -9,13 +9,9 @@ import android.widget.TextView;
 
 import com.cxgm.app.R;
 import com.cxgm.app.data.event.PayEvent;
-import com.cxgm.app.data.io.order.UpdateStatusReq;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.utils.StringHelper;
-import com.deanlib.ootb.data.io.Request;
-
-import org.xutils.common.Callback;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

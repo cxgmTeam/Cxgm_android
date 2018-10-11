@@ -539,7 +539,7 @@ public class GoodsDetailActivity extends BaseActivity implements ViewHelper.OnSh
                 break;
             case R.id.imgAction1:
                 //使用QBageView 导致失效 在ViewHelper.drawShopCartNum方法中实现点击
-                ViewJump.toMain(this, R.id.rbShopCart);
+                ViewJump.toShopCart(this);
                 break;
             case R.id.imgToTop:
                 isScrollLock = true;

@@ -407,7 +407,7 @@ public class GoodsSecondClassifyActivity extends BaseActivity implements Expanda
                 break;
             case R.id.imgAction2:
                 //购物车 由于使用 qbadgeview 这里的点击事件无效了
-                ViewJump.toMain(this,R.id.rbShopCart);
+                ViewJump.toShopCart(this);
                 break;
         }
     }

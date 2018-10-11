@@ -209,7 +209,7 @@ public class ViewHelper {
         if (gotoShopCart)
             RxView.clicks(view).throttleFirst(2, TimeUnit.SECONDS)
                     .subscribe(o -> {
-                        ViewJump.toMain(activity, R.id.rbShopCart);
+                        ViewJump.toShopCart(activity);
                     });
 
         if (num > 0)

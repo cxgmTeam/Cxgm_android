@@ -182,7 +182,7 @@ public class SearchResultActivity extends BaseActivity implements ViewHelper.OnS
                 finish();
                 break;
             case R.id.imgShopCar:
-                ViewJump.toMain(this,R.id.rbShopCart);
+                ViewJump.toShopCart(this);
                 break;
         }
     }

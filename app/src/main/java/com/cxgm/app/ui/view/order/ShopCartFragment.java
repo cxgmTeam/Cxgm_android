@@ -148,6 +148,8 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
         tvTitle.setText(R.string.shop_cart);
         tvAction1.setText(R.string.delete);
         tvAction1.setVisibility(View.VISIBLE);
+        if (getActivity() instanceof ShopCartActivity)
+            imgBack.setVisibility(View.VISIBLE);
 
         mCartList = new ArrayList<>();
         mCheckedCartIdList = new ArrayList<>();
@@ -419,9 +421,12 @@ public class ShopCartFragment extends BaseFragment implements CartGoodsAdapter.O
             tvGoDuoShou.setText(R.string.go_duoshou);
     }
 
-    @OnClick({R.id.tvGoDuoShou, R.id.tvGoShopping, R.id.tvAction1})
+    @OnClick({R.id.imgBack,R.id.tvGoDuoShou, R.id.tvGoShopping, R.id.tvAction1})
     public void onViewClicked(View view) {
         switch (view.getId()) {
+            case R.id.imgBack:
+                getActivity().finish();
+                break;
             case R.id.tvGoDuoShou:
                 ArrayList<OrderProduct> products = new ArrayList<>();
                 for (ShopCart cart : mCartList) {
