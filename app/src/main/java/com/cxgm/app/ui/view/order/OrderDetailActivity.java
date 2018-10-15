@@ -16,6 +16,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
+import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.entity.Invoice;
 import com.cxgm.app.data.entity.Order;
 import com.cxgm.app.data.entity.OrderProduct;
@@ -36,6 +37,7 @@ import com.tbruyelle.rxpermissions.Permission;
 
 import org.xutils.common.Callback;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -107,6 +109,8 @@ public class OrderDetailActivity extends BaseActivity {
     TextView tvPayment;
     @BindView(R.id.tvRemark)
     TextView tvRemark;
+    @BindView(R.id.text3)
+    TextView text3;
 
     int mOrderId;
     Order mOrder;
@@ -192,6 +196,9 @@ public class OrderDetailActivity extends BaseActivity {
                             tvInvoiceType.setText(R.string.not_invoice);
                         }
                         tvRemark.setText(order.getRemarks());
+                        //邮费说明
+                        BigDecimal decimal = new BigDecimal(Constants.postage.getSatisfyMoney());
+                        text3.setText(getString(R.string.carriage, decimal.setScale(1, BigDecimal.ROUND_HALF_UP).toString()));
                         //付款
                         tvGoodsTotal.setText(StringHelper.getRMBFormat(order.getTotalAmount()));
                         tvDiscounts.setText(StringHelper.getRMBFormat(order.getPreferential()));
