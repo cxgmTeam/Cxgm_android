@@ -212,7 +212,7 @@ public class LaunchActivity extends BaseActivity implements MapHelper.LocationCa
             Constants.currentLocation = bdLocation;
             //定位功能 置Null currentUserLocation
             Constants.currentUserLocation = null;
-            new CheckAddressReq(this, bdLocation.getLongitude() + "", bdLocation.getLatitude() + "")
+            /*new CheckAddressReq(this, bdLocation.getLongitude() + "", bdLocation.getLatitude() + "")
                     .execute(false,new Request.RequestCallback<List<Shop>>() {
 
                 @Override
@@ -239,7 +239,10 @@ public class LaunchActivity extends BaseActivity implements MapHelper.LocationCa
                     ViewJump.toMain(LaunchActivity.this);
                     finish();
                 }
-            });
+            });*/
+
+            ViewJump.toMain(LaunchActivity.this);
+            finish();
 
         }else {
             //定位失败

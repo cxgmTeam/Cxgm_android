@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">菜鲜果美</string>
+    <string name="app_name">优选超市</string>
 
     <string name="home">首页</string>
     <string name="classify">分类</string>
@@ -97,6 +97,7 @@
 
     <string name="user_order">我的订单</string>
     <string name="all">全部</string>
+    <string name="all_classify">全部分类</string>
     <string name="distributing">配送中</string>
     <string name="complete">已完成</string>
     <string name="refund2">退货</string>
@@ -150,8 +151,8 @@
     <string name="friend_phone_num">好友手机号</string>
     <string name="get_date">获得时间</string>
     <string name="whether_got_lucky_money_or_not">是否得到红包</string>
-    <string name="login_tag">未注册过的手机号码将自动注册为菜鲜果美账号</string>
-    <string name="login_tag2">登录即代表同意《菜鲜果美注册协议》《菜鲜果美用户隐私协议》</string>
+    <string name="login_tag">未注册过的手机号码将自动注册为优选超市账号</string>
+    <string name="login_tag2">登录即代表同意《优选超市注册协议》《优选超市用户隐私协议》</string>
     <string name="out_of_distribution">不在配送范围之内，请选择收货地址</string>
     <string name="destination_">送至：%s</string>
 
@@ -269,10 +270,10 @@
     <string name="refund_amount">退款总金额</string>
     <string name="version_v_">版本：V %s</string>
 
-    <string name="agreement">菜鲜果美会员服务协议</string>
-    <string name="policy">菜鲜果美隐私权政策</string>
-    <string name="business_information">菜鲜果美商家信息</string>
-    <string name="inside_entrance">菜鲜果美内部专用入口</string>
+    <string name="agreement">优选超市会员服务协议</string>
+    <string name="policy">优选超市隐私权政策</string>
+    <string name="business_information">优选超市商家信息</string>
+    <string name="inside_entrance">优选超市内部专用入口</string>
     <string name="look_pack">详情见包装</string>
 
     <string name="message_list_empty">您还没有任何消息哦~</string>
@@ -287,6 +288,15 @@
     <string name="scan_error">扫码出错</string>
     <string name="exchange_code_invalid">兑换码已失效</string>
     <string name="extraction_type">配送方式</string>
+
+
+
+    <string name="delicious_fresh">美味生鲜</string>
+    <string name="alcohol_drinks">酒水饮品</string>
+    <string name="fresh_fruits_vegetables">新鲜果蔬</string>
+    <string name="comprehensive_sequencing">综合排序</string>
+    <string name="sales">销量</string>
+    <string name="distance">距离</string>
 
 
 </resources>

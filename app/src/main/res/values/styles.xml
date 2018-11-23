@@ -80,4 +80,14 @@
         <item name="android:windowFullscreen">false</item>
     </style>
 
+    <style name="ShopType">
+        <item name="android:button">@null</item>
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:textSize">@dimen/text_size_small</item>
+        <item name="android:textColor">@color/color_black_gray</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">2dp</item>
+    </style>
+
 </resources>

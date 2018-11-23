@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/layoutAppbar"
         android:elevation="@dimen/elevation"
-        android:background="@color/colorGreenTop"
+        android:background="@color/colorWhite"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -26,16 +26,31 @@
             android:layout_width="@dimen/appbar_height"
             android:layout_height="@dimen/appbar_height"
             android:scaleType="center"
-            android:src="@mipmap/location" />
+            android:src="@mipmap/location4" />
 
-        <include
-            android:layout_width="match_parent"
-            android:layout_height="28dp"
+        <FrameLayout
             android:layout_weight="1"
-            layout="@layout/layout_input"
-            />
+            android:layout_width="match_parent"
+            android:layout_height="28dp">
+            <TextView
+                android:id="@+id/tvAppTitle"
+                android:text="@string/app_name"
+                android:textColor="@color/textBlack"
+                android:textSize="@dimen/text_size_giant"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <include
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                layout="@layout/layout_input"
+                />
+        </FrameLayout>
+
 
         <LinearLayout
+            android:visibility="gone"
             android:id="@+id/layoutMessage"
             android:layout_width="@dimen/appbar_height"
             android:layout_height="@dimen/appbar_height"
@@ -48,9 +63,24 @@
                 android:src="@mipmap/message" />
         </LinearLayout>
 
+        <LinearLayout
+            android:visibility="invisible"
+            android:id="@+id/layoutScan"
+            android:layout_width="@dimen/appbar_height"
+            android:layout_height="@dimen/appbar_height"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/imgScan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/scan2" />
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
+        android:visibility="gone"
         android:id="@+id/view1"
         android:gravity="center_vertical"
         android:layout_below="@+id/layoutAppbar"
@@ -136,7 +166,122 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:visibility="gone">
+                    >
+
+                    <com.kevin.loopview.BannerView
+                        android:id="@+id/loopShopBanner"
+                        android:layout_width="match_parent"
+                        android:layout_height="170dp"
+                        kevin:loop_dotMargin="5dp"
+                        kevin:loop_layout="@layout/layout_banner_loop"
+                        kevin:loop_autoLoop="false"
+                        kevin:loop_dotSelector="@drawable/selector_banner_dot"
+                        kevin:loop_placeholder="@mipmap/default_img"
+                        android:elevation="@dimen/elevation" />
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:background="@color/colorWhite"
+                        android:layout_width="match_parent"
+                        android:layout_height="104dp">
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:src="@mipmap/all_classify"
+                                android:layout_width="42dp"
+                                android:layout_height="42dp" />
+                            <TextView
+                                android:layout_marginTop="@dimen/margin_micro"
+                                android:textColor="@color/textBlack"
+                                android:textSize="@dimen/text_size_small"
+                                android:text="@string/all_classify"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:src="@mipmap/all_classify"
+                                android:layout_width="42dp"
+                                android:layout_height="42dp" />
+                            <TextView
+                                android:layout_marginTop="@dimen/margin_micro"
+                                android:textColor="@color/textBlack"
+                                android:textSize="@dimen/text_size_small"
+                                android:text="@string/delicious_fresh"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:src="@mipmap/all_classify"
+                                android:layout_width="42dp"
+                                android:layout_height="42dp" />
+                            <TextView
+                                android:layout_marginTop="@dimen/margin_micro"
+                                android:textColor="@color/textBlack"
+                                android:textSize="@dimen/text_size_small"
+                                android:text="@string/first_category_8"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:src="@mipmap/all_classify"
+                                android:layout_width="42dp"
+                                android:layout_height="42dp" />
+                            <TextView
+                                android:layout_marginTop="@dimen/margin_micro"
+                                android:textColor="@color/textBlack"
+                                android:textSize="@dimen/text_size_small"
+                                android:text="@string/alcohol_drinks"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:orientation="vertical"
+                            android:layout_weight="1"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+                            <ImageView
+                                android:src="@mipmap/all_classify"
+                                android:layout_width="42dp"
+                                android:layout_height="42dp" />
+                            <TextView
+                                android:layout_marginTop="@dimen/margin_micro"
+                                android:textColor="@color/textBlack"
+                                android:textSize="@dimen/text_size_small"
+                                android:text="@string/fresh_fruits_vegetables"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content" />
+                        </LinearLayout>
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:visibility="gone"
@@ -196,14 +341,45 @@
 
                     </LinearLayout>
 
+                    <RadioGroup
+                        android:id="@+id/rgShopType"
+                        android:orientation="horizontal"
+                        android:paddingLeft="@dimen/margin_giant"
+                        android:paddingRight="@dimen/margin_giant"
+                        android:background="@color/colorWhite"
+                        android:layout_marginTop="@dimen/margin_large_t"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+                        <RadioButton
+                            android:id="@+id/rbDefault"
+                            style="@style/ShopType"
+                            android:paddingLeft="0dp"
+                            android:text="@string/comprehensive_sequencing"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <RadioButton
+                            android:id="@+id/rbSales"
+                            style="@style/ShopType"
+                            android:text="@string/sales"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                        <RadioButton
+                            android:id="@+id/rbDistance"
+                            style="@style/ShopType"
+                            android:text="@string/distance"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content" />
+
+                    </RadioGroup>
                     <com.deanlib.ootb.widget.ListViewForScrollView
                         android:listSelector="@color/transparent"
-                        android:layout_marginTop="@dimen/margin_large_t"
                         android:id="@+id/lvShop"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:divider="@null"
-                        android:dividerHeight="@dimen/margin_large_t" />
+                        android:dividerHeight="0dp" />
                 </LinearLayout>
 
                 <LinearLayout

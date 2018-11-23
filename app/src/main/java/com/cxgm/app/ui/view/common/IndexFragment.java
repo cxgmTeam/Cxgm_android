@@ -3,6 +3,7 @@ package com.cxgm.app.ui.view.common;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,6 +19,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
@@ -145,6 +148,20 @@ public class IndexFragment extends BaseFragment {
     LinearLayout layoutAD2;
     @BindView(R.id.scrollView)
     CustomScrollView scrollView;
+    @BindView(R.id.layoutScan)
+    LinearLayout layoutScan;
+    @BindView(R.id.tvAppTitle)
+    TextView tvAppTitle;
+    @BindView(R.id.layoutInput)
+    LinearLayout layoutInput;
+    @BindView(R.id.rgShopType)
+    RadioGroup rgShopType;
+    @BindView(R.id.rbDefault)
+    RadioButton rbDefault;
+    @BindView(R.id.rbSales)
+    RadioButton rbSales;
+    @BindView(R.id.rbDistance)
+    RadioButton rbDistance;
 
     GoodsRecyclerViewAdapter mTopProductAdapter;
     List<ProductTransfer> mTopProductList;
@@ -237,6 +254,20 @@ public class IndexFragment extends BaseFragment {
             //无可配送商铺
             layoutShopShow.setVisibility(View.VISIBLE);
             layoutGoodsShow.setVisibility(View.GONE);
+            tvAppTitle.setVisibility(View.VISIBLE);
+            layoutInput.setVisibility(View.GONE);
+            layoutScan.setVisibility(View.INVISIBLE);
+            rgShopType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                    rbDefault.setTypeface(Typeface.DEFAULT);
+                    rbSales.setTypeface(Typeface.DEFAULT);
+                    rbDistance.setTypeface(Typeface.DEFAULT);
+                    ((RadioButton)radioGroup.findViewById(i)).setTypeface(Typeface.DEFAULT_BOLD);
+                    //todo 排序
+                }
+            });
+            rbDefault.setChecked(true);
 
             mShopList = new ArrayList<>();
             mShopAdapter = new ShopAdapter(mShopList);
@@ -255,6 +286,9 @@ public class IndexFragment extends BaseFragment {
             srl.setEnableLoadMore(true);
 
         } else {
+            tvAppTitle.setVisibility(View.GONE);
+            layoutInput.setVisibility(View.VISIBLE);
+            layoutScan.setVisibility(View.VISIBLE);
             loopBanner.setImageLoader(new ImageLoader() {
                 @Override
                 public void loadImage(ImageView imageView, String url, int placeholder) {
@@ -395,8 +429,14 @@ public class IndexFragment extends BaseFragment {
 
 
         if (Constants.currentShopId == 0) {
+            double longitude = 0;
+            double latitude = 0;
+            if (Constants.currentLocation!=null) {
+                longitude = Constants.currentLocation.getLongitude();
+                latitude = Constants.currentLocation.getLatitude();
+            }
             //商铺列表
-            new ShopListReq(getActivity(), mShopListPageNum, 10)
+            new ShopListReq(getActivity(), ShopListReq.TYPE_DEFAULT,longitude,latitude,mShopListPageNum, 10)
                     .execute(new Request.RequestCallback<PageInfo<Shop>>() {
                         @Override
                         public void onSuccess(PageInfo<Shop> shopPageInfo) {

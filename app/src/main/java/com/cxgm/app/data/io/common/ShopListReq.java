@@ -1,6 +1,7 @@
 package com.cxgm.app.data.io.common;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.alibaba.fastjson.JSON;
 import com.cxgm.app.app.Constants;
@@ -19,9 +20,20 @@ import org.xutils.http.RequestParams;
  * @time 2018/5/12 0012 18:29
  */
 public class ShopListReq extends Request {
+
+    public static final String TYPE_DEFAULT = "";//综合
+    public static final String TYPE_DISTANCE = "distance";//距离
+    public static final String TYPE_MONT_SALES = "monthSales";//月销量
+
     int pageNum,pageSize;
-    public ShopListReq(Context context,int pageNum,int pageSize) {
+    double longitude,dimension;
+    String orderType;
+
+    public ShopListReq(Context context,String orderType,double longitude,double dimension,int pageNum,int pageSize) {
         super(context);
+        this.orderType = orderType;
+        this.longitude = longitude;
+        this.dimension = dimension;
         this.pageNum = pageNum;
         this.pageSize = pageSize;
     }
@@ -36,8 +48,12 @@ public class ShopListReq extends Request {
 
         RequestParams params = new RequestParams(SERVER + Constants.PORT7 + "/user/shopList");
         params.setMethod(HttpMethod.GET);
+        if (!TextUtils.isEmpty(orderType))
+            params.addQueryStringParameter("orderType",orderType );
         params.addQueryStringParameter("pageNum",pageNum+"" );
         params.addQueryStringParameter("pageSize",pageSize+"" );
+        params.addQueryStringParameter("longitude",longitude+"" );
+        params.addQueryStringParameter("dimension",dimension+"" );
         return params;
     }
 
