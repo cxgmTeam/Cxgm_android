@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.cxgm.app.R;
+import com.cxgm.app.app.Constants;
 import com.cxgm.app.ui.base.BaseActivity;
 import com.cxgm.app.ui.view.ViewJump;
 import com.deanlib.ootb.utils.VersionUtils;
@@ -76,7 +77,7 @@ public class AboutActivity extends BaseActivity {
                 break;
             case R.id.tvInsideEntrance:
                 //http://47.104.226.173/
-                ViewJump.toWebView(this,"http://47.104.226.173/");
+                ViewJump.toWebView(this, Constants.SERVICE_URL);
                 break;
         }
     }

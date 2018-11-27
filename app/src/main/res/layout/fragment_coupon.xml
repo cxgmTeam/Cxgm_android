@@ -51,7 +51,7 @@
             android:text="@string/exchange"
             android:textColor="@color/textWhite"
             android:textSize="@dimen/text_size_large_x"
-            android:background="@drawable/shape_tc_tran_green"
+            android:background="@drawable/shape_tc_tran_pink"
             android:layout_marginLeft="@dimen/margin_small"
             android:layout_width="70dp"
             android:layout_height="34dp" />

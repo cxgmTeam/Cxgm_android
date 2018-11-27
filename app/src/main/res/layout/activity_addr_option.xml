@@ -27,7 +27,7 @@
         android:id="@+id/tvNewAddr"
         android:layout_width="match_parent"
         android:layout_height="@dimen/button_height2"
-        android:background="@color/colorGreen"
+        android:background="@color/colorPink"
         android:gravity="center"
         android:text="@string/new_receive_addr"
         android:textColor="@color/textWhite"

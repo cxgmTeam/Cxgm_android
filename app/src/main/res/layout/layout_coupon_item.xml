@@ -90,8 +90,8 @@
                 android:paddingLeft="@dimen/margin_small"
                 android:paddingRight="@dimen/margin_small"
                 android:textSize="@dimen/text_size_small"
-                android:textColor="@color/textGreen"
-                android:background="@drawable/shape_ct_green_tran"
+                android:textColor="@color/textPink"
+                android:background="@drawable/shape_ct_pink_tran"
                 android:layout_width="wrap_content"
                 android:layout_height="22dp" />
 

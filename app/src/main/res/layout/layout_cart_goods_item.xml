@@ -67,7 +67,7 @@
             android:id="@+id/tvSubtotal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/textGreen"
+            android:textColor="@color/textPink"
             android:textSize="@dimen/text_size_large_x" />
 
     </LinearLayout>

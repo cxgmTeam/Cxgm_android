@@ -254,14 +254,14 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/margin_giant_x"
             android:layout_weight="1"
-            android:textColor="@color/textGreen"
+            android:textColor="@color/textPink"
             android:textSize="@dimen/text_size_giant_x" />
 
         <TextView
             android:id="@+id/tvCommitOrder"
             android:layout_width="wrap_content"
             android:layout_height="@dimen/button_height2"
-            android:background="@color/colorGreen"
+            android:background="@color/colorPink"
             android:gravity="center"
             android:paddingLeft="27dp"
             android:paddingRight="27dp"

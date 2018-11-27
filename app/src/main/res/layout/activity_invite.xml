@@ -65,7 +65,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/margin_giant_xxx"
-                        android:background="@drawable/shape_tc_tran_green"
+                        android:background="@drawable/shape_tc_tran_pink"
                         android:gravity="center"
                         android:paddingBottom="@dimen/margin_normal"
                         android:paddingTop="@dimen/margin_normal"
@@ -115,7 +115,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/margin_small"
                 android:text="@string/invite_gift_activity"
-                android:textColor="@color/textGreen"
+                android:textColor="@color/textPink"
                 android:textSize="@dimen/text_size_large_x"
                 android:visibility="gone" />
 

@@ -16,10 +16,11 @@
         android:layout_height="@dimen/item_height"
         android:background="@color/colorWhite"
         android:visibility="gone"
-        app:tabIndicatorColor="@color/colorGreen"
+        app:tabIndicatorColor="@color/colorPink"
         app:tabIndicatorHeight="2dp"
-        app:tabSelectedTextColor="@color/textGreen"
-        app:tabTextColor="@color/textGray">
+        app:tabSelectedTextColor="@color/colorPink"
+        app:tabTextColor="@color/textGray"
+        >
 
         <android.support.design.widget.TabItem
             android:layout_width="wrap_content"
@@ -116,7 +117,7 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/tvGoodsSubTitle"
                             android:layout_marginTop="@dimen/margin_micro"
-                            android:textColor="@color/textGreen"
+                            android:textColor="@color/textPink"
                             android:textSize="@dimen/text_size_giant_xx" />
 
                         <TextView
@@ -409,7 +410,7 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/button_height2"
             android:layout_alignParentBottom="true"
-            android:background="@color/colorGreen"
+            android:background="@color/colorPink"
             android:gravity="center"
             android:text="@string/add_shopcart"
             android:textColor="@color/textWhite"

@@ -11,7 +11,6 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
@@ -23,9 +22,6 @@ import com.cxgm.app.data.io.order.AddressListReq;
 import com.cxgm.app.data.io.user.LoginReq;
 import com.cxgm.app.data.io.user.SendSMSReq;
 import com.cxgm.app.ui.base.BaseActivity;
-import com.cxgm.app.ui.view.ViewJump;
-import com.cxgm.app.ui.view.common.LaunchActivity;
-import com.cxgm.app.utils.MapHelper;
 import com.cxgm.app.utils.ToastManager;
 import com.cxgm.app.utils.UserManager;
 import com.cxgm.app.utils.ViewHelper;
@@ -35,8 +31,6 @@ import com.deanlib.ootb.utils.ValidateUtils;
 import org.xutils.common.Callback;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -288,7 +282,7 @@ public class LoginActivity extends BaseActivity {
 
     private void enabledBtn(View view, boolean enabled){
         if (enabled){
-            view.setBackgroundResource(R.drawable.shape_tc_tran_green);
+            view.setBackgroundResource(R.drawable.shape_tc_tran_pink);
         }else {
             view.setBackgroundResource(R.drawable.shape_tc_tran_gray_2);
         }

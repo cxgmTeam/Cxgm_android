@@ -87,7 +87,7 @@
         android:orientation="horizontal"
         android:paddingLeft="@dimen/margin_normal"
         android:paddingRight="@dimen/margin_normal"
-        android:background="@color/colorGreen"
+        android:background="@color/colorPink"
         android:layout_width="match_parent"
         android:layout_height="33dp">
 
@@ -303,7 +303,7 @@
                                 android:drawableLeft="@mipmap/selected"
                                 android:drawablePadding="@dimen/margin_small"
                                 android:text="@string/slogan1"
-                                android:textColor="@color/textGreen"
+                                android:textColor="@color/textPink"
                                 android:textSize="@dimen/text_size_normal" />
                         </LinearLayout>
 
@@ -319,7 +319,7 @@
                                 android:drawableLeft="@mipmap/selected"
                                 android:drawablePadding="@dimen/margin_small"
                                 android:text="@string/slogan2"
-                                android:textColor="@color/textGreen"
+                                android:textColor="@color/textPink"
                                 android:textSize="@dimen/text_size_normal" />
                         </LinearLayout>
 
@@ -335,7 +335,7 @@
                                 android:drawableLeft="@mipmap/selected"
                                 android:drawablePadding="@dimen/margin_small"
                                 android:text="@string/slogan3"
-                                android:textColor="@color/textGreen"
+                                android:textColor="@color/textPink"
                                 android:textSize="@dimen/text_size_normal" />
                         </LinearLayout>
 
@@ -401,6 +401,7 @@
                         android:elevation="@dimen/elevation" />
 
                     <com.deanlib.ootb.widget.GridViewForScrollView
+                        android:visibility="gone"
                         android:listSelector="@color/transparent"
                         android:id="@+id/gvFirstCategory"
                         android:layout_width="match_parent"
@@ -412,12 +413,21 @@
                         android:paddingBottom="@dimen/margin_giant_xxx"
                         android:paddingTop="@dimen/margin_giant_xxx"/>
 
+                    <com.deanlib.ootb.widget.loopviewpager.LoopViewPager
+                        android:id="@+id/vpFirstCategory"
+                        android:background="@color/colorWhite"
+                        android:elevation="@dimen/elevation"
+                        android:layout_width="match_parent"
+                        android:layout_height="112dp"/>
+
                     <View
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/line"
                         android:background="@color/colorLine" />
 
                     <LinearLayout
+                        android:visibility="gone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="@color/colorWhite"
@@ -439,7 +449,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="@string/app_name"
-                                android:textColor="@color/textGreen"
+                                android:textColor="@color/textPink"
                                 android:textSize="@dimen/text_size_normal" />
 
                             <TextView
@@ -447,7 +457,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="@dimen/margin_micro_t"
-                                android:background="@color/colorGreen"
+                                android:background="@color/colorPink"
                                 android:paddingLeft="@dimen/margin_micro_t"
                                 android:paddingRight="@dimen/margin_micro_t"
                                 android:text="@string/recent_news"

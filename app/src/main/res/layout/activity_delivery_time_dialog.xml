@@ -56,7 +56,7 @@
                 android:paddingLeft="@dimen/margin_giant"
                 android:paddingRight="@dimen/margin_giant"
                 android:text="@string/today"
-                android:textColor="@color/textGreen"
+                android:textColor="@color/textPink"
                 android:textSize="@dimen/text_size_large" />
         </LinearLayout>
 

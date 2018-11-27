@@ -17,8 +17,8 @@
         android:id="@+id/tabOrderState"
         android:background="@color/colorWhite"
         app:tabIndicatorHeight="@dimen/margin_micro_t"
-        app:tabIndicatorColor="@color/colorGreen"
-        app:tabSelectedTextColor="@color/textGreen"
+        app:tabIndicatorColor="@color/colorPink"
+        app:tabSelectedTextColor="@color/textPink"
         app:tabTextColor="@color/textBlack"
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_height"/>

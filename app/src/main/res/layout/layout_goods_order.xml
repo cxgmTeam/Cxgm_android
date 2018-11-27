@@ -40,7 +40,7 @@
         android:layout_alignParentBottom="true"
         android:layout_toRightOf="@+id/imgCover"
         android:textSize="@dimen/text_size_large_x"
-        android:textColor="@color/textGreen"
+        android:textColor="@color/textPink"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

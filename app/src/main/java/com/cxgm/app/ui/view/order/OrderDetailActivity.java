@@ -253,7 +253,7 @@ public class OrderDetailActivity extends BaseActivity {
                 case Order.STATUS_DISTRIBUTION:
                 case Order.STATUS_DISTRIBUTION2:
                 case Order.STATUS_DISTRIBUTION3:
-                    layoutOrderState.setBackgroundResource(R.color.colorGreen);
+                    layoutOrderState.setBackgroundResource(R.color.colorPink);
                     imgIcon.setImageResource(R.mipmap.status_distributing);
                     tvOrderState.setText(R.string.distribution);
                     tvOrderTag.setText(R.string.distributing_tag);
@@ -264,7 +264,7 @@ public class OrderDetailActivity extends BaseActivity {
                     imgPhone.setVisibility(View.GONE);
                     break;
                 case Order.STATUS_DISTRIBUTING:
-                    layoutOrderState.setBackgroundResource(R.color.colorGreen);
+                    layoutOrderState.setBackgroundResource(R.color.colorPink);
                     imgIcon.setImageResource(R.mipmap.status_distributing);
                     tvOrderState.setText(R.string.distributing);
                     tvOrderTag.setText(R.string.distributing_tag);

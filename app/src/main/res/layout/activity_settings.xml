@@ -126,7 +126,7 @@
         android:layout_marginLeft="@dimen/margin_giant_xxxx"
         android:layout_marginRight="@dimen/margin_giant_xxxx"
         android:layout_marginTop="@dimen/margin_giant_xx"
-        android:background="@drawable/shape_tc_tran_green"
+        android:background="@drawable/shape_tc_tran_pink"
         android:gravity="center"
         android:paddingBottom="@dimen/margin_normal"
         android:paddingTop="@dimen/margin_normal"

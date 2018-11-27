@@ -1,13 +1,10 @@
 package com.cxgm.app.ui.view.common;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -18,10 +15,8 @@ import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -39,12 +34,13 @@ import com.cxgm.app.data.io.common.CheckAddressReq;
 import com.cxgm.app.data.io.common.FindAdvertisementReq;
 import com.cxgm.app.data.io.common.FindReportReq;
 import com.cxgm.app.data.io.common.ShopListReq;
+import com.cxgm.app.data.io.goods.FindFirstCategoryReq;
 import com.cxgm.app.data.io.goods.FindHotProductReq;
 import com.cxgm.app.data.io.goods.FindMotionReq;
 import com.cxgm.app.data.io.goods.FindNewProductReq;
 import com.cxgm.app.data.io.goods.FindTopProductReq;
 import com.cxgm.app.data.io.order.OrderPostageReq;
-import com.cxgm.app.ui.adapter.FirstCategoryAdapter;
+import com.cxgm.app.ui.adapter.CategoryPageAdapter;
 import com.cxgm.app.ui.adapter.GoodsAdapter;
 import com.cxgm.app.ui.adapter.GoodsRecyclerViewAdapter;
 import com.cxgm.app.ui.adapter.MotionAdapter;
@@ -111,8 +107,10 @@ public class IndexFragment extends BaseFragment {
 
     @BindView(R.id.layoutShopShow)
     LinearLayout layoutShopShow;
-    @BindView(R.id.gvFirstCategory)
-    GridViewForScrollView gvFirstCategory;
+//    @BindView(R.id.gvFirstCategory)
+//    GridViewForScrollView gvFirstCategory;
+    @BindView(R.id.vpFirstCategory)
+    ViewPager vpFirstCategory;
     @BindView(R.id.tvNewsContent)
     TextView tvNewsContent;
     @BindView(R.id.hlvRecommend)
@@ -136,8 +134,9 @@ public class IndexFragment extends BaseFragment {
 
 //    PopupWindow popupWindow;
 
-    FirstCategoryAdapter mFCAdapter;
-    List<ShopCategory> mFCList;
+//    FirstCategoryAdapter mFCAdapter;
+//    CategoryPageAdapter mCPAdapter;
+//    List<ShopCategory> mFCList;
     @BindView(R.id.imgAD21)
     ImageView imgAD21;
     @BindView(R.id.imgAD22)
@@ -178,6 +177,7 @@ public class IndexFragment extends BaseFragment {
 
     List<Motion> mReportList;//简报
     int mCurrentReportPosition = 0;
+    String mOrderType = ShopListReq.TYPE_DEFAULT;
 
 
     @Nullable
@@ -264,7 +264,19 @@ public class IndexFragment extends BaseFragment {
                     rbSales.setTypeface(Typeface.DEFAULT);
                     rbDistance.setTypeface(Typeface.DEFAULT);
                     ((RadioButton)radioGroup.findViewById(i)).setTypeface(Typeface.DEFAULT_BOLD);
-                    //todo 排序
+                    //排序
+                    switch (i){
+                        case R.id.rbDefault:
+                            mOrderType = ShopListReq.TYPE_DEFAULT;
+                            break;
+                        case R.id.rbSales:
+                            mOrderType = ShopListReq.TYPE_MONT_SALES;
+                            break;
+                        case R.id.rbDistance:
+                            mOrderType = ShopListReq.TYPE_DISTANCE;
+                            break;
+                    }
+                    loadData();
                 }
             });
             rbDefault.setChecked(true);
@@ -324,17 +336,19 @@ public class IndexFragment extends BaseFragment {
             layoutGoodsShow.setVisibility(View.VISIBLE);
 
             //First Category
-            mFCList = new ArrayList<>();
-            mFCAdapter = new FirstCategoryAdapter(mFCList);
-            gvFirstCategory.setAdapter(mFCAdapter);
-            gvFirstCategory.setFocusable(false);
-            gvFirstCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    //分类点击事件
-                    ViewJump.toGoodsSecondClassify(getActivity(),mFCList.get((int)id));
-                }
-            });
+//            mFCList = new ArrayList<>();
+//            mCPAdapter = new CategoryPageAdapter(getActivity(),mFCList);
+//            vpFirstCategory.setAdapter(mCPAdapter);
+            vpFirstCategory.setFocusable(false);
+//            gvFirstCategory.setAdapter(mCPAdapter);
+//            gvFirstCategory.setFocusable(false);
+//            gvFirstCategory.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                @Override
+//                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                    //分类点击事件
+//                    ViewJump.toGoodsSecondClassify(getActivity(),mFCList.get((int)id));
+//                }
+//            });
             //精品推荐
             mTopProductList = new ArrayList<>();
             mTopProductAdapter = new GoodsRecyclerViewAdapter(getActivity(), mTopProductList);
@@ -436,7 +450,7 @@ public class IndexFragment extends BaseFragment {
                 latitude = Constants.currentLocation.getLatitude();
             }
             //商铺列表
-            new ShopListReq(getActivity(), ShopListReq.TYPE_DEFAULT,longitude,latitude,mShopListPageNum, 10)
+            new ShopListReq(getActivity(), mOrderType,longitude,latitude,mShopListPageNum, 10)
                     .execute(new Request.RequestCallback<PageInfo<Shop>>() {
                         @Override
                         public void onSuccess(PageInfo<Shop> shopPageInfo) {
@@ -467,23 +481,46 @@ public class IndexFragment extends BaseFragment {
                     });
         } else {
 
-            mFCList.clear();
+//            mFCList.clear();
             mTopProductList.clear();
             mNewProductList.clear();
             mHotProductList.clear();
 //            mMotionList.clear();
             mReportList.clear();
             //首页分类
-            mFCList.add(new ShopCategory(113, getString(R.string.first_category_1), "file:///android_asset/category/c1.png"));
-            mFCList.add(new ShopCategory(102, getString(R.string.first_category_2), "file:///android_asset/category/c2.png"));
-            mFCList.add(new ShopCategory(112, getString(R.string.first_category_3), "file:///android_asset/category/c3.png"));
-            mFCList.add(new ShopCategory(109, getString(R.string.first_category_4), "file:///android_asset/category/c4.png"));
-            mFCList.add(new ShopCategory(105, getString(R.string.first_category_5), "file:///android_asset/category/c5.png"));
-            mFCList.add(new ShopCategory(88, getString(R.string.first_category_6), "file:///android_asset/category/c6.png"));
-            mFCList.add(new ShopCategory(115, getString(R.string.first_category_7), "file:///android_asset/category/c7.png"));
-            mFCList.add(new ShopCategory(106, getString(R.string.first_category_8), "file:///android_asset/category/c8.png"));
+//            mFCList.add(new ShopCategory(113, getString(R.string.first_category_1), "file:///android_asset/category/c1.png"));
+//            mFCList.add(new ShopCategory(102, getString(R.string.first_category_2), "file:///android_asset/category/c2.png"));
+//            mFCList.add(new ShopCategory(112, getString(R.string.first_category_3), "file:///android_asset/category/c3.png"));
+//            mFCList.add(new ShopCategory(109, getString(R.string.first_category_4), "file:///android_asset/category/c4.png"));
+//            mFCList.add(new ShopCategory(105, getString(R.string.first_category_5), "file:///android_asset/category/c5.png"));
+//            mFCList.add(new ShopCategory(88, getString(R.string.first_category_6), "file:///android_asset/category/c6.png"));
+//            mFCList.add(new ShopCategory(115, getString(R.string.first_category_7), "file:///android_asset/category/c7.png"));
+//            mFCList.add(new ShopCategory(106, getString(R.string.first_category_8), "file:///android_asset/category/c8.png"));
+//            mFCAdapter.notifyDataSetChanged();
 
-            mFCAdapter.notifyDataSetChanged();
+            new FindFirstCategoryReq(getActivity(), Constants.currentShopId).execute(new Request.RequestCallback<List<ShopCategory>>() {
+                @Override
+                public void onSuccess(List<ShopCategory> list) {
+                    if (list != null) {
+                        vpFirstCategory.setAdapter(new CategoryPageAdapter(getActivity(),list));
+                    }
+                }
+
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+
+                }
+
+                @Override
+                public void onCancelled(Callback.CancelledException cex) {
+
+                }
+
+                @Override
+                public void onFinished() {
+
+                }
+            });
 
 //            new FindFirstCategoryReq(getActivity(), Constants.currentShop.getId()).execute(new Request.RequestCallback<List<ShopCategory>>() {
 //                @Override
@@ -711,8 +748,8 @@ public class IndexFragment extends BaseFragment {
                 }
             });
 
-            //运营数据
-            new FindMotionReq(getActivity(), Constants.currentShopId).execute(new Request.RequestCallback<List<Motion>>() {
+            //运营数据 todo 加载慢，暂时关闭
+            /*new FindMotionReq(getActivity(), Constants.currentShopId).execute(new Request.RequestCallback<List<Motion>>() {
                 @Override
                 public void onSuccess(List<Motion> motions) {
                     if (motions != null && motions.size() > 0) {
@@ -742,10 +779,10 @@ public class IndexFragment extends BaseFragment {
                 public void onFinished() {
                     srl.finishRefresh();
                 }
-            });
+            });*/
 
             //简报
-            new FindReportReq(getActivity(),Constants.currentShopId).execute(new Request.RequestCallback<List<Motion>>() {
+            /*new FindReportReq(getActivity(),Constants.currentShopId).execute(new Request.RequestCallback<List<Motion>>() {
                 @Override
                 public void onSuccess(List<Motion> motions) {
                     if (motions!=null &&  motions.size()>0){
@@ -773,7 +810,7 @@ public class IndexFragment extends BaseFragment {
                 public void onFinished() {
 
                 }
-            });
+            });*/
 
             //查询邮费
             new OrderPostageReq(getActivity(),Constants.currentShopId).execute(new Request.RequestCallback<Postage>() {
@@ -834,7 +871,7 @@ public class IndexFragment extends BaseFragment {
         layoutPopLocation.setVisibility(View.GONE);
     }
 
-    @OnClick({R.id.imgLocation, R.id.etSearchWord, R.id.layoutMessage,R.id.tvNewsContent})
+    @OnClick({R.id.imgLocation, R.id.etSearchWord, R.id.layoutMessage,R.id.tvNewsContent,R.id.layoutScan})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgLocation:
@@ -860,6 +897,9 @@ public class IndexFragment extends BaseFragment {
                         ViewJump.toGoodsDetail(getActivity(),(int) FormatUtils.convertStringToNum(motion.getProductCode()));
                     }
                 }
+                break;
+            case R.id.layoutScan:
+                //todo 扫码
                 break;
         }
     }
