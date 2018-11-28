@@ -24,7 +24,7 @@ public class ShopCartActivity extends BaseActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
-        setContentView(R.layout.activity_shop_cart);
+        setContentView(R.layout.activity_shop_cart);//布局直接加载 fragment
 
 //        ShopCartFragment fragment = new ShopCartFragment();
 //        getSupportFragmentManager().beginTransaction().add(R.id.layoutContainer,fragment).commit();

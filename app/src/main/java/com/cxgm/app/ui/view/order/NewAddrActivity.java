@@ -198,7 +198,7 @@ public class NewAddrActivity extends BaseActivity {
         mAddress.setRemarks(remark);
 
         //检查范围
-        new CheckAddressReq(this,mAddress.getLongitude()+"",mAddress.getDimension()+"").execute(new Request.RequestCallback<List<Shop>>() {
+        /*new CheckAddressReq(this,mAddress.getLongitude()+"",mAddress.getDimension()+"").execute(new Request.RequestCallback<List<Shop>>() {
             @Override
             public void onSuccess(List<Shop> shops) {
                 if (shops!=null && shops.size()>0) {
@@ -228,7 +228,15 @@ public class NewAddrActivity extends BaseActivity {
             public void onFinished() {
 
             }
-        });
+        });*/
+
+        if (mIsEdit) {
+            //约定编辑传Null 以区分设置默认功能
+            mAddress.setIsDef(null);
+            new UpdateAddressReq(NewAddrActivity.this, mAddress).execute(callback);
+        } else {
+            new AddAddressReq(NewAddrActivity.this, mAddress).execute(callback);
+        }
 
     }
 

@@ -14,10 +14,11 @@ import java.util.List;
 
 /**
  * 判断用户配送地址是否在配送范围
- *
+ * @deprecated 不再做范围检查
  * @author dean
  * @time 2018/5/8 上午11:52
  */
+@Deprecated
 public class CheckAddressReq extends Request {
 
     String longitude;

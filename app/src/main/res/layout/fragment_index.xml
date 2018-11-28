@@ -342,6 +342,7 @@
                     </LinearLayout>
 
                     <RadioGroup
+                        android:visibility="gone"
                         android:id="@+id/rgShopType"
                         android:orientation="horizontal"
                         android:paddingLeft="@dimen/margin_giant"

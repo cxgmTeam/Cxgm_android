@@ -22,6 +22,8 @@ import com.cxgm.app.ui.view.common.WebViewActivity;
 import com.cxgm.app.ui.view.goods.GoodsDetailActivity;
 import com.cxgm.app.ui.view.goods.GoodsSecondClassifyActivity;
 import com.cxgm.app.ui.view.goods.GoodsSpecificationDialogActivity;
+import com.cxgm.app.ui.view.goods.ManuallyInputBarCodeActivity;
+import com.cxgm.app.ui.view.goods.ScanBarCodeActivity;
 import com.cxgm.app.ui.view.goods.SearchResultActivity;
 import com.cxgm.app.ui.view.news.MessageListActivity;
 import com.cxgm.app.ui.view.order.AddrListActivity;
@@ -284,6 +286,14 @@ public class ViewJump {
 
     public static void toShopCart(Activity activity){
         activity.startActivity(new Intent(activity, ShopCartActivity.class));
+    }
+
+    public static void toScanBarCode(Activity activity){
+        activity.startActivity(new Intent(activity, ScanBarCodeActivity.class));
+    }
+
+    public static void toManuallyInputBarCode(Activity activity){
+        activity.startActivity(new Intent(activity, ManuallyInputBarCodeActivity.class));
     }
 
 }

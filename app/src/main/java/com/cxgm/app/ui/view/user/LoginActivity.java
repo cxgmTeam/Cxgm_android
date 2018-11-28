@@ -200,7 +200,7 @@ public class LoginActivity extends BaseActivity {
                                         //设置默认收货地址
                                         Constants.defaultUserAddress = temp;
 
-                                        new CheckAddressReq(LoginActivity.this,temp.getLongitude(),temp.getDimension())
+                                        /*new CheckAddressReq(LoginActivity.this,temp.getLongitude(),temp.getDimension())
                                                 .execute(new Request.RequestCallback<List<Shop>>() {
                                                     @Override
                                                     public void onSuccess(List<Shop> shops) {
@@ -225,7 +225,9 @@ public class LoginActivity extends BaseActivity {
                                                         Request.dismissDialog();
                                                         finish();
                                                     }
-                                                });
+                                                });*/
+                                        Request.dismissDialog();
+                                        finish();
                                     }else {
                                         //登录但没有添加过地址
                                         Request.dismissDialog();

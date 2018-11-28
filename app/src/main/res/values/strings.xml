@@ -299,6 +299,13 @@
     <string name="distance">距离</string>
     <string name="shop_info_1_">起送%s&#160;&#160;&#160;配送%s&#160;&#160;&#160;月销%d&#160;&#160;&#160;</string>
     <string name="shop_info_2_">%d分钟&#160;&#160;&#160;%skm</string>
-
+    <string name="scan_tag">请对准商品包装上的条形码</string>
+    <string name="to_shop_cart">去购物车</string>
+    <string name="scan_bar_code">扫描条形码</string>
+    <string name="manually_input">手动输入</string>
+    <string name="switch_code">切换扫码</string>
+    <string name="please_enter_commodity_bar_code">请输入商品条形码</string>
+    <string name="goods_not_found">未查询到对应商品</string>
+    <string name="empty_bar_code">商品条形码不能为空</string>
 
 </resources>

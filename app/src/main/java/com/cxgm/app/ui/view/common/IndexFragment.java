@@ -1,5 +1,6 @@
 package com.cxgm.app.ui.view.common;
 
+import android.Manifest;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.os.Bundle;
@@ -47,6 +48,7 @@ import com.cxgm.app.ui.adapter.MotionAdapter;
 import com.cxgm.app.ui.adapter.ShopAdapter;
 import com.cxgm.app.ui.base.BaseFragment;
 import com.cxgm.app.ui.view.ViewJump;
+import com.cxgm.app.ui.view.user.CouponFragment;
 import com.cxgm.app.ui.widget.CustomScrollView;
 import com.cxgm.app.ui.widget.SpaceItemDecoration;
 import com.cxgm.app.utils.Helper;
@@ -54,6 +56,7 @@ import com.cxgm.app.utils.ToastManager;
 import com.cxgm.app.utils.UserManager;
 import com.cxgm.app.utils.ViewHelper;
 import com.deanlib.ootb.data.io.Request;
+import com.deanlib.ootb.manager.PermissionManager;
 import com.deanlib.ootb.utils.FormatUtils;
 import com.deanlib.ootb.widget.GridViewForScrollView;
 import com.deanlib.ootb.widget.ListViewForScrollView;
@@ -64,6 +67,7 @@ import com.kevin.loopview.internal.LoopData;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadMoreListener;
+import com.tbruyelle.rxpermissions.Permission;
 
 import org.xutils.common.Callback;
 import org.xutils.common.util.DensityUtil;
@@ -77,6 +81,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
+import rx.functions.Action1;
 
 /**
  * 首页
@@ -211,7 +216,7 @@ public class IndexFragment extends BaseFragment {
 
     private void doShowPop(){
         //地址提示
-        if (Constants.getEnableDeliveryAddress() && Constants.getLocation(true) != null) {
+        if (/*Constants.getEnableDeliveryAddress() && */Constants.getLocation(true) != null) {
             showPopLocationInfo(getString(R.string.destination_,
                     Constants.getLocation(true).address));
         } else {
@@ -285,6 +290,7 @@ public class IndexFragment extends BaseFragment {
             mShopAdapter = new ShopAdapter(mShopList);
             mShopListPageNum = 1;
             lvShop.setAdapter(mShopAdapter);
+            lvShop.setFocusable(false);
             lvShop.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -455,6 +461,7 @@ public class IndexFragment extends BaseFragment {
                         @Override
                         public void onSuccess(PageInfo<Shop> shopPageInfo) {
                             if (shopPageInfo != null && shopPageInfo.getList() != null) {
+                                rgShopType.setVisibility(View.VISIBLE);
                                 mShopList.addAll(shopPageInfo.getList());
                                 mShopAdapter.notifyDataSetChanged();
                             } else {
@@ -899,7 +906,19 @@ public class IndexFragment extends BaseFragment {
                 }
                 break;
             case R.id.layoutScan:
-                //todo 扫码
+                if (!UserManager.isUserLogin()){
+                    ViewJump.toLogin(getActivity());
+                    return;
+                }
+                //扫码
+                PermissionManager.requstPermission(getActivity(), new Action1<Permission>() {
+                    @Override
+                    public void call(Permission permission) {
+                        if (permission.granted){
+                            ViewJump.toScanBarCode(getActivity());
+                        }
+                    }
+                }, Manifest.permission.CAMERA);
                 break;
         }
     }
@@ -914,7 +933,7 @@ public class IndexFragment extends BaseFragment {
                     if (data!=null) {
                         boolean isDefAddr = data.getBooleanExtra("isDefAddr",false);
                         if (Constants.getLocation(isDefAddr)!=null) {
-                            new CheckAddressReq(getActivity(), Constants.getLocation(isDefAddr).location.longitude + "", Constants.getLocation(isDefAddr).location.latitude + "")
+                            /*new CheckAddressReq(getActivity(), Constants.getLocation(isDefAddr).location.longitude + "", Constants.getLocation(isDefAddr).location.latitude + "")
                                     .execute(new Request.RequestCallback<List<Shop>>() {
                                         @Override
                                         public void onSuccess(List<Shop> shops) {
@@ -923,7 +942,7 @@ public class IndexFragment extends BaseFragment {
                                                         && shops.get(0).getId() == Constants.currentShopId)
                                                     return;
 
-                                                /**
+                                                *//**
                                                  //返回得到的定位信息内仍然可能没有商铺
                                                  //或者有商铺，而非用户最开始选择的商铺，直接替换，是否需要提示给用户
                                                  //地址配送区域重叠
@@ -944,7 +963,7 @@ public class IndexFragment extends BaseFragment {
                                                 });
                                                  builder.setNegativeButton(R.string.cancel, null);
                                                  builder.show();
-                                                 */
+                                                 *//*
                                                 Constants.currentShopId = shops.get(0).getId();
                                                 Constants.setEnableDeliveryAddress(true);//可配送
                                                 init();
@@ -953,7 +972,7 @@ public class IndexFragment extends BaseFragment {
                                             } else {
                                                 if (Constants.currentShopId != 0) {
                                                     //shop 从有到无
-                                                /*
+                                                *//*
                                                 new AlertDialog.Builder(getActivity()).setTitle(R.string.hint)
                                                         .setMessage(R.string.show_shop_list).setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                                     @Override
@@ -972,7 +991,7 @@ public class IndexFragment extends BaseFragment {
                                                         ViewHelper.updateShopCart(getActivity());
                                                     }
                                                 }).show();
-                                                */
+                                                *//*
                                                     //shop置Null
                                                     Constants.setEnableDeliveryAddress(false);
                                                     Constants.currentShopId = 0;
@@ -997,7 +1016,10 @@ public class IndexFragment extends BaseFragment {
                                         public void onFinished() {
 
                                         }
-                                    });
+                                    });*/
+                            init();
+                            loadData();
+                            ViewHelper.updateShopCart(getActivity());
                         }
                     }
                     break;

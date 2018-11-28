@@ -130,6 +130,12 @@
         <activity android:name=".ui.view.order.ShopCartActivity"
             android:screenOrientation="portrait"
             />
+        <activity android:name=".ui.view.goods.ScanBarCodeActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".ui.view.goods.ManuallyInputBarCodeActivity"
+            android:screenOrientation="portrait"
+            />
 
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"

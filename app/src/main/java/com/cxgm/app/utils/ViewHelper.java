@@ -224,7 +224,7 @@ public class ViewHelper {
      * @param userAddresses
      */
     public static void filterAddress(Activity activity, List<UserAddress> userAddresses, int currentShopId, OnActionListener listener) {
-        final int[] num = {0};//记录请求次数
+        /*final int[] num = {0};//记录请求次数
         for (int i = 0; i < userAddresses.size(); i++) {
 
             int finalI = i;
@@ -282,8 +282,27 @@ public class ViewHelper {
                         }
                     });
 
+        }*/
+
+        //排序
+        //将有效地址提前
+        Collections.sort(userAddresses);
+        //默认值提前
+        int defPosition = -1;
+        for (int i = 0; i < userAddresses.size(); i++) {
+            if (userAddresses.get(i).getIsDef() == 1) {
+                defPosition = i;
+                break;
+            }
+        }
+        if (defPosition > 0) {
+            //放到第一个
+            userAddresses.add(0, userAddresses.remove(defPosition));
         }
 
+        if (listener != null) {
+            listener.onSuccess();
+        }
 
     }
 

@@ -144,7 +144,7 @@ public class LaunchActivity extends BaseActivity implements MapHelper.LocationCa
                                     //设置默认收货地址
                                     Constants.defaultUserAddress = temp;
                                     //我日
-                                    new CheckAddressReq(LaunchActivity.this,temp.getLongitude(),temp.getDimension())
+                                    /*new CheckAddressReq(LaunchActivity.this,temp.getLongitude(),temp.getDimension())
                                             .execute(new Request.RequestCallback<List<Shop>>() {
                                                 @Override
                                                 public void onSuccess(List<Shop> shops) {
@@ -170,7 +170,10 @@ public class LaunchActivity extends BaseActivity implements MapHelper.LocationCa
                                                     ViewJump.toMain(LaunchActivity.this);
                                                     finish();
                                                 }
-                                            });
+                                            });*/
+
+                                    ViewJump.toMain(LaunchActivity.this);
+                                    finish();
                                 }else {
                                     //登录但没有添加过地址
                                     MapHelper mapHelper = new MapHelper(getApplicationContext(), LaunchActivity.this);

@@ -15,10 +15,11 @@ import java.util.List;
 
 /**
  * 查看所有配送范围接口
- *
+ * @deprecated 没有电子围栏，该接口没用了
  * @anthor Dean
  * @time 2018/5/13 0013 16:13
  */
+@Deprecated
 public class FindAllPsfwReq extends Request {
     int shopId;
     public FindAllPsfwReq(Context context) {

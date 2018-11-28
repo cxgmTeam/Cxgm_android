@@ -322,7 +322,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
                  //反向编码，以得到城市名，也可以得到POI信息 开启后，得到新的结果会重置这个list,看上去就是跳来跳去
                  mGeoCoder.reverseGeoCode(new ReverseGeoCodeOption().location(new LatLng(mPoiList.get((int) id).location.latitude, mPoiList.get((int) id).location.longitude)));
                  **/
-                new CheckAddressReq(MapLocationActivity.this,mPoiList.get((int)id).location.longitude+"",
+                /*new CheckAddressReq(MapLocationActivity.this,mPoiList.get((int)id).location.longitude+"",
                         mPoiList.get((int)id).location.latitude+"").execute(new Request.RequestCallback<List<Shop>>() {
                     @Override
                     public void onSuccess(List<Shop> shops) {
@@ -348,7 +348,10 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
                     public void onFinished() {
 
                     }
-                });
+                });*/
+
+                Request.dismissDialog();
+                finish();
 
             }
         });
@@ -356,7 +359,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
 
     private void loadData() {
         //用定位地址区分是否显示全部店铺的区域，还是指定店铺的区域
-        if (Constants.currentLocation!=null){
+        /*if (Constants.currentLocation!=null){
             new CheckAddressReq(this,Constants.currentLocation.getLongitude()+"",Constants.currentLocation.getLatitude()+"")
                     .execute(new Request.RequestCallback<List<Shop>>() {
                         @Override
@@ -386,7 +389,7 @@ public class MapLocationActivity extends BaseActivity implements MapHelper.Locat
                     });
         }else {
             new FindAllPsfwReq(this).execute(mPsfwCallback);
-        }
+        }*/
 
 
     }

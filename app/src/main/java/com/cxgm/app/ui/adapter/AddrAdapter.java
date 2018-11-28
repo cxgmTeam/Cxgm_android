@@ -100,7 +100,7 @@ public class AddrAdapter extends BaseAdapter {
                             Constants.defaultUserAddress = mList.get(position);
                             //需要重新确定 地址是否是配送范围
                             Constants.currentShopId = 0;
-                            Constants.setEnableDeliveryAddress(false);
+                            /*Constants.setEnableDeliveryAddress(false);
                             new CheckAddressReq(activity,Constants.defaultUserAddress.getLongitude(),Constants.defaultUserAddress.getDimension())
                                     .execute(new Request.RequestCallback<List<Shop>>() {
                                         @Override
@@ -125,7 +125,7 @@ public class AddrAdapter extends BaseAdapter {
                                         public void onFinished() {
 
                                         }
-                                    });
+                                    });*/
                         }
 
                         @Override

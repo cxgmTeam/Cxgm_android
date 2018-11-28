@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#0C0C17"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_back_title_action_appbar"/>
+
+    <cn.simonlee.xcodescanner.view.MaskConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:frame_viewid="@id/scannerframe">
+
+        <cn.simonlee.xcodescanner.view.AdjustTextureView
+            android:id="@+id/textureview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <cn.simonlee.xcodescanner.view.ScannerFrameView
+            android:id="@+id/scannerframe"
+            android:layout_width="match_parent"
+            android:layout_height="224dp"
+            android:layout_marginLeft="@dimen/margin_giant_x"
+            android:layout_marginRight="@dimen/margin_giant_x"
+            android:layout_marginTop="34dp"
+            app:frameCorner_color="@color/colorPrimaryDark"
+            app:frame_whRatio="1"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:scanLine_color="@color/colorPrimaryDark"
+            app:scan_cycle="1500" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="@string/scan_tag"
+            android:textColor="@color/textWhite"
+            android:textSize="@dimen/text_size_small"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btn_flash" />
+
+        <LinearLayout
+            android:id="@+id/layoutToShopCart"
+            android:gravity="center"
+            android:layout_marginTop="60dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:background="@drawable/shape_c_white"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView">
+            <ImageView
+                android:src="@mipmap/shop_cart3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:layout_marginTop="@dimen/margin_small"
+                android:text="@string/to_shop_cart"
+                android:textSize="@dimen/text_size_large"
+                android:textColor="@color/textPink"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <Button
+            android:id="@+id/btn_flash"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="闪光灯"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="@id/scannerframe"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent" />
+
+
+    </cn.simonlee.xcodescanner.view.MaskConstraintLayout>
+</LinearLayout>

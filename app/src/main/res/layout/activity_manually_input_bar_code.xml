@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:background="#0C0C17"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include layout="@layout/layout_back_title_action_appbar"/>
+
+    <LinearLayout
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <EditText
+        android:singleLine="true"
+        android:imeOptions="actionSearch"
+        android:id="@+id/etBarCode"
+        android:layout_marginTop="34dp"
+        android:textColor="@color/textBlack"
+        android:gravity="center"
+        android:padding="@dimen/margin_normal"
+        android:textColorHint="@color/textHint"
+        android:textSize="@dimen/text_size_normal_x"
+        android:hint="@string/please_enter_commodity_bar_code"
+        android:background="@color/colorWhite"
+        android:layout_marginRight="@dimen/margin_giant_x"
+        android:layout_marginLeft="@dimen/margin_giant_x"
+        android:layout_width="match_parent"
+        android:layout_height="50dp" />
+
+    <TextView
+
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="@string/please_enter_commodity_bar_code"
+        android:textColor="@color/textWhite"
+        android:textSize="@dimen/text_size_small"
+         />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvOK"
+        android:gravity="center"
+        android:text="@string/ok"
+        android:textColor="@color/textWhite"
+        android:textSize="@dimen/text_size_large_x"
+        android:background="@color/colorPink"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height" />
+</LinearLayout>
