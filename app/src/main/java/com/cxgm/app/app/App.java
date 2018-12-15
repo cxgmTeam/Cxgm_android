@@ -109,7 +109,7 @@ public class App extends MultiDexApplication {
 
         //友盟
 //        UMConfigure.init(this, "5af6acadb27b0a761e000306", "channel", UMConfigure.DEVICE_TYPE_PHONE, "44b9f56acba05f8a5e6859d41f1e886b");
-        UMConfigure.init(this, "5b42fb3cf29d98568500000f", "channel", UMConfigure.DEVICE_TYPE_PHONE, "3be877a849c662d8cf85b18385291aa9");
+        UMConfigure.init(this, "5c14a418f1f55673f6000032", "channel", UMConfigure.DEVICE_TYPE_PHONE, "09a191cd745a1259aec765b46458bf95");
         UMConfigure.setLogEnabled(Constants.DEBUG);
 
         //友盟推送

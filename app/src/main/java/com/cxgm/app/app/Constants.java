@@ -15,7 +15,8 @@ import com.cxgm.app.data.entity.UserPoiInfo;
 
 public class Constants {
 
-    public static final boolean DEBUG = BuildConfig.isDebug;
+//    public static final boolean DEBUG = BuildConfig.isDebug;
+    public static final boolean DEBUG = true;
 //    public static final long offMaxDate = ((long) 1000) * 3600 * 24 * 365 * 100;
 
     public static final String SERVICE_URL = "http://yxlifeshop.com";
@@ -38,7 +39,7 @@ public class Constants {
     public static String deviceToken;
 
     public static final String WECHAT_APP_ID = "wxd2f7d73babd9de68";
-    public static final String BAIDU_AK = "KevuKZ68Ny3gszdU1h4Y7Rc2ytTY9BPq";
+    public static final String BAIDU_AK = "fICiSkPtMYYcS7d1MDPhSLj9cosdMBnf";
 
     public static BDLocation currentLocation;//当前定位
     public static PoiInfo currentUserLocation;//用户在地图上点选的位置

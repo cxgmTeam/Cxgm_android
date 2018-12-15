@@ -20,6 +20,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.baidu.mapapi.search.core.PoiInfo;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.cxgm.app.R;
@@ -451,9 +452,10 @@ public class IndexFragment extends BaseFragment {
         if (Constants.currentShopId == 0) {
             double longitude = 0;
             double latitude = 0;
-            if (Constants.currentLocation!=null) {
-                longitude = Constants.currentLocation.getLongitude();
-                latitude = Constants.currentLocation.getLatitude();
+            PoiInfo location = Constants.getLocation(true);
+            if (location!=null) {
+                longitude = location.location.longitude;
+                latitude = location.location.latitude;
             }
             //商铺列表
             new ShopListReq(getActivity(), mOrderType,longitude,latitude,mShopListPageNum, 10)
