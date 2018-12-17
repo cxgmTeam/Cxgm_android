@@ -16,6 +16,7 @@
         android:layout_height="match_parent">
 
     <EditText
+        android:inputType="number"
         android:singleLine="true"
         android:imeOptions="actionSearch"
         android:id="@+id/etBarCode"
@@ -42,6 +43,7 @@
         android:textColor="@color/textWhite"
         android:textSize="@dimen/text_size_small"
          />
+
     </LinearLayout>
 
     <TextView
