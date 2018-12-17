@@ -136,6 +136,9 @@
         <activity android:name=".ui.view.goods.ManuallyInputBarCodeActivity"
             android:screenOrientation="portrait"
             />
+        <activity android:name=".ui.view.common.CommentActivity"
+            android:screenOrientation="portrait"
+            />
 
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"

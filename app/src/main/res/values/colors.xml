@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">@color/colorPinkDark</color>
     <color name="colorAccent">@color/colorPink</color>
     <color name="colorAppBackground">@color/colorGray</color>
-    <color name="colorLine">#E8E8E8</color>
+    <color name="colorLine">#EEEEEE</color>
 
     <color name="textGray">@color/colorGrayDark</color>
     <color name="textPink">@color/colorPink</color>
@@ -21,12 +21,13 @@
     <color name="textBrown">#836C50</color>
     <color name="textBrownTint">#938062</color>
     <color name="textBrickRed">#FF7928</color>
-    <color name="textOrange">#FF5C00</color>
+    <color name="textOrange">@color/colorOrange</color>
 
     <color name="colorBlack">#000000</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorGray">#F2F3F4</color>
     <color name="colorGray2">#EFEFEF</color>
+    <color name="colorGray3">#FAFAFA </color>
     <color name="colorGrayDark">#999999</color>
     <color name="colorPink">#FF4891</color>
     <color name="colorBlueTint">#3AB0F2</color>
@@ -34,7 +35,8 @@
     <color name="colorKhaki">#FFEED0</color>
     <color name="colorPinkDark">#F4378C</color>
 
-    <color name="colorOrange">#FA8E2E</color>
+    <color name="colorOrange">#FF5C00</color>
+    <color name="colorOrangeTint">#FA8E2E</color>
     <color name="colorGrayDark2">#ADADAD</color>
     <color name="colorBlue">#249EE2</color>
     <color name="colorRed">#F33F31</color>

@@ -308,4 +308,13 @@
     <string name="goods_not_found">未查询到对应商品</string>
     <string name="empty_bar_code">商品条形码不能为空</string>
 
+    <string name="shop_score">商家评价</string>
+    <string name="input_comment">请输入评论内容</string>
+    <string name="commit_comment">提交评论</string>
+    <string name="all_comment">全部评价</string>
+    <string name="comment">评论</string>
+    <string name="score">评分</string>
+    <string name="_scores">%d个评分</string>
+    <string name="shop_info_3_">月销%d&#160;&#160;&#160;%skm</string>
+
 </resources>

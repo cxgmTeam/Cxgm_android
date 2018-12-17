@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <include layout="@layout/layout_back_title_action_appbar" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/line"
+        android:background="@color/colorLine" />
+
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/srl"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/colorWhite"
+                android:elevation="@dimen/elevation"
+                android:orientation="horizontal"
+                android:padding="@dimen/margin_giant">
+
+                <ImageView
+                    android:id="@+id/imgShopCover"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:scaleType="fitXY" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/margin_normal"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvShopName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/textBlack"
+                        android:textSize="@dimen/text_size_large"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/tvShopInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/margin_micro"
+                        android:textColor="@color/textBlackTint"
+                        android:textSize="@dimen/text_size_small" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/line"
+                android:background="@color/colorLine" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="74dp"
+                android:background="@color/colorWhite"
+                android:elevation="@dimen/elevation"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/margin_giant_xx"
+                android:paddingRight="@dimen/margin_giant_xx">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvShopScore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="1.0"
+                        android:textColor="@color/textOrange"
+                        android:textSize="32sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/shop_score"
+                        android:textColor="@color/textGray"
+                        android:textSize="@dimen/text_size_small" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="34dp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                        style="@style/Widget.MaterialRatingBar.RatingBar"
+                        android:id="@+id/mrbShopScore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="-10dp"
+                        android:maxHeight="20dp"
+                        android:rating="1"
+                        app:mrb_progressTint="@color/colorOrange" />
+
+                    <TextView
+                        android:id="@+id/tvScoreInfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/shop_score"
+                        android:textColor="@color/textGray"
+                        android:textSize="@dimen/text_size_small" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layoutUserComment"
+                android:visibility="gone"
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_giant"
+                android:background="@drawable/shape_tc_gray_white"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/margin_giant"
+                android:paddingLeft="@dimen/margin_giant"
+                android:paddingRight="@dimen/margin_giant">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="30dp"
+                    android:text="@string/shop_score"
+                    android:textColor="@color/textBlack"
+                    android:textSize="@dimen/text_size_giant_t"
+                    android:textStyle="bold" />
+
+                <me.zhanghai.android.materialratingbar.MaterialRatingBar
+                    android:id="@+id/mrbUserScore"
+                    style="@style/Widget.MaterialRatingBar.RatingBar"
+                    android:layout_width="230dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:maxHeight="30dp"
+                    android:rating="1"
+                    app:mrb_progressTint="@color/colorOrange" />
+
+                <TextView
+                    android:id="@+id/tvUserScore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="1.0分"
+                    android:textColor="@color/textOrange"
+                    android:textSize="@dimen/text_size_giant_t" />
+
+                <EditText
+                    android:id="@+id/etComment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/shape_t_gray_tran"
+                    android:gravity="top|left"
+                    android:hint="@string/input_comment"
+                    android:lines="7"
+                    android:padding="12dp"
+                    android:textColor="@color/textBlack"
+                    android:textColorHint="#C1C1C1"
+                    android:textSize="@dimen/text_size_normal_x" />
+
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tvCommitComment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="25dp"
+                android:layout_marginLeft="@dimen/margin_giant"
+                android:layout_marginRight="@dimen/margin_giant"
+                android:layout_marginTop="30dp"
+                android:background="@color/colorPink"
+                android:text="@string/commit_comment"
+                android:textColor="@color/textWhite"
+                android:textSize="@dimen/text_size_large_x" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/layoutComments"
+                android:padding="@dimen/margin_giant"
+                android:background="@color/colorWhite"
+                android:layout_marginTop="@dimen/margin_normal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:textColor="@color/textBlack"
+                    android:text="@string/all_comment"
+                    android:textSize="@dimen/text_size_large"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <TextView
+                    android:text="1111"
+                    android:id="@+id/tvCommentTotal"
+                    android:layout_alignParentRight="true"
+                    android:textSize="@dimen/text_size_normal"
+                    android:textColor="@color/textGray"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+
+                <com.deanlib.ootb.widget.ListViewForScrollView
+                    android:dividerHeight="@dimen/margin_giant"
+                    android:divider="@null"
+                    android:listSelector="@color/transparent"
+                    android:id="@+id/lvConments"
+                    android:layout_marginTop="@dimen/margin_giant"
+                    android:layout_below="@+id/tvCommentTotal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+</LinearLayout>
