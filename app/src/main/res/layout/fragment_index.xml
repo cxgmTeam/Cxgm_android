@@ -22,11 +22,20 @@
         android:orientation="horizontal">
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/imgLocation"
             android:layout_width="@dimen/appbar_height"
             android:layout_height="@dimen/appbar_height"
             android:scaleType="center"
             android:src="@mipmap/location4" />
+
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/imgBack"
+            android:layout_width="@dimen/appbar_height"
+            android:layout_height="@dimen/appbar_height"
+            android:scaleType="center"
+            android:src="@mipmap/back" />
 
         <FrameLayout
             android:layout_weight="1"
@@ -187,6 +196,7 @@
                         android:layout_height="104dp">
 
                         <LinearLayout
+                            android:id="@+id/layoutAll"
                             android:orientation="vertical"
                             android:layout_weight="1"
                             android:gravity="center"
@@ -206,13 +216,14 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/layoutMWSX"
                             android:orientation="vertical"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
                             <ImageView
-                                android:src="@mipmap/all_classify"
+                                android:src="@mipmap/delicious_fresh"
                                 android:layout_width="42dp"
                                 android:layout_height="42dp" />
                             <TextView
@@ -225,13 +236,14 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/layoutMZGH"
                             android:orientation="vertical"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
                             <ImageView
-                                android:src="@mipmap/all_classify"
+                                android:src="@mipmap/beauty_makeup_guard"
                                 android:layout_width="42dp"
                                 android:layout_height="42dp" />
                             <TextView
@@ -244,13 +256,14 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/layoutJSYP"
                             android:orientation="vertical"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
                             <ImageView
-                                android:src="@mipmap/all_classify"
+                                android:src="@mipmap/alcohol_drinks"
                                 android:layout_width="42dp"
                                 android:layout_height="42dp" />
                             <TextView
@@ -263,13 +276,14 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/layoutXXGS"
                             android:orientation="vertical"
                             android:layout_weight="1"
                             android:gravity="center"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content">
                             <ImageView
-                                android:src="@mipmap/all_classify"
+                                android:src="@mipmap/fresh_fruits_vegetables"
                                 android:layout_width="42dp"
                                 android:layout_height="42dp" />
                             <TextView

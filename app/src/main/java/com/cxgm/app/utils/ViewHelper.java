@@ -3,43 +3,28 @@ package com.cxgm.app.utils;
 import android.animation.Animator;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
-import android.animation.ValueAnimator;
 import android.app.Activity;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.graphics.BitmapFactory;
 import android.support.v7.app.AlertDialog;
-import android.text.Html;
-import android.view.Gravity;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RemoteViews;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
 import com.cxgm.app.data.entity.ProductTransfer;
-import com.cxgm.app.data.entity.Shop;
 import com.cxgm.app.data.entity.ShopCart;
 import com.cxgm.app.data.entity.UserAddress;
-import com.cxgm.app.data.entity.Version;
 import com.cxgm.app.data.entity.base.PageInfo;
-import com.cxgm.app.data.io.common.CheckAddressReq;
-import com.cxgm.app.data.io.common.VersionControlReq;
 import com.cxgm.app.data.io.order.AddCartReq;
 import com.cxgm.app.data.io.order.ShopCartListReq;
 import com.cxgm.app.data.io.order.UpdateCartReq;
 import com.cxgm.app.ui.view.ViewJump;
 import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.utils.DeviceUtils;
-import com.deanlib.ootb.utils.VersionUtils;
 import com.jakewharton.rxbinding.view.RxView;
 
 import org.xutils.common.Callback;
@@ -286,7 +271,7 @@ public class ViewHelper {
 
         //排序
         //将有效地址提前
-        Collections.sort(userAddresses);
+        //Collections.sort(userAddresses);
         //默认值提前
         int defPosition = -1;
         for (int i = 0; i < userAddresses.size(); i++) {

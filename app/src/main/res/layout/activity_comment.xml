@@ -90,7 +90,7 @@
                         android:id="@+id/tvShopScore"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="1.0"
+                        android:text="0.0"
                         android:textColor="@color/textOrange"
                         android:textSize="32sp" />
 
@@ -116,14 +116,17 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="-10dp"
                         android:maxHeight="20dp"
-                        android:rating="1"
+                        android:rating="0"
+                        android:stepSize="0.1"
+                        android:isIndicator="true"
                         app:mrb_progressTint="@color/colorOrange" />
 
                     <TextView
+                        android:visibility="invisible"
                         android:id="@+id/tvScoreInfo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/shop_score"
+                        android:text="@string/high_score"
                         android:textColor="@color/textGray"
                         android:textSize="@dimen/text_size_small" />
 
@@ -139,6 +142,8 @@
                 android:layout_height="wrap_content">
 
             <LinearLayout
+                android:focusable="true"
+                android:focusableInTouchMode="true"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/margin_giant"
@@ -165,7 +170,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
                     android:maxHeight="30dp"
-                    android:rating="1"
+                    android:rating="0"
+                    android:stepSize="0.1"
                     app:mrb_progressTint="@color/colorOrange" />
 
                 <TextView
@@ -173,7 +179,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="15dp"
-                    android:text="1.0分"
+                    android:text="0.0分"
                     android:textColor="@color/textOrange"
                     android:textSize="@dimen/text_size_giant_t" />
 
@@ -194,14 +200,15 @@
             </LinearLayout>
 
             <TextView
+                android:gravity="center"
                 android:id="@+id/tvCommitComment"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="42dp"
                 android:layout_marginBottom="25dp"
                 android:layout_marginLeft="@dimen/margin_giant"
                 android:layout_marginRight="@dimen/margin_giant"
                 android:layout_marginTop="30dp"
-                android:background="@color/colorPink"
+                android:background="@drawable/shape_tc_tran_pink"
                 android:text="@string/commit_comment"
                 android:textColor="@color/textWhite"
                 android:textSize="@dimen/text_size_large_x" />
@@ -224,7 +231,6 @@
                     android:layout_height="wrap_content" />
 
                 <TextView
-                    android:text="1111"
                     android:id="@+id/tvCommentTotal"
                     android:layout_alignParentRight="true"
                     android:textSize="@dimen/text_size_normal"

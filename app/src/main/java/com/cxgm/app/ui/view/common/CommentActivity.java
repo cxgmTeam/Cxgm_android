@@ -100,6 +100,7 @@ public class CommentActivity extends BaseActivity {
         imgBack.setVisibility(View.VISIBLE);
         tvTitle.setText(R.string.comment);
 
+        lvConments.setFocusable(false);
         lvConments.setAdapter(mCommentAdapter = new CommentAdapter(mCommentList = new ArrayList<>()));
 
         srl.setEnableLoadMore(!isUserComment);
@@ -110,12 +111,13 @@ public class CommentActivity extends BaseActivity {
             mrbUserScore.setOnRatingChangeListener(new MaterialRatingBar.OnRatingChangeListener() {
                 @Override
                 public void onRatingChanged(MaterialRatingBar ratingBar, float rating) {
-                    tvUserScore.setText(((int)rating)+".0分");
+                    tvUserScore.setText(rating+"分");
                 }
             });
         }else {
             layoutUserComment.setVisibility(View.GONE);
             layoutComments.setVisibility(View.VISIBLE);
+            tvCommentTotal.setText(getString(R.string._scores,0));
             srl.setOnRefreshLoadMoreListener(new OnRefreshLoadMoreListener() {
                 @Override
                 public void onLoadMore(@NonNull RefreshLayout refreshLayout) {
@@ -144,10 +146,14 @@ public class CommentActivity extends BaseActivity {
                             .error(R.mipmap.icon_round)).into(imgShopCover);
                     tvShopName.setText(shop.getShopName());
                     tvShopInfo.setText(getString(R.string.shop_info_3_,shop.getMonthSales(),shop.getDistance()+""));
-                    tvShopScore.setText(((int)shop.getScore())+".0");
+                    tvShopScore.setText(shop.getScore()+"");
                     mrbShopScore.setRating(shop.getScore());
-                    //todo 评分下边有句话
-
+                    //评分下边有句话
+                    if (shop.getScore()>= 4) {
+                        tvScoreInfo.setVisibility(View.VISIBLE);
+                    }else {
+                        tvScoreInfo.setVisibility(View.INVISIBLE);
+                    }
                 }
             }
 
@@ -176,8 +182,6 @@ public class CommentActivity extends BaseActivity {
                     tvCommentTotal.setText(getString(R.string._scores,commentPageInfo.getTotal()));
                     mCommentList.addAll(commentPageInfo.getList());
                     mCommentAdapter.notifyDataSetChanged();
-                }else {
-                    tvCommentTotal.setText(getString(R.string._scores,0));
                 }
             }
 

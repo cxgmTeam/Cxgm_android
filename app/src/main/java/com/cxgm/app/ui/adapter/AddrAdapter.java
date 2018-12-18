@@ -10,16 +10,13 @@ import android.widget.TextView;
 
 import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
-import com.cxgm.app.data.entity.Shop;
 import com.cxgm.app.data.entity.UserAddress;
-import com.cxgm.app.data.io.common.CheckAddressReq;
 import com.cxgm.app.data.io.order.DeleteAddressReq;
 import com.cxgm.app.data.io.order.UpdateAddressReq;
 import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.utils.ToastManager;
 import com.deanlib.ootb.data.io.Request;
 import com.deanlib.ootb.utils.FormatUtils;
-import com.deanlib.ootb.utils.TextUtils;
 
 import org.xutils.common.Callback;
 

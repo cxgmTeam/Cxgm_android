@@ -32,24 +32,19 @@ import com.cxgm.app.data.entity.ProductTransfer;
 import com.cxgm.app.data.entity.Shop;
 import com.cxgm.app.data.entity.ShopCategory;
 import com.cxgm.app.data.entity.base.PageInfo;
-import com.cxgm.app.data.io.common.CheckAddressReq;
 import com.cxgm.app.data.io.common.FindAdvertisementReq;
-import com.cxgm.app.data.io.common.FindReportReq;
 import com.cxgm.app.data.io.common.ShopListReq;
 import com.cxgm.app.data.io.goods.FindFirstCategoryReq;
 import com.cxgm.app.data.io.goods.FindHotProductReq;
-import com.cxgm.app.data.io.goods.FindMotionReq;
 import com.cxgm.app.data.io.goods.FindNewProductReq;
 import com.cxgm.app.data.io.goods.FindTopProductReq;
 import com.cxgm.app.data.io.order.OrderPostageReq;
 import com.cxgm.app.ui.adapter.CategoryPageAdapter;
 import com.cxgm.app.ui.adapter.GoodsAdapter;
 import com.cxgm.app.ui.adapter.GoodsRecyclerViewAdapter;
-import com.cxgm.app.ui.adapter.MotionAdapter;
 import com.cxgm.app.ui.adapter.ShopAdapter;
 import com.cxgm.app.ui.base.BaseFragment;
 import com.cxgm.app.ui.view.ViewJump;
-import com.cxgm.app.ui.view.user.CouponFragment;
 import com.cxgm.app.ui.widget.CustomScrollView;
 import com.cxgm.app.ui.widget.SpaceItemDecoration;
 import com.cxgm.app.utils.Helper;
@@ -155,6 +150,8 @@ public class IndexFragment extends BaseFragment {
     CustomScrollView scrollView;
     @BindView(R.id.layoutScan)
     LinearLayout layoutScan;
+    @BindView(R.id.imgBack)
+    ImageView imgBack;
     @BindView(R.id.tvAppTitle)
     TextView tvAppTitle;
     @BindView(R.id.layoutInput)
@@ -183,8 +180,8 @@ public class IndexFragment extends BaseFragment {
 
     List<Motion> mReportList;//简报
     int mCurrentReportPosition = 0;
-    String mOrderType = ShopListReq.TYPE_DEFAULT;
-
+    String mOrderType = ShopListReq.ORDER_TYPE_DEFAULT;
+    String mIndustryType = ShopListReq.INDUSTRY_TYPE_DEFAULT;
 
     @Nullable
     @Override
@@ -216,12 +213,14 @@ public class IndexFragment extends BaseFragment {
     }
 
     private void doShowPop(){
-        //地址提示
-        if (/*Constants.getEnableDeliveryAddress() && */Constants.getLocation(true) != null) {
-            showPopLocationInfo(getString(R.string.destination_,
-                    Constants.getLocation(true).address));
-        } else {
-            showPopLocationInfo(getString(R.string.out_of_distribution));
+        if (Constants.currentShopId == 0) {
+            //地址提示
+            if (/*Constants.getEnableDeliveryAddress() && */Constants.getLocation(true) != null) {
+                showPopLocationInfo(getString(R.string.destination_,
+                        Constants.getLocation(true).address));
+            } else {
+                showPopLocationInfo(getString(R.string.out_of_distribution));
+            }
         }
     }
 
@@ -263,32 +262,10 @@ public class IndexFragment extends BaseFragment {
             tvAppTitle.setVisibility(View.VISIBLE);
             layoutInput.setVisibility(View.GONE);
             layoutScan.setVisibility(View.INVISIBLE);
-            rgShopType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(RadioGroup radioGroup, int i) {
-                    rbDefault.setTypeface(Typeface.DEFAULT);
-                    rbSales.setTypeface(Typeface.DEFAULT);
-                    rbDistance.setTypeface(Typeface.DEFAULT);
-                    ((RadioButton)radioGroup.findViewById(i)).setTypeface(Typeface.DEFAULT_BOLD);
-                    //排序
-                    switch (i){
-                        case R.id.rbDefault:
-                            mOrderType = ShopListReq.TYPE_DEFAULT;
-                            break;
-                        case R.id.rbSales:
-                            mOrderType = ShopListReq.TYPE_MONT_SALES;
-                            break;
-                        case R.id.rbDistance:
-                            mOrderType = ShopListReq.TYPE_DISTANCE;
-                            break;
-                    }
-                    loadData();
-                }
-            });
-            rbDefault.setChecked(true);
+            imgBack.setVisibility(View.GONE);
+            imgLocation.setVisibility(View.VISIBLE);
 
-            mShopList = new ArrayList<>();
-            mShopAdapter = new ShopAdapter(mShopList);
+            mShopAdapter = new ShopAdapter(getActivity(),mShopList = new ArrayList<>());
             mShopListPageNum = 1;
             lvShop.setAdapter(mShopAdapter);
             lvShop.setFocusable(false);
@@ -301,6 +278,31 @@ public class IndexFragment extends BaseFragment {
                     ViewHelper.updateShopCart(getActivity());
                 }
             });
+            rbDefault.setChecked(true);
+            rgShopType.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(RadioGroup radioGroup, int i) {
+                    rbDefault.setTypeface(Typeface.DEFAULT);
+                    rbSales.setTypeface(Typeface.DEFAULT);
+                    rbDistance.setTypeface(Typeface.DEFAULT);
+                    ((RadioButton)radioGroup.findViewById(i)).setTypeface(Typeface.DEFAULT_BOLD);
+                    //排序
+                    switch (i){
+                        case R.id.rbDefault:
+                            mOrderType = ShopListReq.ORDER_TYPE_DEFAULT;
+                            break;
+                        case R.id.rbSales:
+                            mOrderType = ShopListReq.ORDER_TYPE_MONT_SALES;
+                            break;
+                        case R.id.rbDistance:
+                            mOrderType = ShopListReq.ORDER_TYPE_DISTANCE;
+                            break;
+                    }
+                    if (mShopList!=null)
+                        mShopList.clear();
+                    loadData();
+                }
+            });
 
             srl.setEnableLoadMore(true);
 
@@ -308,6 +310,8 @@ public class IndexFragment extends BaseFragment {
             tvAppTitle.setVisibility(View.GONE);
             layoutInput.setVisibility(View.VISIBLE);
             layoutScan.setVisibility(View.VISIBLE);
+            imgBack.setVisibility(View.VISIBLE);
+            imgLocation.setVisibility(View.GONE);
             loopBanner.setImageLoader(new ImageLoader() {
                 @Override
                 public void loadImage(ImageView imageView, String url, int placeholder) {
@@ -458,7 +462,7 @@ public class IndexFragment extends BaseFragment {
                 latitude = location.location.latitude;
             }
             //商铺列表
-            new ShopListReq(getActivity(), mOrderType,longitude,latitude,mShopListPageNum, 10)
+            new ShopListReq(getActivity(), mIndustryType,mOrderType,longitude,latitude,mShopListPageNum, 10)
                     .execute(new Request.RequestCallback<PageInfo<Shop>>() {
                         @Override
                         public void onSuccess(PageInfo<Shop> shopPageInfo) {
@@ -880,11 +884,18 @@ public class IndexFragment extends BaseFragment {
         layoutPopLocation.setVisibility(View.GONE);
     }
 
-    @OnClick({R.id.imgLocation, R.id.etSearchWord, R.id.layoutMessage,R.id.tvNewsContent,R.id.layoutScan})
+    @OnClick({R.id.imgLocation,R.id.imgBack, R.id.etSearchWord, R.id.layoutMessage,R.id.tvNewsContent,R.id.layoutScan,
+        R.id.layoutAll,R.id.layoutMWSX,R.id.layoutMZGH,R.id.layoutJSYP,R.id.layoutXXGS})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.imgLocation:
                 ViewJump.toAddrList(getActivity(), this);
+                break;
+            case R.id.imgBack:
+                Constants.currentShopId = 0;
+                init();
+                loadData();
+                ViewHelper.updateShopCart(getActivity());
                 break;
             case R.id.etSearchWord:
                 if (Constants.currentShopId != 0) {
@@ -921,6 +932,31 @@ public class IndexFragment extends BaseFragment {
                         }
                     }
                 }, Manifest.permission.CAMERA);
+                break;
+            case R.id.layoutAll:
+                mIndustryType = ShopListReq.INDUSTRY_TYPE_DEFAULT;
+                mShopList.clear();
+                loadData();
+                break;
+            case R.id.layoutMWSX:
+                mIndustryType = ShopListReq.INDUSTRY_TYPE_MWSX;
+                mShopList.clear();
+                loadData();
+                break;
+            case R.id.layoutMZGH:
+                mIndustryType = ShopListReq.INDUSTRY_TYPE_MZGH;
+                mShopList.clear();
+                loadData();
+                break;
+            case R.id.layoutJSYP:
+                mIndustryType = ShopListReq.INDUSTRY_TYPE_JSYP;
+                mShopList.clear();
+                loadData();
+                break;
+            case R.id.layoutXXGS:
+                mIndustryType = ShopListReq.INDUSTRY_TYPE_XXGS;
+                mShopList.clear();
+                loadData();
                 break;
         }
     }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">优品生活</string>
+    <string name="app_name">优鲜超市</string>
 
     <string name="home">首页</string>
     <string name="classify">分类</string>
@@ -151,8 +151,8 @@
     <string name="friend_phone_num">好友手机号</string>
     <string name="get_date">获得时间</string>
     <string name="whether_got_lucky_money_or_not">是否得到红包</string>
-    <string name="login_tag">未注册过的手机号码将自动注册为优品生活账号</string>
-    <string name="login_tag2">登录即代表同意《优品生活注册协议》《优品生活用户隐私协议》</string>
+    <string name="login_tag">未注册过的手机号码将自动注册为优鲜超市账号</string>
+    <string name="login_tag2">登录即代表同意《优鲜超市注册协议》《优鲜超市用户隐私协议》</string>
     <string name="out_of_distribution">不在配送范围之内，请选择收货地址</string>
     <string name="destination_">送至：%s</string>
 
@@ -270,10 +270,10 @@
     <string name="refund_amount">退款总金额</string>
     <string name="version_v_">版本：V %s</string>
 
-    <string name="agreement">优品生活会员服务协议</string>
-    <string name="policy">优品生活隐私权政策</string>
-    <string name="business_information">优品生活商家信息</string>
-    <string name="inside_entrance">优品生活内部专用入口</string>
+    <string name="agreement">优鲜超市会员服务协议</string>
+    <string name="policy">优鲜超市隐私权政策</string>
+    <string name="business_information">优鲜超市商家信息</string>
+    <string name="inside_entrance">优鲜超市内部专用入口</string>
     <string name="look_pack">详情见包装</string>
 
     <string name="message_list_empty">您还没有任何消息哦~</string>
@@ -316,5 +316,6 @@
     <string name="score">评分</string>
     <string name="_scores">%d个评分</string>
     <string name="shop_info_3_">月销%d&#160;&#160;&#160;%skm</string>
+    <string name="high_score">当前店铺的评分很高，值得逛逛~</string>
 
 </resources>

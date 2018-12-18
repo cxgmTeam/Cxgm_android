@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">@color/colorPinkDark</color>
     <color name="colorAccent">@color/colorPink</color>
     <color name="colorAppBackground">@color/colorGray</color>
-    <color name="colorLine">#EEEEEE</color>
+    <color name="colorLine">#DFDFDF</color>
 
     <color name="textGray">@color/colorGrayDark</color>
     <color name="textPink">@color/colorPink</color>

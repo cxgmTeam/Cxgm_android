@@ -10,13 +10,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.baidu.location.BDLocation;
 import com.baidu.mapapi.search.core.PoiInfo;
 import com.cxgm.app.R;
-import com.cxgm.app.data.entity.Shop;
 import com.cxgm.app.data.entity.UserAddress;
-import com.cxgm.app.data.entity.UserPoiInfo;
-import com.cxgm.app.data.io.common.CheckAddressReq;
 import com.cxgm.app.data.io.order.AddAddressReq;
 import com.cxgm.app.data.io.order.AddressListReq;
 import com.cxgm.app.data.io.order.UpdateAddressReq;

@@ -55,6 +55,8 @@
                         android:layout_height="15dp"
                         android:layout_marginLeft="@dimen/margin_micro"
                         android:maxHeight="12dp"
+                        android:stepSize="0.1"
+                        android:isIndicator="true"
                         app:mrb_progressTint="@color/colorOrange" />
                 </LinearLayout>
 

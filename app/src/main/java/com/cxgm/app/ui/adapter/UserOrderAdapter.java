@@ -261,6 +261,15 @@ public class UserOrderAdapter extends BaseAdapter {
             }
         });
 
+        if (Order.STATUS_COMPLETE.equals(mList.get(i).getStatus())) {
+            holder.tvComment.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ViewJump.toComment(mActivity, mList.get(i).getStoreId(), true);
+                }
+            });
+        }
+
         return view;
     }
 
@@ -277,6 +286,8 @@ public class UserOrderAdapter extends BaseAdapter {
         TextView tvTotal;
         @BindView(R.id.tvOrderAction)
         TextView tvOrderAction;
+        @BindView(R.id.tvComment)
+        TextView tvComment;
 
         ViewHolder(View view) {
             ButterKnife.bind(this, view);
