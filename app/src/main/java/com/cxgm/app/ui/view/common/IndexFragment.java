@@ -36,12 +36,14 @@ import com.cxgm.app.data.io.common.FindAdvertisementReq;
 import com.cxgm.app.data.io.common.ShopListReq;
 import com.cxgm.app.data.io.goods.FindFirstCategoryReq;
 import com.cxgm.app.data.io.goods.FindHotProductReq;
+import com.cxgm.app.data.io.goods.FindMotionReq;
 import com.cxgm.app.data.io.goods.FindNewProductReq;
 import com.cxgm.app.data.io.goods.FindTopProductReq;
 import com.cxgm.app.data.io.order.OrderPostageReq;
 import com.cxgm.app.ui.adapter.CategoryPageAdapter;
 import com.cxgm.app.ui.adapter.GoodsAdapter;
 import com.cxgm.app.ui.adapter.GoodsRecyclerViewAdapter;
+import com.cxgm.app.ui.adapter.MotionAdapter;
 import com.cxgm.app.ui.adapter.ShopAdapter;
 import com.cxgm.app.ui.base.BaseFragment;
 import com.cxgm.app.ui.view.ViewJump;
@@ -761,8 +763,8 @@ public class IndexFragment extends BaseFragment {
                 }
             });
 
-            //运营数据 todo 加载慢，暂时关闭
-            /*new FindMotionReq(getActivity(), Constants.currentShopId).execute(new Request.RequestCallback<List<Motion>>() {
+            //运营数据
+            new FindMotionReq(getActivity(), Constants.currentShopId).execute(new Request.RequestCallback<List<Motion>>() {
                 @Override
                 public void onSuccess(List<Motion> motions) {
                     if (motions != null && motions.size() > 0) {
@@ -792,7 +794,7 @@ public class IndexFragment extends BaseFragment {
                 public void onFinished() {
                     srl.finishRefresh();
                 }
-            });*/
+            });
 
             //简报
             /*new FindReportReq(getActivity(),Constants.currentShopId).execute(new Request.RequestCallback<List<Motion>>() {

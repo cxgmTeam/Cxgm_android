@@ -268,6 +268,9 @@ public class UserOrderAdapter extends BaseAdapter {
                     ViewJump.toComment(mActivity, mList.get(i).getStoreId(), true);
                 }
             });
+            holder.tvComment.setVisibility(View.VISIBLE);
+        }else {
+            holder.tvComment.setVisibility(View.GONE);
         }
 
         return view;
