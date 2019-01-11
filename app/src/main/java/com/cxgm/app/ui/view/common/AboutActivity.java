@@ -76,8 +76,8 @@ public class AboutActivity extends BaseActivity {
                 ViewJump.toWebView(this,"file:///android_asset/business_info.html");
                 break;
             case R.id.tvInsideEntrance:
-                //http://47.104.226.173/
-                ViewJump.toWebView(this, Constants.SERVICE_URL);
+                //http://47.105.86.63
+                ViewJump.toWebView(this, "http://47.105.86.63");
                 break;
         }
     }
