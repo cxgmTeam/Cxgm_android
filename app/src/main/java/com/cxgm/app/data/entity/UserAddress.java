@@ -33,7 +33,7 @@ public class UserAddress extends BaseEntity implements Cloneable ,Comparable<Use
     private String realName;
     private Integer isDef;//是否为默认值 1默认
     private String remarks;
-    public boolean isEnable;//地址相对于当前商铺是可用的，在配送范围内的
+    public boolean isEnable = true;//地址相对于当前商铺是可用的，在配送范围内的 新版本取消了范围一说
     public int yn; //有效地址 1 有效
 
     public int getYn() {

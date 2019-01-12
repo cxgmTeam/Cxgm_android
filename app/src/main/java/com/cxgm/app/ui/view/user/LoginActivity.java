@@ -14,10 +14,8 @@ import android.widget.TextView;
 
 import com.cxgm.app.R;
 import com.cxgm.app.app.Constants;
-import com.cxgm.app.data.entity.Shop;
 import com.cxgm.app.data.entity.User;
 import com.cxgm.app.data.entity.UserAddress;
-import com.cxgm.app.data.io.common.CheckAddressReq;
 import com.cxgm.app.data.io.order.AddressListReq;
 import com.cxgm.app.data.io.user.LoginReq;
 import com.cxgm.app.data.io.user.SendSMSReq;

@@ -44,5 +44,13 @@ public class StringHelper {
             str = "";
         return weight+str+unit;
     }
+
+    public static String cutTimeStr(String timeStr){
+        if (TextUtils.isEmpty(timeStr))
+            return "";
+        if (timeStr.length() <= 10)
+            return timeStr;
+        return timeStr.substring(0,10);
+    }
     
 }

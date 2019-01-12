@@ -239,7 +239,7 @@ public class OrderDetailActivity extends BaseActivity {
         if (order != null) {
             switch (order.getStatus()) {
                 case Order.STATUS_TO_BE_PAID:
-                    layoutOrderState.setBackgroundResource(R.color.colorOrange);
+                    layoutOrderState.setBackgroundResource(R.color.colorOrangeTint);
                     imgIcon.setImageResource(R.mipmap.status_pay);
                     tvOrderState.setText(R.string.unpaid);
                     tvOrderTag.setText(R.string.unpaid_tag);

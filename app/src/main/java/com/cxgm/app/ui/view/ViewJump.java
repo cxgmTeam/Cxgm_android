@@ -14,6 +14,7 @@ import com.cxgm.app.data.entity.ProductTransfer;
 import com.cxgm.app.data.entity.ShopCategory;
 import com.cxgm.app.data.entity.UserAddress;
 import com.cxgm.app.ui.view.common.AboutActivity;
+import com.cxgm.app.ui.view.common.CommentActivity;
 import com.cxgm.app.ui.view.common.MainActivity;
 import com.cxgm.app.ui.view.common.Scan2Activity;
 import com.cxgm.app.ui.view.common.ScanActivity;
@@ -294,6 +295,13 @@ public class ViewJump {
 
     public static void toManuallyInputBarCode(Activity activity){
         activity.startActivity(new Intent(activity, ManuallyInputBarCodeActivity.class));
+    }
+
+    public static void toComment(Activity activity,int shopId,boolean isUserComment){
+        Intent intent = new Intent(activity, CommentActivity.class);
+        intent.putExtra("shopId",shopId);
+        intent.putExtra("isUserComment",isUserComment);
+        activity.startActivity(intent);
     }
 
 }

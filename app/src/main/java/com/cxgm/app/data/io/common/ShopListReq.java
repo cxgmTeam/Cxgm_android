@@ -21,16 +21,23 @@ import org.xutils.http.RequestParams;
  */
 public class ShopListReq extends Request {
 
-    public static final String TYPE_DEFAULT = "";//综合
-    public static final String TYPE_DISTANCE = "distance";//距离
-    public static final String TYPE_MONT_SALES = "monthSales";//月销量
+    public static final String ORDER_TYPE_DEFAULT = "";//综合
+    public static final String ORDER_TYPE_DISTANCE = "distance";//距离
+    public static final String ORDER_TYPE_MONT_SALES = "monthSales";//月销量
+
+    public static final String INDUSTRY_TYPE_DEFAULT = "";//全部分类
+    public static final String INDUSTRY_TYPE_MWSX = "mwsx";//美味生鲜
+    public static final String INDUSTRY_TYPE_MZGH = "mzgh";//美妆个护
+    public static final String INDUSTRY_TYPE_JSYP = "jsyp";//酒水饮品
+    public static final String INDUSTRY_TYPE_XXGS = "xxgs";//新鲜果蔬
 
     int pageNum,pageSize;
     double longitude,dimension;
-    String orderType;
+    String orderType,industryType;
 
-    public ShopListReq(Context context,String orderType,double longitude,double dimension,int pageNum,int pageSize) {
+    public ShopListReq(Context context,String industryType,String orderType,double longitude,double dimension,int pageNum,int pageSize) {
         super(context);
+        this.industryType = industryType;
         this.orderType = orderType;
         this.longitude = longitude;
         this.dimension = dimension;
@@ -48,6 +55,8 @@ public class ShopListReq extends Request {
 
         RequestParams params = new RequestParams(SERVER + Constants.PORT7 + "/user/shopList");
         params.setMethod(HttpMethod.GET);
+        if (!TextUtils.isEmpty(industryType))
+            params.addQueryStringParameter("industryType",industryType );
         if (!TextUtils.isEmpty(orderType))
             params.addQueryStringParameter("orderType",orderType );
         params.addQueryStringParameter("pageNum",pageNum+"" );

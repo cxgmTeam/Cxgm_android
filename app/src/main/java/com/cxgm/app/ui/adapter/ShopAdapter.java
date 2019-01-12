@@ -1,5 +1,6 @@
 package com.cxgm.app.ui.adapter;
 
+import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -10,6 +11,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.cxgm.app.R;
 import com.cxgm.app.data.entity.Shop;
+import com.cxgm.app.ui.view.ViewJump;
 import com.cxgm.app.utils.StringHelper;
 
 import java.util.List;
@@ -28,9 +30,10 @@ import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 public class ShopAdapter extends BaseAdapter {
 
     List<Shop> mList;
-
-    public ShopAdapter(List<Shop> mList) {
+    Activity mAct;
+    public ShopAdapter(Activity activity,List<Shop> mList) {
         this.mList = mList;
+        this.mAct = activity;
     }
 
     @Override
@@ -75,7 +78,17 @@ public class ShopAdapter extends BaseAdapter {
                 mList.get(position).getMonthSales()));
         holder.tvInfo2.setText(parent.getContext().getString(R.string.shop_info_2_,
                 mList.get(position).getNeedTime(),mList.get(position).getDistance()+""));
-
+        holder.tvScore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ViewJump.toComment(mAct,mList.get(position).getId(),false);
+            }
+        });
+        if (mList.get(position).getScore() <=0){
+            holder.tvScore.setVisibility(View.GONE);
+        }else {
+            holder.tvScore.setVisibility(View.VISIBLE);
+        }
         return convertView;
     }
 
