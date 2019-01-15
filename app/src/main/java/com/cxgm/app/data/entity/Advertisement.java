@@ -30,14 +30,17 @@ public class Advertisement extends BaseEntity implements Comparable<Advertisemen
 
     private String adverName;
     private String createTime;
+    private String goodName;
     private int id;
     private String imageUrl;
+    private int isShop;
     private String notifyUrl;
     private int number;
     private int onShelf;
     private String position;
     private String productCode;
     private int shopId;
+    private String shopName;
     private String type;//1是网页 2是商品详情
 
     public String getAdverName() {
@@ -126,6 +129,30 @@ public class Advertisement extends BaseEntity implements Comparable<Advertisemen
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getGoodName() {
+        return goodName;
+    }
+
+    public void setGoodName(String goodName) {
+        this.goodName = goodName;
+    }
+
+    public int getIsShop() {
+        return isShop;
+    }
+
+    public void setIsShop(int isShop) {
+        this.isShop = isShop;
+    }
+
+    public String getShopName() {
+        return shopName;
+    }
+
+    public void setShopName(String shopName) {
+        this.shopName = shopName;
     }
 
     @Override

@@ -6,8 +6,8 @@ android {
         applicationId "com.yxcs.app"
         minSdkVersion 14
         targetSdkVersion 27
-        versionCode 66
-        versionName "1.0.9"
+        versionCode 67
+        versionName "1.0.10"
         multiDexEnabled = true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 

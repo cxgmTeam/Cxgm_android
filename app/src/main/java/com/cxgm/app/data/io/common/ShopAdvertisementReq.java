@@ -5,10 +5,13 @@ import android.content.Context;
 import com.alibaba.fastjson.JSON;
 import com.cxgm.app.app.Constants;
 import com.cxgm.app.app.UserResult;
+import com.cxgm.app.data.entity.Advertisement;
 import com.deanlib.ootb.data.io.Request;
 
 import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
+
+import java.util.List;
 
 /**
  * 门店列表页面广告
@@ -35,9 +38,8 @@ public class ShopAdvertisementReq extends Request {
     }
 
     @Override
-    public <T> T parse(String json) {
-        //todo
-        UserResult<T> result = JSON.parseObject(json,new UserResult<T>(){}.getEntityType());
+    public List<Advertisement> parse(String json) {
+        UserResult<List<Advertisement>> result = JSON.parseObject(json,new UserResult<List<Advertisement>>(){}.getEntityType());
         return result.data;
     }
 }

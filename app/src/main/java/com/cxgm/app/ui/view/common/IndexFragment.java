@@ -33,6 +33,7 @@ import com.cxgm.app.data.entity.Shop;
 import com.cxgm.app.data.entity.ShopCategory;
 import com.cxgm.app.data.entity.base.PageInfo;
 import com.cxgm.app.data.io.common.FindAdvertisementReq;
+import com.cxgm.app.data.io.common.ShopAdvertisementReq;
 import com.cxgm.app.data.io.common.ShopListReq;
 import com.cxgm.app.data.io.goods.FindFirstCategoryReq;
 import com.cxgm.app.data.io.goods.FindHotProductReq;
@@ -166,6 +167,8 @@ public class IndexFragment extends BaseFragment {
     RadioButton rbSales;
     @BindView(R.id.rbDistance)
     RadioButton rbDistance;
+    @BindView(R.id.loopShopBanner)
+    BannerView loopShopBanner;
 
     GoodsRecyclerViewAdapter mTopProductAdapter;
     List<ProductTransfer> mTopProductList;
@@ -241,6 +244,8 @@ public class IndexFragment extends BaseFragment {
         }
         if (loopBanner.getData()!=null && loopBanner.getData().items!=null && loopBanner.getData().items.size()>0)
             loopBanner.startAutoLoop();
+        if (loopShopBanner.getData()!=null && loopShopBanner.getData().items!=null && loopShopBanner.getData().items.size()>0)
+            loopShopBanner.startAutoLoop();
     }
 
     @Override
@@ -248,6 +253,7 @@ public class IndexFragment extends BaseFragment {
         super.onPause();
         dismissPopLocationInfo();
         loopBanner.stopAutoLoop();
+        loopShopBanner.stopAutoLoop();
     }
 
     private void init() {
@@ -303,6 +309,25 @@ public class IndexFragment extends BaseFragment {
                     if (mShopList!=null)
                         mShopList.clear();
                     loadData();
+                }
+            });
+
+            loopShopBanner.setImageLoader(new ImageLoader() {
+                @Override
+                public void loadImage(ImageView imageView, String url, int placeholder) {
+                    Glide.with(imageView.getContext()).load(url).apply(new RequestOptions()
+                            .placeholder(placeholder).error(R.mipmap.default_img)).into(imageView);
+                }
+            });
+            loopShopBanner.setOnItemClickListener(new BaseLoopAdapter.OnItemClickListener() {
+
+                @Override
+                public void onItemClick(View view, LoopData.ItemData itemData, int position) {
+                    //广告点击事件 跳到商店
+                    Constants.currentShopId = Integer.valueOf(itemData.link);
+                    init();
+                    loadData();
+                    ViewHelper.updateShopCart(getActivity());
                 }
             });
 
@@ -463,6 +488,55 @@ public class IndexFragment extends BaseFragment {
                 longitude = location.location.longitude;
                 latitude = location.location.latitude;
             }
+            //商铺列表上边的广告
+            new ShopAdvertisementReq(getActivity()).execute(new Request.RequestCallback<List<Advertisement>>() {
+                @Override
+                public void onSuccess(List<Advertisement> advertisement) {
+                    if (advertisement!=null && advertisement.size()>0) {
+                        LoopData loopData = new LoopData();
+                        loopData.items = new ArrayList<>();
+                        for (Advertisement ad : advertisement) {
+                            loopData.items.add(loopData.new ItemData(ad.getImageUrl(), ad.getAdverName(), ad.getShopId()+""));
+                        }
+                        loopShopBanner.setData(loopData);
+                        loopShopBanner.getViewPager().addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                            @Override
+                            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                            }
+
+                            @Override
+                            public void onPageSelected(int position) {
+
+                            }
+
+                            @Override
+                            public void onPageScrollStateChanged(int state) {
+
+                            }
+                        });
+                        loopShopBanner.startAutoLoop();
+                        loopShopBanner.setVisibility(View.VISIBLE);
+                    } else {
+                        loopShopBanner.setVisibility(View.GONE);
+                    }
+                }
+
+                @Override
+                public void onError(Throwable ex, boolean isOnCallback) {
+
+                }
+
+                @Override
+                public void onCancelled(Callback.CancelledException cex) {
+
+                }
+
+                @Override
+                public void onFinished() {
+
+                }
+            });
             //商铺列表
             new ShopListReq(getActivity(), mIndustryType,mOrderType,longitude,latitude,mShopListPageNum, 10)
                     .execute(new Request.RequestCallback<PageInfo<Shop>>() {
